@@ -10,6 +10,7 @@ const CONSTANTS = {
     CALABASH_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/calabashData',
     CHALLENGE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/challengeIndex',
     EXPLORE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/exploreIndex',
+    SIGNIN_URL: 'https://api.kurobbs.com/encourage/signIn/v2',
     REQUEST_HEADERS_BASE: {
         "source": "android",
     },
@@ -194,6 +195,33 @@ class Waves {
         } catch (error) {
             logger.error('获取探索数据失败，疑似网络问题：\n', error);
             return { status: false, msg: '获取探索数据失败，疑似网络问题，请检查控制台日志' };
+        }
+    }
+
+    // 签到
+    async signIn(serverId, roleId, userId, token) {
+
+        let data = qs.stringify({
+            'gameId': 3,
+            'serverId': serverId,
+            'roleId': roleId,
+            'userId': userId,
+            'reqMonth': (new Date().getMonth() + 1).toString().padStart(2, '0'),
+        });
+
+        try {
+            const response = await axios.post(CONSTANTS.SIGNIN_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
+
+            if (response.data.code === 200) {
+                logger.info('签到成功');
+                return { status: true, data: response.data.data };
+            } else {
+                logger.error('签到失败：', response.data.msg);
+                return { status: false, msg: response.data.msg };
+            }
+        } catch (error) {
+            logger.error('签到失败，疑似网络问题：\n', error);
+            return { status: false, msg: '签到失败，疑似网络问题，请检查控制台日志' };
         }
     }
 }
