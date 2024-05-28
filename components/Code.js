@@ -1,6 +1,5 @@
 import axios from 'axios';
 import qs from 'qs';
-import Render from '../model/render.js'
 
 const CONSTANTS = {
     LOGIN_URL: 'https://api.kurobbs.com/user/sdkLogin',
@@ -44,6 +43,31 @@ class Waves {
         } catch (error) {
             logger.error('验证码登录失败，疑似网络问题：\n', error);
             return { status: false, msg: '登录失败，疑似网络问题，请检查控制台日志' };
+        }
+    }
+
+    // 获取可用性
+    async isAvailable(token) {
+
+        let data = qs.stringify({
+            'type': '2',
+            'sizeType': '1'
+        });
+
+
+        try {
+            const response = await axios.post(CONSTANTS.GAME_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+
+            if (response.data.code === 220) {
+                logger.info('获取可用性成功：账号已过期');
+                return false;
+            } else {
+                logger.info('获取可用性成功：账号可用');
+                return true;
+            }
+        } catch (error) {
+            logger.error('获取可用性失败，疑似网络问题：\n', error);
+            return false;
         }
     }
 
