@@ -15,7 +15,7 @@ export class Help extends plugin {
                     fnc: "help"
                 },
                 {
-                    reg: "^#?(waves|鸣潮)绑定帮助$",
+                    reg: "^#?(waves|鸣潮)(登录|登陆|绑定)帮助$",
                     fnc: "bindHelp"
                 }
             ]
@@ -73,6 +73,15 @@ export class Help extends plugin {
     }
 
     async bindHelp(e) {
+        const helpStep = [
+            { message: '1.浏览器打开 https://www.kurobbs.com/mc 点击右上角头像' },
+            { message: '2.输入手机号，点击 获取验证码 按钮' },
+            { message: '3.等待手机收到验证码' },
+            { message: '4.发送 #鸣潮登录手机号:验证码 即可完成登录(例：#鸣潮登录17041039503:1865)' },
+            { message: '注意：再次在网页或APP登录账号会导致此次登录失效，如果需要与APP共用请自行抓包获取Token，发送 #鸣潮登录Token 即可完成登录(例：#鸣潮登录eyJhbGc...)' }
+        ]
+        await e.reply(Bot.makeForwardMsg(helpStep))
+        return true
     }
 
     async getThemeData(diyStyle, sysStyle) {
