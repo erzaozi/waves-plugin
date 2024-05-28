@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" type="text/css" href="{{pluginResources}}/User/User.css" />
+    <link rel="preload" href="{{pluginResources}}/User/fonts/MiSans-Regular.ttf" as="font" />
+</head>
+
+<body id="body">
+    <div id="account">
+        <div id="user-name">{{baseData.name}}</div>
+        <div id="user-uid">{{baseData.id}}</div>
+        <div id="profile">
+            <div class="value">{{baseData.activeDays}}</div>
+            <div class="value">{{baseData.level}}</div>
+            <div class="value">{{baseData.worldLevel}}</div>
+            <div class="value">{{baseData.achievementCount}}</div>
+            <div class="value">{{baseData.roleNum}}</div>
+            <div class="value">{{baseData.soundBox}}</div>
+            <div class="value">{{baseData.smallCount}}</div>
+            <div class="value">{{baseData.bigCount}}</div>
+            <div class="value">{{baseData.boxList[0].num}}</div>
+            <div class="value">{{baseData.boxList[1].num}}</div>
+            <div class="value">{{baseData.boxList[2].num}}</div>
+            <div class="value">{{baseData.boxList[3].num}}</div>
+        </div>
+        <div id="character-frame">
+            {{each roleData.roleList character idx}}
+            <div class="character">
+                <img src="{{pluginResources}}/User/imgs/{{character.starLevel}}.png" class="character-bg">
+                <img src="{{character.roleIconUrl}}" class="char-avatar">
+                <img src="{{pluginResources}}/User/imgs/attribute/{{character.attributeId}}.png" class="char-attr">
+                <span class="char-name">{{character.roleName}}</span>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</body>
+
+</html>

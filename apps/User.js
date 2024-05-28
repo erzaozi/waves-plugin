@@ -1,6 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
+import Render from '../model/render.js'
 
 export class UserInfo extends plugin {
     constructor() {
@@ -40,9 +41,9 @@ export class UserInfo extends plugin {
             const baseData = await waves.getBaseData(account.serverId, account.roleId, account.token);
             const roleData = await waves.getRoleData(account.serverId, account.roleId, account.token);
 
-            // 渲染卡片
+            const imageCard = await Render.User(baseData.data, roleData.data)
 
-            data.push({ message: result });
+            data.push({ message: imageCard });
         }
 
         if (deleteroleId.length) {

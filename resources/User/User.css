@@ -1,0 +1,98 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("./fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+#body {
+    width: 1220px;
+    height: auto;
+    background-image: url(./imgs/background.png);
+    background-repeat: no-repeat;
+    font-family: "MiSans";
+}
+
+#user-name {
+    padding-left: 323px;
+    padding-top: 132px;
+    color: white;
+    font-size: 58px;
+}
+
+#user-uid {
+    position: absolute;
+    left: 462px;
+    top: 224px;
+    color: white;
+    font-size: 39px;
+}
+
+#profile {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 267px 267px 267px 267px;
+    column-gap: 16px;
+    row-gap: 15px;
+    top: 694px;
+    left: 52px;
+    width: 1117px;
+    height: 570px;
+}
+
+.value {
+    width: 267px;
+    height: 180px;
+    padding-top: 42px;
+    text-align: center;
+    font-size: 44px;
+    font-weight: 1000;
+}
+
+#character-frame {
+    display: grid;
+    grid-template-columns: 250px 250px 250px 250px;
+    column-gap: 36px;
+    row-gap: 36px;
+    padding-top: 1255.2px;
+    padding-left: 57px;
+    padding-bottom: 140px;
+    width: 1164px;
+    height: auto;
+}
+
+.character {
+    position: relative;
+    width: 251px;
+    height: 314px;
+}
+
+.char-avatar {
+    position: absolute;
+    left: 3px;
+    top: -14px;
+    width: 244px;
+    height: 244px;
+}
+
+.char-attr {
+    position: absolute;
+    left: -4px;
+    top: 224px;
+    width: 73px;
+}
+
+.char-name {
+    position: absolute;
+    left: 70px;
+    top: 236px;
+    color: white;
+    font-size: 25px;
+}

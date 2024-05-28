@@ -22,7 +22,7 @@ export class BindToken extends plugin {
     }
 
     async bindToken(e) {
-        const message = e.msg.replace(/#?(waves|鸣潮)(登录|登陆|绑定).*$/, "");
+        const message = e.msg.replace(/#?(waves|鸣潮)(登录|登陆|绑定)/, '').trim();
 
         const waves = new Waves();
         let token;
