@@ -2,22 +2,22 @@ import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
 
-export class Calabash extends plugin {
+export class Challenge extends plugin {
     constructor() {
         super({
-            name: "鸣潮-数据坞",
+            name: "鸣潮-挑战数据",
             event: "message",
             priority: 1009,
             rule: [
                 {
-                    reg: "^#?(waves|鸣潮)?(数据坞|声骸)$",
-                    fnc: "calabash"
+                    reg: "^#?(waves|鸣潮)?(挑战数据|全息战略)$",
+                    fnc: "challenge"
                 }
             ]
         })
     }
 
-    async calabash(e) {
+    async challenge(e) {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
 
         if (!accountList.length) {
@@ -37,7 +37,7 @@ export class Calabash extends plugin {
                 continue;
             }
 
-            const result = await waves.getCalabashData(account.serverId, account.roleId, account.token);
+            const result = await waves.getChallengeData(account.serverId, account.roleId, account.token);
 
             // 渲染卡片
 
