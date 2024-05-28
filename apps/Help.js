@@ -41,10 +41,40 @@ export class Help extends plugin {
                 "group": "功能列表",
                 "list": [
                     {
-                        "icon": 17,
-                        "title": "#鸣潮绑定",
-                        "desc": "绑定账户Cookie"
+                        "icon": 1,
+                        "title": "#鸣潮登录",
+                        "desc": "绑定账户Token"
                     },
+                    {
+                        "icon": 2,
+                        "title": "#鸣潮登录帮助",
+                        "desc": "绑定账户Token教程"
+                    },
+                    {
+                        "icon": 3,
+                        "title": "#鸣潮解绑",
+                        "desc": "解绑账户Token"
+                    },
+                    {
+                        "icon": 4,
+                        "title": "#鸣潮开启自动签到",
+                        "desc": "每天四点自动执行所有账号签到"
+                    },
+                    {
+                        "icon": 5,
+                        "title": "#鸣潮开启波片推送",
+                        "desc": "结晶波片回满提醒"
+                    },
+                    {
+                        "icon": 6,
+                        "title": "#鸣潮帮助",
+                        "desc": "查看帮助面板"
+                    },
+                    {
+                        "icon": 7,
+                        "title": "#鸣潮更新",
+                        "desc": "更新插件"
+                    }
                 ],
             },
         ]

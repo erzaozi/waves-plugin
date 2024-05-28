@@ -13,6 +13,10 @@ export class BindToken extends plugin {
                     reg: "^#?(waves|鸣潮)(登录|登陆|绑定).*$",
                     fnc: "bindToken"
                 },
+                {
+                    reg: "^#?(waves|鸣潮)解绑.*$",
+                    fnc: "unbindToken"
+                }
             ]
         })
     }
@@ -66,5 +70,29 @@ export class BindToken extends plugin {
         const msg = `${gameData.data.roleName}(${gameData.data.roleId}) 登录成功！`;
 
         return await e.reply(msg, true);
+    }
+
+    async unbindToken(e) {
+        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+
+        if (!accountList || !accountList.length) {
+            return await e.reply('当前没有绑定任何账号，请使用[#鸣潮登录]进行绑定');
+        }
+
+        let roleId = e.msg.replace(/#?(waves|鸣潮)解绑/, '').trim();
+        if (!roleId || !accountList.map(item => item.roleId).includes(roleId)) {
+            let msg = '当前绑定的特征码有：'
+            accountList.forEach(item => {
+                msg += `\n${item.roleId}`
+            })
+            msg += `\n请使用[#鸣潮解绑 + 特征码]的格式进行解绑。`
+            await e.reply(msg);
+        } else {
+            let index = accountList.findIndex(item => item.roleId == roleId);
+            accountList.splice(index, 1);
+            await e.reply(`已删除账号 ${roleId}`);
+            Config.setUserConfig(e.user_id, accountList);
+        }
+        return true;
     }
 }
