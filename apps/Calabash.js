@@ -1,6 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
+import Render from '../model/render.js'
 
 export class Calabash extends plugin {
     constructor() {
@@ -37,11 +38,15 @@ export class Calabash extends plugin {
                 continue;
             }
 
-            const result = await waves.getCalabashData(account.serverId, account.roleId, account.token);
+            const baseData = await waves.getBaseData(account.serverId, account.roleId, account.token);
+            const CalabashData = await waves.getCalabashData(account.serverId, account.roleId, account.token);
 
-            // 渲染卡片
-
-            data.push({ message: result });
+            if (!baseData.status || !CalabashData.status) {
+                data.push({ message: baseData.msg || CalabashData.msg });
+            } else {
+                const imageCard = await Render.calaBashData(baseData.data, CalabashData.data)
+                data.push({ message: imageCard });
+            }
         }
 
         if (deleteroleId.length) {

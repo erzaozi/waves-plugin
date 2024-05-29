@@ -32,6 +32,22 @@ class Render {
 
         return base64
     }
+
+    async calaBashData(baseData, calabashData) {
+        calabashData.phantomList.sort((a, b) => {
+            return b.star - a.star
+        })
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'calaBash',
+            imgType: 'png',
+            tplFile: `${pluginResources}/calaBash/calaBash.html`,
+            pluginResources,
+            baseData,
+            calabashData,
+        })
+
+        return base64
+    }
 }
 
 export default new Render()

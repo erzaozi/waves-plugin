@@ -15,7 +15,7 @@
 #body {
     width: 1220px;
     height: 1173px;
-    background: url(./imgs/dailyData.png) no-repeat;
+    background: url(./imgs/background.png) no-repeat;
     font-family: "Misans";
 }
 
@@ -78,8 +78,9 @@
 #progress {
     position: absolute;
     top: 299.3px;
-    left:214px;
+    left: 214px;
     width: 700px;
     height: 16px;
-    -webkit-mask: linear-gradient(90deg, #000 60%,#0000 0) 0/2%;
+    mask: linear-gradient(90deg, #000 60%, #0000 0) 0/2%;
+    -webkit-mask: linear-gradient(90deg, #000 60%, #0000 0) 0/2%;
 }

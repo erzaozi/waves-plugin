@@ -1,0 +1,155 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("../fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+#body {
+    width: 1220px;
+    height: auto;
+    background: url(./imgs/background.png) no-repeat;
+    font-family: "Misans";
+}
+
+
+#user-name {
+    position: relative;
+    left: 324px;
+    top: 133px;
+    height: auto;
+    color: white;
+    font-size: 58px;
+}
+
+#user-uid {
+    position: relative;
+    left: 462px;
+    top: 146px;
+    height: auto;
+    color: white;
+    font-size: 39px;
+}
+
+#data {
+    position: relative;
+    top: 504px;
+    left: 52px;
+    height: 479px;
+    width: 1117px;
+}
+
+#gourd-level {
+    position: absolute;
+    top: 277px;
+    left: 100px;
+    height: auto;
+    width: 120px;
+    color: #fbedc3;
+    font-size: 76px;
+    text-align: center;
+}
+
+#base-sbsorb {
+    position: absolute;
+    top: 150px;
+    left: 792px;
+    height: auto;
+    width: 300px;
+    color: #676866;
+    font-size: 38px;
+    text-align: right;
+}
+
+#enhanced-absorb {
+    position: absolute;
+    top: 236px;
+    left: 792px;
+    height: auto;
+    width: 300px;
+    color: #676866;
+    font-size: 38px;
+    text-align: right;
+}
+
+#absorbable {
+    position: absolute;
+    top: 324px;
+    left: 792px;
+    height: auto;
+    width: 300px;
+    color: #c49e55;
+    font-size: 38px;
+    text-align: right;
+}
+
+#max-cost {
+    position: absolute;
+    top: 408px;
+    left: 792px;
+    height: auto;
+    width: 300px;
+    color: #676866;
+    font-size: 38px;
+    text-align: right;
+}
+
+#collection {
+    position: absolute;
+    top: 1204px;
+    left: 436px;
+    font-size: 33px;
+    color: #aaaaaa;
+}
+
+#pets {
+    position: relative;
+    display: grid;
+    grid-template-columns: 256px 256px 256px 256px;
+    column-gap: 31px;
+    row-gap: 10px;
+    padding-left: 52px;
+    padding-top: 704px;
+    width: 1116px;
+    height: auto;
+    padding-bottom: 120px;
+}
+
+.pet {
+    position: relative;
+    height: 256px;
+    width: 256px;
+    background-image: url(./imgs/iconBg.png);
+}
+
+#pet-avatar {
+    position: absolute;
+    height: 256px;
+    width: 256px;
+    z-index: 1;
+    border-radius: 30px 0 30px 0;
+}
+
+#pet-name {
+    position: absolute;
+    top: 170px;
+    width: 240px;
+    z-index: 3;
+    font-size: 34px;
+    color: white;
+    text-align: center;
+}
+
+#pet-cover {
+    position: absolute;
+    top: 170px;
+    width: 256px;
+    z-index: 2;
+}
