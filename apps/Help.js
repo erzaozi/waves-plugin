@@ -104,7 +104,7 @@ export class Help extends plugin {
 
     async bindHelp(e) {
         const helpStep = [
-            { message: '1.浏览器打开 https://www.kurobbs.com/mc 点击右上角头像' },
+            { message: '1.浏览器打开 https://www.kurobbs.com/mc 点击右上角头像（手机用户请切换电脑模式）' },
             { message: '2.输入手机号，点击 获取验证码 按钮' },
             { message: '3.等待手机收到验证码' },
             { message: '4.发送 #鸣潮登录手机号:验证码 即可完成登录(例：#鸣潮登录17041039503:1865)' },
