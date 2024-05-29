@@ -93,8 +93,14 @@ export class Sanity extends plugin {
                     return true;
                 }
 
-                if (result.data.energyData.cur >= result.data.energyData.total) {
+                const key = `Yunzai:waves:pushed:${result.data.roleId}`;
+                const isPushed = await redis.get(key);
+                const isFull = result.data.energyData.cur >= result.data.energyData.total;
+                if (isFull && !isPushed) {
                     data.push({ message: `漂泊者${result.data.roleName}(${result.data.roleId})，你的结晶波片已经恢复满了哦~` })
+                    await redis.set(key, 'true');
+                } else if (!isFull && isPushed) {
+                    await redis.del(key);
                 }
             }
 
