@@ -1,6 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
+import Render from '../model/render.js'
 
 export class SignIn extends plugin {
     constructor() {
@@ -43,11 +44,14 @@ export class SignIn extends plugin {
                 continue;
             }
 
-            const result = await waves.signIn(account.serverId, account.roleId, account.userId, account.token);
+            const signInData = await waves.signIn(account.serverId, account.roleId, account.userId, account.token);
 
-            // 渲染卡片
-
-            data.push({ message: result });
+            if (!signInData.status) {
+                data.push({ message: signInData.msg });
+            } else {
+                const imageCard = await Render.signInData(signInData.data)
+                data.push({ message: imageCard });
+            }
         }
 
         if (deleteroleId.length) {

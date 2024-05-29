@@ -34,6 +34,9 @@ class Render {
     }
 
     async calaBashData(baseData, calabashData) {
+        if (!calabashData.phantomList) {
+            calabashData.phantomList = []
+        }
         calabashData.phantomList.sort((a, b) => {
             return b.star - a.star
         })
@@ -44,6 +47,18 @@ class Render {
             pluginResources,
             baseData,
             calabashData,
+        })
+
+        return base64
+    }
+
+    async signInData(signInData) {
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'signIn',
+            imgType: 'png',
+            tplFile: `${pluginResources}/signIn/signIn.html`,
+            pluginResources,
+            signInData
         })
 
         return base64
