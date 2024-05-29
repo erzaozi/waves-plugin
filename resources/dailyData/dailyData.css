@@ -1,0 +1,85 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("../fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+#body {
+    width: 1220px;
+    height: 1173px;
+    background: url(./imgs/dailyData.png) no-repeat;
+    font-family: "Misans";
+}
+
+
+#user-name {
+    position: relative;
+    left: 324px;
+    top: 133px;
+    height: auto;
+    color: white;
+    font-size: 58px;
+}
+
+#user-uid {
+    position: relative;
+    left: 462px;
+    top: 146px;
+    height: auto;
+    color: white;
+    font-size: 39px;
+}
+
+#data {
+    position: relative;
+    top: 524px;
+    left: 52px;
+    height: 402px;
+    width: 1118px;
+    margin-bottom: 120px;
+}
+
+#stamina {
+    position: absolute;
+    top: 41px;
+    left: 204px;
+    font-size: 48px;
+}
+
+#activity {
+    position: absolute;
+    top: 41px;
+    left: 626px;
+    font-size: 48px;
+}
+
+#experience {
+    position: absolute;
+    top: 241px;
+    left: 740px;
+    font-size: 33px;
+}
+
+#level {
+    position: absolute;
+    top: 318px;
+    left: 88px;
+    font-size: 33px;
+}
+
+#progress {
+    position: absolute;
+    top: 299.3px;
+    left:214px;
+    width: 700px;
+    height: 16px;
+    -webkit-mask: linear-gradient(90deg, #000 60%,#0000 0) 0/2%;
+}

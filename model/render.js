@@ -5,17 +5,29 @@ class Render {
     constructor() {
     }
 
-    async User(baseData, roleData) {
+    async userInfo(baseData, roleData) {
         roleData.roleList.sort((a, b) => {
             return b.starLevel - a.starLevel
         })
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'User',
+            saveId: 'userInfo',
             imgType: 'png',
-            tplFile: `${pluginResources}/User/User.html`,
+            tplFile: `${pluginResources}/userInfo/userInfo.html`,
             pluginResources,
             baseData,
             roleData
+        })
+
+        return base64
+    }
+
+    async dailyData(gameData) {
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'dailyData',
+            imgType: 'png',
+            tplFile: `${pluginResources}/dailyData/dailyData.html`,
+            pluginResources,
+            gameData
         })
 
         return base64

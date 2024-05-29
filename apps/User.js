@@ -41,9 +41,12 @@ export class UserInfo extends plugin {
             const baseData = await waves.getBaseData(account.serverId, account.roleId, account.token);
             const roleData = await waves.getRoleData(account.serverId, account.roleId, account.token);
 
-            const imageCard = await Render.User(baseData.data, roleData.data)
-
-            data.push({ message: imageCard });
+            if (!baseData.status || !roleData.status) {
+                data.push({ message: baseData.msg || roleData.msg });
+            } else {
+                const imageCard = await Render.userInfo(baseData.data, roleData.data)
+                data.push({ message: imageCard });
+            }
         }
 
         if (deleteroleId.length) {

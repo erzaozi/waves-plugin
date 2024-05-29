@@ -4,8 +4,8 @@
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <link rel="shortcut icon" href="#" />
-    <link rel="stylesheet" type="text/css" href="{{pluginResources}}/User/User.css" />
-    <link rel="preload" href="{{pluginResources}}/User/fonts/MiSans-Regular.ttf" as="font" />
+    <link rel="stylesheet" type="text/css" href="{{pluginResources}}/userInfo/userInfo.css" />
+    <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
 </head>
 
 <body id="body">
@@ -29,9 +29,9 @@
         <div id="character-frame">
             {{each roleData.roleList character idx}}
             <div class="character">
-                <img src="{{pluginResources}}/User/imgs/{{character.starLevel}}.png" class="character-bg">
+                <img src="{{pluginResources}}/userInfo/imgs/{{character.starLevel}}.png" class="character-bg">
                 <img src="{{character.roleIconUrl}}" class="char-avatar">
-                <img src="{{pluginResources}}/User/imgs/attribute/{{character.attributeId}}.png" class="char-attr">
+                <img src="{{pluginResources}}/userInfo/imgs/attribute/{{character.attributeId}}.png" class="char-attr">
                 <span class="char-name">{{character.roleName}}</span>
             </div>
             {{/each}}

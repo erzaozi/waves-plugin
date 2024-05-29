@@ -1,6 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
+import Render from '../model/render.js'
 
 export class Sanity extends plugin {
     constructor() {
@@ -43,11 +44,14 @@ export class Sanity extends plugin {
                 continue;
             }
 
-            const result = await waves.getGameData(account.token);
+            const gameData = await waves.getGameData(account.token);
 
-            // 渲染卡片
-
-            data.push({ message: result });
+            if (!gameData.status) {
+                data.push({ message: gameData.msg });
+            } else {
+                const imageCard = await Render.dailyData(gameData.data)
+                data.push({ message: imageCard });
+            }
         }
 
         if (deleteroleId.length) {
