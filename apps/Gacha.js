@@ -75,14 +75,18 @@ export class Gacha extends plugin {
                 return true;
             }
 
-            const GachaData = await this.dataFormat(result.data, key);
-            GachaData.playerId = jsonData.playerId;
-
-            if (result.status) {
-                const imageCard = await Render.gachaCount(GachaData);
-                messageData.push({ message: imageCard });
+            if (result.data.length === 0) {
+                messageData.push({ message: `${value}：未获取到任何抽卡记录` });
             } else {
-                messageData.push({ message: `${value}：${result.msg}` });
+                const GachaData = await this.dataFormat(result.data, key);
+                GachaData.playerId = jsonData.playerId;
+
+                if (result.status) {
+                    const imageCard = await Render.gachaCount(GachaData);
+                    messageData.push({ message: imageCard });
+                } else {
+                    messageData.push({ message: `${value}：${result.msg}` });
+                }
             }
         }
 
