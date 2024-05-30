@@ -24,7 +24,7 @@ export class Gacha extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^#?(waves|鸣潮)抽卡(统计|分析)$",
+                    reg: "^#?(waves|鸣潮)抽卡(统计|分析)([\\s\\S]*)$",
                     fnc: "gachaCount"
                 }
             ]
@@ -32,28 +32,33 @@ export class Gacha extends plugin {
     }
 
     async gachaCount(e) {
-        this.setContext("getGachaData", e.isGroup, 60, "操作已超时，请重新发送[#鸣潮抽卡统计]");
-        await e.reply("请发送抓包获得的JSON请求体，至少包括：playerId与recordId\n抓包详细步骤请发送[#鸣潮抽卡帮助]")
-        return true;
-    }
-
-    async getGachaData() {
-        this.finish("getGachaData", this.e.isGroup);
+        let message = e.msg.replace(/#?(waves|鸣潮)抽卡(统计|分析)/, "");
 
         let jsonData = null;
+
+        if (!message) {
+            let data = await redis.get(`Yunzai:waves:gacha:${e.user_id}`);
+            if (!data) {
+                await e.reply(`请在命令后抓包获得的JSON请求体\n(例：#鸣潮抽卡统计{"recordId":"2b798246702...)\n抓包详细步骤请发送[#鸣潮抽卡帮助]`);
+                return true;
+            } else {
+                message = data;
+            }
+        }
+
         try {
-            jsonData = JSON.parse(this.e.msg);
+            jsonData = JSON.parse(message);
         } catch (error) {
-            await this.e.reply("无法转换成JSON格式，请复制完整请求体");
+            await e.reply("无法转换成JSON格式，请复制完整请求体");
             return true;
         }
 
         if (!jsonData.playerId || !jsonData.recordId) {
-            await this.e.reply("请求体中缺少playerId或recordId，请复制完整请求体");
+            await e.reply("请求体中缺少playerId或recordId，请复制完整请求体");
             return true;
         }
 
-        await this.e.reply("正在分析您的抽卡记录，请稍后...");
+        await e.reply("正在分析您的抽卡记录，请稍后...");
 
         const data = {
             "playerId": jsonData.playerId,
@@ -90,7 +95,9 @@ export class Gacha extends plugin {
             }
         }
 
-        await this.e.reply(Bot.makeForwardMsg([...messageData]));
+        await e.reply(Bot.makeForwardMsg([...messageData]));
+        await redis.set(`Yunzai:waves:gacha:${e.user_id}`, JSON.stringify(jsonData));
+        return true;
     }
 
     async dataFormat(data, type) {

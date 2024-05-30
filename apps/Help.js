@@ -158,7 +158,7 @@ export class Help extends plugin {
             { message: '1.打开抓包软件（请自行寻找Reqable等自己熟悉的抓包软件）' },
             { message: '2.进入游戏，打开抽卡记录界面，翻看抽卡记录' },
             { message: '3.回到抓包软件，找到 https://gmserver-api.aki-game2.com/gacha/record/query 的POST请求，复制整个请求体' },
-            { message: '4.向机器人发送[#鸣潮抽卡统计]，等待机器人提示你发送请求体，把复制好的请求体发送即可开始分析' }
+            { message: '4.向机器人发送[#鸣潮抽卡统计 + 你复制的内容]，即可开始分析' }
         ]
         await e.reply(Bot.makeForwardMsg(helpStep))
         return true
