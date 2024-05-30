@@ -24,7 +24,7 @@ export class Gacha extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^#?(waves|鸣潮)抽卡统计$",
+                    reg: "^#?(waves|鸣潮)抽卡(统计|分析)$",
                     fnc: "gachaCount"
                 }
             ]
@@ -44,14 +44,16 @@ export class Gacha extends plugin {
         try {
             jsonData = JSON.parse(this.e.msg);
         } catch (error) {
-            await e.reply("无法转换成JSON格式，请复制完整请求体");
+            await this.e.reply("无法转换成JSON格式，请复制完整请求体");
             return true;
         }
 
         if (!jsonData.playerId || !jsonData.recordId) {
-            await e.reply("请求体中缺少playerId或recordId，请复制完整请求体");
+            await this.e.reply("请求体中缺少playerId或recordId，请复制完整请求体");
             return true;
         }
+
+        await this.e.reply("正在分析您的抽卡记录，请稍后...");
 
         const data = {
             "playerId": jsonData.playerId,
@@ -59,7 +61,7 @@ export class Gacha extends plugin {
             "languageCode": jsonData.languageCode || "zh-Hans",
             "recordId": jsonData.recordId
         }
-        
+
         const messageData = [];
         for (const [key, value] of Object.entries(CardPoolTypes)) {
             data.cardPoolId = key;
