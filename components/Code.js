@@ -1,3 +1,4 @@
+import Config from './Config.js';
 import axios from 'axios';
 import qs from 'qs';
 
@@ -87,7 +88,7 @@ class Waves {
             if (response.data.code === 200) {
                 if (response.data.data === null) {
                     logger.info('获取日常数据失败，返回数据为null');
-                    return { status: false, msg: "未能查询到日常数据，官方API返回null，请检查库街区展示是否打开" };
+                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
                 }
                 logger.info('获取日常数据成功');
                 return { status: true, data: response.data.data };
@@ -116,7 +117,7 @@ class Waves {
             if (response.data.code === 200) {
                 if (response.data.data === null) {
                     logger.info('获取我的资料失败，返回数据为null');
-                    return { status: false, msg: "未能查询到我的资料，官方API返回null，请检查库街区展示是否打开" };
+                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
                 }
                 logger.info('获取我的资料成功');
                 return { status: true, data: response.data.data };
@@ -145,7 +146,7 @@ class Waves {
             if (response.data.code === 200) {
                 if (response.data.data === null) {
                     logger.info('获取共鸣者失败，返回数据为null');
-                    return { status: false, msg: "未能查询到共鸣者，官方API返回null，请检查库街区展示是否打开" };
+                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
                 }
                 logger.info('获取共鸣者成功');
                 return { status: true, data: response.data.data };
@@ -174,7 +175,7 @@ class Waves {
             if (response.data.code === 200) {
                 if (response.data.data === null) {
                     logger.info('获取数据坞失败，返回数据为null');
-                    return { status: false, msg: "未能查询到数据坞，官方API返回null，请检查库街区展示是否打开" };
+                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
                 }
                 logger.info('获取数据坞成功');
                 return { status: true, data: response.data.data };
@@ -203,7 +204,7 @@ class Waves {
             if (response.data.code === 200) {
                 if (response.data.data === null) {
                     logger.info('获取挑战数据失败，返回数据为null');
-                    return { status: false, msg: "未能查询到挑战数据，官方API返回null，请检查库街区展示是否打开" };
+                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
                 }
                 logger.info('获取挑战数据成功');
                 return { status: true, data: response.data.data };
@@ -233,7 +234,7 @@ class Waves {
             if (response.data.code === 200) {
                 if (response.data.data === null) {
                     logger.info('获取探索数据失败，返回数据为null');
-                    return { status: false, msg: "未能查询到探索数据，官方API返回null，请检查库街区展示是否打开" };
+                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
                 }
                 logger.info('获取探索数据成功');
                 return { status: true, data: response.data.data };
@@ -264,7 +265,7 @@ class Waves {
             if (response.data.code === 200) {
                 if (response.data.data === null) {
                     logger.info('签到失败，返回数据为null');
-                    return { status: false, msg: "未能获取到签到数据，官方API返回null，请检查库街区展示是否打开" };
+                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
                 }
                 logger.info('签到成功');
                 return { status: true, data: response.data.data };
@@ -287,7 +288,7 @@ class Waves {
             if (response.data.code === 0) {
                 if (response.data.data === null) {
                     logger.info('获取抽卡记录失败，返回数据为null');
-                    return { status: false, msg: "未能查询到抽卡记录，官方API返回null，请检查库街区展示是否打开" };
+                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
                 }
                 logger.info('获取抽卡记录成功');
                 return { status: true, data: response.data.data };
@@ -299,6 +300,26 @@ class Waves {
             logger.error('获取抽卡记录失败，疑似网络问题：\n', error);
             return { status: false, msg: '获取抽卡记录失败，疑似网络问题，请检查控制台日志' };
         }
+    }
+
+    // 获取公共Cookie
+    async getPublicCookie() {
+        if (!Config.getConfig().use_public_cookie) return false;
+
+        const keys = await redis.keys('Yunzai:waves:users:*');
+        const values = (await Promise.all(keys.map(key => redis.get(key))))
+            .map(value => value ? JSON.parse(value) : null)
+            .filter(Boolean)
+            .flat()
+            .sort(() => Math.random() - 0.5);
+
+        for (let value of values) {
+            if (value.token && await this.isAvailable(value.token)) {
+                return value;
+            }
+        }
+
+        return false;
     }
 }
 

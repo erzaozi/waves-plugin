@@ -109,6 +109,12 @@ export function supportGuoba() {
             ],
           },
         },
+        {
+          field: "use_public_cookie",
+          label: "使用公共Token",
+          bottomHelpMessage: "允许未绑定用户使用绑定用户的Token进行查询",
+          component: "Switch",
+        },
       ],
       getConfigData() {
         let config = Config.getConfig()

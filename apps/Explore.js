@@ -20,30 +20,43 @@ export class Explore extends plugin {
 
     async explore(e) {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+        const waves = new Waves();
+
+        const match = e.msg.replace(/^#?(waves|鸣潮)(探索度|地图)/, '').match(/^\d{9}$/);
 
         if (!accountList.length) {
-            return await e.reply('当前没有绑定任何账号，请使用[#鸣潮登录]进行绑定');
+            if (match) {
+                const publicCookie = await waves.getPublicCookie();
+                if (!publicCookie) {
+                    return await e.reply('当前没有可用的公共Cookie，请使用[#鸣潮登录]进行绑定');
+                } else {
+                    accountList.push(publicCookie);
+                }
+            } else {
+                return await e.reply('当前没有绑定任何账号，请使用[#鸣潮登录]进行绑定');
+            }
         }
 
-        const waves = new Waves();
         let data = [];
         let deleteroleId = [];
 
-        for (let account of accountList) {
+        await Promise.all(accountList.map(async (account) => {
             const usability = await waves.isAvailable(account.token);
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新绑定Token` });
                 deleteroleId.push(account.roleId);
-                continue;
+                return;
             }
 
-            if (e.msg.replace(/^#?(waves|鸣潮)(探索度|地图)/, '').match(/^\d{9}$/)) {
-                account.roleId = e.msg.replace(/^#?(waves|鸣潮)(探索度|地图)/, '');
+            if (match) {
+                account.roleId = match[0];
             }
 
-            const baseData = await waves.getBaseData(account.serverId, account.roleId, account.token);
-            const exploreData = await waves.getExploreData(account.serverId, account.roleId, account.token);
+            const [baseData, exploreData] = await Promise.all([
+                waves.getBaseData(account.serverId, account.roleId, account.token),
+                waves.getExploreData(account.serverId, account.roleId, account.token)
+            ]);
 
             if (!baseData.status || !exploreData.status) {
                 data.push({ message: baseData.msg || exploreData.msg });
@@ -51,7 +64,7 @@ export class Explore extends plugin {
                 const imageCard = await Render.exploreData(baseData.data, exploreData.data)
                 data.push({ message: imageCard });
             }
-        }
+        }));
 
         if (deleteroleId.length) {
             let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));

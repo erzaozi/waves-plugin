@@ -1,2 +1,3 @@
 waves_auto_signin_list: []
 waves_auto_push_list: []
+use_public_cookie: true

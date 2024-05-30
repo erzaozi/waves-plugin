@@ -20,41 +20,54 @@ export class Calabash extends plugin {
 
     async calabash(e) {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+        const waves = new Waves();
+
+        const match = e.msg.replace(/^#?(waves|鸣潮)?(数据坞|声骸)/, '').match(/^\d{9}$/);
 
         if (!accountList.length) {
-            return await e.reply('当前没有绑定任何账号，请使用[#鸣潮登录]进行绑定');
+            if (match) {
+                const publicCookie = await waves.getPublicCookie();
+                if (!publicCookie) {
+                    return await e.reply('当前没有可用的公共Cookie，请使用[#鸣潮登录]进行绑定');
+                } else {
+                    accountList.push(publicCookie);
+                }
+            } else {
+                return await e.reply('当前没有绑定任何账号，请使用[#鸣潮登录]进行绑定');
+            }
         }
 
-        const waves = new Waves();
         let data = [];
         let deleteroleId = [];
 
-        for (let account of accountList) {
+        await Promise.all(accountList.map(async (account) => {
             const usability = await waves.isAvailable(account.token);
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新绑定Token` });
                 deleteroleId.push(account.roleId);
-                continue;
+                return;
             }
 
-            if (e.msg.replace(/^#?(waves|鸣潮)?(数据坞|声骸)/, '').match(/^\d{9}$/)) {
-                account.roleId = e.msg.replace(/^#?(waves|鸣潮)?(数据坞|声骸)/, '');
+            if (match) {
+                account.roleId = match[0];
             }
 
-            const baseData = await waves.getBaseData(account.serverId, account.roleId, account.token);
-            const CalabashData = await waves.getCalabashData(account.serverId, account.roleId, account.token);
+            const [baseData, CalabashData] = await Promise.all([
+                waves.getBaseData(account.serverId, account.roleId, account.token),
+                waves.getCalabashData(account.serverId, account.roleId, account.token)
+            ]);
 
             if (!baseData.status || !CalabashData.status) {
                 data.push({ message: baseData.msg || CalabashData.msg });
             } else {
-                const imageCard = await Render.calaBashData(baseData.data, CalabashData.data)
+                const imageCard = await Render.calaBashData(baseData.data, CalabashData.data);
                 data.push({ message: imageCard });
             }
-        }
+        }));
 
         if (deleteroleId.length) {
-            let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
+            const newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
             Config.setUserConfig(e.user_id, newAccountList);
         }
 
