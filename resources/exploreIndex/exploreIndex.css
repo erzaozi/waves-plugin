@@ -1,0 +1,163 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("../fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+#body {
+    width: 1220px;
+    height: auto;
+    background-image: url(./imgs/background.png);
+    background-repeat: no-repeat;
+    font-family: "MiSans";
+}
+
+#account {
+    height: 424px;
+}
+
+#user-name {
+    position: relative;
+    left: 323px;
+    top: 132px;
+    height: auto;
+    color: white;
+    font-size: 58px;
+}
+
+#user-uid {
+    position: relative;
+    left: 462px;
+    top: 148px;
+    color: white;
+    font-size: 39px;
+}
+
+.country {
+    margin-bottom: 50px;
+    /* opacity: 0.3; */
+}
+
+.title {
+    margin: 52px 0px 0px 58px;
+    background: url(./imgs/title.png) no-repeat;
+    background-size: cover;
+    width: 1118px;
+    height: 242px;
+}
+
+.title>.country-logo {
+    position: relative;
+    top: 42px;
+    left: 40px;
+    width: 196px;
+}
+
+.title>.exploratory-name {
+    position: relative;
+    top: -85px;
+    left: 272px;
+    color: #fdf8ea;
+    font-size: 67px;
+}
+
+.title>.exploratory-degree {
+    position: relative;
+    top: -160px;
+    right: 58px;
+    text-align: right;
+    color: #f1e5be;
+    font-size: 47px;
+}
+
+.area {
+    margin: 21px 0px 0px 57px;
+    width: 1108px;
+    height: auto;
+}
+
+.area-name {
+    padding: 20px 0px 0px 30px;
+    height: 130px;
+    background: url(./imgs/area-bg.png) no-repeat;
+    background-size: cover;
+}
+
+.area-key {
+    display: inline-block;
+    padding: 16px 0px 0px 14px;
+    color: #fff;
+    font-size: 40px;
+    font-size: 45px;
+}
+
+.area-value {
+    display: inline-block;
+    padding: 16px 0px 0px 18px;
+    color: #cfa251;
+    font-size: 40px;
+    font-size: 45px;
+}
+
+.progress {
+    height: 94px;
+    width: 1108px;
+    border: 3px solid #e9e2dc;
+    border-top-color: transparent;
+}
+
+.progress-name {
+    padding: 18px 0px 0px 24px;
+    color: #353535;
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.progress-bar-frame {
+    position: relative;
+    left: 152px;
+    top: -41px;
+    height: 32px;
+    width: 802px;
+    border-radius: 16px;
+    border: 3px solid #cac0bc;
+}
+
+.progress-bar-total {
+    position: relative;
+    left: 8px;
+    top: 5px;
+    width: 780px;
+    background-color: #cbcbcb;
+    border-radius: 20px;
+}
+
+.progress-bar {
+    height: 16px;
+    line-height: 28px;
+    background-color: #bfa852;
+    border-radius: 20px;
+}
+
+.progress-number  {
+    position: relative;
+    top: -82px;
+    right: 30px;
+    color: #353535;
+    font-size: 38px;
+    font-weight: 700;
+    text-align: right;
+}
+
+#footer {
+    margin-top: 1px;
+    height: 50px;
+}

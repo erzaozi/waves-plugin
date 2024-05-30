@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" type="text/css" href="{{pluginResources}}/exploreIndex/exploreIndex.css" />
+    <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
+</head>
+
+<body id="body">
+    <div id="account">
+        <div id="user-name">{{baseData.name}}</div>
+        <div id="user-uid">{{baseData.id}}</div>
+    </div>
+
+    {{each exploreData country}}
+    <div class="country">
+        <div class="title">
+            <img src="{{pluginResources}}/exploreIndex/imgs/area/{{country.countryName}}.png" class="country-logo">
+            <div class="exploratory-name">{{country.countryName}}</div>
+            <div class="exploratory-degree">探索度：{{country.countryProgress}}%</div>
+        </div>
+        {{each country.areaInfoList area}}
+        <div class="area">
+            <div class="area-name">
+                <div class="area-key">{{area.areaName}}</div>
+                <div class="area-value">{{area.areaProgress}}%</div>
+            </div>
+            {{each area.itemList row idx}}
+            {{if idx % 2 == 0}}
+            <div class="progress" style="background-color: #fcfafb;">
+                {{else }}
+                <div class="progress" style="background-color: #e9e3dc;">
+                    {{/if}}
+                    <div class="progress-name">{{row.name}}</div>
+                    <div class="progress-bar-frame">
+                        <div class="progress-bar-total">
+                            <div class="progress-bar" data-degree="{{row.progress}}"></div>
+                        </div>
+                    </div>
+                    <div class="progress-number">{{row.progress}}%</div>
+                </div>
+                {{/each}}
+            </div>
+            {{/each}}
+        </div>
+        {{/each}}
+        <div id="footer"></div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const progressBars = document.querySelectorAll(".progress-bar");
+                progressBars.forEach(bar => {
+                    const degree = bar.getAttribute("data-degree");
+                    bar.style.width = degree + "%";
+                });
+            });
+        </script>
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
+import Render from '../model/render.js'
 
 export class Explore extends plugin {
     constructor() {
@@ -37,11 +38,15 @@ export class Explore extends plugin {
                 continue;
             }
 
-            const result = await waves.getExploreData(account.serverId, account.roleId, account.token);
+            const baseData = await waves.getBaseData(account.serverId, account.roleId, account.token);
+            const exploreData = await waves.getExploreData(account.serverId, account.roleId, account.token);
 
-            // 渲染卡片
-
-            data.push({ message: result });
+            if (!baseData.status || !exploreData.status) {
+                data.push({ message: baseData.msg || exploreData.msg });
+            } else {
+                const imageCard = await Render.exploreData(baseData.data, exploreData.data)
+                data.push({ message: imageCard });
+            }
         }
 
         if (deleteroleId.length) {

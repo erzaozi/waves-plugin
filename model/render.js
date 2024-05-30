@@ -52,6 +52,21 @@ class Render {
         return base64
     }
 
+    async exploreData(baseData, exploreData) {
+        exploreData = [exploreData]
+
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'exploreIndex',
+            imgType: 'png',
+            tplFile: `${pluginResources}/exploreIndex/exploreIndex.html`,
+            pluginResources,
+            baseData,
+            exploreData,
+        })
+
+        return base64
+    }
+
     async signInData(signInData) {
         const base64 = await puppeteer.screenshot('waves-plugin', {
             saveId: 'signIn',

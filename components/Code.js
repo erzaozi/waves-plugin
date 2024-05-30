@@ -85,6 +85,10 @@ class Waves {
             const response = await axios.post(CONSTANTS.GAME_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
+                if (response.data.data === null) {
+                    logger.info('获取日常数据失败，返回数据为null');
+                    return { status: false, msg: "未能查询到日常数据，官方API返回null，请检查库街区展示是否打开" };
+                }
                 logger.info('获取日常数据成功');
                 return { status: true, data: response.data.data };
             } else {
@@ -110,6 +114,10 @@ class Waves {
             const response = await axios.post(CONSTANTS.BASE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
+                if (response.data.data === null) {
+                    logger.info('获取我的资料失败，返回数据为null');
+                    return { status: false, msg: "未能查询到我的资料，官方API返回null，请检查库街区展示是否打开" };
+                }
                 logger.info('获取我的资料成功');
                 return { status: true, data: response.data.data };
             } else {
@@ -135,6 +143,10 @@ class Waves {
             const response = await axios.post(CONSTANTS.ROLE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
+                if (response.data.data === null) {
+                    logger.info('获取共鸣者失败，返回数据为null');
+                    return { status: false, msg: "未能查询到共鸣者，官方API返回null，请检查库街区展示是否打开" };
+                }
                 logger.info('获取共鸣者成功');
                 return { status: true, data: response.data.data };
             } else {
@@ -160,6 +172,10 @@ class Waves {
             const response = await axios.post(CONSTANTS.CALABASH_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
+                if (response.data.data === null) {
+                    logger.info('获取数据坞失败，返回数据为null');
+                    return { status: false, msg: "未能查询到数据坞，官方API返回null，请检查库街区展示是否打开" };
+                }
                 logger.info('获取数据坞成功');
                 return { status: true, data: response.data.data };
             } else {
@@ -185,6 +201,10 @@ class Waves {
             const response = await axios.post(CONSTANTS.CHALLENGE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
+                if (response.data.data === null) {
+                    logger.info('获取挑战数据失败，返回数据为null');
+                    return { status: false, msg: "未能查询到挑战数据，官方API返回null，请检查库街区展示是否打开" };
+                }
                 logger.info('获取挑战数据成功');
                 return { status: true, data: response.data.data };
             } else {
@@ -211,6 +231,10 @@ class Waves {
             const response = await axios.post(CONSTANTS.EXPLORE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
+                if (response.data.data === null) {
+                    logger.info('获取探索数据失败，返回数据为null');
+                    return { status: false, msg: "未能查询到探索数据，官方API返回null，请检查库街区展示是否打开" };
+                }
                 logger.info('获取探索数据成功');
                 return { status: true, data: response.data.data };
             } else {
@@ -238,6 +262,10 @@ class Waves {
             const response = await axios.post(CONSTANTS.SIGNIN_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
 
             if (response.data.code === 200) {
+                if (response.data.data === null) {
+                    logger.info('签到失败，返回数据为null');
+                    return { status: false, msg: "未能获取到签到数据，官方API返回null，请检查库街区展示是否打开" };
+                }
                 logger.info('签到成功');
                 return { status: true, data: response.data.data };
             } else {
@@ -257,6 +285,10 @@ class Waves {
             const response = await axios.post(CONSTANTS.GACHA_URL, data);
 
             if (response.data.code === 0) {
+                if (response.data.data === null) {
+                    logger.info('获取抽卡记录失败，返回数据为null');
+                    return { status: false, msg: "未能查询到抽卡记录，官方API返回null，请检查库街区展示是否打开" };
+                }
                 logger.info('获取抽卡记录成功');
                 return { status: true, data: response.data.data };
             } else {
