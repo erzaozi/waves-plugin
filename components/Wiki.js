@@ -42,7 +42,6 @@ class Wiki {
             const response = await axios.post(CONSTANTS.WIKI_PAGE_URL, data, { headers: CONSTANTS.REQUEST_HEADERS_BASE });
 
             if (response.data.code === 200) {
-                logger.info(`获取Wiki列表成功`);
                 return { status: true, data: response.data.data };
             } else {
                 logger.error('获取Wiki列表失败：', response.data.msg);

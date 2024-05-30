@@ -17,6 +17,10 @@ export class Help extends plugin {
                 {
                     reg: "^#?(waves|鸣潮)(登录|登陆|绑定)帮助$",
                     fnc: "bindHelp"
+                },
+                {
+                    reg: "^#?(waves|鸣潮)(抽卡统计|抽卡|统计)帮助$",
+                    fnc: "gachaHelp"
                 }
             ]
         })
@@ -97,11 +101,16 @@ export class Help extends plugin {
                     },
                     {
                         "icon": 12,
+                        "title": "#鸣潮抽卡分析",
+                        "desc": "抽卡分析"
+                    },
+                    {
+                        "icon": 13,
                         "title": "#鸣潮帮助",
                         "desc": "查看帮助面板"
                     },
                     {
-                        "icon": 13,
+                        "icon": 14,
                         "title": "#鸣潮更新",
                         "desc": "更新插件"
                     }
@@ -139,6 +148,17 @@ export class Help extends plugin {
             { message: '3.等待手机收到验证码' },
             { message: '4.发送 #鸣潮登录手机号:验证码 即可完成登录(例：#鸣潮登录17041039503:1865)' },
             { message: '注意：再次在网页或APP登录账号会导致此次登录失效，如果需要与APP共用请自行抓包获取Token，发送 #鸣潮登录Token 即可完成登录(例：#鸣潮登录eyJhbGc...)' }
+        ]
+        await e.reply(Bot.makeForwardMsg(helpStep))
+        return true
+    }
+
+    async gachaHelp(e) {
+        const helpStep = [
+            { message: '1.打开抓包软件（请自行寻找Reqable等自己熟悉的抓包软件）' },
+            { message: '2.进入游戏，打开抽卡记录界面，翻看抽卡记录' },
+            { message: '3.回到抓包软件，找到 https://gmserver-api.aki-game2.com/gacha/record/query 的POST请求，复制整个请求体' },
+            { message: '4.向机器人发送[#鸣潮抽卡统计]，等待机器人提示你发送请求体，把复制好的请求体发送即可开始分析' }
         ]
         await e.reply(Bot.makeForwardMsg(helpStep))
         return true

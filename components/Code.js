@@ -251,14 +251,8 @@ class Waves {
     }
 
     // 抽卡记录
-    async getGaCha(serverId, roleId, cardPoolType, recordId) {
-        const data = {
-            "playerId": roleId,
-            "cardPoolType": cardPoolType,
-            "serverId": serverId,
-            "languageCode": "zh-Hans",
-            "recordId": recordId
-        }
+    async getGaCha(data) {
+
         try {
             const response = await axios.post(CONSTANTS.GACHA_URL, data);
 
@@ -267,7 +261,7 @@ class Waves {
                 return { status: true, data: response.data.data };
             } else {
                 logger.error('获取抽卡记录失败：', response.data.message);
-                return { status: false, msg: response.data.msg };
+                return { status: false, msg: response.data.message };
             }
         } catch (error) {
             logger.error('获取抽卡记录失败，疑似网络问题：\n', error);

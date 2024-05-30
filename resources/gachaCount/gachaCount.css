@@ -1,0 +1,167 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("../fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+ul {
+    list-style: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+#body {
+    width: 1220px;
+    height: auto;
+    background-image: url(./imgs/background.png);
+    background-repeat: no-repeat;
+    font-family: "MiSans";
+}
+
+#user-name {
+    position: relative;
+    left: 323px;
+    top: 132px;
+    height: auto;
+    color: white;
+    font-size: 58px;
+}
+
+#user-uid {
+    position: relative;
+    left: 462px;
+    top: 148px;
+    color: white;
+    font-size: 39px;
+}
+
+#pool-type {
+    position: relative;
+    top: 530px;
+    padding-left: 92px;
+    color: white;
+    font-size: 58px;
+}
+
+#gacha-list {
+    position: relative;
+    top: 568px;
+    left: 51px;
+    width: 1119px;
+    height: auto;
+}
+
+.role-card {
+    display: block;
+    margin-bottom: 18px;
+    height: 218px;
+    background-image: url(./imgs/card.png);
+    background-size: cover;
+    padding-bottom: 50px;
+    border-radius: 0px 16px;
+}
+
+.role-avatar {
+    position: relative;
+    left: 46px;
+    top: 14px;
+    width: 194px;
+    height: 191px;
+    overflow: hidden;
+    box-shadow: inset 0px 0px 50px 0px #e7ba27;
+    border-radius: 0px 10px;
+}
+
+
+.myProgress {
+    position: relative;
+    left: 254px;
+    width: 840px;
+    top: -164px;
+    background-color: #cbcbcb;
+    border-radius: 20px;
+}
+
+.myBar {
+    height: 10px;
+    line-height: 28px;
+    background-color: #2f2d21;
+    text-align: center;
+    color: white;
+    border-radius: 20px;
+}
+
+.tags {
+    position: relative;
+    top: -150px;
+    left: 249px;
+    width: 850px;
+    height: 42px;
+}
+
+.tag {
+    height: 30px;
+    width: auto;
+    padding: 0px 16px;
+    background-color: #efebe8;
+    font-size: 29px;
+    text-align: center;
+    border: 3px solid #2f2d21;
+    border-radius: 0px 10px;
+}
+
+.four-stars {
+    position: relative;
+    display: grid;
+    grid-template-columns: 86px 86px 86px 86px 86px 86px 86px 86px 86px;
+    column-gap: 8px;
+    top: -144px;
+    left: 250px;
+    width: 850px;
+    height: 108px;
+}
+
+.four-star {
+    display: flex;
+    position: relative;
+    width: 86px;
+    height: 108px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #efebe8;
+    border: 3px solid #2f2d21;
+    border-radius: 0px 10px;
+    box-shadow: inset 0px 0px 22px 0px #ae57ff;
+}
+
+.four-star-pic {
+    height: 106px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.four-star-times {
+    position: absolute;
+    padding: 2px 0.7px;
+    right: 0px;
+    bottom: 0px;
+    width: 20px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}
+
+#footer {
+    margin-top: 500px;
+    height: 100px;
+}
