@@ -11,7 +11,7 @@ export class Explore extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^#?(waves|鸣潮)?(探索度|地图)$",
+                    reg: "^#?(waves|鸣潮)(探索度|地图).*$",
                     fnc: "explore"
                 }
             ]
@@ -36,6 +36,10 @@ export class Explore extends plugin {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新绑定Token` });
                 deleteroleId.push(account.roleId);
                 continue;
+            }
+
+            if (e.msg.replace(/^#?(waves|鸣潮)(探索度|地图)/, '').match(/^\d{9}$/)) {
+                account.roleId = e.msg.replace(/^#?(waves|鸣潮)(探索度|地图)/, '');
             }
 
             const baseData = await waves.getBaseData(account.serverId, account.roleId, account.token);
