@@ -24,7 +24,7 @@ export class Gacha extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^#?(waves|鸣潮)抽卡(统计|分析)([\\s\\S]*)$",
+                    reg: "^#?(waves|鸣潮)(常驻(武器|角色)|限定(武器|角色))?抽卡(统计|分析|记录)([\\s\\S]*)$",
                     fnc: "gachaCount"
                 }
             ]
@@ -32,7 +32,7 @@ export class Gacha extends plugin {
     }
 
     async gachaCount(e) {
-        let message = e.msg.replace(/#?(waves|鸣潮)抽卡(统计|分析)/, "");
+        let message = e.msg.replace(/#?(waves|鸣潮)(常驻(武器|角色)|限定(武器|角色))?抽卡(统计|分析|记录)/, "");
 
         let jsonData = null;
 
@@ -67,8 +67,14 @@ export class Gacha extends plugin {
             "recordId": jsonData.recordId
         }
 
+        let cardPool = e.msg.includes("限定角色") ? { "1": "角色精准调谐" } :
+            e.msg.includes("限定武器") ? { "2": "武器精准调谐" } :
+                e.msg.includes("常驻角色") ? { "3": "角色调谐（常驻池）" } :
+                    e.msg.includes("常驻武器") ? { "4": "武器调谐（常驻池）" } :
+                        CardPoolTypes;
+
         const messageData = [];
-        for (const [key, value] of Object.entries(CardPoolTypes)) {
+        for (const [key, value] of Object.entries(cardPool)) {
             data.cardPoolId = key;
             data.cardPoolType = key;
 
@@ -95,8 +101,14 @@ export class Gacha extends plugin {
             }
         }
 
-        await e.reply(Bot.makeForwardMsg([...messageData]));
         await redis.set(`Yunzai:waves:gacha:${e.user_id}`, JSON.stringify(jsonData));
+
+        if (messageData.length === 1) {
+            await e.reply(messageData[0].message);
+            return true;
+        }
+
+        await e.reply(Bot.makeForwardMsg([...messageData]));
         return true;
     }
 
@@ -120,8 +132,8 @@ export class Gacha extends plugin {
             }
             const sortedEntries = Object.entries(count4Star)
                 .map(async ([name, count]) => {
-                    const record = await wiki.getRecord(name);
-                    return { avatar: record.content.contentUrl, count };
+                    const recordData = await wiki.getRecord(name);
+                    return { avatar: recordData.record.content.contentUrl, count };
                 });
 
             return (await Promise.all(sortedEntries))
@@ -143,9 +155,9 @@ export class Gacha extends plugin {
                 const startIdx = index + 1;
                 const endIdx = (i + 1 < fiveStarIndexes.length) ? fiveStarIndexes[i + 1] : data.length;
                 const interval = endIdx - index;
-                const record = await wiki.getRecord(data[index].name);
+                const recordData = await wiki.getRecord(data[index].name);
                 return {
-                    "avatar": record.content.contentUrl,
+                    "avatar": recordData.record.content.contentUrl,
                     "times": interval,
                     "tags": [`${interval}抽`, interval < 50 ? "欧" : interval < 70 ? "中" : "非", data[index].time, ...((type == 1 || type == 2) && resident.includes(data[index].name) ? ["歪"] : [])],
                     "four_star": await getCount4Star(startIdx, endIdx)

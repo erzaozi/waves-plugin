@@ -61,12 +61,12 @@ class Wiki {
                 const records = response.data.results.records;
                 for (const record of records) {
                     if (record.name === name) {
-                        return record;
+                        return { status: true, record: record, type: catalogueId }
                     }
                 }
             }
         }
-        return null;
+        return { status: false, msg: '未找到该词条的Wiki信息' }
     }
 
     // 获取Wiki详情
