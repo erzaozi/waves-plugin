@@ -69,11 +69,27 @@ class Wiki {
         return { status: false, msg: '未找到该词条的Wiki信息' }
     }
 
+    // 根据名字获取Wiki详情
+    async getEntry(name) {
+        const recordData = await this.getRecord(name);
+        if (recordData.status) {
+            const linkId = recordData.record.content.linkId;
+            const entryData = await this.getEntryDetail(linkId);
+            if (entryData.status) {
+                return { status: true, record: entryData.data, type: recordData.type };
+            } else {
+                return { status: false, msg: entryData.msg };
+            }
+        } else {
+            return { status: false, msg: recordData.msg };
+        }
+    }
+
     // 获取Wiki详情
-    async getEntryDetail(entryId) {
+    async getEntryDetail(linkId) {
 
         let data = qs.stringify({
-            id: entryId,
+            id: linkId,
         });
 
         try {

@@ -1,0 +1,152 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("../../fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+ul {
+    list-style: none;
+}
+
+td {
+    padding: 0px 20px;
+}
+
+#body {
+    font-family: "MiSans";
+    width: 1282px;
+    background: url(./imgs/role.png) no-repeat;
+}
+
+#portray-frame {
+    padding-top: 4px;
+    width: 608px;
+    height: 400px;
+    overflow: hidden;
+}
+
+#portray {
+    width: 608px;
+}
+
+#role-desc {
+    margin: 0px 0px 0px 65px;
+    padding: 6px 20px;
+    width: 497px;
+    color: #797777;
+    background-color: #fafafa;
+    font-size: 16px;
+    border-radius: 16px 0px 16px 0px;
+    border: 2px solid #dadada;
+}
+
+#role-desc::first-letter {
+    margin-top: -4px;
+    font-size: 35px;
+    float: left;
+}
+
+#role-title {
+    position: absolute;
+    top: 44px;
+    left: 576px;
+    width: 500px;
+    height: 64px;
+}
+
+#camp-icon {
+    display: inline-block;
+    width: 64px;
+}
+
+#role-name {
+    padding: 3px 0px;
+    display: inline-block;
+    font-size: 40px;
+    vertical-align: top;
+}
+
+#role-subtitle {
+    padding: 8px 8px;
+    display: inline-block;
+    color: #c7c070;
+    font-size: 20px;
+    vertical-align: top;
+}
+
+#ability {
+    position: absolute;
+    top: 117px;
+    left: 594px;
+    width: 500px;
+    color: #fff;
+    font-size: 20px;
+}
+
+#role-info {
+    position: absolute;
+    top: 166px;
+    left: 585px;
+    height: 84px;
+    width: 627px;
+}
+
+#info-frame {
+    display: grid;
+    grid-template-columns: 188px 188px 188px;
+    column-gap: 31.5px;
+    row-gap: 11px;
+}
+
+.info-box {
+    padding: 5px 0px 0px 22px;
+    width: 188px;
+    height: 36px;
+    font-size: 19px;
+}
+
+#chain {
+    overflow: hidden;
+    margin: 18px 0px 0px 66px;
+    width: 496px;
+    height: auto;
+    border-radius: 16px 0px 16px 0px;
+    border: 2px solid #dadada;
+}
+
+#meterial {
+    overflow: hidden;
+    margin: 18px 0px 0px 66px;
+    width: 496px;
+    height: auto;
+    background-color: #fefefe;
+    border-radius: 16px 0px 16px 0px;
+    border: 2px solid #dadada;
+}
+
+.meterial-icon {
+    width: 90px;
+}
+
+#skill {
+    position: absolute;
+    padding: 10px 20px;
+    left: 581px;
+    top: 270px;
+    width: 630px;
+    border-radius: 16px 0px 16px 0px;
+    border: 2px solid #dadada;
+}
+
+
+#footer {
+    height: 50px;
+}

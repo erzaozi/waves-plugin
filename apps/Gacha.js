@@ -39,7 +39,7 @@ export class Gacha extends plugin {
         if (!message) {
             let data = await redis.get(`Yunzai:waves:gacha:${e.user_id}`);
             if (!data) {
-                await e.reply(`请在命令后抓包获得的JSON请求体\n(例：#鸣潮抽卡统计{"recordId":"2b798246702...)\n抓包详细步骤请发送[#鸣潮抽卡帮助]`);
+                await e.reply(`请在命令后抓包获得的JSON请求体\n例：#鸣潮抽卡统计{"recordId":"2b798246702...\n抓包详细步骤请发送[#鸣潮抽卡帮助]`);
                 return true;
             } else {
                 message = data;

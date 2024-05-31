@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" type="text/css" href="{{pluginResources}}/wiki/role/role.css" />
+    <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
+</head>
+
+<body id="body" data-content='{{data}}'>
+    <div id="main">
+
+        <div id="portray-frame">
+            <img src="{{data.content.modules[0].components[0].role.figures[2].url}}" id="portray">
+        </div>
+
+        <div id="role-desc">
+            {{data.content.modules[0].components[0].role.roleDescription}}
+        </div>
+
+        <div id="role-title">
+            <img src="{{data.content.modules[0].components[0].role.campIcon}}" id="camp-icon">
+            <span id="role-name">{{data.content.modules[0].components[0].role.title}}</span>
+            <span id="role-subtitle">{{data.content.modules[0].components[0].role.subtitle}}</span>
+        </div>
+
+        <div id="ability">{{data.content.modules[0].components[0].role.roleDescriptionTitle}}</div>
+
+        <div id="role-info">
+            <ul id="info-frame">
+                <li class="info-box">{{data.content.modules[0].components[0].role.info[0].text}}</li>
+                <li class="info-box">{{data.content.modules[0].components[0].role.info[1].text}}</li>
+                <li class="info-box">{{data.content.modules[0].components[0].role.info[2].text}}</li>
+                <li class="info-box">{{data.content.modules[0].components[0].role.info[3].text}}</li>
+                <li class="info-box">{{data.content.modules[0].components[0].role.info[4].text}}</li>
+                <li class="info-box">{{data.content.modules[0].components[0].role.info[5].text}}</li>
+            </ul>
+        </div>
+
+        <div id="chain">
+        </div>
+
+        <div id="meterial">
+        </div>
+
+        <div id="skill">
+            <div id="skill-1">
+            </div>
+            <div id="skill-2">
+            </div>
+            <div id="skill-3">
+            </div>
+            <div id="skill-4">
+            </div>
+            <div id="skill-5">
+            </div>
+            <div id="skill-6">
+            </div>
+        </div>
+
+    </div>
+
+    <div id="footer"></div>
+
+    <script>
+        const dataContent = JSON.parse(document.getElementById('body').getAttribute('data-content'));
+
+        document.getElementById("chain").innerHTML = dataContent.content.modules[1].components[1].content;
+
+        document.getElementById("meterial").innerHTML = dataContent.content.modules[1].components[2].tabs[5].content + dataContent.content.modules[1].components[3].tabs[4].content;
+
+        document.getElementById("skill-1").innerHTML = dataContent.content.modules[1].components[0].tabs[0].content;
+        document.getElementById("skill-2").innerHTML = dataContent.content.modules[1].components[0].tabs[1].content;
+        document.getElementById("skill-3").innerHTML = dataContent.content.modules[1].components[0].tabs[2].content;
+        document.getElementById("skill-4").innerHTML = dataContent.content.modules[1].components[0].tabs[3].content;
+        document.getElementById("skill-5").innerHTML = dataContent.content.modules[1].components[0].tabs[4].content;
+        document.getElementById("skill-6").innerHTML = dataContent.content.modules[1].components[0].tabs[5].content;
+
+        let result = [];
+        const imgs = document.querySelectorAll('#meterial img');
+        const links = document.querySelectorAll('#meterial a');
+        for (let i = 0; i < imgs.length; i++) {
+            let obj = {
+                name: links[i].textContent,
+                src: imgs[i].src
+            };
+            result.push(obj);
+        }
+
+        const uniqueArr = result.filter((item, index) => result.findIndex(obj => obj.name === item.name) === index);
+        const htmlStr = `
+        <div style="display: inline-block; width: 297.6px;">
+            <div style="padding-top: 2px; height: 27.991px; width: 100%; background-color: #f7f7f7; color: #5b544a; text-align: center;"><strong>等级突破</strong></div>
+            <img src="${uniqueArr[0]?.src}" class="meterial-icon">
+            <img src="${uniqueArr[1]?.src}" class="meterial-icon">
+            <img src="${uniqueArr[2]?.src}" class="meterial-icon">
+        </div>
+        <div style="display: inline-block; width: 198.4px; margin-left: -10px; border-left: 2px solid #dadada;">
+            <div style="padding-top: 2px; height: 27.991px; width: 100%; background-color: #f7f7f7; color: #5b544a; text-align: center;"><strong>天赋升级</strong></div>
+            <img src="${uniqueArr[6]?.src}" class="meterial-icon">
+            <img src="${uniqueArr[7]?.src}" class="meterial-icon">
+        </div>`
+
+        const meterialDiv = document.getElementById('meterial');
+        meterialDiv.innerHTML = htmlStr;
+
+        const chain = document.getElementById('chain');
+        const table = chain.getElementsByTagName('table')[0];
+        table.style.height = "800px";
+
+        try {
+            const skill_1 = document.getElementById('skill-1');
+            let hr_1 = skill_1.getElementsByTagName('hr')[0];
+            while (hr_1.nextSibling) {
+                skill_1.removeChild(hr_1.nextSibling);
+            }
+        } catch (e) { }
+
+        try {
+            const skill_2 = document.getElementById('skill-2');
+            let hr_2 = skill_2.getElementsByTagName('hr')[0];
+            while (hr_2.nextSibling) {
+                skill_2.removeChild(hr_2.nextSibling);
+            }
+        } catch (e) { }
+
+        try {
+            const skill_3 = document.getElementById('skill-3');
+            let hr_3 = skill_3.getElementsByTagName('hr')[0];
+            while (hr_3.nextSibling) {
+                skill_3.removeChild(hr_3.nextSibling);
+            }
+        } catch (e) { }
+
+        try {
+            const skill_4 = document.getElementById('skill-4');
+            let hr_4 = skill_4.getElementsByTagName('hr')[0];
+            while (hr_4.nextSibling) {
+                skill_4.removeChild(hr_4.nextSibling);
+            }
+        } catch (e) { }
+
+        try {
+            const skill_5 = document.getElementById('skill-5');
+            let hr_5 = skill_5.getElementsByTagName('hr')[0];
+            while (hr_5.nextSibling) {
+                skill_5.removeChild(hr_5.nextSibling);
+            }
+        } catch (e) { }
+
+        const meterialElement = document.getElementById("meterial");
+        let left = meterialElement.offsetHeight + meterialElement.offsetTop;
+        const skillElement = document.getElementById("skill");
+        let right = skillElement.offsetHeight + skillElement.offsetTop;
+        const main = document.getElementById("main");
+        main.style.height = (left > right ? left + 140 : right + 50) + "px";
+    </script>
+</body>
+
+</html>

@@ -106,11 +106,16 @@ export class Help extends plugin {
                     },
                     {
                         "icon": 13,
+                        "title": "#鸣潮xx图鉴",
+                        "desc": "万物图鉴"
+                    },
+                    {
+                        "icon": 14,
                         "title": "#鸣潮帮助",
                         "desc": "查看帮助面板"
                     },
                     {
-                        "icon": 14,
+                        "icon": 15,
                         "title": "#鸣潮更新",
                         "desc": "更新插件"
                     }
@@ -147,7 +152,7 @@ export class Help extends plugin {
             { message: '2.输入手机号，点击 获取验证码 按钮' },
             { message: '3.等待手机收到验证码' },
             { message: '4.发送 #鸣潮登录手机号:验证码 即可完成登录(例：#鸣潮登录17041039503:1865)' },
-            { message: '注意：再次在网页或APP登录账号会导致此次登录失效，如果需要与APP共用请自行抓包获取Token，发送 #鸣潮登录Token 即可完成登录(例：#鸣潮登录eyJhbGc...)' }
+            { message: '注意：再次在网页或APP登录账号会导致此次登录失效，如果需要与APP共用请自行抓包库街区获取Token。网页中的Token不可用，只能抓包APP。发送 #鸣潮登录Token 即可完成登录(例：#鸣潮登录eyJhbGc...)' }
         ]
         await e.reply(Bot.makeForwardMsg(helpStep))
         return true

@@ -90,6 +90,33 @@ class Render {
 
         return base64
     }
+
+    async wikiRole(data) {
+        function replace(str) {
+            return str.replace(/\\"/g, '"').replace(/\\n/g, '')
+        }
+
+        data.content.modules[1].components[1].content = replace(data.content.modules[1].components[1].content)
+        data.content.modules[1].components[2].tabs[5].content = replace(data.content.modules[1].components[2].tabs[5].content)
+        data.content.modules[1].components[3].tabs[4].content = replace(data.content.modules[1].components[3].tabs[4].content)
+        data.content.modules[1].components[0].tabs[0].content = replace(data.content.modules[1].components[0].tabs[0].content)
+        data.content.modules[1].components[0].tabs[1].content = replace(data.content.modules[1].components[0].tabs[1].content)
+        data.content.modules[1].components[0].tabs[2].content = replace(data.content.modules[1].components[0].tabs[2].content)
+        data.content.modules[1].components[0].tabs[3].content = replace(data.content.modules[1].components[0].tabs[3].content)
+        data.content.modules[1].components[0].tabs[4].content = replace(data.content.modules[1].components[0].tabs[4].content)
+        data.content.modules[1].components[0].tabs[5].content = replace(data.content.modules[1].components[0].tabs[5].content)
+
+
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'wikiRole',
+            imgType: 'png',
+            tplFile: `${pluginResources}/wiki/role/role.html`,
+            pluginResources,
+            data
+        })
+
+        return base64
+    }
 }
 
 export default new Render()
