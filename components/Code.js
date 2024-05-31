@@ -12,6 +12,7 @@ const CONSTANTS = {
     EXPLORE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/exploreIndex',
     SIGNIN_URL: 'https://api.kurobbs.com/encourage/signIn/v2',
     GACHA_URL: 'https://gmserver-api.aki-game2.com/gacha/record/query',
+    ROLE_DETAIL_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/getRoleDetail',
     REQUEST_HEADERS_BASE: {
         "source": "android",
     },
@@ -246,6 +247,36 @@ class Waves {
             logger.error('获取探索数据失败，疑似网络问题：\n', error);
             return { status: false, msg: '获取探索数据失败，疑似网络问题，请检查控制台日志' };
         }
+    }
+
+    // 获取角色详细信息
+    async getRoleDetail(serverId, roleId, id, token) {
+
+        let data = qs.stringify({
+            'serverId': serverId,
+            'roleId': roleId,
+            'id': id
+        });
+
+        try {
+            const response = await axios.post(CONSTANTS.ROLE_DETAIL_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+
+            if (response.data.code === 200) {
+                if (response.data.data === null) {
+                    logger.info('获取角色详细信息失败，返回数据为null');
+                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
+                }
+                logger.info('获取角色详细信息成功');
+                return { status: true, data: response.data.data };
+            } else {
+                logger.error('获取角色详细信息失败：', response.data.msg);
+                return { status: false, msg: response.data.msg };
+            }
+        } catch (error) {
+            logger.error('获取角色详细信息失败，疑似网络问题：\n', error);
+            return { status: false, msg: '获取角色详细信息失败，疑似网络问题，请检查控制台日志' };
+        }
+
     }
 
     // 签到

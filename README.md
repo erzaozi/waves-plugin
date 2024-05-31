@@ -52,6 +52,7 @@ pnpm install --filter=waves-plugin
 - [x] 探索度查询
 - [x] 抽卡记录查询分析
 - [ ] 挑战数据查询
+- [ ] 角色卡片查询
 - [ ] 角色 / 武器图鉴
 
 ## 功能列表
@@ -77,3 +78,9 @@ pnpm install --filter=waves-plugin
 ## 许可证
 
 本项目使用 [GNU AGPLv3](https://choosealicense.com/licenses/agpl-3.0/) 作为开源许可证。
+
+> [!CAUTION]
+> 本项目 `resources` 文件夹下的所有文件均受到以下限制：\
+> **禁止复制**：不允许复制 `resources` 文件夹中的任何文件。\
+> **禁止修改**：不允许修改 `resources` 文件夹中的任何文件。\
+> **禁止再分发**：不允许以任何形式再分发 `resources` 文件夹中的任何文件，包括但不限于公开托管、分享或将其包含在其他项目中。
