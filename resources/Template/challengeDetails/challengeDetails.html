@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" type="text/css" href="{{pluginResources}}/Template/challengeDetails/challengeDetails.css" />
+    <link rel="preload" href="{{pluginResources}}/Fonts/MiSans-Regular.ttf" as="font" />
+</head>
+
+<body id="body">
+    <div id="account">
+        <div id="user-name">{{baseData.name}}</div>
+        <div id="user-uid">{{baseData.id}}</div>
+    </div>
+
+    {{each challengeData boss}}
+    <div class="boss">
+        <div class="boss-banner">
+            <img src="{{boss.bossIconUrl}}" class="boss-pic">
+            <div class="diffucult">
+                <div class="boss-name">{{boss.bossName}}</div>
+                <div class="boss-progress">当前难度：<span style="color: #be9a58;">{{boss.difficulty}}</span>/6</div>
+            </div>
+        </div>
+        <div class="success">
+            <div class="enemy-level">等级：<span style="font-weight: 700; color: #be9a58;">Lv.{{boss.bossLevel}}</span>
+            </div>
+            <div class="spend-time">通关时间：<span style="font-weight: 700; color: #be9a58;">{{boss.passTime}}</span></div>
+            <div class="role">
+                {{each boss.roles role}}
+                <div>
+                    <div class="avatar-frame">
+                        <img src="{{role.roleHeadIcon}}" class="avatar">
+                    </div>
+                    <div class="role-level">{{role.roleLevel}}</div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    <div id="footer"></div>
+</body>
+
+</html>

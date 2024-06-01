@@ -8,7 +8,7 @@ const CONSTANTS = {
     BASE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/baseData',
     ROLE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/roleData',
     CALABASH_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/calabashData',
-    CHALLENGE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/challengeIndex',
+    CHALLENGE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/challengeDetails',
     EXPLORE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/exploreIndex',
     SIGNIN_URL: 'https://api.kurobbs.com/encourage/signIn/v2',
     GACHA_URL: 'https://gmserver-api.aki-game2.com/gacha/record/query',
@@ -196,7 +196,8 @@ class Waves {
         let data = qs.stringify({
             'gameId': 3,
             'serverId': serverId,
-            'roleId': roleId
+            'roleId': roleId,
+            'countryCode': 1
         });
 
         try {

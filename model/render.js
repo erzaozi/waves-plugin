@@ -52,6 +52,40 @@ class Render {
         return base64
     }
 
+    async challengeData(baseData, challengeData) {
+        const result = [];
+
+        Object.keys(challengeData.challengeInfo).forEach(key => {
+            const challenges = challengeData.challengeInfo[key];
+
+            for (let i = challenges.length - 1; i >= 0; i--) {
+                if (challenges[i].roles !== null) {
+                    result.push(challenges[i]);
+                    break;
+                }
+            }
+        });
+
+        for (let i = 0; i < result.length; i++) {
+            const passTime = result[i].passTime;
+            const hours = Math.floor(passTime / 3600);
+            const minutes = Math.floor((passTime % 3600) / 60);
+            const seconds = passTime % 60;
+            result[i].passTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'challengeDetails',
+            imgType: 'png',
+            tplFile: `${pluginResources}/Template/challengeDetails/challengeDetails.html`,
+            pluginResources,
+            baseData,
+            challengeData: result,
+        })
+
+        return base64
+    }
+
     async exploreData(baseData, exploreData) {
         exploreData = [exploreData]
 

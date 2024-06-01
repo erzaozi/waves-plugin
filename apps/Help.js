@@ -148,11 +148,12 @@ export class Help extends plugin {
 
     async bindHelp(e) {
         const helpStep = [
-            { message: '1.浏览器打开 https://www.kurobbs.com/mc 点击右上角头像（手机用户请切换电脑模式）' },
-            { message: '2.输入手机号，点击 获取验证码 按钮' },
-            { message: '3.等待手机收到验证码' },
-            { message: '4.发送 #鸣潮登录手机号:验证码 即可完成登录(例：#鸣潮登录17041039503:1865)' },
-            { message: '注意：再次在网页或APP登录账号会导致此次登录失效，如果需要与APP共用请自行抓包库街区获取Token。网页中的Token不可用，只能抓包APP。发送 #鸣潮登录Token 即可完成登录(例：#鸣潮登录eyJhbGc...)' }
+            { message: '1.手机下载库街区APP（下载地址：https://www.kurobbs.com/download.html）' },
+            { message: '2.首次使用请先登录库街区APP，并检查数据终端中各项数据是否开启对外展示开关' },
+            { message: '3.退出库街区登录，再次获取验证码（此时不要登录库街区APP）' },
+            { message: '4.发送 #鸣潮登录<手机号>:<验证码> 即可完成登录(例：#鸣潮登录17041039503:1865)，注意：手机号验证码之间有冒号间隔' },
+            { message: '机器人登录后再次在网页或APP登录库街区账号会导致机器人Token失效，目前库街区只支持一端登录' },
+            { message: '如果需要与库街区APP共用请自行抓包库街区APP获取Token，发送 #鸣潮登录Token 即可完成登录(例：#鸣潮登录eyJhbGc...)，注意：网页中的Token不可用，只能抓包APP' }
         ]
         await e.reply(Bot.makeForwardMsg(helpStep))
         return true

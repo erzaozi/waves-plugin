@@ -1,0 +1,184 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("./fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+#body {
+    width: 1220px;
+    height: auto;
+    background-image: url(./imgs/background.png);
+    background-repeat: no-repeat;
+    font-family: "MiSans";
+}
+
+#account {
+    height: 424px;
+}
+
+#user-name {
+    position: relative;
+    left: 323px;
+    top: 132px;
+    height: auto;
+    color: white;
+    font-size: 58px;
+}
+
+#user-uid {
+    position: relative;
+    left: 462px;
+    top: 148px;
+    color: white;
+    font-size: 39px;
+}
+
+.country {
+    margin-bottom: 50px;
+}
+
+.title {
+    margin: 52px 0px 0px 58px;
+    background: url(./imgs/title.png) no-repeat;
+    background-size: cover;
+    width: 1118px;
+    height: 242px;
+}
+
+.title>.country-logo {
+    position: relative;
+    top: 42px;
+    left: 41px;
+    width: 196px;
+}
+
+.title>.exploratory-name {
+    position: relative;
+    top: -85px;
+    left: 272px;
+    color: #fdf8ea;
+    font-size: 67px;
+}
+
+.boss {
+    margin: 30px 58px;
+    width: 1118px;
+    overflow: hidden;
+    border: 3px solid black;
+    border-radius: 0px 0px 30px 30px;
+    border-top: transparent;
+}
+
+.boss>.boss-banner {
+    position: relative;
+    left: -5px;
+    width: 1121px;
+    height: 303px;
+    overflow: hidden;
+    background: url(./imgs/card.png) no-repeat;
+    border: 3px solid black;
+    border-radius: 0px 0px 30px 30px;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.boss-banner>.boss-pic {
+    position: absolute;
+    height: 298px;
+    border-radius: 0px 0px 30px 30px;
+}
+
+.boss-banner>.diffucult {
+    margin: 80px 700px;
+    width: 500px;
+    height: 140px;
+}
+
+.diffucult>.boss-name {
+    padding: 5px 0px 0px 10px;
+    height: 68px;
+    color: black;
+    font-size: 50px;
+}
+
+.diffucult>.boss-progress {
+    padding: 12px 0px 0px 10px;
+    color: #85857c;
+    font-size: 38px;
+}
+
+.success {
+    height: 268px;
+    width: 1110px;
+    background-color: #fcfafb;
+}
+
+.success>.enemy-level {
+    position: relative;
+    top: 66px;
+    left: 66px;
+    color: #85857c;
+    font-size: 34px;
+}
+
+.success>.spend-time {
+    position: relative;
+    top: 110px;
+    left: 66px;
+    color: #85857c;
+    font-size: 34px;
+}
+
+.success>.role {
+    position: relative;
+    display: grid;
+    grid-template-columns: 180px 180px 180px;
+    column-gap: 20px;
+    top: -50px;
+    left: 450px;
+    width: 600px;
+    height: 180px;
+}
+
+.avatar-frame {
+    width: 180px;
+    height: 180px;
+    border-radius: 90px;
+    border: 2px solid #85857c;
+}
+
+.avatar {
+    position: relative;
+    left: 8px;
+    top: 8px;
+    width: 160px;
+    background-color: #929292;
+    border-radius: 80px;
+    border: 3px solid #616161;
+}
+
+.role-level {
+    position: relative;
+    padding-top: 2px;
+    left: 120px;
+    top: -60px;
+    width: 50px;
+    height: 50px;
+    border-radius: 0 8px 0 8px;
+    background: linear-gradient(to bottom, #dbdbdb, #ececec);
+    border: 3px solid #bbbbbb;
+    text-align: center;
+    font-size: 28px;
+}
+
+#footer {
+    margin-top: 1px;
+    height: 50px;
+}
