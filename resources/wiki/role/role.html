@@ -10,7 +10,7 @@
 
 <body id="body" data-content='{{data}}'>
     <div id="main">
-
+<div>
         <div id="portray-frame">
             <img src="{{data.content.modules[0].components[0].role.figures[2].url}}" id="portray">
         </div>
@@ -19,6 +19,13 @@
             {{data.content.modules[0].components[0].role.roleDescription}}
         </div>
 
+
+        <div id="chain">
+        </div>
+
+        <div id="meterial">
+        </div>
+</div><div>
         <div id="role-title">
             <img src="{{data.content.modules[0].components[0].role.campIcon}}" id="camp-icon">
             <span id="role-name">{{data.content.modules[0].components[0].role.title}}</span>
@@ -37,13 +44,6 @@
                 <li class="info-box">{{data.content.modules[0].components[0].role.info[5].text}}</li>
             </ul>
         </div>
-
-        <div id="chain">
-        </div>
-
-        <div id="meterial">
-        </div>
-
         <div id="skill">
             <div id="skill-1">
             </div>
@@ -58,7 +58,7 @@
             <div id="skill-6">
             </div>
         </div>
-
+</div>
     </div>
 
     <div id="footer"></div>
@@ -153,8 +153,6 @@
         let left = meterialElement.offsetHeight + meterialElement.offsetTop;
         const skillElement = document.getElementById("skill");
         let right = skillElement.offsetHeight + skillElement.offsetTop;
-        const main = document.getElementById("main");
-        main.style.height = (left > right ? left + 140 : right + 50) + "px";
     </script>
 </body>
 

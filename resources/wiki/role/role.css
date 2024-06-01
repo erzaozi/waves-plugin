@@ -137,16 +137,19 @@ td {
 }
 
 #skill {
-    position: absolute;
     padding: 10px 20px;
-    left: 581px;
-    top: 270px;
+    margin-top: 270px;
+    margin-left: -26.9869px;
     width: 630px;
     border-radius: 16px 0px 16px 0px;
     border: 2px solid #dadada;
 }
 
-
 #footer {
     height: 50px;
+}
+
+div#main {
+    display: flex;
+    flex-direction: row;
 }
