@@ -27,7 +27,8 @@ export class Guide extends plugin {
         const message = match[2]
 
         const wiki = new Wiki()
-        const entryData = await wiki.getEntry(message)
+        const name = await wiki.getAlias(message)
+        const entryData = await wiki.getEntry(name)
 
         if (!entryData.status) {
             logger.warn(`[Waves-Plugin] 未能获取图鉴内容：${message}`)

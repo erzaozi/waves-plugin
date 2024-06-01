@@ -1,5 +1,8 @@
+import {pluginResources} from "../model/path.js";
 import axios from 'axios';
 import qs from 'qs';
+import fs from 'fs';
+import YAML from 'yaml';
 
 const CONSTANTS = {
     WIKI_PAGE_URL: 'https://api.kurobbs.com/wiki/core/catalogue/item/getPage',
@@ -29,7 +32,7 @@ class Wiki {
     /**
      * 获取指定Wiki列表
      * @param {*} catalogueId
-     * @returns 
+     * @returns
      */
     async getPage(catalogueId) {
 
@@ -105,6 +108,21 @@ class Wiki {
         } catch (error) {
             logger.error('获取Wiki详情失败，疑似网络问题：\n', error);
             return { status: false, msg: '获取Wiki详情失败，疑似网络问题，请检查控制台日志' };
+        }
+    }
+
+    // 获取别名
+    async getAlias(name) {
+        const files = fs.readdirSync(pluginResources + '/Alias');
+        for (const file of files) {
+            const content = fs.readFileSync(pluginResources + '/Alias/' + file, 'utf8');
+            const alias = YAML.parse(content);
+            for (const key in alias) {
+                if (alias[key].includes(name)) {
+                    return key;
+                }
+            }
+            return name;
         }
     }
 }
