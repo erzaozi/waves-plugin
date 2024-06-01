@@ -1,6 +1,6 @@
 @font-face {
     font-family: "MiSans";
-    src: url("../fonts/MiSans-Regular.ttf");
+    src: url("../../Fonts/MiSans-Regular.ttf");
     font-weight: normal;
     font-style: normal;
 }
@@ -15,7 +15,7 @@
 #body {
     width: 713px;
     height: 1011px;
-    background: url(./imgs/background.png) no-repeat;
+    background: url(imgs/background.png) no-repeat;
     font-family: "Misans";
 }
 
@@ -29,7 +29,7 @@
 }
 
 .today-box {
-    background: url(./imgs/iconBg.png);
+    background: url(imgs/iconBg.png);
     background-size: cover;
     height: 183px;
     width: 180px;
@@ -65,7 +65,7 @@
 }
 
 .tomorrow-box {
-    background: url(./imgs/iconBg.png);
+    background: url(imgs/iconBg.png);
     background-size: cover;
     height: 138px;
     width: 138px;

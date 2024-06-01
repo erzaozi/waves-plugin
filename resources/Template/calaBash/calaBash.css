@@ -1,6 +1,6 @@
 @font-face {
     font-family: "MiSans";
-    src: url("../fonts/MiSans-Regular.ttf");
+    src: url("../../Fonts/MiSans-Regular.ttf");
     font-weight: normal;
     font-style: normal;
 }
@@ -15,7 +15,7 @@
 #body {
     width: 1220px;
     height: auto;
-    background: url(./imgs/background.png) no-repeat;
+    background: url(imgs/background.png) no-repeat;
     font-family: "Misans";
 }
 
@@ -126,7 +126,7 @@
     position: relative;
     height: 256px;
     width: 256px;
-    background-image: url(./imgs/iconBg.png);
+    background-image: url(imgs/iconBg.png);
 }
 
 #pet-avatar {

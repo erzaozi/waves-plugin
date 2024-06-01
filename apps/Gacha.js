@@ -144,7 +144,7 @@ export class Gacha extends plugin {
 
             if (fiveStarIndexes[0] !== 0) {
                 result["five_star"].push({
-                    "avatar": pluginResources + "/gachaCount/imgs/unknow.png",
+                    "avatar": pluginResources + "/Template/gachaCount/imgs/unknow.png",
                     "times": fiveStarIndexes[0],
                     "tags": [`${fiveStarIndexes[0]}抽`, data[0].time],
                     "four_star": await getCount4Star(0, fiveStarIndexes[0])
@@ -167,7 +167,7 @@ export class Gacha extends plugin {
         } else {
             const interval = data.length;
             result["five_star"].push({
-                "avatar": pluginResources + "/gachaCount/imgs/unknow.png",
+                "avatar": pluginResources + "/Template/gachaCount/imgs/unknow.png",
                 "times": interval,
                 "tags": [`${interval}抽`, data[0].time],
                 "four_star": await getCount4Star(0, data.length)

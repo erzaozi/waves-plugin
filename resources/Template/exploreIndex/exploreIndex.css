@@ -1,6 +1,6 @@
 @font-face {
     font-family: "MiSans";
-    src: url("../fonts/MiSans-Regular.ttf");
+    src: url("../../Fonts/MiSans-Regular.ttf");
     font-weight: normal;
     font-style: normal;
 }
@@ -15,7 +15,7 @@
 #body {
     width: 1220px;
     height: auto;
-    background-image: url(./imgs/background.png);
+    background-image: url(imgs/background.png);
     background-repeat: no-repeat;
     font-family: "MiSans";
 }
@@ -48,7 +48,7 @@
 
 .title {
     margin: 52px 0px 0px 58px;
-    background: url(./imgs/title.png) no-repeat;
+    background: url(imgs/title.png) no-repeat;
     background-size: cover;
     width: 1118px;
     height: 242px;
@@ -87,7 +87,7 @@
 .area-name {
     padding: 20px 0px 0px 30px;
     height: 130px;
-    background: url(./imgs/area-bg.png) no-repeat;
+    background: url(imgs/area-bg.png) no-repeat;
     background-size: cover;
 }
 

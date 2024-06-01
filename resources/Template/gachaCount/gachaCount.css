@@ -1,6 +1,6 @@
 @font-face {
     font-family: "MiSans";
-    src: url("../fonts/MiSans-Regular.ttf");
+    src: url("../../Fonts/MiSans-Regular.ttf");
     font-weight: normal;
     font-style: normal;
 }
@@ -19,7 +19,7 @@ ul {
 #body {
     width: 1220px;
     height: auto;
-    background-image: url(./imgs/background.png);
+    background-image: url(imgs/background.png);
     background-repeat: no-repeat;
     font-family: "MiSans";
 }
@@ -61,7 +61,7 @@ ul {
     display: block;
     margin-bottom: 18px;
     height: 218px;
-    background-image: url(./imgs/card.png);
+    background-image: url(imgs/card.png);
     background-size: cover;
     padding-bottom: 50px;
     border-radius: 0px 16px;

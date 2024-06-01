@@ -12,7 +12,7 @@ class Render {
         const base64 = await puppeteer.screenshot('waves-plugin', {
             saveId: 'userInfo',
             imgType: 'png',
-            tplFile: `${pluginResources}/userInfo/userInfo.html`,
+            tplFile: `${pluginResources}/Template/userInfo/userInfo.html`,
             pluginResources,
             baseData,
             roleData
@@ -25,7 +25,7 @@ class Render {
         const base64 = await puppeteer.screenshot('waves-plugin', {
             saveId: 'dailyData',
             imgType: 'png',
-            tplFile: `${pluginResources}/dailyData/dailyData.html`,
+            tplFile: `${pluginResources}/Template/dailyData/dailyData.html`,
             pluginResources,
             gameData
         })
@@ -43,7 +43,7 @@ class Render {
         const base64 = await puppeteer.screenshot('waves-plugin', {
             saveId: 'calaBash',
             imgType: 'png',
-            tplFile: `${pluginResources}/calaBash/calaBash.html`,
+            tplFile: `${pluginResources}/Template/calaBash/calaBash.html`,
             pluginResources,
             baseData,
             calabashData,
@@ -58,7 +58,7 @@ class Render {
         const base64 = await puppeteer.screenshot('waves-plugin', {
             saveId: 'exploreIndex',
             imgType: 'png',
-            tplFile: `${pluginResources}/exploreIndex/exploreIndex.html`,
+            tplFile: `${pluginResources}/Template/exploreIndex/exploreIndex.html`,
             pluginResources,
             baseData,
             exploreData,
@@ -71,7 +71,7 @@ class Render {
         const base64 = await puppeteer.screenshot('waves-plugin', {
             saveId: 'signIn',
             imgType: 'png',
-            tplFile: `${pluginResources}/signIn/signIn.html`,
+            tplFile: `${pluginResources}/Template/signIn/signIn.html`,
             pluginResources,
             signInData
         })
@@ -83,7 +83,7 @@ class Render {
         const base64 = await puppeteer.screenshot('waves-plugin', {
             saveId: 'gachaCount',
             imgType: 'png',
-            tplFile: `${pluginResources}/gachaCount/gachaCount.html`,
+            tplFile: `${pluginResources}/Template/gachaCount/gachaCount.html`,
             pluginResources,
             GachaData
         })
@@ -109,11 +109,11 @@ class Render {
         if (!data.content.modules[0].components[0].role.figures[2]) {
             data.content.modules[0].components[0].role.figures[2] = data.content.modules[0].components[0].role.figures[1]
         }
-        
+
         const base64 = await puppeteer.screenshot('waves-plugin', {
             saveId: 'wikiRole',
             imgType: 'png',
-            tplFile: `${pluginResources}/wiki/role/role.html`,
+            tplFile: `${pluginResources}/Wiki/role/role.html`,
             pluginResources,
             data
         })
