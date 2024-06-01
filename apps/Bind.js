@@ -16,6 +16,10 @@ export class BindToken extends plugin {
                 {
                     reg: "^#?(waves|鸣潮)解绑.*$",
                     fnc: "unbindToken"
+                },
+                {
+                    reg: "^#?库街区Token$",
+                    fnc: "getToken"
                 }
             ]
         })
@@ -93,6 +97,25 @@ export class BindToken extends plugin {
             await e.reply(`已删除账号 ${roleId}`);
             Config.setUserConfig(e.user_id, accountList);
         }
+        return true;
+    }
+
+    async getToken(e) {
+        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+
+        if (!accountList || !accountList.length) {
+            return await e.reply('当前没有绑定任何账号，请使用[#鸣潮登录]进行绑定');
+        }
+
+        if (e.isGroup) return await e.reply('为了您的账号安全，请私聊使用该指令');
+
+        const tokenList = []
+        accountList.forEach((item) => {
+            tokenList.push({ message: item.roleId })
+            tokenList.push({ message: item.token })
+        })
+
+        await e.reply(Bot.makeForwardMsg(tokenList))
         return true;
     }
 }

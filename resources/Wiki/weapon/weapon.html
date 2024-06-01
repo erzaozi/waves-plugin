@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" type="text/css" href="{{pluginResources}}/Wiki/weapon/weapon.css" />
+    <link rel="preload" href="{{pluginResources}}/Fonts/MiSans-Regular.ttf" as="font" />
+</head>
+
+<body id="body" data-content='{{data}}'>
+    <div id="container">
+        <div id="left">
+            <div id="weapon-display">
+            </div>
+
+            <div id="weapon-desc">
+            </div>
+        </div>
+
+        <div id="right">
+            <div id="weapon-info">
+                <div id="weapon-name"></div>
+                <span id="weapon-subtitle"></span>
+            </div>
+            <div id="weapon-level"></div>
+            <div id="tags">
+            </div>
+            <div id="meterials">
+            </div>
+            <div id="skill"></div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+</body>
+
+<script>
+    const dataContent = JSON.parse(document.getElementById('body').getAttribute('data-content'));
+    document.getElementById("weapon-display").innerHTML = dataContent.content.modules[0].components[0].content;
+    document.getElementById("weapon-desc").innerHTML = dataContent.content.modules[0].components[1].content;
+    document.getElementById("tags").innerHTML = dataContent.content.modules[0].components[2].content;
+    document.getElementById("meterials").innerHTML = dataContent.content.modules[1].components[0].content;
+    const infoTable = document.querySelector("#weapon-display table")
+    const infotrs = infoTable.querySelectorAll("tr")
+    const weaponPic = infotrs[0]?.getElementsByTagName("img")[0]?.src
+    const weaponName = infotrs[1]?.querySelectorAll("td")[1]?.innerText
+    const weaponType = infotrs[2]?.querySelectorAll("td")[1]?.innerText;
+    const weaponLevelPic = infotrs[3]?.getElementsByTagName("img")[0]?.src
+    const descTable = document.querySelector("#weapon-desc table")
+    const desctrs = descTable.querySelectorAll("tr")
+    const [attributeEle, descEle, accessEle] = [desctrs[0], desctrs[1], desctrs[2]]
+    const tags = document.querySelector("#tags table")?.querySelectorAll("td")?.[1].querySelectorAll("p")
+    const tag_1 = tags[0].innerText
+    const tag_2 = tags[1].innerText
+    const meterials = document.querySelector("#meterials").querySelectorAll("td")
+    const meterial_2 = meterials[meterials.length - 1].querySelector("img").src
+    const meterial_1 = meterials[meterials.length - 2].querySelector("img").src
+    document.getElementById("weapon-display").innerHTML = `<img src="${weaponPic}" id="weapon-icon">`
+    document.getElementById("weapon-desc").innerHTML = descEle.innerHTML
+    document.getElementById("weapon-name").innerText = weaponName
+    document.getElementById("weapon-subtitle").innerText = weaponType
+    document.getElementById("weapon-level").innerHTML = `<img src="${weaponLevelPic}" style="height: 68px; position: relative; top: -10px; left: -16px">`
+    document.getElementById("tags").innerHTML = `
+    <div class="tag">${tag_1}</div>
+    <div class="tag">${tag_2}</div>
+    <div class="tag">${accessEle.querySelector("span").innerText}</div>
+    `
+    document.getElementById("skill").innerHTML = attributeEle.innerHTML
+    document.getElementById("meterials").innerHTML = `
+    <div style="width: 100%; height: 30px; text-align: center; padding-top: 5px; background-color: #dedede; border-radius: 10px 0px 0px 0px;">突破材料</div>
+    <img src="${meterial_1}" class="meterial-icon"><img src="${meterial_2}" class="meterial-icon">
+    `
+    const leftHeight = document.getElementById("weapon-desc").offsetHeight + document.getElementById("weapon-desc").offsetTop
+    const rightHeight = document.getElementById("skill").offsetHeight + document.getElementById("skill").offsetTop
+    if (leftHeight > rightHeight) {
+        document.getElementById("skill").style.height = leftHeight - rightHeight + document.getElementById("skill").offsetHeight + "px"
+    } else {
+        document.getElementById("weapon-desc").style.height = rightHeight - leftHeight + document.getElementById("weapon-desc").offsetHeight + "px"
+    }
+</script>
+
+</html>

@@ -35,15 +35,18 @@ export class Guide extends plugin {
             return false
         }
 
+        let imageCard
+
         switch (entryData.type) {
             // 共鸣者
             case "1105":
-                const imageCard = await Render.wikiRole(entryData.record)
+                imageCard = await Render.wikiRole(entryData.record)
                 await e.reply(imageCard)
                 break
             // 武器
             case "1106":
-                await e.reply(`暂时还没有武器：${message}的图鉴`)
+                imageCard = await Render.wikiWeapon(entryData.record)
+                await e.reply(imageCard)
                 break
             // 声骸
             case "1107":
