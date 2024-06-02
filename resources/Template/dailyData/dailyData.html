@@ -16,6 +16,8 @@
     <div id="data">
         <div id="stamina">{{gameData.energyData.cur}}/{{gameData.energyData.total}}</div>
         <div id="activity">{{gameData.livenessData.cur}}/{{gameData.livenessData.total}}</div>
+        <div id="dailyname">恢复时间：</div>
+        <div id="dailytime">{{gameData.energyData.refreshTimeStamp}}</div>
         <div id="experience">{{gameData.battlePassData[1].cur}}/{{gameData.battlePassData[1].total}}</div>
         <div id="level">LV.{{gameData.battlePassData[0].cur}}</div>
         <div id="progress" style="background: linear-gradient(90deg, #b9a068 0%, #c8c5bc 0%);"></div>
@@ -31,6 +33,25 @@
             const pct = (curExp / totalExp) * 100;
             const progressEl = document.getElementById('progress');
             progressEl.style.background = `linear-gradient(90deg, #b9a068 ${pct}%, #c8c5bc ${pct}%`;
+
+            let timestampMs = parseInt('{{gameData.energyData.refreshTimeStamp}}');
+
+            if (timestampMs < 10000000000) {
+                timestampMs *= 1000;
+            }
+
+            if (!isNaN(timestampMs) && timestampMs > 0) {
+                const date = new Date(timestampMs);
+                const year = date.getFullYear();
+                const month = ('0' + (date.getMonth() + 1)).slice(-2);
+                const day = ('0' + date.getDate()).slice(-2);
+                const hours = ('0' + date.getHours()).slice(-2);
+                const minutes = ('0' + date.getMinutes()).slice(-2);
+                const formattedTime = `${year}-${month}-${day} ${hours}:${minutes}`;
+                document.getElementById('dailytime').innerText = formattedTime;
+            } else {
+                document.getElementById('dailytime').innerText = 'Invalid timestamp';
+            }
         });
     </script>
 </body>

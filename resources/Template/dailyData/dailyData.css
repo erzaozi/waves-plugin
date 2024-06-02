@@ -61,6 +61,22 @@
     font-size: 48px;
 }
 
+#dailyname {
+    position: absolute;
+    top: -140px;
+    left: 500px;
+    font-size: 48px;
+    white-space: nowrap;
+}
+
+#dailytime {
+    position: absolute;
+    top: -140px;
+    left: 730px;
+    font-size: 48px;
+    white-space: nowrap;
+}
+
 #experience {
     position: absolute;
     top: 241px;
