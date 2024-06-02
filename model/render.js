@@ -175,6 +175,26 @@ class Render {
 
         return base64
     }
+
+    async wikiRelics(data) {
+        function replace(str) {
+            return str.replace(/\\"/g, '"').replace(/\\n/g, '')
+        }
+
+        data.content.modules[0].components[0].content = replace(data.content.modules[0].components[0].content)
+        data.content.modules[1].components[0].content = replace(data.content.modules[1].components[0].content)
+        data.content.modules[0].components[1].content = replace(data.content.modules[0].components[1].content)
+
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'wikiRelics',
+            imgType: 'png',
+            tplFile: `${pluginResources}/Wiki/relics/relics.html`,
+            pluginResources,
+            data
+        })
+
+        return base64
+    }
 }
 
 export default new Render()

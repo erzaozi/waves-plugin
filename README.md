@@ -52,20 +52,26 @@ pnpm install --filter=waves-plugin
 - [x] 探索度查询
 - [x] 挑战数据查询
 - [x] 抽卡记录查询分析
-- [x] 角色 / 武器图鉴
+- [x] 角色 / 武器 / 声骸图鉴
 - [ ] 角色卡片查询
+- [ ] 角色攻略（联系作者中）
 
 ## 功能列表
 
 <details><summary>点击展开</summary>
 
-| 命令      | 功能                       | 示例                                                                                          |
-| --------- | -------------------------- | --------------------------------------------------------------------------------------------- |
-| ~绑定 | 绑定账户 Token             | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Bind.png)     |
-| ~签到 | 库街区签到                 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/SignIn.png)   |
-| ~卡片 | 获取用户详细信息           | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/User.png) |
-| ~体力 | 获取用户日常数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Sanity.png)     |
-| ~数据坞   | 获取用户数据坞以及声骸信息 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Calabash.png)     |
+| 命令      | 功能                       | 示例                                                                                           |
+| --------- | -------------------------- | ---------------------------------------------------------------------------------------------- |
+| ~登录     | 绑定账户 Token             | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Bind.png)      |
+| ~卡片     | 获取用户详细信息           | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/User.png)      |
+| ~签到     | 库街区签到                 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/SignIn.png)    |
+| ~体力     | 获取用户日常数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Sanity.png)    |
+| ~数据坞   | 获取用户数据坞以及声骸信息 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Calabash.png)  |
+| ~探索度   | 获取用户探索度数据卡片     | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Explore.png)   |
+| ~全息战略 | 获取用户挑战数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Challenge.png) |
+| ~抽卡记录 | 获取用户抽卡数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Gacha.png)     |
+| ~图鉴     | 获取角色、武器、声骸等图鉴 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Guide.png)     |
+| ~帮助     | 获取插件帮助               | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Help.png)      |
 
 </details>
 
@@ -81,6 +87,7 @@ pnpm install --filter=waves-plugin
 
 > [!CAUTION]
 > 本项目 `resources` 文件夹下的所有文件均受到以下限制：
+>
 > - **禁止复制**：不允许复制 `resources` 文件夹中的任何文件。
 > - **禁止修改**：不允许修改 `resources` 文件夹中的任何文件。
 > - **禁止再分发**：不允许以任何形式再分发 `resources` 文件夹中的任何文件，包括但不限于公开托管、分享或将其包含在其他项目中。

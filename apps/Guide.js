@@ -32,7 +32,7 @@ export class Guide extends plugin {
 
         if (!entryData.status) {
             logger.warn(`[Waves-Plugin] 未能获取图鉴内容：${message}`)
-            if (e.msg.includes("鸣潮")) {
+            if (e.msg.startsWith("~") || e.msg.startsWith("～") || e.msg.startsWith("鸣潮")) {
                 await e.reply(`未能获取到${message}的图鉴，请检查输入是否正确`)
             }
             return false
@@ -53,7 +53,8 @@ export class Guide extends plugin {
                 break
             // 声骸
             case "1107":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有声骸：${message}的图鉴`])
+                imageCard = await Render.wikiRelics(entryData.record)
+                await e.reply(imageCard)
                 break
             // 合鸣效果
             case "1219":

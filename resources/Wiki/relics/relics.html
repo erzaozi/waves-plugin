@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" type="text/css" href="{{pluginResources}}/Wiki/relics/relics.css" />
+    <link rel="preload" href="{{pluginResources}}/Fonts/MiSans-Regular.ttf" as="font" />
+</head>
+
+<body id="body" data-content='{{data}}'>
+    <div id="container">
+        <div id="left">
+            <div id="avatar">
+            </div>
+            <div id="name">{{data.content.title}}</div>
+            <div id="desc-table">
+            </div>
+        </div>
+        <div id="right">
+            <div id="data-table">
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+
+</body>
+
+<script>
+    const dataContent = JSON.parse(document.getElementById('body').getAttribute('data-content'));
+    document.getElementById("avatar").innerHTML = dataContent.content.modules[0].components[0].content;
+    document.getElementById("desc-table").innerHTML = dataContent.content.modules[1].components[0].content;
+    document.getElementById("data-table").innerHTML = dataContent.content.modules[0].components[1].content
+    document.querySelectorAll('#data-table a').forEach(a => a.outerHTML = a.innerHTML);
+    document.getElementById('desc-table').querySelector("table").style.height = "318px"
+    document.getElementById("data-table").querySelector("table").style.height = "840px"
+    const descspanEle = document.getElementById("desc-table").querySelector("table").getElementsByTagName('span')
+    for (var i = 0; i < descspanEle.length; i++) {
+        if (descspanEle[i].style.fontSize) descspanEle[i].style.fontSize = Number(descspanEle[i].style.fontSize.replace("px", "")) * 1.4 + "px"
+    }
+    document.getElementById("desc-table").querySelector("table").border = '0px'
+    document.getElementById("desc-table").querySelector("tr").insertAdjacentHTML("afterend", '<hr style="height: 1px; background-color: #dadada; border: none;">')
+    const spanEle = document.getElementById("data-table").querySelector("table").getElementsByTagName('span')
+    for (var i = 0; i < spanEle.length; i++) {
+        if (spanEle[i].style.fontSize) spanEle[i].style.fontSize = Number(spanEle[i].style.fontSize.replace("px", "")) * 1.4 + "px"
+    }
+</script>
+
+</html>
