@@ -12,7 +12,6 @@ export class News extends plugin {
                 {
                     reg: "^(～|~|鸣潮)(活动|新闻|公告)$",
                     fnc: "queryNews",
-                    permission: "admin"
                 }
             ]
         })
@@ -54,7 +53,7 @@ export class News extends plugin {
         }
 
         const postId = newsData.data.list[0].postId;
-        if (postId != redis.get(`Yunzai:waves:news`)) {
+        if (postId != await redis.get(`Yunzai:waves:news`)) {
             await Promise.all(autoPushList.map(async (user) => {
                 const [botId, groupId, userId] = user.split(':');
 

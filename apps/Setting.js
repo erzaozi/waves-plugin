@@ -18,7 +18,8 @@ export class Setting extends plugin {
                 },
                 {
                     reg: "^(～|~|鸣潮)(开启|关闭)(公告|新闻|活动)推送$",
-                    fnc: "setAutoNews"
+                    fnc: "setAutoNews",
+                    permission: "admin"
                 }
             ]
         })
@@ -78,10 +79,6 @@ export class Setting extends plugin {
         let key;
 
         if (e.isGroup) {
-            if (!e.group.is_admin && !e.group.is_owner) {
-                await e.reply("只有管理员才能开启群推送");
-                return true
-            }
             key = `${e.self_id}:${e.group_id}:undefined`;
         } else {
             key = `${e.self_id}:undefined:${e.user_id}`;
