@@ -4,7 +4,7 @@ import qs from 'qs';
 
 const CONSTANTS = {
     LOGIN_URL: 'https://api.kurobbs.com/user/sdkLogin',
-    GAME_DATA_URL: 'https://api.kurobbs.com/gamer/widget/game3/getData',
+    GAME_DATA_URL: 'https://api.kurobbs.com/gamer/widget/game3/refresh',
     BASE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/baseData',
     ROLE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/roleData',
     CALABASH_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/calabashData',
