@@ -34,7 +34,7 @@ export class Gacha extends plugin {
     async gachaCount(e) {
         let message = e.msg.replace(/^(～|~|鸣潮)(常驻(武器|角色)|限定(武器|角色))?抽卡(统计|分析|记录)/, "");
 
-        let jsonData = null;
+        let jsonData = {};
 
         if (!message) {
             let data = await redis.get(`Yunzai:waves:gacha:${e.user_id}`);
@@ -46,16 +46,32 @@ export class Gacha extends plugin {
             }
         }
 
-        try {
-            jsonData = JSON.parse(message);
-        } catch (error) {
-            await e.reply("无法转换成JSON格式，请复制完整请求体");
-            return true;
-        }
-
-        if (!jsonData.playerId || !jsonData.recordId) {
-            await e.reply("请求体中缺少playerId或recordId，请复制完整请求体");
-            return true;
+        if (message.startsWith("{")) {
+            try {
+                jsonData = JSON.parse(message);
+                if (!jsonData.playerId || !jsonData.recordId) {
+                    await e.reply("缺少playerId或recordId，请复制完整请求体");
+                    return true;
+                }
+            } catch (error) {
+                await e.reply("无法转换成JSON格式，请复制完整请求体");
+                return true;
+            }
+        } else if (message.startsWith("http")) {
+            message = message.replace(/#/, "");
+            try {
+                const parsedUrl = new URL(message);
+                const params = parsedUrl.searchParams;
+                jsonData.playerId = params.get("player_id");
+                jsonData.recordId = params.get("record_id");
+                if (!jsonData.playerId || !jsonData.recordId) {
+                    await e.reply("缺少player_id或record_id，请复制完整链接");
+                    return true;
+                }
+            } catch (error) {
+                await e.reply("无法解析链接，请复制完整链接");
+                return true;
+            }
         }
 
         await e.reply("正在分析您的抽卡记录，请稍后...");
