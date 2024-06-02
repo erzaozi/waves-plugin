@@ -1,4 +1,4 @@
-import {pluginResources} from "../model/path.js";
+import { pluginResources } from "../model/path.js";
 import axios from 'axios';
 import qs from 'qs';
 import fs from 'fs';
@@ -122,8 +122,8 @@ class Wiki {
                     return key;
                 }
             }
-            return name;
         }
+        return name;
     }
 }
 

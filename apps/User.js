@@ -11,7 +11,7 @@ export class UserInfo extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^#?(waves|鸣潮)信息.*$",
+                    reg: "^#?(waves|鸣潮)(信息|卡片).*$",
                     fnc: "userInfo"
                 }
             ]
@@ -22,7 +22,7 @@ export class UserInfo extends plugin {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
         const waves = new Waves();
 
-        const match = e.msg.replace(/^#?(waves|鸣潮)信息/, '').match(/^\d{9}$/);
+        const match = e.msg.replace(/^#?(waves|鸣潮)(信息|卡片)/, '').match(/^\d{9}$/);
 
         if (!accountList.length) {
             if (match) {

@@ -61,61 +61,71 @@ export class Help extends plugin {
                     },
                     {
                         "icon": 4,
+                        "title": "#库街区Token",
+                        "desc": "查看自己已绑定的Token"
+                    },
+                    {
+                        "icon": 5,
                         "title": "#鸣潮签到",
                         "desc": "社区签到"
                     },
                     {
-                        "icon": 5,
+                        "icon": 6,
                         "title": "#鸣潮日常数据",
                         "desc": "查看日常数据"
                     },
                     {
-                        "icon": 6,
+                        "icon": 7,
                         "title": "#鸣潮信息",
                         "desc": "查看账号信息"
                     },
                     {
-                        "icon": 7,
+                        "icon": 8,
                         "title": "#鸣潮数据坞",
                         "desc": "查看数据坞信息"
                     },
                     {
-                        "icon": 8,
+                        "icon": 9,
                         "title": "#鸣潮全息战略",
                         "desc": "查看全息战略挑战信息信息"
                     },
                     {
-                        "icon": 9,
+                        "icon": 10,
                         "title": "#鸣潮探索度",
                         "desc": "查看地图探索度"
                     },
                     {
-                        "icon": 10,
+                        "icon": 11,
                         "title": "#鸣潮开启自动签到",
                         "desc": "每天四点自动执行所有账号签到"
                     },
                     {
-                        "icon": 11,
+                        "icon": 12,
                         "title": "#鸣潮开启波片推送",
                         "desc": "结晶波片回满提醒"
                     },
                     {
-                        "icon": 12,
-                        "title": "#鸣潮抽卡分析",
-                        "desc": "抽卡分析"
+                        "icon": 13,
+                        "title": "#鸣潮抽卡记录",
+                        "desc": "抽卡记录"
                     },
                     {
-                        "icon": 13,
+                        "icon": 14,
+                        "title": "#鸣潮抽卡帮助",
+                        "desc": "获取抽卡记录教程"
+                    },
+                    {
+                        "icon": 15,
                         "title": "#鸣潮xx图鉴",
                         "desc": "万物图鉴"
                     },
                     {
-                        "icon": 14,
+                        "icon": 16,
                         "title": "#鸣潮帮助",
                         "desc": "查看帮助面板"
                     },
                     {
-                        "icon": 15,
+                        "icon": 17,
                         "title": "#鸣潮更新",
                         "desc": "更新插件"
                     }
