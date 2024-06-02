@@ -11,15 +11,15 @@ export class Help extends plugin {
             priority: 1008,
             rule: [
                 {
-                    reg: "^#?(waves|鸣潮)帮助$",
+                    reg: "^(～|~|鸣潮)帮助$",
                     fnc: "help"
                 },
                 {
-                    reg: "^#?(waves|鸣潮)(登录|登陆|绑定)帮助$",
+                    reg: "^(～|~|鸣潮)(登录|登陆|绑定)帮助$",
                     fnc: "bindHelp"
                 },
                 {
-                    reg: "^#?(waves|鸣潮)(抽卡统计|抽卡|统计)帮助$",
+                    reg: "^(～|~|鸣潮)(抽卡统计|抽卡|统计)帮助$",
                     fnc: "gachaHelp"
                 }
             ]
@@ -46,87 +46,87 @@ export class Help extends plugin {
                 "list": [
                     {
                         "icon": 1,
-                        "title": "#鸣潮登录",
+                        "title": "~登录",
                         "desc": "绑定账户Token"
                     },
                     {
                         "icon": 2,
-                        "title": "#鸣潮登录帮助",
+                        "title": "~登录帮助",
                         "desc": "绑定账户Token教程"
                     },
                     {
                         "icon": 3,
-                        "title": "#鸣潮解绑",
+                        "title": "~解绑",
                         "desc": "解绑账户Token"
                     },
                     {
                         "icon": 4,
-                        "title": "#库街区Token",
+                        "title": "~库街区Token",
                         "desc": "查看自己已绑定的Token"
                     },
                     {
                         "icon": 5,
-                        "title": "#鸣潮签到",
+                        "title": "~签到",
                         "desc": "社区签到"
                     },
                     {
                         "icon": 6,
-                        "title": "#鸣潮日常数据",
+                        "title": "~体力",
                         "desc": "查看日常数据"
                     },
                     {
                         "icon": 7,
-                        "title": "#鸣潮信息",
-                        "desc": "查看账号信息"
+                        "title": "~卡片",
+                        "desc": "查看账号卡片"
                     },
                     {
                         "icon": 8,
-                        "title": "#鸣潮数据坞",
+                        "title": "~数据坞",
                         "desc": "查看数据坞信息"
                     },
                     {
                         "icon": 9,
-                        "title": "#鸣潮全息战略",
+                        "title": "~全息战略",
                         "desc": "查看全息战略挑战信息信息"
                     },
                     {
                         "icon": 10,
-                        "title": "#鸣潮探索度",
+                        "title": "~探索度",
                         "desc": "查看地图探索度"
                     },
                     {
                         "icon": 11,
-                        "title": "#鸣潮开启自动签到",
+                        "title": "~开启自动签到",
                         "desc": "每天四点自动执行所有账号签到"
                     },
                     {
                         "icon": 12,
-                        "title": "#鸣潮开启波片推送",
+                        "title": "~开启体力推送",
                         "desc": "结晶波片回满提醒"
                     },
                     {
                         "icon": 13,
-                        "title": "#鸣潮抽卡记录",
+                        "title": "~抽卡记录",
                         "desc": "抽卡记录"
                     },
                     {
                         "icon": 14,
-                        "title": "#鸣潮抽卡帮助",
+                        "title": "~抽卡帮助",
                         "desc": "获取抽卡记录教程"
                     },
                     {
                         "icon": 15,
-                        "title": "#鸣潮xx图鉴",
+                        "title": "~xx图鉴",
                         "desc": "万物图鉴"
                     },
                     {
                         "icon": 16,
-                        "title": "#鸣潮帮助",
+                        "title": "~帮助",
                         "desc": "查看帮助面板"
                     },
                     {
                         "icon": 17,
-                        "title": "#鸣潮更新",
+                        "title": "~更新",
                         "desc": "更新插件"
                     }
                 ],
@@ -161,9 +161,9 @@ export class Help extends plugin {
             { message: '1.手机下载库街区APP（下载地址：https://www.kurobbs.com/download.html）' },
             { message: '2.首次使用请先登录库街区APP，并检查数据终端中各项数据是否开启对外展示开关' },
             { message: '3.退出库街区登录，再次获取验证码（此时不要登录库街区APP）' },
-            { message: '4.发送 #鸣潮登录<手机号>:<验证码> 即可完成登录(例：#鸣潮登录17041039503:1865)，注意：手机号验证码之间有冒号间隔' },
+            { message: '4.发送 ~登录<手机号>:<验证码> 即可完成登录(例：~登录17041039503:1865)，注意：手机号验证码之间有冒号间隔' },
             { message: '机器人登录后再次在网页或APP登录库街区账号会导致机器人Token失效，目前库街区只支持一端登录' },
-            { message: '如果需要与库街区APP共用请自行抓包库街区APP获取Token，发送 #鸣潮登录Token 即可完成登录(例：#鸣潮登录eyJhbGc...)，注意：网页中的Token不可用，只能抓包APP' }
+            { message: '如果需要与库街区APP共用请自行抓包库街区APP获取Token，发送 ~登录Token 即可完成登录(例：~登录eyJhbGc...)，注意：网页中的Token不可用，只能抓包APP' }
         ]
         await e.reply(Bot.makeForwardMsg(helpStep))
         return true
@@ -174,7 +174,7 @@ export class Help extends plugin {
             { message: '1.打开抓包软件（请自行寻找Reqable等自己熟悉的抓包软件）' },
             { message: '2.进入游戏，打开抽卡记录界面，翻看抽卡记录' },
             { message: '3.回到抓包软件，找到 https://gmserver-api.aki-game2.com/gacha/record/query 的POST请求，复制整个请求体' },
-            { message: '4.向机器人发送[#鸣潮抽卡统计 + 你复制的内容]，即可开始分析' }
+            { message: '4.向机器人发送[~抽卡统计 + 你复制的内容]，即可开始分析' }
         ]
         await e.reply(Bot.makeForwardMsg(helpStep))
         return true

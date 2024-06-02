@@ -24,7 +24,7 @@ export class Gacha extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^#?(waves|鸣潮)(常驻(武器|角色)|限定(武器|角色))?抽卡(统计|分析|记录)([\\s\\S]*)$",
+                    reg: "^(～|~|鸣潮)(常驻(武器|角色)|限定(武器|角色))?抽卡(统计|分析|记录)([\\s\\S]*)$",
                     fnc: "gachaCount"
                 }
             ]
@@ -32,14 +32,14 @@ export class Gacha extends plugin {
     }
 
     async gachaCount(e) {
-        let message = e.msg.replace(/#?(waves|鸣潮)(常驻(武器|角色)|限定(武器|角色))?抽卡(统计|分析|记录)/, "");
+        let message = e.msg.replace(/^(～|~|鸣潮)(常驻(武器|角色)|限定(武器|角色))?抽卡(统计|分析|记录)/, "");
 
         let jsonData = null;
 
         if (!message) {
             let data = await redis.get(`Yunzai:waves:gacha:${e.user_id}`);
             if (!data) {
-                await e.reply(`请在命令后抓包获得的JSON请求体\n例：#鸣潮抽卡统计{"recordId":"2b798246702...\n抓包详细步骤请发送[#鸣潮抽卡帮助]`);
+                await e.reply(`请在命令后抓包获得的JSON请求体\n例：~抽卡统计{"recordId":"2b798246702...\n抓包详细步骤请发送[~抽卡帮助]`);
                 return true;
             } else {
                 message = data;

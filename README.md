@@ -41,7 +41,7 @@ pnpm install --filter=waves-plugin
 
 ## 功能列表
 
-请使用 `#鸣潮帮助` 获取完整帮助
+请使用 `~帮助` 获取完整帮助
 
 - [x] 绑定账号
 - [x] 自动签到
@@ -61,11 +61,11 @@ pnpm install --filter=waves-plugin
 
 | 命令      | 功能                       | 示例                                                                                          |
 | --------- | -------------------------- | --------------------------------------------------------------------------------------------- |
-| #鸣潮绑定 | 绑定账户 Token             | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Bind.png)     |
-| #鸣潮签到 | 库街区签到                 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/SignIn.png)   |
-| #鸣潮信息 | 获取用户详细信息           | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/User.png) |
-| #日常数据 | 获取用户日常数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Sanity.png)     |
-| #数据坞   | 获取用户数据坞以及声骸信息 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Calabash.png)     |
+| ~绑定 | 绑定账户 Token             | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Bind.png)     |
+| ~签到 | 库街区签到                 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/SignIn.png)   |
+| ~卡片 | 获取用户详细信息           | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/User.png) |
+| ~体力 | 获取用户日常数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Sanity.png)     |
+| ~数据坞   | 获取用户数据坞以及声骸信息 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Calabash.png)     |
 
 </details>
 

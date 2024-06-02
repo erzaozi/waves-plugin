@@ -11,7 +11,7 @@ export class Calabash extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^#(waves|鸣潮)?(数据坞|声骸).*$",
+                    reg: "^(～|~|鸣潮)?(数据坞|声骸).*$",
                     fnc: "calabash"
                 }
             ]
@@ -22,18 +22,18 @@ export class Calabash extends plugin {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
         const waves = new Waves();
 
-        const match = e.msg.replace(/^#?(waves|鸣潮)?(数据坞|声骸)/, '').match(/^\d{9}$/);
+        const match = e.msg.match(/\d{9}$/);
 
         if (!accountList.length) {
             if (match) {
                 const publicCookie = await waves.getPublicCookie();
                 if (!publicCookie) {
-                    return await e.reply('当前没有可用的公共Cookie，请使用[#鸣潮登录]进行绑定');
+                    return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行绑定');
                 } else {
                     accountList.push(publicCookie);
                 }
             } else {
-                return await e.reply('当前没有绑定任何账号，请使用[#鸣潮登录]进行绑定');
+                return await e.reply('当前没有绑定任何账号，请使用[~登录]进行绑定');
             }
         }
 

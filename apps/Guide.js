@@ -10,7 +10,7 @@ export class Guide extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^#?(waves|鸣潮)?.*图鉴$",
+                    reg: "^(～|~|鸣潮)?.*图鉴$",
                     fnc: "guide"
                 }
             ]
@@ -19,7 +19,7 @@ export class Guide extends plugin {
 
     async guide(e) {
 
-        const match = e.msg.match(/#?(鸣潮)?(.*?)图鉴/);
+        const match = e.msg.match(/(～|~|鸣潮)?(.*?)图鉴/);
         if (!match || !match[2]) {
             return false
         }

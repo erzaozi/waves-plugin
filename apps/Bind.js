@@ -10,15 +10,15 @@ export class BindToken extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^#?(waves|鸣潮)(登录|登陆|绑定).*$",
+                    reg: "^(～|~|鸣潮)(登录|登陆|绑定).*$",
                     fnc: "bindToken"
                 },
                 {
-                    reg: "^#?(waves|鸣潮)解绑.*$",
+                    reg: "^(～|~|鸣潮)解绑.*$",
                     fnc: "unbindToken"
                 },
                 {
-                    reg: "^#?库街区Token$",
+                    reg: "^(～|~)?库街区Token$",
                     fnc: "getToken"
                 }
             ]
@@ -26,7 +26,7 @@ export class BindToken extends plugin {
     }
 
     async bindToken(e) {
-        const message = e.msg.replace(/#?(waves|鸣潮)(登录|登陆|绑定)/, '').trim();
+        const message = e.msg.replace(/^(～|~|鸣潮)(登录|登陆|绑定)/, '').trim();
 
         const waves = new Waves();
         let token;
@@ -37,14 +37,14 @@ export class BindToken extends plugin {
             const [mobile, code] = message.split(":");
 
             if (!mobile || !code) {
-                await e.reply("请输入正确的手机号与验证码\n使用[#鸣潮登录帮助]查看登录方法！");
+                await e.reply("请输入正确的手机号与验证码\n使用[~登录帮助]查看登录方法！");
                 return true;
             }
 
             const data = await waves.getToken(mobile, code);
 
             if (!data.status) {
-                await e.reply(`登录失败！原因：${data.msg}\n使用[#鸣潮登录帮助]查看登录方法！`);
+                await e.reply(`登录失败！原因：${data.msg}\n使用[~登录帮助]查看登录方法！`);
                 return true;
             }
 
@@ -54,7 +54,7 @@ export class BindToken extends plugin {
         const gameData = await waves.getGameData(token);
 
         if (!gameData.status) {
-            await e.reply(`登录失败！原因：${gameData.msg}\n使用[#鸣潮登录帮助]查看登录方法！`);
+            await e.reply(`登录失败！原因：${gameData.msg}\n使用[~登录帮助]查看登录方法！`);
             return true;
         }
 
@@ -80,16 +80,16 @@ export class BindToken extends plugin {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
 
         if (!accountList || !accountList.length) {
-            return await e.reply('当前没有绑定任何账号，请使用[#鸣潮登录]进行绑定');
+            return await e.reply('当前没有绑定任何账号，请使用[~登录]进行绑定');
         }
 
-        let roleId = e.msg.replace(/#?(waves|鸣潮)解绑/, '').trim();
+        let roleId = e.msg.replace(/^(～|~|鸣潮)解绑/, '').trim();
         if (!roleId || !accountList.map(item => item.roleId).includes(roleId)) {
             let msg = '当前绑定的特征码有：'
             accountList.forEach(item => {
                 msg += `\n${item.roleId}`
             })
-            msg += `\n请使用[#鸣潮解绑 + 特征码]的格式进行解绑。`
+            msg += `\n请使用[~解绑 + 特征码]的格式进行解绑。`
             await e.reply(msg);
         } else {
             let index = accountList.findIndex(item => item.roleId == roleId);
@@ -104,7 +104,7 @@ export class BindToken extends plugin {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
 
         if (!accountList || !accountList.length) {
-            return await e.reply('当前没有绑定任何账号，请使用[#鸣潮登录]进行绑定');
+            return await e.reply('当前没有绑定任何账号，请使用[~登录]进行绑定');
         }
 
         if (e.isGroup) return await e.reply('为了您的账号安全，请私聊使用该指令');

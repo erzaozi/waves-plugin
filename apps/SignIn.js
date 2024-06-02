@@ -11,7 +11,7 @@ export class SignIn extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^#?(waves|鸣潮)签到$",
+                    reg: "^(～|~|鸣潮)签到$",
                     fnc: "signIn"
                 }
             ]
@@ -28,7 +28,7 @@ export class SignIn extends plugin {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
 
         if (!accountList || !accountList.length) {
-            return await e.reply('当前没有绑定任何账号，请使用[#鸣潮登录]进行绑定');
+            return await e.reply('当前没有绑定任何账号，请使用[~登录]进行绑定');
         }
 
         const waves = new Waves();

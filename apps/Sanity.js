@@ -11,7 +11,7 @@ export class Sanity extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^#?(waves|鸣潮)?(波片|日常数据)$",
+                    reg: "^(～|~|鸣潮)(波片|体力|日常数据)$",
                     fnc: "querySanity"
                 }
             ]
@@ -28,7 +28,7 @@ export class Sanity extends plugin {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
 
         if (!accountList || !accountList.length) {
-            return await e.reply('当前没有绑定任何账号，请使用[#鸣潮登录]进行绑定');
+            return await e.reply('当前没有绑定任何账号，请使用[~登录]进行绑定');
         }
 
         const waves = new Waves();
@@ -100,7 +100,7 @@ export class Sanity extends plugin {
                 const key = `Yunzai:waves:pushed:${result.data.roleId}`;
                 const isPushed = await redis.get(key);
                 let isFull = false
-                if (result.energyData.refreshTimeStamp === 0 || (result.energyData.refreshTimeStamp * 1000) < new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }))) {
+                if (result.data.energyData.refreshTimeStamp === 0 || (result.data.energyData.refreshTimeStamp * 1000) < new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }))) {
                     isFull = true
                 }
                 if (isFull && !isPushed) {
