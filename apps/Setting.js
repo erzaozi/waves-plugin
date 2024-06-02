@@ -16,6 +16,10 @@ export class Setting extends plugin {
                     reg: "^(～|~|鸣潮)(开启|关闭)(波片|体力)?推送$",
                     fnc: "setAutoPush"
                 },
+                {
+                    reg: "^(～|~|鸣潮)(开启|关闭)(公告|新闻|活动)推送$",
+                    fnc: "setAutoNews"
+                }
             ]
         })
     }
@@ -68,5 +72,38 @@ export class Setting extends plugin {
             return e.reply("已关闭结晶波片推送");
         }
         return e.reply("你已经关闭了结晶波片推送");
+    }
+
+    async setAutoNews(e) {
+        let key;
+
+        if (e.isGroup) {
+            if (!e.group.is_admin && !e.group.is_owner) {
+                await e.reply("只有管理员才能开启群推送");
+                return true
+            }
+            key = `${e.self_id}:${e.group_id}:undefined`;
+        } else {
+            key = `${e.self_id}:undefined:${e.user_id}`;
+        }
+
+        const config = await Config.getConfig();
+        const index = config.waves_auto_news_list.indexOf(key);
+
+        if (e.msg.includes('开启')) {
+            if (index === -1) {
+                config.waves_auto_news_list.push(key);
+                Config.setConfig(config);
+                return e.reply("已开启活动推送");
+            }
+            return e.reply("你已经开启了活动推送");
+        }
+
+        if (index !== -1) {
+            config.waves_auto_news_list.splice(index, 1);
+            Config.setConfig(config);
+            return e.reply("已关闭活动推送");
+        }
+        return e.reply("你已经关闭了活动推送");
     }
 }

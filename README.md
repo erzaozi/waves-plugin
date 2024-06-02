@@ -53,6 +53,7 @@ pnpm install --filter=waves-plugin
 - [x] 挑战数据查询
 - [x] 抽卡记录查询分析
 - [x] 角色 / 武器 / 声骸图鉴
+- [x] 官方公告推送
 - [ ] 角色卡片查询
 - [ ] 角色攻略（联系作者中）
 
@@ -80,6 +81,10 @@ pnpm install --filter=waves-plugin
 如果你喜欢这个项目，请不妨点个 Star🌟，这是对开发者最大的动力， 当然，你可以对我 [爱发电](https://afdian.net/a/sumoqi) 赞助，呜咪~❤️
 
 有意见或者建议也欢迎提交 [Issues](https://github.com/erzaozi/waves-plugin/issues) 和 [Pull requests](https://github.com/erzaozi/waves-plugin/pulls)。
+
+## 资源
+1. 图鉴：[库街区Wiki](https://wiki.kurobbs.com/mc/home)
+2. 角色攻略：[小沐 XMu](https://v.douyin.com/ijShaYJU/) （作者已授权）
 
 ## 许可证
 

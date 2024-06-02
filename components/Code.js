@@ -13,6 +13,7 @@ const CONSTANTS = {
     SIGNIN_URL: 'https://api.kurobbs.com/encourage/signIn/v2',
     GACHA_URL: 'https://gmserver-api.aki-game2.com/gacha/record/query',
     ROLE_DETAIL_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/getRoleDetail',
+    EVENT_LIST_URL: 'https://api.kurobbs.com/forum/companyEvent/findEventList',
     REQUEST_HEADERS_BASE: {
         "source": "android",
     },
@@ -352,6 +353,32 @@ class Waves {
         }
 
         return false;
+    }
+
+    async getEventList() {
+
+        let data = qs.stringify({
+            'gameId': 3
+        });
+
+        try {
+            const response = await axios.post(CONSTANTS.EVENT_LIST_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE } });
+
+            if (response.data.code === 200) {
+                if (response.data.data === null) {
+                    logger.info('获取活动列表失败，返回数据为null');
+                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
+                }
+                logger.info('获取活动列表成功');
+                return { status: true, data: response.data.data };
+            } else {
+                logger.error('获取活动列表失败：', response.data.msg);
+                return { status: false, msg: response.data.msg };
+            }
+        } catch (error) {
+            logger.error('获取活动列表失败，疑似网络问题：\n', error);
+            return { status: false, msg: '获取活动列表失败，疑似网络问题，请检查控制台日志' };
+        }
     }
 }
 
