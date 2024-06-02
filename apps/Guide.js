@@ -57,35 +57,35 @@ export class Guide extends plugin {
                 break
             // 合鸣效果
             case "1219":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有声骸：${message}的图鉴`])
+                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有合鸣效果：${message}的图鉴`])
                 break
             // 敌人
             case "1158":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有声骸：${message}的图鉴`])
+                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有敌人：${message}的图鉴`])
                 break
             // 可合成道具
             case "1264":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有声骸：${message}的图鉴`])
+                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有可合成道具：${message}的图鉴`])
                 break
             // 道具合成图纸
             case "1265":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有声骸：${message}的图鉴`])
+                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有道具合成图纸：${message}的图鉴`])
                 break
             // 补给
             case "1217":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有声骸：${message}的图鉴`])
+                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有补给：${message}的图鉴`])
                 break
             // 资源
             case "1161":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有声骸：${message}的图鉴`])
+                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有资源：${message}的图鉴`])
                 break
             // 素材
             case "1218":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有声骸：${message}的图鉴`])
+                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有素材：${message}的图鉴`])
                 break
             // 特殊道具
             case "1223":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有声骸：${message}的图鉴`])
+                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有特殊道具：${message}的图鉴`])
                 break
             // 默认
             default:
