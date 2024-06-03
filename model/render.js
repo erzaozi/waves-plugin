@@ -208,6 +208,24 @@ class Render {
 
         return base64
     }
+
+    async wikiProps(data) {
+        function replace(str) {
+            return str.replace(/\\"/g, '"').replace(/\\n/g, '')
+        }
+
+        data.content.modules[0].components[0].content = replace(data.content.modules[0].components[0].content)
+
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'wikiProps',
+            imgType: 'png',
+            tplFile: `${pluginResources}/Wiki/props/props.html`,
+            pluginResources,
+            data
+        })
+
+        return base64
+    }
 }
 
 export default new Render()

@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" type="text/css" href="{{pluginResources}}/Wiki/props/props.css" />
+    <link rel="preload" href="{{pluginResources}}/Fonts/MiSans-Regular.ttf" as="font" />
+</head>
+
+<body id="body" data-content='{{data}}'>
+    <div id="picture">
+        <img src="" id="icon">
+        <div id="name"></div>
+    </div>
+    <div id="info-table">
+    </div>
+
+    <script>
+        const dataContent = JSON.parse(document.getElementById('body').getAttribute('data-content'));
+        document.getElementById("info-table").innerHTML = dataContent.content.modules[0].components[0].content;
+        document.getElementById("name").innerText = dataContent.content.modules[0].components[0].title;
+        const row = document.querySelector("#info-table tbody").querySelectorAll("tr")
+        document.querySelector("table").style.height = document.querySelector("table").offsetHeight - row[0].offsetHeight + "px"
+        document.getElementById("icon").src = row[0].querySelector('img').src
+        row[0].parentNode.removeChild(row[0])
+        row.forEach(ele => ele.style.borderColor = "transparent")
+    </script>
+</body>
+
+
+</html>

@@ -41,17 +41,14 @@ export class Guide extends plugin {
         let imageCard
 
         switch (entryData.type) {
-            // 共鸣者
             case "1105":
                 imageCard = await Render.wikiRole(entryData.record)
                 await e.reply(imageCard)
                 break
-            // 武器
             case "1106":
                 imageCard = await Render.wikiWeapon(entryData.record)
                 await e.reply(imageCard)
                 break
-            // 声骸
             case "1107":
                 imageCard = await Render.wikiRelics(entryData.record)
                 await e.reply(imageCard)
@@ -64,31 +61,30 @@ export class Guide extends plugin {
             case "1158":
                 await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有敌人：${message}的图鉴`])
                 break
-            // 可合成道具
             case "1264":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有可合成道具：${message}的图鉴`])
+                imageCard = await Render.wikiProps(entryData.record)
+                await e.reply(imageCard)
                 break
-            // 道具合成图纸
             case "1265":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有道具合成图纸：${message}的图鉴`])
+                imageCard = await Render.wikiProps(entryData.record)
+                await e.reply(imageCard)
                 break
-            // 补给
             case "1217":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有补给：${message}的图鉴`])
+                imageCard = await Render.wikiProps(entryData.record)
+                await e.reply(imageCard)
                 break
-            // 资源
             case "1161":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有资源：${message}的图鉴`])
+                imageCard = await Render.wikiProps(entryData.record)
+                await e.reply(imageCard)
                 break
-            // 素材
             case "1218":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有素材：${message}的图鉴`])
+                imageCard = await Render.wikiProps(entryData.record)
+                await e.reply(imageCard)
                 break
-            // 特殊道具
             case "1223":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有特殊道具：${message}的图鉴`])
+                imageCard = await Render.wikiProps(entryData.record)
+                await e.reply(imageCard)
                 break
-            // 默认
             default:
                 return false
         }

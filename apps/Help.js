@@ -131,6 +131,11 @@ export class Help extends plugin {
                     },
                     {
                         "icon": 18,
+                        "title": "~十连",
+                        "desc": "抽卡模拟器"
+                    },
+                    {
+                        "icon": 18,
                         "title": "~帮助",
                         "desc": "查看帮助面板"
                     },

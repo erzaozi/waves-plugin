@@ -1,0 +1,58 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("../../Fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+#body {
+    width: 800px;
+    height: auto;
+    padding: 50px 50px 50px 50px;
+    background: url(./imgs/props.png) no-repeat;
+    font-family: "Misans";
+}
+
+td {
+    padding: 10px 50px;
+}
+
+#picture {
+    position: relative;
+    left: 267px;
+    width: 166px;
+    height: 223px;
+    overflow: hidden;
+}
+
+#icon {
+    position: absolute;
+    width: 166px;
+}
+
+#name {
+    position: relative;
+    top: 186px;
+    width: 166px;
+    height: 30px;
+    color: black;
+    font-size: 20px;
+    text-align: center;
+    background-color: #ddd;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+#info-table {
+    overflow: hidden;
+    margin-top: 30px;
+    border-radius: 0px 15px;
+    border: 1px solid #ddd;
+}

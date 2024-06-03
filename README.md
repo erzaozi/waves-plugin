@@ -52,7 +52,7 @@ pnpm install --filter=waves-plugin
 - [x] 探索度查询
 - [x] 挑战数据查询
 - [x] 抽卡记录查询分析
-- [x] 角色 / 武器 / 声骸图鉴
+- [x] 游戏内所有物品图鉴
 - [x] 官方公告推送
 - [x] 角色攻略
 - [x] 抽卡模拟器
@@ -72,9 +72,9 @@ pnpm install --filter=waves-plugin
 | ~探索度   | 获取用户探索度数据卡片     | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Explore.png)   |
 | ~全息战略 | 获取用户挑战数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Challenge.png) |
 | ~抽卡记录 | 获取用户抽卡数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Gacha.png)     |
-| ~图鉴     | 获取角色、武器、声骸等图鉴 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Guide.png)     |
+| ~图鉴     | 获取游戏内所有物品图鉴     | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Guide.png)     |
 | ~攻略     | 获取角色攻略               | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Strategy.png)  |
-| ~十连     | 抽卡模拟器               | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Simulator.png)  |
+| ~十连     | 抽卡模拟器                 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Simulator.png) |
 | ~公告     | 获取官方公告与资讯         | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/News.png)      |
 | ~帮助     | 获取插件帮助               | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Help.png)      |
 
