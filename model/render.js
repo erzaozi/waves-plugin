@@ -125,6 +125,19 @@ class Render {
         return base64
     }
 
+    async simulatorGacha(gachaData) {
+
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'simulatorGacha',
+            imgType: 'png',
+            tplFile: `${pluginResources}/Template/simulatorGacha/simulatorGacha.html`,
+            pluginResources,
+            gachaData
+        })
+
+        return base64
+    }
+
     async wikiRole(data) {
         function replace(str) {
             return str.replace(/\\"/g, '"').replace(/\\n/g, '')

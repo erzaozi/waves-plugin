@@ -55,6 +55,7 @@ pnpm install --filter=waves-plugin
 - [x] 角色 / 武器 / 声骸图鉴
 - [x] 官方公告推送
 - [x] 角色攻略
+- [x] 抽卡模拟器
 - [ ] 角色卡片查询
 
 ## 功能列表
@@ -73,6 +74,7 @@ pnpm install --filter=waves-plugin
 | ~抽卡记录 | 获取用户抽卡数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Gacha.png)     |
 | ~图鉴     | 获取角色、武器、声骸等图鉴 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Guide.png)     |
 | ~攻略     | 获取角色攻略               | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Strategy.png)  |
+| ~十连     | 抽卡模拟器               | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Simulator.png)  |
 | ~公告     | 获取官方公告与资讯         | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/News.png)      |
 | ~帮助     | 获取插件帮助               | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Help.png)      |
 

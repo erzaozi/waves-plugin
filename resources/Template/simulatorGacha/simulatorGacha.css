@@ -1,0 +1,60 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("../../Fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    width: 1920px;
+    height: 1080px;
+    margin: 0;
+    background-image: url(imgs/background.png);
+    background-repeat: no-repeat;
+}
+
+#gacha {
+    display: grid;
+    grid-template-columns: 265px 265px 265px 265px 265px;
+    gap: 15px;
+    margin: 135px 265px 0px 265px;
+}
+
+.frame {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+}
+
+.img-bottom {
+    width: 100%;
+    position: relative;
+
+}
+
+.img-role {
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    object-fit: contain;
+}
+
+.img-cover {
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+}
+
+.info-box {
+    top: 20px;
+    right: 20px;
+    width: 150px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    line-height: 1.5;
+}

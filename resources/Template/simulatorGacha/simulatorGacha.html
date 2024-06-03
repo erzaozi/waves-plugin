@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+
+<head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <link rel="shortcut icon" href="#" />
+        <link rel="stylesheet" type="text/css" href="{{pluginResources}}/Template/simulatorGacha/simulatorGacha.css" />
+        <link rel="preload" href="{{pluginResources}}/Fonts/MiSans-Regular.ttf" as="font" />
+        <style>
+                .frame-5 {
+                        box-shadow: 0 0 50px rgba(251, 235, 103, 0.5);
+                }
+
+                .frame-4 {
+                        box-shadow: 0 0 50px rgba(180, 124, 252, 0.5);
+                }
+        </style>
+</head>
+
+<body>
+        <div class="info-box">
+                {{gachaData.poolName}}<br>{{gachaData.times}}
+        </div>
+        <div id="gacha">
+                {{each gachaData.list gacha idx}}
+                <div class="frame" data-star="{{gacha.star}}">
+                        <img class="img-bottom"
+                                src="{{pluginResources}}/Template/simulatorGacha/imgs/bg-card-{{gacha.star}}.png">
+                        <img class="img-role" src="{{gacha.role}}">
+                        <img class="img-cover"
+                                src="{{pluginResources}}/Template/simulatorGacha/imgs/tb-card-{{gacha.star}}.png">
+                </div>
+                {{/each}}
+        </div>
+
+        <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                        document.querySelectorAll('#gacha .frame').forEach(function (frame) {
+                                var star = frame.getAttribute('data-star');
+                                if (star == 5) {
+                                        frame.classList.add('frame-5');
+                                } else if (star == 4) {
+                                        frame.classList.add('frame-4');
+                                }
+                        });
+                });
+        </script>
+</body>
+
+</html>
