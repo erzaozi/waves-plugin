@@ -121,16 +121,21 @@ export class Help extends plugin {
                     },
                     {
                         "icon": 16,
+                        "title": "~xx攻略",
+                        "desc": "角色攻略"
+                    },
+                    {
+                        "icon": 17,
                         "title": "~开启公告推送",
                         "desc": "推送官方公告"
                     },
                     {
-                        "icon": 17,
+                        "icon": 18,
                         "title": "~帮助",
                         "desc": "查看帮助面板"
                     },
                     {
-                        "icon": 18,
+                        "icon": 19,
                         "title": "~更新",
                         "desc": "更新插件"
                     }

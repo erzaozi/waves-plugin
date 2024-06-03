@@ -61,18 +61,20 @@ pnpm install --filter=waves-plugin
 
 <details><summary>点击展开</summary>
 
-| 命令      | 功能                       | 示例                                                                                           |
-| --------- | -------------------------- | ---------------------------------------------------------------------------------------------- |
-| ~登录     | 绑定账户 Token             | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Bind.png)      |
-| ~卡片     | 获取用户详细信息           | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/User.png)      |
-| ~签到     | 库街区签到                 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/SignIn.png)    |
-| ~体力     | 获取用户日常数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Sanity.png)    |
-| ~数据坞   | 获取用户数据坞以及声骸信息 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Calabash.png)  |
-| ~探索度   | 获取用户探索度数据卡片     | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Explore.png)   |
-| ~全息战略 | 获取用户挑战数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Challenge.png) |
-| ~抽卡记录 | 获取用户抽卡数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Gacha.png)     |
-| ~图鉴     | 获取角色、武器、声骸等图鉴 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Guide.png)     |
-| ~帮助     | 获取插件帮助               | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin/resources/readme/Help.png)      |
+| 命令      | 功能                       | 示例                                                                                                |
+| --------- | -------------------------- | --------------------------------------------------------------------------------------------------- |
+| ~登录     | 绑定账户 Token             | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Bind.png)      |
+| ~卡片     | 获取用户详细信息           | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/User.png)      |
+| ~签到     | 库街区签到                 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/SignIn.png)    |
+| ~体力     | 获取用户日常数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Sanity.png)    |
+| ~数据坞   | 获取用户数据坞以及声骸信息 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Calabash.png)  |
+| ~探索度   | 获取用户探索度数据卡片     | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Explore.png)   |
+| ~全息战略 | 获取用户挑战数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Challenge.png) |
+| ~抽卡记录 | 获取用户抽卡数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Gacha.png)     |
+| ~图鉴     | 获取角色、武器、声骸等图鉴 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Guide.png)     |
+| ~攻略     | 获取角色攻略               | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Strategy.png)  |
+| ~公告     | 获取官方公告与资讯         | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/News.png)      |
+| ~帮助     | 获取插件帮助               | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Help.png)      |
 
 </details>
 
@@ -83,7 +85,8 @@ pnpm install --filter=waves-plugin
 有意见或者建议也欢迎提交 [Issues](https://github.com/erzaozi/waves-plugin/issues) 和 [Pull requests](https://github.com/erzaozi/waves-plugin/pulls)。
 
 ## 资源
-1. 图鉴：[库街区Wiki](https://wiki.kurobbs.com/mc/home)
+
+1. 图鉴：[库街区 Wiki](https://wiki.kurobbs.com/mc/home)
 2. 角色攻略：[小沐 XMu](https://v.douyin.com/ijShaYJU/) （作者已授权）
 
 ## 许可证
