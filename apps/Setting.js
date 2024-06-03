@@ -19,6 +19,10 @@ export class Setting extends plugin {
                 {
                     reg: "^(～|~|鸣潮)(开启|关闭)(公告|新闻|活动)推送$",
                     fnc: "setAutoNews"
+                },
+                {
+                    reg: "^(～|~|鸣潮)(波片|体力)阈值.*$",
+                    fnc: "setSanityThreshold"
                 }
             ]
         })
@@ -61,9 +65,9 @@ export class Setting extends plugin {
             if (index === -1) {
                 config["waves_auto_push_list"].push(key);
                 Config.setConfig(config);
-                return e.reply("已开启结晶波片推送");
+                return e.reply("已开启结晶波片推送，可以使用[~体力阈值]来自定义提醒阈值");
             }
-            return e.reply("你已经开启了结晶波片推送");
+            return e.reply("你已经开启了结晶波片推送，可以使用[~体力阈值]来自定义提醒阈值");
         }
 
         if (index !== -1) {
@@ -105,5 +109,20 @@ export class Setting extends plugin {
             return e.reply("已关闭活动推送");
         }
         return e.reply("你已经关闭了活动推送");
+    }
+
+    async setSanityThreshold(e) {
+        const threshold = e.msg.replace(/^(～|~|鸣潮)(波片|体力)阈值/, "");
+        if (!/^\d+$/.test(threshold)) {
+            await e.reply("波片阈值必须是数字，请重新输入");
+            return true
+        }
+        if (threshold > 240 || threshold < 0) {
+            await e.reply("波片阈值必须在0-240之间，请重新输入");
+            return true
+        }
+        await redis.set(`Yunzai:waves:sanity_threshold:${e.user_id}`, threshold)
+        await e.reply(`波片阈值已设置为${threshold}，使用[~开启体力推送]后，达到该设定值后会向您推送提醒哦`);
+        return true
     }
 }

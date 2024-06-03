@@ -99,10 +99,8 @@ export class Sanity extends plugin {
 
                 const key = `Yunzai:waves:pushed:${result.data.roleId}`;
                 const isPushed = await redis.get(key);
-                let isFull = false
-                if (result.data.energyData.refreshTimeStamp === 0 || (result.data.energyData.refreshTimeStamp * 1000) < new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }))) {
-                    isFull = true
-                }
+                const threshold = await redis.get(`Yunzai:waves:sanity_threshold:${userId}`) || result.data.energyData.total;
+                const isFull = result.data.energyData.cur >= threshold;
                 if (isFull && !isPushed) {
                     data.push({ message: `漂泊者${result.data.roleName}(${result.data.roleId})，你的结晶波片已经恢复满了哦~` })
                     await redis.set(key, 'true');

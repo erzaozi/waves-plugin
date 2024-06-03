@@ -14,7 +14,7 @@
         <div id="user-uid">{{gameData.roleId}}</div>
     </div>
     <div id="data">
-        <div id="stamina">{{gameData.energyData.total}}</div>
+        <div id="stamina">{{gameData.energyData.cur}}/{{gameData.energyData.total}}</div>
         <div id="activity">{{gameData.livenessData.cur}}/{{gameData.livenessData.total}}</div>
         <div id="dailytime">{{gameData.energyData.refreshTimeStamp}}</div>
         <div id="experience">{{gameData.battlePassData[1].cur}}/{{gameData.battlePassData[1].total}}</div>
@@ -34,15 +34,12 @@
             progressEl.style.background = `linear-gradient(90deg, #b9a068 ${pct}%, #c8c5bc ${pct}%`;
 
             const timestampMs = parseInt(document.getElementById('dailytime').innerText, 10);
-            const totalAp = parseInt(document.getElementById('stamina').innerText, 10);
             const date = new Date(timestampMs * 1000);
             const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }));
 
             if (timestampMs === 0 || date < now) {
                 document.getElementById('dailytime').innerText = '体力已恢满';
-                document.getElementById('stamina').innerText = `${totalAp}/${totalAp}`;
             } else {
-                document.getElementById('stamina').innerText = `${totalAp - Math.floor((date - now) / 1000 / 60 / 6)}/${totalAp}`;
                 document.getElementById('dailytime').innerText = `${date.getDate() > now.getDate() ? '明天' : ''}${date.getHours()}:${date.getMinutes()}恢满`;
             }
         });

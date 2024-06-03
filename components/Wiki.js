@@ -7,6 +7,7 @@ import YAML from 'yaml';
 const CONSTANTS = {
     WIKI_PAGE_URL: 'https://api.kurobbs.com/wiki/core/catalogue/item/getPage',
     WIKI_ENTRYDETAIL_URL: 'https://api.kurobbs.com/wiki/core/catalogue/item/getEntryDetail',
+    WIKI_SEARCH_URL: 'https://api.kurobbs.com/wiki/core/catalogue/item/search',
     REQUEST_HEADERS_BASE: {
         "wiki_type": "9",
     },
@@ -124,6 +125,30 @@ class Wiki {
             }
         }
         return name;
+    }
+
+    // 搜索关键词
+    async search(keyword) {
+
+        let data = qs.stringify({
+            keyword,
+            limit: 1000,
+        });
+
+        try {
+            const response = await axios.post(CONSTANTS.WIKI_SEARCH_URL, data, { headers: CONSTANTS.REQUEST_HEADERS_BASE });
+
+            if (response.data.code === 200) {
+                logger.info(`搜索Wiki成功`);
+                return { status: true, data: response.data.data };
+            } else {
+                logger.error('搜索Wiki失败：', response.data.msg);
+                return { status: false, msg: response.data.msg };
+            }
+        } catch (error) {
+            logger.error('搜索Wiki失败，疑似网络问题：\n', error);
+            return { status: false, msg: '搜索Wiki失败，疑似网络问题，请检查控制台日志' };
+        }
     }
 }
 
