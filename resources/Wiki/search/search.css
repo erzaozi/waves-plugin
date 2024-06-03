@@ -1,0 +1,57 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("./fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+#body {
+    width: 824px;
+    height: auto;
+    padding: 50px;
+    font-family: "Misans";
+}
+
+#list {
+    display: grid;
+    grid-template-columns: 166px 166px 166px 166px;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.item {
+    position: relative;
+    overflow: hidden;
+    height: 233px;
+    background-color: #000;
+    border-radius: 6px;
+}
+
+.item-bg {
+    position: absolute;
+    top: 0px;
+    width: 166px;
+    height: 213px;
+}
+
+.item-icon {
+    position: absolute;
+    top: 0px;
+    width: 166px;
+}
+
+.item-name {
+    position: relative;
+    top: 195px;
+    width: 166px;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+}

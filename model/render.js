@@ -226,6 +226,19 @@ class Render {
 
         return base64
     }
+
+    async wikiSearch(data) {
+
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'wikiSearch',
+            imgType: 'png',
+            tplFile: `${pluginResources}/Wiki/search/search.html`,
+            pluginResources,
+            data
+        })
+
+        return base64
+    }
 }
 
 export default new Render()

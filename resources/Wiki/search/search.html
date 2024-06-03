@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" type="text/css" href="{{pluginResources}}/Wiki/search/search.css" />
+    <link rel="preload" href="{{pluginResources}}/Fonts/MiSans-Regular.ttf" as="font" />
+</head>
+
+<body id="body">
+    <div id="list">
+        {{each data.results.records item}}
+        <div class="item">
+            <img src="{{pluginResources}}/Wiki/search/imgs/{{item.content.star}}star.png" class="item-bg">
+            <img src="{{item.content.contentUrl}}" class="item-icon">
+            <div class="item-name">{{item.content.star}}{{item.name}}</div>
+        </div>
+        {{/each}}
+    </div>
+
+    <script>
+        const itemEleArr = document.querySelectorAll(".item")
+        itemEleArr.forEach(ele => {
+            const char = ele.innerText.charAt(0)
+            switch (char) {
+                case "5":
+                    ele.getElementsByClassName("item-icon")[0].style.boxShadow = "inset 0px -17px 17px rgb(255, 247, 144,0.5)"
+                    break
+                case "4":
+                    ele.getElementsByClassName("item-icon")[0].style.boxShadow = "inset 0px -17px 17px rgb(203, 130, 240,0.5)"
+                    break
+                case "3":
+                    ele.getElementsByClassName("item-icon")[0].style.boxShadow = "inset 0px -17px 17px rgb(131, 211, 255,0.5)"
+                    break
+                case "2":
+                    ele.getElementsByClassName("item-icon")[0].style.boxShadow = "inset 0px -17px 17px rgb(160, 250, 180,0.5)"
+                    break
+                case "1":
+                    ele.getElementsByClassName("item-icon")[0].style.boxShadow = "inset 0px -17px 17px rgb(225, 225, 225,0.5)"
+                    break
+                default:
+                    ele.getElementsByClassName("item-icon")[0].style.boxShadow = "inset 0px -17px 17px rgb(225, 168, 30,0.5)"
+            }
+
+            ele.getElementsByClassName("item-name")[0].innerText = ele.getElementsByClassName("item-name")[0].innerText.replace(/^([1-5]|null)/, '')
+        })
+    </script>
+</body>
+
+</html>

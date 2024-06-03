@@ -27,13 +27,30 @@ export class Guide extends plugin {
         const message = match[2]
 
         const wiki = new Wiki()
+
+        let typeList = await wiki.getTypeList(message)
+        if (typeList.status) {
+            let imageCard = await Render.wikiSearch(typeList.data)
+            await e.reply(imageCard)
+            return true
+        }
+
         const name = await wiki.getAlias(message)
         const entryData = await wiki.getEntry(name)
 
         if (!entryData.status) {
             logger.warn(`[Waves-Plugin] 未能获取图鉴内容：${message}`)
             if (e.msg.startsWith("~") || e.msg.startsWith("～") || e.msg.startsWith("鸣潮")) {
-                await e.reply(`未能获取到${message}的图鉴，请检查输入是否正确`)
+                logger.info(`[Waves-Plugin] 尝试搜索图鉴：${message}`)
+                let result = await wiki.search(message)
+                if (!result.status) {
+                    logger.warn(`[Waves-Plugin] 未能搜索到图鉴内容：${message}`)
+                    await e.reply(`未能获取到${message}的图鉴，请检查输入是否正确`)
+                    return false
+                } else {
+                    let imageCard = await Render.wikiSearch(result.data)
+                    await e.reply([`未能获取到${message}的图鉴，你是指以下内容吗？`, imageCard])
+                }
             }
             return false
         }

@@ -139,6 +139,9 @@ class Wiki {
             const response = await axios.post(CONSTANTS.WIKI_SEARCH_URL, data, { headers: CONSTANTS.REQUEST_HEADERS_BASE });
 
             if (response.data.code === 200) {
+                if (response.data.data.results === null) {
+                    return { status: false, msg: '未找到该词条的Wiki信息' };
+                }
                 logger.info(`搜索Wiki成功`);
                 return { status: true, data: response.data.data };
             } else {
@@ -148,6 +151,21 @@ class Wiki {
         } catch (error) {
             logger.error('搜索Wiki失败，疑似网络问题：\n', error);
             return { status: false, msg: '搜索Wiki失败，疑似网络问题，请检查控制台日志' };
+        }
+    }
+
+    // 搜索类型
+    async getTypeList(type) {
+        let catalogueId = Object.keys(CONSTANTS.CATALOGUEID_MAP).find(key => CONSTANTS.CATALOGUEID_MAP[key] === type);
+        if (catalogueId) {
+            const response = await this.getPage(catalogueId);
+            if (response.status) {
+                return { status: true, data: response.data };
+            } else {
+                return { status: false, msg: response.msg };
+            }
+        } else {
+            return { status: false, msg: '未找到该类型' };
         }
     }
 }
