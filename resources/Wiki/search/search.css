@@ -13,15 +13,16 @@
 }
 
 #body {
-    width: 824px;
+    width: 1196px;
     height: auto;
     padding: 50px;
     font-family: "Misans";
+    background: url(./imgs/search.png) no-repeat;
 }
 
 #list {
     display: grid;
-    grid-template-columns: 166px 166px 166px 166px;
+    grid-template-columns: 166px 166px 166px 166px 166px 166px;
     column-gap: 20px;
     row-gap: 20px;
 }
