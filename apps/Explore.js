@@ -11,7 +11,7 @@ export class Explore extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)(探索度|地图).*$",
+                    reg: "^(～|~|鸣潮)(探索度|地图)(\\d{9})?$",
                     fnc: "explore"
                 }
             ]

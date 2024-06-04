@@ -11,7 +11,7 @@ export class Challenge extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)?(挑战数据|全息战略).*$",
+                    reg: "^(～|~|鸣潮)?(挑战数据|全息战略)(\\d{9})?$",
                     fnc: "challenge"
                 }
             ]

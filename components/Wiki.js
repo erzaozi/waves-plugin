@@ -58,24 +58,37 @@ class Wiki {
     }
 
     // 根据名字获取Wiki索引
-    async getRecord(name) {
-        for (const catalogueId in CONSTANTS.CATALOGUEID_MAP) {
-            const response = await this.getPage(catalogueId);
+    async getRecord(name, type = '') {
+        if (type) {
+            const response = await this.getPage(type);
             if (response.status) {
                 const records = response.data.results.records;
                 for (const record of records) {
                     if (record.name === name) {
-                        return { status: true, record: record, type: catalogueId }
+                        return { status: true, record: record, type: type }
                     }
                 }
             }
+            return { status: false, msg: '未找到该词条的Wiki信息' }
+        } else {
+            for (const catalogueId in CONSTANTS.CATALOGUEID_MAP) {
+                const response = await this.getPage(catalogueId);
+                if (response.status) {
+                    const records = response.data.results.records;
+                    for (const record of records) {
+                        if (record.name === name) {
+                            return { status: true, record: record, type: catalogueId }
+                        }
+                    }
+                }
+            }
+            return { status: false, msg: '未找到该词条的Wiki信息' }
         }
-        return { status: false, msg: '未找到该词条的Wiki信息' }
     }
 
     // 根据名字获取Wiki详情
-    async getEntry(name) {
-        const recordData = await this.getRecord(name);
+    async getEntry(name, type = '') {
+        const recordData = await this.getRecord(name, type);
         if (recordData.status) {
             const linkId = recordData.record.content.linkId;
             const entryData = await this.getEntryDetail(linkId);

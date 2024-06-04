@@ -11,7 +11,7 @@ export class UserInfo extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)(信息|卡片).*$",
+                    reg: "^(～|~|鸣潮)(信息|卡片)(\\d{9})?$",
                     fnc: "userInfo"
                 }
             ]

@@ -11,7 +11,7 @@ export class Calabash extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)?(数据坞|声骸).*$",
+                    reg: "^(～|~|鸣潮)?(数据坞|声骸)(\\d{9})?$",
                     fnc: "calabash"
                 }
             ]

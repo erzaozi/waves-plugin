@@ -2,6 +2,20 @@ import plugin from '../../../lib/plugins/plugin.js'
 import Wiki from '../components/Wiki.js';
 import Render from '../model/render.js'
 
+const typeMap = {
+    "共鸣者": "1105",
+    "武器": "1106",
+    "声骸": "1107",
+    "合鸣效果": "1219",
+    "敌人": "1158",
+    "可合成道具": "1264",
+    "道具合成图纸": "1265",
+    "补给": "1217",
+    "资源": "1161",
+    "素材": "1218",
+    "特殊道具": "1223"
+};
+
 export class Guide extends plugin {
     constructor() {
         super({
@@ -24,7 +38,7 @@ export class Guide extends plugin {
             return false
         }
 
-        const message = match[2]
+        let message = match[2]
 
         const wiki = new Wiki()
 
@@ -35,8 +49,17 @@ export class Guide extends plugin {
             return true
         }
 
+        let type = "";
+        for (const key in typeMap) {
+            if (message.includes(key)) {
+                message = message.replace(key, "")
+                type = typeMap[key];
+                break;
+            }
+        }
+
         const name = await wiki.getAlias(message)
-        const entryData = await wiki.getEntry(name)
+        const entryData = await wiki.getEntry(name, type)
 
         if (!entryData.status) {
             logger.warn(`[Waves-Plugin] 未能获取图鉴内容：${message}`)
