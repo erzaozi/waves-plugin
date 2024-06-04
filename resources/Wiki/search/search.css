@@ -29,7 +29,7 @@
 .item {
     position: relative;
     overflow: hidden;
-    height: 233px;
+    height: 348px;
     background-color: #000;
     border-radius: 6px;
 }
@@ -38,20 +38,26 @@
     position: absolute;
     top: 0px;
     width: 166px;
-    height: 213px;
+    height: 348px;
 }
 
 .item-icon {
     position: absolute;
     top: 0px;
     width: 166px;
+    height: 284px;
+    object-fit: cover;
+    object-position: top;
 }
 
 .item-name {
     position: relative;
-    top: 195px;
+    top: 300px;
     width: 166px;
     color: white;
-    font-size: 24px;
+    font-size: 20px;
     text-align: center;
+    overflow: hidden;
+    height: 40px;
+    line-height: 20px;
 }
