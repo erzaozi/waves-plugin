@@ -42,11 +42,13 @@ export class Guide extends plugin {
 
         const wiki = new Wiki()
 
-        let typeList = await wiki.getTypeList(message)
-        if (typeList.status) {
-            let imageCard = await Render.wikiSearch(typeList.data)
-            await e.reply(imageCard)
-            return true
+        if (e.msg.startsWith("~") || e.msg.startsWith("～") || e.msg.startsWith("鸣潮")) {
+            let typeList = await wiki.getTypeList(message)
+            if (typeList.status) {
+                let imageCard = await Render.wikiSearch(typeList.data)
+                await e.reply(imageCard)
+                return true
+            }
         }
 
         let type = "";
