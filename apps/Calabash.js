@@ -27,7 +27,7 @@ export class Calabash extends plugin {
         const match = e.msg.match(/\d{9}$/);
 
         if (!accountList.length) {
-            if (match || (e.at && !await redis.get(`Yunzai:waves:bind:${e.at}`))) {
+            if (match || (e.at && await redis.get(`Yunzai:waves:bind:${e.at}`))) {
                 const publicCookie = await waves.getPublicCookie();
                 if (!publicCookie) {
                     return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行绑定');
