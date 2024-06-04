@@ -218,7 +218,7 @@ class Render {
         data.content.modules[0].components[1].tabs[0].content = replace(data.content.modules[0].components[1].tabs[0].content)
 
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'wikiProps',
+            saveId: 'wikiEnemy',
             imgType: 'png',
             tplFile: `${pluginResources}/Wiki/enemy/enemy.html`,
             pluginResources,

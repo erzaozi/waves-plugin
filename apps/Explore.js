@@ -57,6 +57,11 @@ export class Explore extends plugin {
                 return;
             }
 
+            if (match) {
+                account.roleId = match[0];
+                await redis.set(`Yunzai:waves:bind:${e.user_id}`, account.roleId);
+            }
+
             const [baseData, exploreData] = await Promise.all([
                 waves.getBaseData(account.serverId, account.roleId, account.token),
                 waves.getExploreData(account.serverId, account.roleId, account.token)

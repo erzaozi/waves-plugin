@@ -1,6 +1,6 @@
 @font-face {
     font-family: "MiSans";
-    src: url("./fonts/MiSans-Regular.ttf");
+    src: url("../../Fonts/MiSans-Regular.ttf");
     font-weight: normal;
     font-style: normal;
 }
@@ -15,7 +15,7 @@
 #body {
     width: 1081.8px;
     height: auto;
-    background: url(./imgs/template.png) no-repeat;
+    background: url(./imgs/enemy.png) no-repeat;
     font-family: "MiSans";
 }
 
