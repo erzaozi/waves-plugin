@@ -35,6 +35,8 @@ export class BindToken extends plugin {
             token = message;
         } else if (/^\d{9}$/.test(message)) {
             await redis.set(`Yunzai:waves:bind:${e.user_id}`, message);
+            await e.reply("绑定成功！")
+            return true;
         } else {
             const [mobile, code] = message.split(":");
 

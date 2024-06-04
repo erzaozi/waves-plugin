@@ -19,13 +19,15 @@ export class Calabash extends plugin {
     }
 
     async calabash(e) {
+
+        if (e.at) e.user_id = e.at;
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
         const waves = new Waves();
 
         const match = e.msg.match(/\d{9}$/);
 
         if (!accountList.length) {
-            if (match) {
+            if (match || (e.at && !await redis.get(`Yunzai:waves:bind:${e.at}`))) {
                 const publicCookie = await waves.getPublicCookie();
                 if (!publicCookie) {
                     return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行绑定');
@@ -49,8 +51,13 @@ export class Calabash extends plugin {
                 return;
             }
 
+            if (e.at) {
+                account.roleId = await redis.get(`Yunzai:waves:bind:${e.at}`)
+            }
+
             if (match) {
                 account.roleId = match[0];
+                await redis.set(`Yunzai:waves:bind:${e.user_id}`, account.roleId);
             }
 
             const [baseData, CalabashData] = await Promise.all([
