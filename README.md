@@ -56,6 +56,7 @@ pnpm install --filter=waves-plugin
 - [x] 官方公告推送
 - [x] 角色攻略
 - [x] 抽卡模拟器
+- [x] 随机表情包
 - [ ] 角色卡片查询
 
 ## 功能列表
