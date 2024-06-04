@@ -209,6 +209,25 @@ class Render {
         return base64
     }
 
+    async wikiEnemy(data) {
+        function replace(str) {
+            return str.replace(/\\"/g, '"').replace(/\\n/g, '')
+        }
+
+        data.content.modules[0].components[0].content = replace(data.content.modules[0].components[0].content)
+        data.content.modules[0].components[1].tabs[0].content = replace(data.content.modules[0].components[1].tabs[0].content)
+
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'wikiProps',
+            imgType: 'png',
+            tplFile: `${pluginResources}/Wiki/enemy/enemy.html`,
+            pluginResources,
+            data
+        })
+
+        return base64
+    }
+
     async wikiProps(data) {
         function replace(str) {
             return str.replace(/\\"/g, '"').replace(/\\n/g, '')

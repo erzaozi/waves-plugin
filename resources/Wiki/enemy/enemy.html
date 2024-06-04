@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" type="text/css" href="{{pluginResources}}/Wiki/enemy/enemy.css" />
+    <link rel="preload" href="{{pluginResources}}/Fonts/MiSans-Regular.ttf" as="font" />
+</head>
+
+<body id="body" data-content='{{data}}'>
+
+    <div id="container">
+        <div id="left">
+            <div id="icon-frame"></div>
+            <div id="desc"></div>
+            <div id="meterials"></div>
+
+        </div>
+
+        <div id="right">
+            <div id="name"></div>
+            <div id="attribute"></div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+
+</body>
+
+<script>
+    const dataContent = JSON.parse(document.getElementById('body').getAttribute('data-content'))
+    document.getElementById("meterials").innerHTML = dataContent.content.modules[0].components[0].content
+    document.getElementById("attribute").innerHTML = dataContent.content.modules[0].components[1].tabs[0].content
+    document.getElementById("name").innerText = dataContent.name
+    const originTable = document.querySelector("#meterials tbody")
+    const rows = originTable.querySelectorAll("tr")
+    const pic = rows[0].querySelector("img").src
+    document.querySelector("#meterials table").style.height = document.querySelector("#meterials table").offsetHeight - rows[0].offsetHeight + "px"
+    originTable.removeChild(rows[0])
+    const descEle = rows[rows.length - 1]
+    document.querySelector("#meterials table").style.height = document.querySelector("#meterials table").offsetHeight - descEle.previousElementSibling.offsetHeight - descEle.offsetHeight + "px"
+    originTable.removeChild(descEle.previousElementSibling)
+    originTable.removeChild(descEle)
+    let type, level
+    rows.forEach(ele => {
+        if (ele.innerText.startsWith("种类")) {
+            document.querySelector("#meterials table").style.height = document.querySelector("#meterials table").offsetHeight - ele.offsetHeight + "px"
+            originTable.removeChild(ele)
+        }
+        if (ele.innerText.startsWith("级别")) {
+            document.querySelector("#meterials table").style.height = document.querySelector("#meterials table").offsetHeight - ele.offsetHeight + "px"
+            originTable.removeChild(ele)
+        }
+    })
+    document.getElementById("icon-frame").innerHTML = `<img src="${pic}" id="icon">`
+    descEle.querySelectorAll("div").forEach(ele => {
+        document.getElementById("desc").insertAdjacentElement('beforeend', ele)
+    })
+    document.querySelector("#attribute table").style.height = document.querySelector("#attribute table").offsetHeight * 2.85 + "px"
+    let defenseEle = document.querySelectorAll("#attribute table tr")[0]
+    defenseEle.parentNode.removeChild(defenseEle)
+</script>
+
+</html>

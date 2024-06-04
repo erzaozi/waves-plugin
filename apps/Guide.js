@@ -74,9 +74,9 @@ export class Guide extends plugin {
             case "1219":
                 await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有合鸣效果：${message}的图鉴`])
                 break
-            // 敌人
             case "1158":
-                await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有敌人：${message}的图鉴`])
+                imageCard = await Render.wikiEnemy(entryData.record)
+                await e.reply(imageCard)
                 break
             case "1264":
                 imageCard = await Render.wikiProps(entryData.record)
