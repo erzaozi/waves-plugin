@@ -27,11 +27,17 @@ export class Calabash extends plugin {
         const match = e.msg.match(/\d{9}$/);
 
         if (!accountList.length) {
-            if (match || (e.at && await redis.get(`Yunzai:waves:bind:${e.at}`))) {
-                const publicCookie = await waves.getPublicCookie();
+            if (match || await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
+                let publicCookie = await waves.getPublicCookie();
                 if (!publicCookie) {
                     return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行绑定');
                 } else {
+                    if (match) {
+                        publicCookie.roleId = match[0];
+                        await redis.set(`Yunzai:waves:bind:${e.user_id}`, publicCookie.roleId);
+                    } else if (await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
+                        publicCookie.roleId = await redis.get(`Yunzai:waves:bind:${e.user_id}`);
+                    }
                     accountList.push(publicCookie);
                 }
             } else {
@@ -49,15 +55,6 @@ export class Calabash extends plugin {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新绑定Token` });
                 deleteroleId.push(account.roleId);
                 return;
-            }
-
-            if (e.at) {
-                account.roleId = await redis.get(`Yunzai:waves:bind:${e.at}`)
-            }
-
-            if (match) {
-                account.roleId = match[0];
-                await redis.set(`Yunzai:waves:bind:${e.user_id}`, account.roleId);
             }
 
             const [baseData, CalabashData] = await Promise.all([
