@@ -4,6 +4,7 @@ import qs from 'qs';
 
 const CONSTANTS = {
     LOGIN_URL: 'https://api.kurobbs.com/user/sdkLogin',
+    REFRESH_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/refreshData',
     GAME_DATA_URL: 'https://api.kurobbs.com/gamer/widget/game3/refresh',
     BASE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/baseData',
     ROLE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/roleData',
@@ -75,6 +76,32 @@ class Waves {
         }
     }
 
+    // 刷新资料
+    async refreshData(serverId, roleId, token) {
+
+        let data = qs.stringify({
+            'gameId': 3,
+            'serverId': serverId,
+            'roleId': roleId
+        });
+
+        try {
+            const response = await axios.post(CONSTANTS.REFRESH_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+
+            if (response.data.code === 200) {
+                logger.info('刷新资料成功');
+                return { status: true, data: response.data.data };
+            } else {
+                logger.error('刷新资料失败：', response.data.msg);
+                return { status: false, msg: response.data.msg };
+            }
+        } catch (error) {
+            logger.error('刷新资料失败，疑似网络问题：\n', error);
+            return { status: false, msg: '刷新资料失败，疑似网络问题，请检查控制台日志' };
+        }
+    }
+
+
     // 日常数据
     async getGameData(token) {
 
@@ -107,6 +134,8 @@ class Waves {
     // 我的资料
     async getBaseData(serverId, roleId, token) {
 
+        await this.refreshData(serverId, roleId, token)
+
         let data = qs.stringify({
             'gameId': 3,
             'serverId': serverId,
@@ -135,6 +164,8 @@ class Waves {
 
     // 共鸣者
     async getRoleData(serverId, roleId, token) {
+
+        await this.refreshData(serverId, roleId, token)
 
         let data = qs.stringify({
             'gameId': 3,
@@ -165,6 +196,8 @@ class Waves {
     // 数据坞
     async getCalabashData(serverId, roleId, token) {
 
+        await this.refreshData(serverId, roleId, token)
+
         let data = qs.stringify({
             'gameId': 3,
             'serverId': serverId,
@@ -193,6 +226,8 @@ class Waves {
 
     // 挑战数据
     async getChallengeData(serverId, roleId, token) {
+
+        await this.refreshData(serverId, roleId, token)
 
         let data = qs.stringify({
             'gameId': 3,
@@ -224,6 +259,8 @@ class Waves {
     // 探索数据
     async getExploreData(serverId, roleId, token) {
 
+        await this.refreshData(serverId, roleId, token)
+
         let data = qs.stringify({
             'gameId': 3,
             'serverId': serverId,
@@ -254,6 +291,8 @@ class Waves {
     // 获取角色详细信息
     async getRoleDetail(serverId, roleId, id, token) {
 
+        await this.refreshData(serverId, roleId, token)
+
         let data = qs.stringify({
             'serverId': serverId,
             'roleId': roleId,
@@ -283,6 +322,8 @@ class Waves {
 
     // 签到
     async signIn(serverId, roleId, userId, token) {
+
+        await this.refreshData(serverId, roleId, token)
 
         let data = qs.stringify({
             'gameId': 3,
@@ -355,6 +396,7 @@ class Waves {
         return false;
     }
 
+    // 获取活动列表
     async getEventList() {
 
         let data = qs.stringify({

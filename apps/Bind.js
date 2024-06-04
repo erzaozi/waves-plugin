@@ -33,6 +33,8 @@ export class BindToken extends plugin {
 
         if (message.startsWith("eyJhbGc")) {
             token = message;
+        } else if (/^\d{9}$/.test(message)) {
+            await redis.set(`Yunzai:waves:bind:${e.user_id}`, message);
         } else {
             const [mobile, code] = message.split(":");
 
