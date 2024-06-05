@@ -1,4 +1,5 @@
 waves_auto_signin_list: []
 waves_auto_push_list: []
 waves_auto_news_list: []
+news_push_time: 0 0/5 * * * ? 
 use_public_cookie: true

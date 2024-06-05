@@ -110,6 +110,58 @@ export function supportGuoba() {
           },
         },
         {
+          field: "waves_auto_news_lists",
+          label: "公告推送配置",
+          bottomHelpMessage: "公告推送列表",
+          component: "GSubForm",
+          componentProps: {
+            multiple: true,
+            schemas: [
+              {
+                field: "push_bot",
+                label: "推送使用的机器人",
+                component: "Input",
+                required: true,
+                componentProps: {
+                  placeholder: '请输入机器人账号ID',
+                },
+              },
+              {
+                field: "is_group",
+                label: "是否为群号",
+                bottomHelpMessage: "打开后请在下方输入群号，关闭请在下方输入用户账号",
+                component: "Switch",
+              },
+              {
+                field: "push_id",
+                label: "公告推送ID",
+                component: "Input",
+                required: true,
+                componentProps: {
+                  placeholder: '请输入ID',
+                },
+              },
+            ],
+          },
+        },
+        {
+          field: 'news_push_time',
+          label: 'cron',
+          bottomHelpMessage: '在指定的时间更新',
+          component: 'EasyCron',
+          componentProps: {
+            placeholder: '请输入或选择Cron表达式',
+          },
+        },
+        {
+          component: "Divider",
+          label: "Waves 其他配置",
+          componentProps: {
+            orientation: "left",
+            plain: true,
+          },
+        },
+        {
           field: "use_public_cookie",
           label: "使用公共Token",
           bottomHelpMessage: "允许未绑定用户使用绑定用户的Token进行查询",
@@ -125,6 +177,15 @@ export function supportGuoba() {
         config["waves_auto_push_lists"] = [];
         config["waves_auto_push_list"].forEach(user => {
           config["waves_auto_push_lists"].push({ push_bot: user.split(":")[0], push_group: user.split(":")[1], push_user: user.split(":")[2] });
+        })
+        config["waves_auto_news_lists"] = [];
+        config["waves_auto_news_list"].forEach(user => {
+          let is_group = user.split(":")[1] == "undefined" ? false : true;
+          if (is_group) {
+            config["waves_auto_news_lists"].push({ push_bot: user.split(":")[0], is_group: is_group, push_id: user.split(":")[1] });
+          } else {
+            config["waves_auto_news_lists"].push({ push_bot: user.split(":")[0], is_group: is_group, push_id: user.split(":")[2] });
+          }
         })
         return config
       },
@@ -147,6 +208,12 @@ export function supportGuoba() {
           config["waves_auto_push_list"].push(`${push_bot}:${push_group || "undefined"}:${push_user}`);
         });
         delete config["waves_auto_push_lists"];
+
+        config["waves_auto_news_list"] = [];
+        config["waves_auto_news_lists"].forEach(({ push_bot, is_group, push_id }) => {
+          config["waves_auto_news_list"].push(`${push_bot}:${is_group ? push_id : "undefined"}:${!is_group ? push_id : "undefined"}`);
+        });
+        delete config["waves_auto_news_lists"];
 
         Config.setConfig(config)
         return Result.ok({}, '保存成功~')

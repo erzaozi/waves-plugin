@@ -18,7 +18,7 @@ export class News extends plugin {
         this.task = {
             name: '[Waves-Plugin] 新闻推送',
             fnc: () => this.autoNews(),
-            cron: '*/1 * * * *',
+            cron: Config.getConfig().news_push_time,
             log: false
         }
     }
@@ -43,6 +43,10 @@ export class News extends plugin {
 
     async autoNews() {
         const { waves_auto_news_list: autoPushList } = Config.getConfig();
+
+        if (!autoPushList.length) {
+            return true;
+        }
 
         const waves = new Waves();
         const newsData = await waves.getEventList();
