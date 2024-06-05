@@ -72,9 +72,18 @@ export function supportGuoba() {
           },
         },
         {
+          field: 'signin_time',
+          label: 'cron',
+          bottomHelpMessage: '定时签到',
+          component: 'EasyCron',
+          componentProps: {
+            placeholder: '请输入或选择Cron表达式',
+          },
+        },
+        {
           field: "waves_auto_push_lists",
-          label: "理智值推送配置",
-          bottomHelpMessage: "理智推送列表",
+          label: "体力推送配置",
+          bottomHelpMessage: "体力推送列表",
           component: "GSubForm",
           componentProps: {
             multiple: true,
@@ -90,7 +99,7 @@ export function supportGuoba() {
               },
               {
                 field: "push_group",
-                label: "理智值推送群",
+                label: "体力值推送群",
                 component: "Input",
                 required: false,
                 componentProps: {
@@ -99,7 +108,7 @@ export function supportGuoba() {
               },
               {
                 field: "push_user",
-                label: "理智值推送用户",
+                label: "体力值推送用户",
                 component: "Input",
                 required: true,
                 componentProps: {
@@ -107,6 +116,15 @@ export function supportGuoba() {
                 },
               },
             ],
+          },
+        },
+        {
+          field: 'sanity_push_time',
+          label: 'cron',
+          bottomHelpMessage: '体力检查频率',
+          component: 'EasyCron',
+          componentProps: {
+            placeholder: '请输入或选择Cron表达式',
           },
         },
         {
@@ -147,7 +165,7 @@ export function supportGuoba() {
         {
           field: 'news_push_time',
           label: 'cron',
-          bottomHelpMessage: '在指定的时间更新',
+          bottomHelpMessage: '公告检查频率',
           component: 'EasyCron',
           componentProps: {
             placeholder: '请输入或选择Cron表达式',

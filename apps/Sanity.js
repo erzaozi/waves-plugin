@@ -19,7 +19,7 @@ export class Sanity extends plugin {
         this.task = {
             name: '[Waves-Plugin] 波片推送',
             fnc: () => this.autoPush(),
-            cron: '*/7 * * * *',
+            cron: Config.getConfig().sanity_push_time,
             log: false
         }
     }

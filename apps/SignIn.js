@@ -19,7 +19,7 @@ export class SignIn extends plugin {
         this.task = {
             name: '[Waves-Plugin] 自动签到',
             fnc: () => this.autoSignIn(),
-            cron: '0 4 * * *',
+            cron: Config.getConfig().signin_time,
             log: true
         }
     }
