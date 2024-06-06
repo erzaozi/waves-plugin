@@ -1,9 +1,9 @@
 {
-    "pool_name": "「夜将寒色去」",
+    "pool_name": "「惊霆雨时节」",
     "five_star": {
         "up_pool": [
             {
-                "name": "忌炎"
+                "name": "吟霖"
             }
         ],
         "other_pool": [
@@ -30,13 +30,13 @@
     "four_star": {
         "up_pool": [
             {
-                "name": "丹瑾"
+                "name": "桃祈"
             },
             {
-                "name": "炽霞"
+                "name": "秋水"
             },
             {
-                "name": "莫特斐"
+                "name": "渊武"
             }
         ],
         "other_pool": [
@@ -47,16 +47,16 @@
                 "name": "散华"
             },
             {
-                "name": "桃祈"
+                "name": "莫特斐"
             },
             {
                 "name": "白芷"
             },
             {
-                "name": "秋水"
+                "name": "炽霞"
             },
             {
-                "name": "渊武"
+                "name": "丹瑾"
             },
             {
                 "name": "永夜长明"
