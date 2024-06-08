@@ -39,7 +39,7 @@ export class Gacha extends plugin {
         if (!message) {
             let data = await redis.get(`Yunzai:waves:gacha:${e.user_id}`);
             if (!data) {
-                await e.reply(`请在命令后抓包获得的JSON请求体\n例：~抽卡统计{"recordId":"2b798246702...\n抓包详细步骤请发送[~抽卡帮助]`);
+                await e.reply(`请在命令后面携带请求体或链接\n例：~抽卡统计{"recordId":"2b798246702...\n各平台抽卡记录获取详细步骤请发送[~抽卡帮助]`);
                 return true;
             } else {
                 message = data;
@@ -72,6 +72,9 @@ export class Gacha extends plugin {
                 await e.reply("无法解析链接，请复制完整链接");
                 return true;
             }
+        } else {
+            await e.reply("未能解析成功，请在命令后面携带请求体或链接，各平台抽卡记录获取详细步骤请发送[~抽卡帮助]");
+            return true;
         }
 
         await e.reply("正在分析您的抽卡记录，请稍后...");
