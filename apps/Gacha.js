@@ -33,6 +33,9 @@ export class Gacha extends plugin {
 
     async gachaCount(e) {
         let message = e.msg.replace(/^(～|~|鸣潮)(常驻(武器|角色)|限定(武器|角色))?抽卡(统计|分析|记录)/, "");
+        //适配go-cqhttp消息体，仅限抽卡bug
+        message = message.trim();
+        message = message.replaceAll("amp;", "");
 
         let jsonData = {};
 
