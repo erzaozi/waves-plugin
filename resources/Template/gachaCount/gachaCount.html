@@ -14,18 +14,24 @@
         <div id="user-uid">{{GachaData.playerId}}</div>
     </div>
     <div id="pool-type">{{GachaData.pool}}</div>
+    <div id="statistic">
+        <div class="statistic-value">{{GachaData.total}}抽</div>
+        <div class="statistic-value">{{GachaData.five_num}}个</div>
+        <div class="statistic-value">{{GachaData.four_num}}个</div>
+        <div class="statistic-value">{{GachaData.average}}星声</div>
+    </div>
+    </div>
     <ul id="gacha-list">
-        {{each GachaData.five_star five_star idx}}
+        {{each GachaData.five_star five_star}}
         <li class="role-card">
-            <div class="role-avatar"><img src="{{five_star.avatar}}" style="width: 197px;"></div>
+            <div class="role-avatar">
+                <img src="{{five_star.avatar}}" style="width: 130px;">
+            </div>
+            <div class="role-time">{{five_star.time}}</div>
             <div class="myProgress">
-                <div class="myBar" data-times="{{five_star.times}}"></div>
+                <div class="myBar" times="{{five_star.times}}"></div>
             </div>
-            <div class="tags">
-                {{each five_star.tags tags}}
-                <span class="tag">{{tags}}</span>
-                {{/each}}
-            </div>
+            <div class="five-star-times">{{five_star.times}}抽</div>
             <div class="four-stars">
                 {{each five_star.four_star four_star}}
                 <div class="four-star">
@@ -38,12 +44,14 @@
         {{/each}}
     </ul>
     <div id="footer"></div>
-
     <script>
-        document.querySelectorAll('.myBar').forEach(function(bar) {
-            var times = bar.getAttribute('data-times');
-            var width = times / 0.8 + '%';
-            bar.style.width = width;
+        document.querySelectorAll("li").forEach(ele => {
+            const myBar = ele.getElementsByClassName("myBar")[0];
+            const times = Number(myBar.getAttribute("times"));
+            const progress = (times / 80 * 890) + 60;
+
+            ele.getElementsByClassName("myProgress")[0].style.width = progress + "px";
+            myBar.style.backgroundColor = times < 45 ? "#f8f3d4" : times < 70 ? "#fce38a" : "#fbafaf";
         });
     </script>
 </body>

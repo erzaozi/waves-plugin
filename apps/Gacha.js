@@ -135,6 +135,10 @@ export class Gacha extends plugin {
         const wiki = new Wiki();
         const result = {
             "pool": CardPoolTypes[type],
+            "total": data.length,
+            "five_num": data.filter(item => item.qualityLevel === 5).length,
+            "four_num": data.filter(item => item.qualityLevel === 4).length,
+            "average": ((data.findIndex(item => item.qualityLevel === 5) === -1 || data.filter(item => item.qualityLevel === 5).length === 0) ? 0 : (data.length - data.findIndex(item => item.qualityLevel === 5)) / data.filter(item => item.qualityLevel === 5).length) * 160,
             "five_star": []
         };
 
@@ -165,7 +169,7 @@ export class Gacha extends plugin {
                 result["five_star"].push({
                     "avatar": pluginResources + "/Template/gachaCount/imgs/unknow.png",
                     "times": fiveStarIndexes[0],
-                    "tags": [`${fiveStarIndexes[0]}抽`, data[0].time],
+                    "time": new Date(data[0].time).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' }).replace(/\//g, '-'),
                     "four_star": await getCount4Star(0, fiveStarIndexes[0])
                 });
             }
@@ -178,7 +182,7 @@ export class Gacha extends plugin {
                 return {
                     "avatar": recordData.record.content.contentUrl,
                     "times": interval,
-                    "tags": [`${interval}抽`, interval < 50 ? "欧" : interval < 70 ? "中" : "非", data[index].time, ...((type == 1 || type == 2) && resident.includes(data[index].name) ? ["歪"] : [])],
+                    "time": new Date(data[index].time).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' }).replace(/\//g, '-'),
                     "four_star": await getCount4Star(startIdx, endIdx)
                 };
             });
@@ -188,7 +192,7 @@ export class Gacha extends plugin {
             result["five_star"].push({
                 "avatar": pluginResources + "/Template/gachaCount/imgs/unknow.png",
                 "times": interval,
-                "tags": [`${interval}抽`, data[0].time],
+                "time": new Date(data[0].time).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' }).replace(/\//g, '-'),
                 "four_star": await getCount4Star(0, data.length)
             });
         }
