@@ -100,7 +100,7 @@ export class SignIn extends plugin {
 
             if (deleteroleId.length) {
                 let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
-                Config.setUserConfig(e.user_id, newAccountList);
+                Config.setUserConfig(userId, newAccountList);
             }
 
             if (data.length) Bot[botId]?.pickUser(userId).sendMsg(Bot.makeForwardMsg(data))
