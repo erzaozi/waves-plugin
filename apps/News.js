@@ -30,22 +30,20 @@ export class News extends plugin {
     const data = [];
 
     if (!newsData.status) {
-      data.push({ message: newsData.msg });
-    } else {
-      newsData.data.list.slice(0, 20).forEach((item) => {
-        data.push({
-          message: [
-            segment.image(item.coverUrl),
-            `${item.postTitle}\nhttps://www.kurobbs.com/mc/post/${
-              item.postId
-            }\n\n${new Date(item.publishTime).toLocaleString()}`,
-          ],
-        });
-      });
-    }
-    await e.reply(Bot.makeForwardMsg(data));
-    return true;
-  }
+  data.push({ message: newsData.msg });
+} else {
+  newsData.data.list.slice(0, 20).forEach((item) => {
+    data.push({
+      message: [
+        segment.image(item.coverUrl),
+        `[鸣潮·公告]\n${item.postTitle}\n \n链接: https://www.kurobbs.com/mc/post/${item.postId}\n发布时间:\n${new Date(item.publishTime).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false, hour: '2-digit', minute: '2-digit', year: 'numeric', month: '2-digit', day: '2-digit' })}`,
+      ],
+    });
+  });
+}
+await e.reply(Bot.makeForwardMsg(data));
+return true;
+}
 
   async autoNews() {
     const { waves_auto_news_list: autoPushList } = Config.getConfig();
