@@ -55,6 +55,11 @@ export class Help extends plugin {
                         "desc": "绑定账户Token教程"
                     },
                     {
+                        "icon": 20,
+                        "title": "~绑定tap",
+                        "desc": "绑定taptap账号，请现在App绑定鸣潮账号"
+                    },
+                    {
                         "icon": 3,
                         "title": "~解绑",
                         "desc": "解绑账户Token"
@@ -108,6 +113,11 @@ export class Help extends plugin {
                         "icon": 13,
                         "title": "~抽卡记录",
                         "desc": "抽卡记录"
+                    },
+                    {
+                        "icon": 21,
+                        "title": "~安可面板",
+                        "desc": "角色面板，详细词条请先绑定tap账号"
                     },
                     {
                         "icon": 14,

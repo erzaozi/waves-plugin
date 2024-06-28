@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" type="text/css" href="{{pluginResources}}/Template/charProfile/charProfile.css" />
+    <link rel="preload" href="{{pluginResources}}/Fonts/MiSans-Regular.ttf" as="font" />
+</head>
+
+<body id="body" data-content='{{data}}'>
+    <div id="container">
+        <div id="header">
+            <div id="user-id">UID:{{data.uid}}</div>
+            <img src="{{pluginResources}}/Template/charProfile/imgs/attribute/{{data.roleData.data.role.attributeId}}.png" id="attribute-icon">
+            <div id="role-name">{{data.roleData.data.role.roleName}}</div>
+            <div id="role-level">LV.{{data.roleData.data.role.level}}</div>
+            <img src="{{pluginResources}}/Template/charProfile/imgs/{{data.roleData.data.role.starLevel}}star.png" id="role-star">
+            <img src="{{data.roleData.data.role.rolePicUrl}}" id="role-pic">
+            <div id="chain">
+                <div id="chain-list">
+                    {{each data.roleData.data.chainList chain}}
+                    <img src="{{chain.iconUrl}}"
+                        actived="{{chain.unlocked}}">
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+        <div id="skill">
+            <div id="skill-list">
+                {{each data.roleData.data.skillList skill idx}}
+                {{if idx<5}}
+                <div class="skill-item">
+                    <img src="{{skill.skill.iconUrl}}"
+                        class="skill-icon">
+                    <div class="skill-level">LV.{{skill.level}}</div>
+                </div>
+                {{/if}}
+                {{/each}}
+            </div>
+        </div>
+        <div id="table">
+            <div>
+                <div id="weapon-icon-box">
+                    <img src="{{data.roleData.data.weaponData.weapon.weaponIcon}}"
+                        id="weapon-icon">
+                    <div class="phantom-level">LV.{{data.roleData.data.weaponData.level}}</div>
+                </div>
+                <div class="phantom-header-right">
+                    <div id="weapon-name">{{data.roleData.data.weaponData.weapon.weaponName}}</div>
+                    <div id="weapon-level-box">
+                        <span id="reson-level">精{{data.roleData.data.weaponData.resonLevel}}</span>
+                    </div>
+                    <img src="{{pluginResources}}/Template/charProfile/imgs/{{data.roleData.data.weaponData.weapon.weaponStarLevel}}star.png" id="weapon-star">
+                </div>
+                <div id="weapon-effect-name">{{data.roleData.data.weaponData.weapon.weaponEffectName}}</div>
+                <div id="effect-description">{{data.roleData.data.weaponData.weapon.effectDescription}}</div>
+            </div>
+            {{each data.roleData.data.phantomData.equipPhantomList phantom}}
+            <div class="phantom-list">
+                <div class="phantom-header">
+                    <img src="{{phantom.phantomProp.iconUrl}}"
+                        class="phantom-icon">
+                    <div class="phantom-level">+{{phantom.level}}</div>
+                    <div class="phantom-header-right">
+                        <div class="phantom-name">{{phantom.phantomProp.name}}</div>
+                        <span class="phantom-cost">COST <strong>{{phantom.cost}}</strong></span>
+                        <img src="{{phantom.fetterDetail.iconUrl}}">
+                        <img src="{{pluginResources}}/Template/charProfile/imgs//{{phantom.quality}}star.png">
+                    </div>
+                </div>
+                <div class="phantom-attribute"></div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <script>
+        const dataContent = JSON.parse(document.getElementById('body').getAttribute('data-content'))
+        if (dataContent.tapRoleData) {
+            document.querySelectorAll(".phantom-list").forEach(Ele => {
+                let phantomName = Ele.getElementsByClassName("phantom-name")[0].textContent
+                let index = dataContent.tapRoleData.equips.findIndex(equip => equip.name === phantomName)
+                if (index !== -1) {
+                    let htmlContent = ''
+                    dataContent.tapRoleData.equips[index].props.forEach(prop => {
+                        htmlContent += `
+                        <div class="phantom-attribute-item">
+                            <span class="phantom-attribute-key">${prop.key}</span> <span class="phantom-attribute-value">${prop.value}</span>
+                        </div>`
+                    })
+                    Ele.getElementsByClassName("phantom-attribute")[0].innerHTML = htmlContent
+                    dataContent.tapRoleData.equips.splice(index, 1)
+                }
+            })
+        }
+        document.getElementById("chain-list").querySelectorAll("img").forEach((img, index) => {
+            if (img.getAttribute("actived") === "true") {
+                img.className = "chain-icon-actived"
+            } else {
+                img.className = "chain-icon-inactived"
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
+import TapTap from '../components/Taptap.js';
 import Config from "../components/Config.js";
 import fetch from 'node-fetch';
 
@@ -28,6 +29,11 @@ export class BindToken extends plugin {
 
     async bindToken(e) {
         const message = e.msg.replace(/^(～|~|鸣潮)(登录|登陆|绑定)/, '').trim();
+
+        if (message.startsWith("tap")) {
+            this.bingTap(e, message);
+            return true;
+        }
 
         const waves = new Waves();
         let token;
@@ -166,5 +172,20 @@ export class BindToken extends plugin {
 
         await e.reply(Bot.makeForwardMsg(tokenList))
         return true;
+    }
+
+    async bingTap(e, message) {
+        message = message.replace(/tap/g, "").trim();
+        if (message === "") return await e.reply("请将TAPTAP账号与鸣潮账号绑定后，发送~绑定tap")
+        const taptap = new TapTap(message);
+        const usability = await taptap.isAvailable();
+        if (usability.status) {
+            let table = Config.getTapTable();
+            table[usability.msg] = message;
+            Config.setTapTable(table);
+            e.reply(`账号可用\nTAPTAP: ${message}\n鸣潮UID: ${usability.msg}`)
+        } else {
+            e.reply(`绑定失败, 原因: ${usability.msg}`)
+        }
     }
 }

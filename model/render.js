@@ -258,6 +258,19 @@ class Render {
 
         return base64
     }
+
+    async charProfile(data) {
+
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'charProfile',
+            imgType: 'png',
+            tplFile: `${pluginResources}/Template/charProfile/charProfile.html`,
+            pluginResources,
+            data
+        })
+
+        return base64
+    }
 }
 
 export default new Render()
