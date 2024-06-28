@@ -4,7 +4,6 @@ import TapTap from '../components/Taptap.js';
 import Config from "../components/Config.js";
 import Wiki from '../components/Wiki.js';
 import Render from '../model/render.js';
-import fs from 'fs'
 
 export class Character extends plugin {
     constructor() {

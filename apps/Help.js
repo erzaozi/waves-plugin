@@ -1,5 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js';
-import { pluginResources } from '../model/path.js'; import Render from '../components/Render.js';
+import Render from '../components/Render.js';
 import { style } from '../resources/help/imgs/config.js';
 import _ from 'lodash';
 

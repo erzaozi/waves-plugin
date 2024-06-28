@@ -57,6 +57,7 @@
                 <div id="effect-description">{{data.roleData.data.weaponData.weapon.effectDescription}}</div>
             </div>
             {{each data.roleData.data.phantomData.equipPhantomList phantom}}
+            {{if phantom}}
             <div class="phantom-list">
                 <div class="phantom-header">
                     <img src="{{phantom.phantomProp.iconUrl}}"
@@ -71,6 +72,7 @@
                 </div>
                 <div class="phantom-attribute"></div>
             </div>
+            {{/if}}
             {{/each}}
         </div>
     </div>
