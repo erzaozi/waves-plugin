@@ -217,8 +217,9 @@
   height: 35px;
   width: 100%;
   background-color: #e1e1e1;
-  margin-top: -4.6px;
-  padding-top: 3px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 35px;
 }
 
 #effect-description {
@@ -229,7 +230,6 @@
   padding: 14px 14px 14px 14px;
   font-size: 18px;
   border-radius: 0px 0px 15px 15px;
-  background-color: #f0ecf0;
   text-align: left;
 }
 

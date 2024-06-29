@@ -93,7 +93,15 @@
                     dataContent.tapRoleData.equips.splice(index, 1)
                 }
             })
+        } else {
+            document.querySelectorAll(".phantom-list").forEach(Ele => {
+                Ele.getElementsByClassName("phantom-attribute")[0].innerHTML = '绑定Taptap查看详细词条';
+                Ele.getElementsByClassName("phantom-attribute")[0].style.color = '#7b7774';
+                Ele.getElementsByClassName("phantom-attribute")[0].style.marginTop = '80px';
+                Ele.getElementsByClassName("phantom-attribute")[0].style.fontSize = '18px';
+            });
         }
+
         const colorMap = {
             1: "rgb(53, 152, 219)",
             2: "rgb(224, 62, 45)",
