@@ -31,7 +31,7 @@ export class BindToken extends plugin {
         const message = e.msg.replace(/^(～|~|鸣潮)(登录|登陆|绑定)/, '').trim();
 
         if (message && (message.toLowerCase().includes("taptap") || message.toLowerCase().includes("tap"))) {
-            const tap_id = message.match(/\d{9}/);
+            const tap_id = message.match(/\d+/);
             if (tap_id) {
                 const taptap = new TapTap();
                 const usability = await taptap.isAvailable(tap_id[0]);

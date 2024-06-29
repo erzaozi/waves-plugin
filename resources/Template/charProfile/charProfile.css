@@ -69,7 +69,7 @@
   right: 6px;
   top: 20px;
   height: 476px;
-  -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 90px);
+  mask-image: linear-gradient(to top, transparent 0%, #000 90px);
 }
 
 #chain {
@@ -175,7 +175,7 @@
   float: left;
   height: 104px;
   width: 104px;
-  -webkit-mask-image: linear-gradient(to left, transparent 0%, #000 70%);
+  mask-image: linear-gradient(to left, transparent 0%, #000 70%);
 }
 
 #weapon-name {
@@ -273,7 +273,7 @@
 .phantom-icon {
   height: 104px;
   float: left;
-  -webkit-mask-image: linear-gradient(to left, transparent 0%, #000 70%);
+  mask-image: linear-gradient(to left, transparent 0%, #000 70%);
 }
 
 .fetter-icon {
