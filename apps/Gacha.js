@@ -138,7 +138,7 @@ export class Gacha extends plugin {
             "total": data.length,
             "five_num": data.filter(item => item.qualityLevel === 5).length,
             "four_num": data.filter(item => item.qualityLevel === 4).length,
-            "average": ((data.findIndex(item => item.qualityLevel === 5) === -1 || data.filter(item => item.qualityLevel === 5).length === 0) ? 0 : (data.length - data.findIndex(item => item.qualityLevel === 5)) / data.filter(item => item.qualityLevel === 5).length) * 160,
+            "average": Math.round(((data.findIndex(item => item.qualityLevel === 5) === -1 || data.filter(item => item.qualityLevel === 5).length === 0) ? 0 : (data.length - data.findIndex(item => item.qualityLevel === 5)) / data.filter(item => item.qualityLevel === 5).length) * 160),
             "five_star": []
         };
 
