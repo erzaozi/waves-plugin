@@ -115,7 +115,7 @@
             const isActive = img.getAttribute("actived") === "true";
             img.className = isActive ? "chain-icon-actived" : "chain-icon-inactived";
 
-            const color = colorMap[dataContent.roleData.data.role.attributeId];
+            const color = colorMap[dataContent.roleDetail.data.role.attributeId];
             img.style.backgroundColor = color;
 
             const factor = isActive ? 1.2 : 0.8;
