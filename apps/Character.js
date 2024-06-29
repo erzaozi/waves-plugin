@@ -60,44 +60,57 @@ export class Character extends plugin {
         let data = [];
         let deleteroleId = [];
 
-        const usability = await waves.isAvailable(accountList[0].token);
+        await Promise.all(accountList.map(async (account) => {
+            const usability = await waves.isAvailable(account.token);
 
-        if (!usability) {
-            data.push({ message: `账号 ${accountList[0].roleId} 的Token已失效\n请重新绑定Token` });
-            deleteroleId.push(accountList[0].roleId);
-        }
+            if (!usability) {
+                data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新绑定Token` });
+                deleteroleId.push(account.roleId);
+                return;
+            }
 
-        if (match) {
-            accountList[0].roleId = match[0];
-            await redis.set(`Yunzai:waves:bind:${e.user_id}`, accountList[0].roleId);
-        }
+            if (match) {
+                account.roleId = match[0];
+                await redis.set(`Yunzai:waves:bind:${e.user_id}`, account.roleId);
+            }
 
-        const roleDataList = await waves.getRoleData(accountList[0].serverId, accountList[0].roleId, accountList[0].token);
+            const roleData = await waves.getRoleData(account.serverId, account.roleId, account.token);
 
-        const char = roleDataList.data.roleList.find(role => role.roleName === name);
-        if (!char) {
-            e.reply(`该账号没有角色 ${name}`);
-            return;
-        }
+            if (!roleData.status) {
+                data.push({ message: roleData.msg });
+                return;
+            }
 
-        const tapId = await redis.get(`Yunzai:waves:taptap:${accountList[0].roleId}`);
-        let tapRoleData;
-        if (tapId) {
-            const taptap = new TapTap();
-            const result = await taptap.getCharInfo(tapId, name);
-            if (result.status) tapRoleData = result.data;
-        }
+            const char = roleData.data.roleList.find(role => role.roleName === name);
 
-        const roleData = await waves.getRoleDetail(accountList[0].serverId, accountList[0].roleId, char.roleId, accountList[0].token);
+            if (!char) {
+                data.push({ message: `该账号没有角色 ${name}` });
+                return;
+            }
 
-        const imageCard = await Render.charProfile({
-            uid: accountList[0].roleId,
-            roleData,
-            tapRoleData
-        });
+            const tapId = await redis.get(`Yunzai:waves:taptap:${account.roleId}`);
+
+            const roleDetail = await waves.getRoleDetail(account.serverId, account.roleId, char.roleId, account.token)
+
+            if (!roleDetail.status) {
+                data.push({ message: roleDetail.msg });
+                return;
+            }
+
+            let tapRoleData;
+            if (tapId) {
+                const taptap = new TapTap();
+                const result = await taptap.getCharInfo(tapId, name);
+                if (result.status) tapRoleData = result.data;
+            }
+
+            const imageCard = await Render.charProfile({ uid: account.roleId, roleDetail, tapRoleData });
+            data.push({ message: imageCard });
+
+        }));
 
         if (deleteroleId.length) {
-            let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
+            const newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
             Config.setUserConfig(e.user_id, newAccountList);
         }
 
@@ -106,7 +119,7 @@ export class Character extends plugin {
             return true;
         }
 
-        await e.reply(imageCard);
+        await e.reply(Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]));
         return true;
     }
 }

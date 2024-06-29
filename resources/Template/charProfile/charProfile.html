@@ -12,16 +12,16 @@
     <div id="container">
         <div id="header">
             <div id="user-id">UID:{{data.uid}}</div>
-            <img src="{{pluginResources}}/Template/charProfile/imgs/attribute/{{data.roleData.data.role.attributeId}}.png"
+            <img src="{{pluginResources}}/Template/charProfile/imgs/attribute/{{data.roleDetail.data.role.attributeId}}.png"
                 id="attribute-icon">
-            <div id="role-name">{{data.roleData.data.role.roleName}}</div>
-            <div id="role-level">LV.{{data.roleData.data.role.level}}</div>
-            <img src="{{pluginResources}}/Template/charProfile/imgs/{{data.roleData.data.role.starLevel}}star.png"
+            <div id="role-name">{{data.roleDetail.data.role.roleName}}</div>
+            <div id="role-level">LV.{{data.roleDetail.data.role.level}}</div>
+            <img src="{{pluginResources}}/Template/charProfile/imgs/{{data.roleDetail.data.role.starLevel}}star.png"
                 id="role-star">
-            <img src="{{data.roleData.data.role.rolePicUrl}}" id="role-pic">
+            <img src="{{data.roleDetail.data.role.rolePicUrl}}" id="role-pic">
             <div id="chain">
                 <div id="chain-list">
-                    {{each data.roleData.data.chainList chain}}
+                    {{each data.roleDetail.data.chainList chain}}
                     <img src="{{chain.iconUrl}}" actived="{{chain.unlocked}}">
                     {{/each}}
                 </div>
@@ -29,7 +29,7 @@
         </div>
         <div id="skill">
             <div id="skill-list">
-                {{each data.roleData.data.skillList skill idx}}
+                {{each data.roleDetail.data.skillList skill idx}}
                 {{if idx<5}} <div class="skill-item">
                     <img src="{{skill.skill.iconUrl}}" class="skill-icon">
                     <div class="skill-level">LV.{{skill.level}}</div>
@@ -41,21 +41,21 @@
     <div id="table">
         <div>
             <div id="weapon-icon-box">
-                <img src="{{data.roleData.data.weaponData.weapon.weaponIcon}}" id="weapon-icon">
-                <div class="phantom-level">LV.{{data.roleData.data.weaponData.level}}</div>
+                <img src="{{data.roleDetail.data.weaponData.weapon.weaponIcon}}" id="weapon-icon">
+                <div class="phantom-level">LV.{{data.roleDetail.data.weaponData.level}}</div>
             </div>
             <div class="phantom-header-right">
-                <div id="weapon-name">{{data.roleData.data.weaponData.weapon.weaponName}}</div>
+                <div id="weapon-name">{{data.roleDetail.data.weaponData.weapon.weaponName}}</div>
                 <div id="weapon-level-box">
-                    <span id="reson-level">精{{data.roleData.data.weaponData.resonLevel}}</span>
+                    <span id="reson-level">精{{data.roleDetail.data.weaponData.resonLevel}}</span>
                 </div>
-                <img src="{{pluginResources}}/Template/charProfile/imgs/{{data.roleData.data.weaponData.weapon.weaponStarLevel}}star.png"
+                <img src="{{pluginResources}}/Template/charProfile/imgs/{{data.roleDetail.data.weaponData.weapon.weaponStarLevel}}star.png"
                     id="weapon-star">
             </div>
-            <div id="weapon-effect-name">{{data.roleData.data.weaponData.weapon.weaponEffectName}}</div>
-            <div id="effect-description">{{data.roleData.data.weaponData.weapon.effectDescription}}</div>
+            <div id="weapon-effect-name">{{data.roleDetail.data.weaponData.weapon.weaponEffectName}}</div>
+            <div id="effect-description">{{data.roleDetail.data.weaponData.weapon.effectDescription}}</div>
         </div>
-        {{each data.roleData.data.phantomData.equipPhantomList phantom}}
+        {{each data.roleDetail.data.phantomData.equipPhantomList phantom}}
         {{if phantom}}
         <div class="phantom-list">
             <div class="phantom-header">

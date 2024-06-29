@@ -213,7 +213,8 @@ export class Help extends plugin {
             { message: '一、下载 TapTap APP，登录 TapTap 账号' },
             { message: '二、搜索框搜索 鸣潮 进入游戏主页，点击底部 在线玩 按钮开启云玩（如果排队需要很久，可以点击右下角 抢先云试玩 即可立即进入）' },
             { message: '三、进入游戏后，登陆界面选择 TapTap 登录，登录 Taptap 账号后，会需要你绑定 原账号手机号 ，绑定成功后即可' },
-            { message: '四、退出云玩，打开自己 TapTap 个人主页，找到ID，向机器人发送[~绑定tap + 账号ID]即可完成绑定' },
+            { message: '四、退出云玩，打开 鸣潮 游戏主页，点击顶部 攻略 选项，点击 数据查询 功能，点击 确认绑定 即可' },
+            { message: '五、打开自己 TapTap 个人主页，找到ID，向机器人发送[~绑定tap + 账号ID]即可完成绑定' }
         ]
         await e.reply(Bot.makeForwardMsg(helpStep))
         return true
