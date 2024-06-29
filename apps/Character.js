@@ -84,7 +84,7 @@ export class Character extends plugin {
             const char = roleData.data.roleList.find(role => role.roleName === name);
 
             if (!char) {
-                data.push({ message: `UID: ${account.roleId} 还未持有共鸣者: ${name}` });
+                data.push({ message: `UID: ${account.roleId} 还未拥有共鸣者 ${name}` });
                 return;
             }
 

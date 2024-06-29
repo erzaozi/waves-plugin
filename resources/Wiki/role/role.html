@@ -37,12 +37,9 @@
 
             <div id="role-info">
                 <ul id="info-frame">
-                    <li class="info-box">{{data.content.modules[0].components[0].role.info[0].text}}</li>
-                    <li class="info-box">{{data.content.modules[0].components[0].role.info[1].text}}</li>
-                    <li class="info-box">{{data.content.modules[0].components[0].role.info[2].text}}</li>
-                    <li class="info-box">{{data.content.modules[0].components[0].role.info[3].text}}</li>
-                    <li class="info-box">{{data.content.modules[0].components[0].role.info[4].text}}</li>
-                    <li class="info-box">{{data.content.modules[0].components[0].role.info[5].text}}</li>
+                    {{each data.content.modules[0].components[0].role.info info}}
+                    <li class="info-box">{{info.text}}</li>
+                    {{/each}}
                 </ul>
             </div>
             <div id="skill">
