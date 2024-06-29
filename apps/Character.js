@@ -21,6 +21,7 @@ export class Character extends plugin {
     }
 
     async character(e) {
+
         if (e.at) e.user_id = e.at;
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
         const waves = new Waves();
@@ -73,31 +74,27 @@ export class Character extends plugin {
 
         const roleDataList = await waves.getRoleData(accountList[0].serverId, accountList[0].roleId, accountList[0].token);
 
-        let charId;
-
-        roleDataList.data.roleList.forEach(role => {
-            if (role.roleName === name) charId = role.roleId;
-        })
-
-        if (!charId) {
-            e.reply(`该账号没有角色${name}`);
+        const char = roleDataList.data.roleList.find(role => role.roleName === name);
+        if (!char) {
+            e.reply(`该账号没有角色 ${name}`);
             return;
         }
 
-        const tapId = Config.getTapTable()[accountList[0].roleId];
-        let tapRoleData, roleData;
-        roleData = await waves.getRoleDetail(accountList[0].serverId, accountList[0].roleId, charId, accountList[0].token);
+        const tapId = await redis.get(`Yunzai:waves:taptap:${accountList[0].roleId}`);
+        let tapRoleData;
         if (tapId) {
-            const taptap = new TapTap(tapId);
-            let result = await taptap.getCharInfo(name);
-            if (result.status) tapRoleData = result.msg
+            const taptap = new TapTap();
+            const result = await taptap.getCharInfo(tapId, name);
+            if (result.status) tapRoleData = result.data;
         }
+
+        const roleData = await waves.getRoleDetail(accountList[0].serverId, accountList[0].roleId, char.roleId, accountList[0].token);
 
         const imageCard = await Render.charProfile({
             uid: accountList[0].roleId,
             roleData,
             tapRoleData
-        })
+        });
 
         if (deleteroleId.length) {
             let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));

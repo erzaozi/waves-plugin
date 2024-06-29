@@ -12,16 +12,17 @@
     <div id="container">
         <div id="header">
             <div id="user-id">UID:{{data.uid}}</div>
-            <img src="{{pluginResources}}/Template/charProfile/imgs/attribute/{{data.roleData.data.role.attributeId}}.png" id="attribute-icon">
+            <img src="{{pluginResources}}/Template/charProfile/imgs/attribute/{{data.roleData.data.role.attributeId}}.png"
+                id="attribute-icon">
             <div id="role-name">{{data.roleData.data.role.roleName}}</div>
             <div id="role-level">LV.{{data.roleData.data.role.level}}</div>
-            <img src="{{pluginResources}}/Template/charProfile/imgs/{{data.roleData.data.role.starLevel}}star.png" id="role-star">
+            <img src="{{pluginResources}}/Template/charProfile/imgs/{{data.roleData.data.role.starLevel}}star.png"
+                id="role-star">
             <img src="{{data.roleData.data.role.rolePicUrl}}" id="role-pic">
             <div id="chain">
                 <div id="chain-list">
                     {{each data.roleData.data.chainList chain}}
-                    <img src="{{chain.iconUrl}}"
-                        actived="{{chain.unlocked}}">
+                    <img src="{{chain.iconUrl}}" actived="{{chain.unlocked}}">
                     {{/each}}
                 </div>
             </div>
@@ -29,52 +30,49 @@
         <div id="skill">
             <div id="skill-list">
                 {{each data.roleData.data.skillList skill idx}}
-                {{if idx<5}}
-                <div class="skill-item">
-                    <img src="{{skill.skill.iconUrl}}"
-                        class="skill-icon">
+                {{if idx<5}} <div class="skill-item">
+                    <img src="{{skill.skill.iconUrl}}" class="skill-icon">
                     <div class="skill-level">LV.{{skill.level}}</div>
-                </div>
-                {{/if}}
-                {{/each}}
-            </div>
-        </div>
-        <div id="table">
-            <div>
-                <div id="weapon-icon-box">
-                    <img src="{{data.roleData.data.weaponData.weapon.weaponIcon}}"
-                        id="weapon-icon">
-                    <div class="phantom-level">LV.{{data.roleData.data.weaponData.level}}</div>
-                </div>
-                <div class="phantom-header-right">
-                    <div id="weapon-name">{{data.roleData.data.weaponData.weapon.weaponName}}</div>
-                    <div id="weapon-level-box">
-                        <span id="reson-level">精{{data.roleData.data.weaponData.resonLevel}}</span>
-                    </div>
-                    <img src="{{pluginResources}}/Template/charProfile/imgs/{{data.roleData.data.weaponData.weapon.weaponStarLevel}}star.png" id="weapon-star">
-                </div>
-                <div id="weapon-effect-name">{{data.roleData.data.weaponData.weapon.weaponEffectName}}</div>
-                <div id="effect-description">{{data.roleData.data.weaponData.weapon.effectDescription}}</div>
-            </div>
-            {{each data.roleData.data.phantomData.equipPhantomList phantom}}
-            {{if phantom}}
-            <div class="phantom-list">
-                <div class="phantom-header">
-                    <img src="{{phantom.phantomProp.iconUrl}}"
-                        class="phantom-icon">
-                    <div class="phantom-level">+{{phantom.level}}</div>
-                    <div class="phantom-header-right">
-                        <div class="phantom-name">{{phantom.phantomProp.name}}</div>
-                        <span class="phantom-cost">COST <strong>{{phantom.cost}}</strong></span>
-                        <img src="{{phantom.fetterDetail.iconUrl}}">
-                        <img src="{{pluginResources}}/Template/charProfile/imgs//{{phantom.quality}}star.png">
-                    </div>
-                </div>
-                <div class="phantom-attribute"></div>
             </div>
             {{/if}}
             {{/each}}
         </div>
+    </div>
+    <div id="table">
+        <div>
+            <div id="weapon-icon-box">
+                <img src="{{data.roleData.data.weaponData.weapon.weaponIcon}}" id="weapon-icon">
+                <div class="phantom-level">LV.{{data.roleData.data.weaponData.level}}</div>
+            </div>
+            <div class="phantom-header-right">
+                <div id="weapon-name">{{data.roleData.data.weaponData.weapon.weaponName}}</div>
+                <div id="weapon-level-box">
+                    <span id="reson-level">精{{data.roleData.data.weaponData.resonLevel}}</span>
+                </div>
+                <img src="{{pluginResources}}/Template/charProfile/imgs/{{data.roleData.data.weaponData.weapon.weaponStarLevel}}star.png"
+                    id="weapon-star">
+            </div>
+            <div id="weapon-effect-name">{{data.roleData.data.weaponData.weapon.weaponEffectName}}</div>
+            <div id="effect-description">{{data.roleData.data.weaponData.weapon.effectDescription}}</div>
+        </div>
+        {{each data.roleData.data.phantomData.equipPhantomList phantom}}
+        {{if phantom}}
+        <div class="phantom-list">
+            <div class="phantom-header">
+                <img src="{{phantom.phantomProp.iconUrl}}" class="phantom-icon">
+                <div class="phantom-level">+{{phantom.level}}</div>
+                <div class="phantom-header-right">
+                    <div class="phantom-name">{{phantom.phantomProp.name}}</div>
+                    <span class="phantom-cost">COST <strong>{{phantom.cost}}</strong></span>
+                    <img src="{{phantom.fetterDetail.iconUrl}}" class="fetter-icon">
+                    <img src="{{pluginResources}}/Template/charProfile/imgs//{{phantom.quality}}star.png">
+                </div>
+            </div>
+            <div class="phantom-attribute"></div>
+        </div>
+        {{/if}}
+        {{/each}}
+    </div>
     </div>
 
     <script>
@@ -96,13 +94,26 @@
                 }
             })
         }
-        document.getElementById("chain-list").querySelectorAll("img").forEach((img, index) => {
-            if (img.getAttribute("actived") === "true") {
-                img.className = "chain-icon-actived"
-            } else {
-                img.className = "chain-icon-inactived"
-            }
-        })
+        const colorMap = {
+            1: "rgb(53, 152, 219)",
+            2: "rgb(224, 62, 45)",
+            3: "rgb(185, 106, 217)",
+            4: "rgb(45, 194, 107)",
+            5: "rgb(241, 196, 15)",
+            6: "rgb(230, 30, 144)"
+        };
+
+        document.querySelectorAll("#chain-list img").forEach(img => {
+            const isActive = img.getAttribute("actived") === "true";
+            img.className = isActive ? "chain-icon-actived" : "chain-icon-inactived";
+
+            const color = colorMap[dataContent.roleData.data.role.attributeId];
+            img.style.backgroundColor = color;
+
+            const factor = isActive ? 1.2 : 0.8;
+            const borderColor = `rgba(${color.slice(4, -1).split(",").map(c => parseInt(c) * factor).join(",")}, 0.6)`;
+            img.style.border = `5px solid ${borderColor}`;
+        });
     </script>
 </body>
 

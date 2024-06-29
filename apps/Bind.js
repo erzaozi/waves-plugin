@@ -30,8 +30,20 @@ export class BindToken extends plugin {
     async bindToken(e) {
         const message = e.msg.replace(/^(～|~|鸣潮)(登录|登陆|绑定)/, '').trim();
 
-        if (message.startsWith("tap")) {
-            this.bingTap(e, message);
+        if (message && (message.toLowerCase().includes("taptap") || message.toLowerCase().includes("tap"))) {
+            const tap_id = message.match(/\d{9}/);
+            if (tap_id) {
+                const taptap = new TapTap();
+                const usability = await taptap.isAvailable(tap_id[0]);
+                if (usability.status) {
+                    await redis.set(`Yunzai:waves:taptap:${usability.data}`, tap_id[0]);
+                    await e.reply(`已为UID ${usability.data} 绑定TapTap账号 ${tap_id[0]} 成功！`)
+                } else {
+                    await e.reply(`绑定失败, 原因: ${usability.msg}`)
+                }
+            } else {
+                await e.reply("绑定失败，请检查TapTap账号是否正确！")
+            }
             return true;
         }
 
@@ -172,20 +184,5 @@ export class BindToken extends plugin {
 
         await e.reply(Bot.makeForwardMsg(tokenList))
         return true;
-    }
-
-    async bingTap(e, message) {
-        message = message.replace(/tap/g, "").trim();
-        if (message === "") return await e.reply("请将TAPTAP账号与鸣潮账号绑定后，发送~绑定tap")
-        const taptap = new TapTap(message);
-        const usability = await taptap.isAvailable();
-        if (usability.status) {
-            let table = Config.getTapTable();
-            table[usability.msg] = message;
-            Config.setTapTable(table);
-            e.reply(`账号可用\nTAPTAP: ${message}\n鸣潮UID: ${usability.msg}`)
-        } else {
-            e.reply(`绑定失败, 原因: ${usability.msg}`)
-        }
     }
 }

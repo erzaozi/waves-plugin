@@ -65,33 +65,6 @@ class Config {
             return false
         }
     }
-
-    getTapTable() {
-        try {
-            if (fs.existsSync(`${_path}/data/waves/waves_tap.yaml`)) {
-                let table = YAML.parse(fs.readFileSync(`${_path}/data/waves/waves_tap.yaml`, 'utf-8'))
-                if (!table) return {}
-                return table
-            } else {
-                return {}
-            }
-        } catch (err) {
-            logger.warn(`读取taptap鸣潮绑定表waves_tap.yaml失败`, err)
-            return false
-        }
-    }
-
-    setTapTable(data) {
-        try {
-            fs.writeFileSync(
-                `${_path}/data/waves/waves_tap.yaml`,
-                YAML.stringify(data),
-            )
-        } catch (err) {
-            logger.warn(`写入taptap鸣潮绑定表waves_tap.yaml失败`, err)
-            return false
-        }
-    }
 }
 
 export default new Config()
