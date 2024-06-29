@@ -1,8 +1,11 @@
 import axios from 'axios';
+import Config from './Config.js';
 
 const CONSTANTS = {
     CHAR_DETAIL: "https://www.taptap.cn/webapiv2/game-record/v1/character-detail",
     USER_DETAIL: "https://www.taptap.cn/webapiv2/game-record/v1/detail-by-user",
+    PROXY_CHAR_DETAIL: "https://taptap-api.pages.dev/webapiv2/game-record/v1/character-detail",
+    PROXY_USER_DETAIL: "https://taptap-api.pages.dev/webapiv2/game-record/v1/detail-by-user",
 };
 
 class TapTap {
@@ -18,7 +21,7 @@ class TapTap {
         }
 
         try {
-            let response = await axios.get(CONSTANTS.USER_DETAIL, { params: data });
+            let response = await axios.get(await Config.getConfig().reverse_taptap_proxy ? CONSTANTS.PROXY_USER_DETAIL : CONSTANTS.USER_DETAIL, { params: data });
 
             if (response.data.success) {
                 if (response.data.data.is_bind) {
@@ -48,7 +51,7 @@ class TapTap {
         }
 
         try {
-            let response = await axios.get(CONSTANTS.CHAR_DETAIL, { params: data });
+            let response = await axios.get(await Config.getConfig().reverse_taptap_proxy ? CONSTANTS.PROXY_CHAR_DETAIL : CONSTANTS.CHAR_DETAIL, { params: data });
             if (response.data.success) {
                 let roleInfo = response.data.data.list.find(role => name === role.name)
                 return { status: true, data: roleInfo };

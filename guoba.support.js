@@ -185,6 +185,12 @@ export function supportGuoba() {
           bottomHelpMessage: "允许未绑定用户使用绑定用户的Token进行查询",
           component: "Switch",
         },
+        {
+          field: "reverse_taptap_proxy",
+          label: "反向代理Taptap",
+          bottomHelpMessage: "无法正常访问Taptap即可打开此开关",
+          component: "Switch",
+        },
       ],
       getConfigData() {
         let config = Config.getConfig()
