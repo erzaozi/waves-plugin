@@ -39,10 +39,10 @@ export class BindToken extends plugin {
                     await redis.set(`Yunzai:waves:taptap:${usability.data}`, tap_id[0]);
                     await e.reply(`已为UID ${usability.data} 绑定TapTap账号 ${tap_id[0]} 成功！`)
                 } else {
-                    await e.reply(`绑定失败, 原因: ${usability.msg}`)
+                    await e.reply(`绑定失败, 原因: ${usability.msg}，使用[~tap帮助]查看绑定指引`)
                 }
             } else {
-                await e.reply("绑定失败，请检查TapTap账号是否正确！")
+                await e.reply("绑定失败，请检查TapTap账号是否正确！使用[~tap帮助]查看绑定指引")
             }
             return true;
         }
