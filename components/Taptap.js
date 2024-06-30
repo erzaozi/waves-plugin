@@ -35,6 +35,9 @@ class TapTap {
                 return { status: false, msg: result.data.data.msg }
             }
         } catch (error) {
+            if (error.response.status === 405) {
+                return { status: false, msg: "当前服务器IP被防火墙拦截，请在设置中开启 [反向代理Taptap] 开关" };
+            }
             logger.error('获取Taptap账号信息失败，疑似网络问题：\n', error);
             return { status: false, msg: '获取Taptap账号信息失败，疑似网络问题，请检查控制台日志' };
         }
