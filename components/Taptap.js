@@ -56,7 +56,7 @@ class TapTap {
         try {
             let response = await axios.get(await Config.getConfig().reverse_taptap_proxy ? CONSTANTS.PROXY_CHAR_DETAIL : CONSTANTS.CHAR_DETAIL, { params: data });
             if (response.data.success) {
-                let roleInfo = response.data.data.list.find(role => name === role.name)
+                let roleInfo = response.data.data.list.find(role => name === role.name.replace(/（女）|（男）/g, ''));
                 return { status: true, data: roleInfo };
             } else {
                 return { status: false, msg: "获取Taptap鸣潮角色信息信息失败" };

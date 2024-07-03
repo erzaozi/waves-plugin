@@ -55,7 +55,7 @@ export class Character extends plugin {
         const message = matchName[2];
 
         const wiki = new Wiki();
-        const name = await wiki.getAlias(message);
+        let name = await wiki.getAlias(message);
 
         let data = [];
         let deleteroleId = [];
@@ -80,6 +80,8 @@ export class Character extends plugin {
                 data.push({ message: roleData.msg });
                 return;
             }
+
+            name = name.replace(/-男-|-女-/g, '·');
 
             const char = roleData.data.roleList.find(role => role.roleName === name);
 
