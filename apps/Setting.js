@@ -79,13 +79,12 @@ export class Setting extends plugin {
     }
 
     async setAutoNews(e) {
-        if (!e.group.pickMember(e.user_id).is_owner && !e.group.pickMember(e.user_id).is_admin && !e.isMaster) {
-            return e.reply("只有管理员和群主才能开启活动推送");
-        }
-
         let key;
 
         if (e.isGroup) {
+            if (!e.group.pickMember(e.user_id).is_owner && !e.group.pickMember(e.user_id).is_admin && !e.isMaster) {
+                return e.reply("只有管理员和群主才能开启活动推送");
+            }
             key = `${e.self_id}:${e.group_id}:undefined`;
         } else {
             key = `${e.self_id}:undefined:${e.user_id}`;
