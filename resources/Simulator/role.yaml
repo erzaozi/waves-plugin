@@ -1,7 +1,7 @@
-pool_name: 「寒尽觉春生」
+pool_name: 「炽羽策阵星」
 five_star:
   up_pool:
-    - name: 今汐
+    - name: 长离
   other_pool:
     - name: 维里奈
     - name: 安可
@@ -13,16 +13,16 @@ five_star:
   other: 0.5
 four_star:
   up_pool:
+    - name: 白芷
+    - name: 桃祈
+    - name: 莫特斐
+  other_pool:
+    - name: 秋水
+    - name: 渊武
+    - name: 炽霞
     - name: 散华
     - name: 秧秧
     - name: 丹瑾
-  other_pool:
-    - name: 桃祈
-    - name: 秋水
-    - name: 渊武
-    - name: 莫特斐
-    - name: 白芷
-    - name: 炽霞
     - name: 永夜长明
     - name: 不归孤军
     - name: 无眠烈火
