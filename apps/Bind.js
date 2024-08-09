@@ -1,6 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
-import TapTap from '../components/Taptap.js';
 import Config from "../components/Config.js";
 import fetch from 'node-fetch';
 
@@ -29,24 +28,6 @@ export class BindToken extends plugin {
 
     async bindToken(e) {
         const message = e.msg.replace(/^(～|~|鸣潮)(登录|登陆|绑定)/, '').trim();
-
-        if (message && (message.toLowerCase().includes("taptap") || message.toLowerCase().includes("tap"))) {
-            const tap_id = message.match(/\d+/);
-            if (tap_id) {
-                const taptap = new TapTap();
-                const usability = await taptap.isAvailable(tap_id[0]);
-                if (usability.status) {
-                    await redis.set(`Yunzai:waves:taptap:${usability.data}`, tap_id[0]);
-                    await redis.set(`Yunzai:waves:bind:${e.user_id}`, usability.data);
-                    await e.reply(`已为UID ${usability.data} 绑定TapTap账号 ${tap_id[0]} 成功！`)
-                } else {
-                    await e.reply(`绑定失败, 原因: ${usability.msg}，使用[~tap帮助]查看绑定指引`)
-                }
-            } else {
-                await e.reply("绑定失败，请检查TapTap账号是否正确！使用[~tap帮助]查看绑定指引")
-            }
-            return true;
-        }
 
         const waves = new Waves();
         let token;

@@ -21,10 +21,6 @@ export class Help extends plugin {
                 {
                     reg: "^(～|~|鸣潮)(抽卡统计|抽卡|统计)帮助$",
                     fnc: "gachaHelp"
-                },
-                {
-                    reg: "^(～|~|鸣潮)(tap|TAP|Tap)帮助$",
-                    fnc: "tapHelp"
                 }
             ]
         })
@@ -57,11 +53,6 @@ export class Help extends plugin {
                         "icon": 2,
                         "title": "~登录帮助",
                         "desc": "绑定账户Token教程"
-                    },
-                    {
-                        "icon": 3,
-                        "title": "~绑定tap",
-                        "desc": "绑定TapTap账号"
                     },
                     {
                         "icon": 4,
@@ -203,18 +194,6 @@ export class Help extends plugin {
             { message: '一、Android 手机方法\n\n1.进入游戏，打开唤取界面\n\n2.关闭网络\n\n3.点击唤取记录\n\n4.长按左上角空白处，全选，复制\n\n5.向机器人发送[~抽卡统计 + 你复制的内容]，即可开始分析' },
             { message: '二、IOS 手机方法\n\n1.在 AppStore 搜索 Stream 并下载安装\n\n2.打开 Stream，按照提示配置好权限并开启 HTTPS 抓包。在 Stream 中点击 开始抓包 > 安装证书 > 在弹出的窗口中选择允许 > 证书已经下载到了你的设备中，然后打开系统设置 > 通用 > VPN与设备管理 > 选择 Stream Generated CA 并安装。打开系统设置 > 通用 > 关于本机 > (最下方)证书信任设置 > 打开 Stream Generated CA 开关即可\n\n3.在 Stream 中点击开始抓包，回到游戏中点击唤取记录\n\n4.回到 Stream 并点击停止抓包，点击抓包历史 > 选择最新的记录 > 找到链接为 https://gmserver-api.aki-game2.com/gacha/record/query 的POST请求点进去 > 点击位于总览右侧的请求标签页 > 点击最下方查看JSON > 全选复制\n\n5.向机器人发送[~抽卡统计 + 你复制的内容]，即可开始分析' },
             { message: '三、PC端方法\n\n1.进入游戏，打开唤取界面，点击唤取记录\n\n2.右键鸣潮图标，选择打开文件所在位置\n\n2.依次打开目录 Wuthering Waves Game\/Client\/Saved\/Logs 找到 Client.log 文件\n\n3.使用文本编辑器打开，搜索 https://aki-gm-resources.aki-game.com/aki/gacha/index.html 找到位置\n\n4.复制链接以及跟随后面的参数（有换行请仔细查看不要漏掉）\n\n5.向机器人发送[~抽卡统计 + 你复制的内容]，即可开始分析' },
-        ]
-        await e.reply(Bot.makeForwardMsg(helpStep))
-        return true
-    }
-
-    async tapHelp(e) {
-        const helpStep = [
-            { message: '一、下载 TapTap APP，登录 TapTap 账号' },
-            { message: '二、搜索框搜索 鸣潮 进入游戏主页，点击底部 在线玩 按钮开启云玩（如果排队需要很久，可以点击右下角 抢先云试玩 即可立即进入）' },
-            { message: '三、进入游戏后，登陆界面选择 TapTap 登录，登录 Taptap 账号后，会需要你绑定 原账号手机号 ，绑定成功后即可' },
-            { message: '四、退出云玩，打开 鸣潮 游戏主页，点击顶部 攻略 选项，点击 数据查询 功能，点击 确认绑定 即可' },
-            { message: '五、打开自己 TapTap 个人主页，找到ID，向机器人发送[~绑定tap + 账号ID]即可完成绑定' }
         ]
         await e.reply(Bot.makeForwardMsg(helpStep))
         return true

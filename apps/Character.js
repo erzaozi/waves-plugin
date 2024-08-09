@@ -1,6 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
-import TapTap from '../components/Taptap.js';
 import Config from "../components/Config.js";
 import Wiki from '../components/Wiki.js';
 import Render from '../model/render.js';
@@ -90,8 +89,6 @@ export class Character extends plugin {
                 return;
             }
 
-            const tapId = await redis.get(`Yunzai:waves:taptap:${account.roleId}`);
-
             const roleDetail = await waves.getRoleDetail(account.serverId, account.roleId, char.roleId, account.token)
 
             if (!roleDetail.status) {
@@ -99,14 +96,8 @@ export class Character extends plugin {
                 return;
             }
 
-            let tapRoleData;
-            if (tapId) {
-                const taptap = new TapTap();
-                const result = await taptap.getCharInfo(tapId, name);
-                if (result.status) tapRoleData = result.data;
-            }
 
-            const imageCard = await Render.charProfile({ uid: account.roleId, roleDetail, tapRoleData });
+            const imageCard = await Render.charProfile({ uid: account.roleId, roleDetail });
             data.push({ message: imageCard });
 
         }));

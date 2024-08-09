@@ -68,7 +68,18 @@
                     <img src="{{pluginResources}}/Template/charProfile/imgs//{{phantom.quality}}star.png">
                 </div>
             </div>
-            <div class="phantom-attribute"></div>
+            <div class="phantom-attribute">
+                {{each phantom.mainProps prop}}
+                <div class="phantom-attribute-item">
+                    <span class="phantom-attribute-key">{{prop.attributeName}}</span> <span class="phantom-attribute-value">{{prop.attributeValue}}</span>
+                </div>
+                {{/each}}
+                {{each phantom.subProps prop}}
+                <div class="phantom-attribute-item">
+                    <span class="phantom-attribute-key">{{prop.attributeName}}</span> <span class="phantom-attribute-value">{{prop.attributeValue}}</span>
+                </div>
+                {{/each}}
+            </div>
         </div>
         {{/if}}
         {{/each}}
@@ -77,30 +88,6 @@
 
     <script>
         const dataContent = JSON.parse(document.getElementById('body').getAttribute('data-content'))
-        if (dataContent.tapRoleData) {
-            document.querySelectorAll(".phantom-list").forEach(Ele => {
-                let phantomName = Ele.getElementsByClassName("phantom-name")[0].textContent
-                let index = dataContent.tapRoleData.equips.findIndex(equip => equip.name === phantomName)
-                if (index !== -1) {
-                    let htmlContent = ''
-                    dataContent.tapRoleData.equips[index].props.forEach(prop => {
-                        htmlContent += `
-                        <div class="phantom-attribute-item">
-                            <span class="phantom-attribute-key">${prop.key}</span> <span class="phantom-attribute-value">${prop.value}</span>
-                        </div>`
-                    })
-                    Ele.getElementsByClassName("phantom-attribute")[0].innerHTML = htmlContent
-                    dataContent.tapRoleData.equips.splice(index, 1)
-                }
-            })
-        } else {
-            document.querySelectorAll(".phantom-list").forEach(Ele => {
-                Ele.getElementsByClassName("phantom-attribute")[0].innerHTML = '绑定Taptap查看详细词条';
-                Ele.getElementsByClassName("phantom-attribute")[0].style.color = '#7b7774';
-                Ele.getElementsByClassName("phantom-attribute")[0].style.marginTop = '80px';
-                Ele.getElementsByClassName("phantom-attribute")[0].style.fontSize = '18px';
-            });
-        }
 
         const colorMap = {
             1: "rgb(53, 152, 219)",
