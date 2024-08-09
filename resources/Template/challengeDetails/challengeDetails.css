@@ -159,9 +159,12 @@
     left: 8px;
     top: 8px;
     width: 160px;
+    height: 160px;
     background-color: #929292;
     border-radius: 80px;
     border: 3px solid #616161;
+    object-fit: cover;
+    object-position: center;
 }
 
 .role-level {

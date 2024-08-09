@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" type="text/css" href="{{pluginResources}}/Template/towerData/tower.css" />
+    <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
+</head>
+
+<body id="body">
+    <div id="account">
+        <div id="user-name">{{baseData.name}}</div>
+        <div id="user-uid">{{baseData.id}}</div>
+    </div>
+    <div class="tower-body">
+        {{each towerData.difficultyList area}}
+        {{if area.difficulty == 3}}
+        {{each area.towerAreaList tower}}
+        <div class="tower-area">
+            <span class="tower-name">{{tower.areaName}}</span>
+            <span class="tower-star">{{tower.star}}/{{tower.maxStar}}</span>
+        </div>
+        <div class="floor-list" style="background-image: url({{tower.floorList[0].picUrl}});">
+            <div class="floor-name" floor="{{tower.floorList[0].floor}}"></div>
+            <div class="star-icon" starlevel="{{tower.floorList[0].star}}">
+                <img src="{{pluginResources}}/Template/towerData/imgs/star.jpg">
+                <img src="{{pluginResources}}/Template/towerData/imgs/star.jpg">
+                <img src="{{pluginResources}}/Template/towerData/imgs/star.jpg">
+            </div>
+            {{each tower.floorList[0].roleList role}}
+            <div class="avatar-frame">
+                <img src="{{role.iconUrl}}" class="avatar">
+            </div>
+            {{/each}}
+        </div>
+        {{/each}}
+        {{/if}}
+        {{/each}}
+    </div>
+    <div style="height: 50px;width: 1px;"></div>
+    <script>
+        const starList = Array.from(document.getElementsByClassName("star-icon"));
+        starList.forEach((ele) => {
+            const starlevel = Number(ele.getAttribute("starlevel"));
+            const stars = Array.from(ele.getElementsByTagName("img"));
+            stars.forEach((star, idx) => {
+                if (idx < starlevel) {
+                    star.style.display = "inline";
+                }
+            });
+        });
+
+        const floorList = Array.from(document.getElementsByClassName("floor-name"));
+        floorList.forEach((ele) => {
+            const floor = ele.getAttribute("floor");
+            if (floor) {
+                switch (floor) {
+                    case "1":
+                        ele.innerText = "第一层";
+                        break;
+                    case "2":
+                        ele.innerText = "第二层";
+                        break;
+                    case "3":
+                        ele.innerText = "第三层";
+                        break;
+                    default:
+                        ele.innerText = "第四层";
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

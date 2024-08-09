@@ -101,6 +101,19 @@ class Render {
         return base64
     }
 
+    async towerData(baseData, towerData) {
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'towerData',
+            imgType: 'png',
+            tplFile: `${pluginResources}/Template/towerData/tower.html`,
+            pluginResources,
+            baseData,
+            towerData,
+        })
+
+        return base64
+    }
+
     async signInData(signInData) {
         const base64 = await puppeteer.screenshot('waves-plugin', {
             saveId: 'signIn',

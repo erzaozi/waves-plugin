@@ -87,7 +87,12 @@ export class Help extends plugin {
                     {
                         "icon": 10,
                         "title": "~全息战略",
-                        "desc": "查看全息战略挑战信息信息"
+                        "desc": "查看全息战略挑战信息"
+                    },
+                    {
+                        "icon": 3,
+                        "title": "~逆境深塔",
+                        "desc": "查看深境区挑战信息"
                     },
                     {
                         "icon": 11,
