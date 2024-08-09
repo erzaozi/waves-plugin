@@ -21,19 +21,21 @@
             <span class="tower-name">{{tower.areaName}}</span>
             <span class="tower-star">{{tower.star}}/{{tower.maxStar}}</span>
         </div>
-        <div class="floor-list" style="background-image: url({{tower.floorList[0].picUrl}});">
-            <div class="floor-name" floor="{{tower.floorList[0].floor}}"></div>
-            <div class="star-icon" starlevel="{{tower.floorList[0].star}}">
+        {{each tower.floorList floor}}
+        <div class="floor-list" style="background-image: url({{floor.picUrl}});">
+            <div class="floor-name" floor="{{floor.floor}}"></div>
+            <div class="star-icon" starlevel="{{floor.star}}">
                 <img src="{{pluginResources}}/Template/towerData/imgs/star.jpg">
                 <img src="{{pluginResources}}/Template/towerData/imgs/star.jpg">
                 <img src="{{pluginResources}}/Template/towerData/imgs/star.jpg">
             </div>
-            {{each tower.floorList[0].roleList role}}
+            {{each floor.roleList role}}
             <div class="avatar-frame">
                 <img src="{{role.iconUrl}}" class="avatar">
             </div>
             {{/each}}
         </div>
+        {{/each}}
         {{/each}}
         {{/if}}
         {{/each}}
