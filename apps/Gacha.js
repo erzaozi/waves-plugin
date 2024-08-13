@@ -57,8 +57,8 @@ export class Gacha extends plugin {
                 await e.reply("无法转换成JSON格式，请复制完整请求体");
                 return true;
             }
-        } else if (message.startsWith("http")) {
-            message = message.replace(/#/, "");
+        } else if (message.match(/https?:\/\/[^\s/$.?#].[^\s]*/g)) {
+            message = message.match(/https?:\/\/[^\s/$.?#].[^\s]*/g)[0];
             try {
                 const parsedUrl = new URL(message);
                 const params = parsedUrl.searchParams;

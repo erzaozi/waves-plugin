@@ -1,4 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js'
+import WeightCalculator from '../utils/Calculate.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
 import Wiki from '../components/Wiki.js';
@@ -96,7 +97,12 @@ export class Character extends plugin {
                 return;
             }
 
+            if (!roleDetail.data.role) {
+                data.push({ message: `UID: ${account.roleId} 未在库街区展示共鸣者 ${name}，请在库街区展示此角色，或使用[~绑定]绑定账号后即可查看所有角色` });
+                return;
+            }
 
+            roleDetail.data = (new WeightCalculator(roleDetail.data)).calculate()
             const imageCard = await Render.charProfile({ uid: account.roleId, roleDetail });
             data.push({ message: imageCard });
 

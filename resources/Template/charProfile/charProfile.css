@@ -5,6 +5,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "framdit";
+  src: url("../../fonts/ZiHunBianTaoTi-2.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -15,7 +22,7 @@
 
 #container {
   width: 761px;
-  height: 1382px;
+  height: 1522px;
   background-image: url(./imgs/rolecard.png);
 }
 
@@ -158,8 +165,7 @@
   position: relative;
   width: 214px;
   height: 320px;
-  text-align: center;
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
 }
 
@@ -178,19 +184,20 @@
   mask-image: linear-gradient(to left, transparent 0%, #000 70%);
 }
 
+.weapon-header-right {
+  padding: 10px 10px 0px 0px;
+  float: right;
+  height: 104px;
+}
+
 #weapon-name {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50px;
+  height: 46px;
   color: #bda757;
   font-size: 20px;
   font-weight: 600;
-}
-
-#weapon-star {
-  height: 15px;
-  transform: translateY(6px);
 }
 
 #weapon-level-box {
@@ -221,6 +228,7 @@
   font-size: 20px;
   text-align: center;
   line-height: 35px;
+  font-weight: bold;
 }
 
 #effect-description {
@@ -232,6 +240,10 @@
   font-size: 15px;
   border-radius: 0px 0px 15px 15px;
   text-align: left;
+}
+
+.phantom-list {
+  position: relative;
 }
 
 .phantom-header {
@@ -250,24 +262,12 @@
 }
 
 .phantom-header-right {
-  padding-top: 10px;
-  float: right;
-  width: 110px;
+  position: relative;
   height: 104px;
-}
-
-.phantom-name {
+  width: 110px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 54px;
-  color: #4e4e4e;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.phantom-header-right>img {
-  height: 15px;
+  align-items: center;
 }
 
 .phantom-icon {
@@ -277,15 +277,42 @@
 }
 
 .fetter-icon {
-  position: relative;
-  top: 1px;
+  position: absolute;
+  height: 24px;
+  left: 3px;
+  top: 3px;
 }
 
-.phantom-attribute>div:nth-child(odd) {
+.phantom-name {
+  position: absolute;
+  margin-top: -30px;
+  color: #4e4e4e;
+  font-size: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.phantom-rank-score {
+  position: absolute;
+  margin-top: 40px;
+  color: red;
+  font-size: 20px;
+  font-weight: 700;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.phantom-attribute>div:nth-child(odd),
+.total-score-table-right-row1>div:nth-child(odd),
+.total-score-table-right-row2>div:nth-child(even),
+.total-score-table-right-row3>div:nth-child(odd) {
   background-color: #e1e1e1;
 }
 
-.phantom-attribute>div:nth-child(even) {
+.phantom-attribute>div:nth-child(even),
+.total-score-table-right-row1>div:nth-child(even),
+.total-score-table-right-row2>div:nth-child(odd),
+.total-score-table-right-row3>div:nth-child(even) {
   background-color: #f0ecf0;
 }
 
@@ -300,6 +327,87 @@
 }
 
 .phantom-attribute-value {
+  font-family: "framdit";
   float: right;
   padding: 6px 8px 0px 0px;
+}
+
+.total-score-table {
+  position: relative;
+  margin-bottom: 21px;
+  display: flex;
+  left: 40.5px;
+  width: 680px;
+  height: 120px;
+  background-color: #f0ecf0;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.total-score-table-left {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-rows: 19px 40px 19px 40px;
+  width: 133px;
+  margin: 1px 0px 0px 1px;
+  text-align: center;
+}
+
+.total-score-table-right {
+  position: relative;
+  margin-top: 1px;
+  left: 0;
+  width: 100%;
+}
+
+.total-score-table-right-row1 {
+  height: 38px;
+  display: grid;
+  grid-template-columns: 106.5px 146.5px 97.67px 97.67px 97.67px;
+}
+
+.total-score-table-right-row2,
+.total-score-table-right-row3 {
+  height: 40px;
+  display: grid;
+  grid-template-columns: 106.5px 146.5px 146.5px 146.5px;
+}
+
+/* .total-score-table-right-row1>*,
+.total-score-table-right-row2>*,
+.total-score-table-right-row3>*{
+  box-shadow: 0 1px 20px -8px rgba(0, 0, 0, 0.2) inset;
+} */
+
+.total-score-table-left>* {
+  border-right: none;
+}
+
+.score-key {
+  font-size: 14px;
+  float: left;
+  padding-top: 11px;
+  padding-left: 5px;
+}
+
+.score-value {
+  font-family: "framdit";
+  font-size: 14px;
+  float: right;
+  padding-top: 11px;
+  padding-right: 5px;
+}
+
+.total-score-key {
+  background-color: #d8d8d8;
+  color: #000;
+  font-size: 14px
+}
+
+.total-score-value {
+  font-family: "framdit";
+  background-color: #f3f3f3;
+  color: #e9c130;
+  font-weight: 700;
+  font-size: 32px;
 }

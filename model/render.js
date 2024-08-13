@@ -166,10 +166,6 @@ class Render {
         data.content.modules[1].components[0].tabs[4].content = replace(data.content.modules[1].components[0].tabs[4].content)
         data.content.modules[1].components[0].tabs[5].content = replace(data.content.modules[1].components[0].tabs[5].content)
 
-        if (!data.content.modules[0].components[0].role.figures[2]) {
-            data.content.modules[0].components[0].role.figures[2] = data.content.modules[0].components[0].role.figures[1]
-        }
-
         const base64 = await puppeteer.screenshot('waves-plugin', {
             saveId: 'wikiRole',
             imgType: 'png',

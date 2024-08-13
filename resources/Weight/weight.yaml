@@ -1,0 +1,65 @@
+subProps:
+  - name: 暴击伤害
+    max: 21
+  - name: 暴击
+    max: 10.5
+  - name: 攻击
+    max: 50
+  - name: 攻击百分比
+    max: 11.6
+  - name: 生命
+    max: 580
+  - name: 生命百分比
+    max: 11.6
+  - name: 防御
+    max: 60
+  - name: 防御百分比
+    max: 14.7
+  - name: 共鸣效率
+    max: 12.4
+  - name: 普攻伤害加成
+    max: 11.6
+  - name: 重击伤害加成
+    max: 11.6
+  - name: 共鸣技能伤害加成
+    max: 11.6
+  - name: 共鸣解放伤害加成
+    max: 11.6
+mainProps:
+  C4:
+    - name: 暴击伤害
+      max: 44
+    - name: 暴击
+      max: 22
+    - name: 治疗效果加成
+      max: 26.4
+    - name: 生命百分比
+      max: 33
+    - name: 攻击百分比
+      max: 33
+    - name: 防御百分比
+      max: 41.8
+    - name: 攻击
+      max: 150
+  C3:
+    - name: 伤害加成
+      max: 30
+    - name: 攻击百分比
+      max: 30
+    - name: 生命百分比
+      max: 30
+    - name: 防御百分比
+      max: 38
+    - name: 共鸣效率
+      max: 32
+    - name: 攻击
+      max: 100
+  C1:
+    - name: 攻击百分比
+      max: 18
+    - name: 防御百分比
+      max: 18
+    - name: 生命百分比
+      max: 22.8
+    - name: 生命
+      max: 2280
