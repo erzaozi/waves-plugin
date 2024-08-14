@@ -4,7 +4,7 @@ subProps:
   - name: 暴击
     max: 10.5
   - name: 攻击
-    max: 50
+    max: 60
   - name: 攻击百分比
     max: 11.6
   - name: 生命
