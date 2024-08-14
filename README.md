@@ -51,6 +51,7 @@ pnpm install --filter=waves-plugin
 - [x] 数据坞 / 声骸查询
 - [x] 探索度查询
 - [x] 挑战数据查询
+- [x] 逆境深塔数据查询
 - [x] 抽卡记录查询分析
 - [x] 游戏内所有物品图鉴
 - [x] 官方公告推送
@@ -58,6 +59,7 @@ pnpm install --filter=waves-plugin
 - [x] 抽卡模拟器
 - [x] 随机表情包
 - [x] 角色卡片查询
+- [x] 计算声骸得分
 
 ## 功能列表
 

@@ -186,7 +186,10 @@
 
 .weapon-header-right {
   padding: 10px 10px 0px 0px;
-  float: right;
+  min-width: 110px;
+  position: absolute;
+  top: 0;
+  right: 0;
   height: 104px;
 }
 
@@ -202,6 +205,8 @@
 
 #weapon-level-box {
   display: flex;
+  width: 110px;
+  float: right;
   vertical-align: top;
   align-items: center;
   justify-content: center;
