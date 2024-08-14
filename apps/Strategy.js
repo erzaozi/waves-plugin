@@ -1,7 +1,12 @@
-import plugin from '../../../lib/plugins/plugin.js'
-import { pluginResources } from "../model/path.js";
+import plugin from '../../../lib/plugins/plugin.js';
+import { pluginResources } from '../model/path.js';
 import Wiki from '../components/Wiki.js';
-import fs from 'fs'
+import fs from 'fs';
+
+const AUTHORS = [
+    { name: "小沐XMu", path: "/Strategy/XMu/" },
+    { name: "moealkyne", path: "/Strategy/moealkyne/" }
+];
 
 export class Strategy extends plugin {
     constructor() {
@@ -15,30 +20,38 @@ export class Strategy extends plugin {
                     fnc: "strategy"
                 }
             ]
-        })
+        });
     }
 
     async strategy(e) {
-
         const match = e.msg.match(/(～|~|鸣潮)?(.*?)攻略/);
-        if (!match || !match[2]) {
-            return false
-        }
+        if (!match || !match[2]) return false;
 
-        const message = match[2]
+        const message = match[2];
+        const wiki = new Wiki();
+        const name = await wiki.getAlias(message);
 
-        const wiki = new Wiki()
-        const name = await wiki.getAlias(message)
-
-        if (!fs.existsSync(`${pluginResources}/Strategy/${name}.jpg`)) {
-            logger.warn(`[Waves-Plugin] 未能获取攻略角色：${message}`)
-            if (e.msg.startsWith("~") || e.msg.startsWith("～") || e.msg.startsWith("鸣潮")) {
-                await e.reply(`暂时还没有${message}的攻略`)
+        let messages = [];
+        for (const { name: authorName, path } of AUTHORS) {
+            const imagePath = `${pluginResources}${path}${name}.jpg`;
+            if (fs.existsSync(imagePath)) {
+                messages.push(
+                    { message: `来自 ${authorName} 的角色攻略：` },
+                    { message: segment.image(imagePath) }
+                );
             }
-            return false
-        } else {
-            await e.reply(segment.image(`${pluginResources}/Strategy/${name}.jpg`))
-            return true
         }
+
+        if (messages.length === 0) {
+            logger.warn(`[Waves-Plugin] 未能获取攻略角色：${message}`)
+            if (/^(～|~|鸣潮)/.test(e.msg)) {
+                await e.reply(`暂时还没有${message}的攻略`);
+                return true;
+            }
+            return false;
+        }
+
+        await e.reply(Bot.makeForwardMsg(messages));
+        return true;
     }
 }

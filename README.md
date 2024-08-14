@@ -93,8 +93,8 @@ pnpm install --filter=waves-plugin
 ## 资源
 
 1. 图鉴：[库街区 Wiki](https://wiki.kurobbs.com/mc/home)
-2. 角色攻略：[小沐 XMu](https://v.douyin.com/ijShaYJU/) （作者已授权）
-3. 声骸评分计算：[SLDHshenlindahuo](https://github.com/SLDHshenlindahuo) 在线权重文档：[腾讯文档](https://docs.qq.com/sheet/DWFNtTHFlVmZ4dFN0)
+2. 角色攻略：[小沐XMu](https://www.kurobbs.com/person-center?id=10450567) & [moealkyne](https://www.kurobbs.com/person-center?id=10422445) 
+3. 声骸评分：[燊林大火](https://github.com/SLDHshenlindahuo) 
 
 ## 许可证
 
