@@ -58,7 +58,7 @@ export class Gacha extends plugin {
                 return true;
             }
         } else if (message.match(/https?:\/\/[^\s/$.?#].[^\s]*/g)) {
-            message = message.match(/https?:\/\/[^\s/$.?#].[^\s]*/g)[0];
+            message = message.match(/https?:\/\/[^\s/$.?#].[^\s]*/g)[0].replace(/#/, "");
             try {
                 const parsedUrl = new URL(message);
                 const params = parsedUrl.searchParams;

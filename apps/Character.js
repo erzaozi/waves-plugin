@@ -81,7 +81,12 @@ export class Character extends plugin {
                 return;
             }
 
-            name = name.replace(/-男-|-女-/g, '·');
+            // 处理主角名称
+            if (name == '漂泊者-男-衍射' || name == '漂泊者-女-衍射') {
+                name = '漂泊者'
+            } else if (name.includes('漂泊者')) {
+                name = name.replace(/-男-|-女-/g, '·');
+            }
 
             const char = roleData.data.roleList.find(role => role.roleName === name);
 
