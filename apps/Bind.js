@@ -83,7 +83,7 @@ export class BindToken extends plugin {
                 return true;
             }
         } else {
-            const [mobile, code] = message.split(":");
+            const [mobile, code] = message.split(/(:|：)/);
 
             if (!mobile || !code) {
                 await e.reply("请输入正确的手机号与验证码\n使用[~登录帮助]查看登录方法！");

@@ -18,7 +18,7 @@
             <div class="value">{{baseData.worldLevel}}</div>
             <div class="value">{{baseData.achievementCount}}</div>
             <div class="value">{{baseData.roleNum}}</div>
-            <div class="value">{{baseData.soundBox}}</div>
+            <div class="value">{{baseData.achievementStar}}</div>
             <div class="value">{{baseData.smallCount}}</div>
             <div class="value">{{baseData.bigCount}}</div>
             <div class="value">{{baseData.boxList[0].num}}</div>
@@ -30,8 +30,10 @@
             {{each roleData.roleList character idx}}
             <div class="character">
                 <img src="{{pluginResources}}/Template/userInfo/imgs/{{character.starLevel}}.png" class="character-bg">
-                <img src="{{character.roleIconUrl}}" class="char-avatar">
-                <img src="{{pluginResources}}/Template/userInfo/imgs/attribute/{{character.attributeId}}.png" class="char-attr">
+                <div class="char-avatar-frame">
+                    <img src="{{character.roleIconUrl}}" class="char-avatar">
+                </div>
+                    <img src="{{pluginResources}}/Template/userInfo/imgs/attribute/{{character.attributeId}}.png" class="char-attr">
                 <span class="char-name">{{character.roleName}}</span>
             </div>
             {{/each}}

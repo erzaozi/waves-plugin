@@ -41,6 +41,7 @@ class WeightCalculator {
 
         const roleWeight = YAML.parse(fs.readFileSync(this.roleWeightPath, 'utf-8'));
         const baseWeight = YAML.parse(fs.readFileSync(this.baseWeightPath, 'utf-8'));
+        this.roleDetail.weightVersion = baseWeight.version
 
         this.calValWeight(roleWeight, baseWeight);
         this.calTheoreticalValue(roleWeight);

@@ -11,6 +11,9 @@
 
 <body id="body" data-content='{{data}}'>
     <div id="container">
+        {{if data.roleDetail.data.weightVersion}}
+        <div id="weight-version">当前权重文件版本 : v{{data.roleDetail.data.weightVersion}}</div>
+        {{/if}}
         <div id="header">
             <div id="user-id">UID:{{data.uid}}</div>
             <img src="{{pluginResources}}/Template/charProfile/imgs/attribute/{{data.roleDetail.data.role.attributeId}}.png" id="attribute-icon">
@@ -107,7 +110,7 @@
                 </div>
             </div>
             {{else}}
-            <div style="color: #585858;font-style: italic;font-size: 50px;margin: 30px 140px;">
+            <div style="color: #585858;font-style: italic;font-size: 50px;margin: 30px 134px;">
                 当前角色暂无评分
             </div>
             {{/if}}

@@ -21,9 +21,19 @@
 }
 
 #container {
+  position: relative;
   width: 761px;
   height: 1522px;
   background-image: url(./imgs/rolecard.png);
+}
+
+#weight-version {
+  position: absolute;
+  top: 782px;
+  right: 50px;
+  font-size: 12px;
+  font-style: italic;
+  color: #a0a0a0;
 }
 
 #header {
@@ -341,8 +351,8 @@
   position: relative;
   margin-bottom: 21px;
   display: flex;
-  left: 40.5px;
-  width: 680px;
+  left: 44px;
+  width: 668px;
   height: 120px;
   background-color: #f0ecf0;
   border-radius: 15px;
@@ -353,7 +363,7 @@
   flex-shrink: 0;
   display: grid;
   grid-template-rows: 19px 40px 19px 40px;
-  width: 133px;
+  width: 121px;
   margin: 1px 0px 0px 1px;
   text-align: center;
 }

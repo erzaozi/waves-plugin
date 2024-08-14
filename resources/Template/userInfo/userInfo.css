@@ -74,11 +74,19 @@
     height: 314px;
 }
 
-.char-avatar {
+.char-avatar-frame {
     position: absolute;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
     left: 3px;
     top: -14px;
+    height: 244px;
     width: 244px;
+}
+
+.char-avatar {
+    position: absolute;
     height: 244px;
 }
 
