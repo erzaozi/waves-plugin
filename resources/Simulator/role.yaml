@@ -1,7 +1,7 @@
-pool_name: 「炽羽策阵星」
+pool_name: 「赋彩作长吟」
 five_star:
   up_pool:
-    - name: 长离
+    - name: 折枝
   other_pool:
     - name: 维里奈
     - name: 安可
@@ -14,13 +14,13 @@ five_star:
 four_star:
   up_pool:
     - name: 白芷
-    - name: 桃祈
-    - name: 莫特斐
+    - name: 炽霞
+    - name: 散华
   other_pool:
     - name: 秋水
     - name: 渊武
-    - name: 炽霞
-    - name: 散华
+    - name: 桃祈
+    - name: 莫特斐
     - name: 秧秧
     - name: 丹瑾
     - name: 永夜长明
