@@ -57,15 +57,15 @@ export class Calendar extends plugin {
                 act.desc = act.desc ? act.desc.replace(/<br>/g, '\n') : '';
 
                 if (end < now && end >= ago) {
-                    act.time[1] += '（已结束' + toEnd + '）';
+                    act.time[2] = '（已结束' + toEnd + '）';
                     return { type: 'ended', act };
                 }
                 if (now >= start && now <= end && (end - now) <= oneYear) {
-                    act.time[1] += '（' + toEnd + '后结束）';
+                    act.time[2] = '（' + toEnd + '后结束）';
                     return { type: 'ongoing', act };
                 }
                 if (start > now && start <= soon) {
-                    act.time[1] += '（' + toStart + '后开始）';
+                    act.time[2] = '（' + toStart + '后开始）';
                     return { type: 'upcoming', act };
                 }
                 return null;

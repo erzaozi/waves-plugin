@@ -10,9 +10,10 @@
 
 <body id="body">
     <div id="container">
+        <hr>
         {{each data.ongoing event}}
         <div class="event continuing">
-            <div class="event-name">{{event.title}}</div>
+            <div class="event-name">{{event.title}}<span style="font-size: 20px;font-style: italic;">{{event.time[2]}}</span></div>
             <div class="time">{{event.time[0]}} - {{event.time[1]}}</div>
             <div class="event-desc">{{event.desc}}</div>
             <div class="event-cond">{{event.cond}}</div>
@@ -25,28 +26,12 @@
                 {{/each}}
             </div>
         </div>
-        {{/each}}
-
-        {{each data.ended event}}
-        <div class="event expiration">
-            <div class="event-name">{{event.title}}</div>
-            <div class="time">{{event.time[0]}} - {{event.time[1]}}</div>
-            <div class="event-desc">{{event.desc}}</div>
-            <div class="event-cond">{{event.cond}}</div>
-            <div class="event-drops">
-                {{each event.drops drop}}
-                <div class="reward">
-                    <img src="https://ww.kuro.wiki/UIResources{{drop.icon}}">
-                    <div class="reward-value">{{drop.value || '-'}}</div>
-                </div> 
-                {{/each}}
-            </div>
-        </div>
+        <hr>
         {{/each}}
 
         {{each data.upcoming event}}
         <div class="event upcoming">
-            <div class="event-name">{{event.title}}</div>
+            <div class="event-name">{{event.title}}<span style="font-size: 20px;font-style: italic;">{{event.time[2]}}</span></div>
             <div class="time">{{event.time[0]}} - {{event.time[1]}}</div>
             <div class="event-desc">{{event.desc}}</div>
             <div class="event-cond">{{event.cond}}</div>
@@ -59,6 +44,25 @@
                 {{/each}}
             </div>
         </div>
+        <hr>
+        {{/each}}
+        
+        {{each data.ended event}}
+        <div class="event expiration">
+            <div class="event-name">{{event.title}}<span style="font-size: 20px;font-style: italic;">{{event.time[2]}}</span></div>
+            <div class="time">{{event.time[0]}} - {{event.time[1]}}</div>
+            <div class="event-desc">{{event.desc}}</div>
+            <div class="event-cond">{{event.cond}}</div>
+            <div class="event-drops">
+                {{each event.drops drop}}
+                <div class="reward">
+                    <img src="https://ww.kuro.wiki/UIResources{{drop.icon}}">
+                    <div class="reward-value">{{drop.value || '-'}}</div>
+                </div> 
+                {{/each}}
+            </div>
+        </div>
+        <hr>
         {{/each}}
 
 </body>

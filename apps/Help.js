@@ -55,42 +55,42 @@ export class Help extends plugin {
                         "desc": "绑定账户Token教程"
                     },
                     {
-                        "icon": 4,
+                        "icon": 3,
                         "title": "~解绑",
                         "desc": "解绑账户Token"
                     },
                     {
-                        "icon": 5,
+                        "icon": 4,
                         "title": "~库街区Token",
                         "desc": "查看自己已绑定的Token"
                     },
                     {
-                        "icon": 6,
+                        "icon": 5,
                         "title": "~签到",
                         "desc": "社区签到"
                     },
                     {
-                        "icon": 7,
+                        "icon": 6,
                         "title": "~体力",
                         "desc": "查看日常数据"
                     },
                     {
-                        "icon": 8,
+                        "icon": 7,
                         "title": "~卡片",
                         "desc": "查看账号卡片"
                     },
                     {
-                        "icon": 9,
+                        "icon": 8,
                         "title": "~数据坞",
                         "desc": "查看数据坞信息"
                     },
                     {
-                        "icon": 10,
+                        "icon": 9,
                         "title": "~全息战略",
                         "desc": "查看全息战略挑战信息"
                     },
                     {
-                        "icon": 3,
+                        "icon": 10,
                         "title": "~逆境深塔",
                         "desc": "查看深境区挑战信息"
                     },
@@ -136,21 +136,31 @@ export class Help extends plugin {
                     },
                     {
                         "icon": 19,
+                        "title": "~公告",
+                        "desc": "最新官方公告"
+                    },
+                    {
+                        "icon": 20,
+                        "title": "~日历",
+                        "desc": "活动日历"
+                    },
+                    {
+                        "icon": 21,
                         "title": "~开启公告推送",
                         "desc": "推送官方公告"
                     },
                     {
-                        "icon": 20,
+                        "icon": 22,
                         "title": "~十连",
                         "desc": "抽卡模拟器"
                     },
                     {
-                        "icon": 21,
+                        "icon": 23,
                         "title": "~帮助",
                         "desc": "查看帮助面板"
                     },
                     {
-                        "icon": 22,
+                        "icon": 24,
                         "title": "~更新",
                         "desc": "更新插件"
                     }

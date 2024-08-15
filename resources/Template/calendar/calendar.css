@@ -13,17 +13,21 @@
     font-family: MiSans;
 }
 
+hr {
+    margin-bottom: 3px;
+}
+
 #container {
     font-family: "MiSans";
     height: auto;
-    width: 1220px;
+    width: 976px;
     padding: 60px;
     border: 1px solid black;
 }
 
 .event {
     position: relative;
-    width: 1100px;
+    width: 856px;
     height: auto;
     padding-top: 8px;
     background-size: 30%;
@@ -58,7 +62,7 @@
 
 .event-desc {
     font-size: 20px;
-    width: 1100px;
+    width: 856px;
     padding: 5px 5px;
 }
 
@@ -92,4 +96,5 @@
     bottom: 0px;
     color: white;
     background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
 }

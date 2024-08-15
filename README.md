@@ -60,6 +60,7 @@ pnpm install --filter=waves-plugin
 - [x] 随机表情包
 - [x] 角色卡片查询
 - [x] 计算声骸得分
+- [x] 活动日历查询
 
 ## 功能列表
 
