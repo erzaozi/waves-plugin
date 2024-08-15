@@ -5,7 +5,8 @@ import fs from 'fs';
 
 const AUTHORS = [
     { name: "小沐XMu", path: "/Strategy/XMu/" },
-    { name: "moealkyne", path: "/Strategy/moealkyne/" }
+    { name: "moealkyne", path: "/Strategy/moealkyne/" },
+    { name: "金铃子", path: "/Strategy/Linn/" }
 ];
 
 export class Strategy extends plugin {

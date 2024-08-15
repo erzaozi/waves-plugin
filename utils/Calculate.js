@@ -218,9 +218,9 @@ class WeightCalculator {
         const ranks = [
             { minScore: 22, name: "MAX", color: "color:#9d2933;" },
             { minScore: 19, name: "ACE", color: "color:#f08a5d;" },
-            { minScore: 17, name: "SSS", color: "color:#fedd00;" },
-            { minScore: 15, name: "SS", color: "color:#fedd00;" },
-            { minScore: 12, name: "S", color: "color:#fedd00;" },
+            { minScore: 17, name: "SSS", color: "color:#eec900;" },
+            { minScore: 15, name: "SS", color: "color:#eec900;" },
+            { minScore: 12, name: "S", color: "color:#eec900;" },
             { minScore: 9, name: "A", color: "color:#9f00ed;" },
             { minScore: 6, name: "B", color: "color:#6640ff;" },
             { minScore: 3, name: "C", color: "color:#00D200;" },

@@ -280,6 +280,18 @@ class Render {
 
         return base64
     }
+
+    async calendar(data) {
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'calendar',
+            imgType: 'png',
+            tplFile: `${pluginResources}/Template/calendar/calendar.html`,
+            pluginResources,
+            data
+        })
+    
+        return base64
+    }
 }
 
 export default new Render()

@@ -1,0 +1,95 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("./fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    font-family: MiSans;
+}
+
+#container {
+    font-family: "MiSans";
+    height: auto;
+    width: 1220px;
+    padding: 60px;
+    border: 1px solid black;
+}
+
+.event {
+    position: relative;
+    width: 1100px;
+    height: auto;
+    padding-top: 8px;
+    background-size: 30%;
+    background-repeat: no-repeat;
+}
+
+.event-name {
+    margin-left: 60px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.time {
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.continuing {
+    background-image: url(imgs/continuing.png);
+}
+
+.expiration {
+    background-image: url(imgs/expiration.png);
+}
+
+.upcoming {
+    background-image: url(imgs/upcoming.png);
+}
+
+.event-desc {
+    font-size: 20px;
+    width: 1100px;
+    padding: 5px 5px;
+}
+
+.event-cond {
+    font-size: 18px;
+    color: #a0a0a0;
+    padding-left: 5px;
+}
+
+.event-drops {
+    margin-left: 5px;
+    height: 90px;
+    display: flex;
+}
+
+.event-drops>.reward {
+    position: relative;
+    height: 80px;
+    margin: 5px;
+}
+
+.reward>img {
+    height: 100%;
+    border-radius: 5px;
+}
+
+.reward-value {
+    position: absolute;
+    padding: 0px 3px;
+    right: 0px;
+    bottom: 0px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.3);
+}

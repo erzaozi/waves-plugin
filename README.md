@@ -76,6 +76,7 @@ pnpm install --filter=waves-plugin
 | ~全息战略 | 获取用户挑战数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Challenge.png) |
 | ~面板     | 获取用户角色面板           | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Panel.png)     |
 | ~抽卡记录 | 获取用户抽卡数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Gacha.png)     |
+| ~日历     | 获取游戏活动时间           | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Calendar.png)  |
 | ~图鉴     | 获取游戏内所有物品图鉴     | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Guide.png)     |
 | ~攻略     | 获取角色攻略               | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Strategy.png)  |
 | ~十连     | 抽卡模拟器                 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Simulator.png) |
@@ -93,8 +94,8 @@ pnpm install --filter=waves-plugin
 ## 资源
 
 1. 图鉴：[库街区 Wiki](https://wiki.kurobbs.com/mc/home)
-2. 角色攻略：[小沐XMu](https://www.kurobbs.com/person-center?id=10450567) & [moealkyne](https://www.kurobbs.com/person-center?id=10422445) 
-3. 声骸评分：[燊林大火](https://github.com/SLDHshenlindahuo) 
+2. 角色攻略：[小沐XMu](https://www.kurobbs.com/person-center?id=10450567) & [moealkyne](https://www.kurobbs.com/person-center?id=10422445) & [金铃子](https://www.kurobbs.com/person-center?id=10584798)
+3. 声骸评分：[燊林大火](https://github.com/SLDHshenlindahuo)
 
 ## 许可证
 

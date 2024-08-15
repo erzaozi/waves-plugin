@@ -2,7 +2,6 @@ import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
 import Render from '../model/render.js';
-import fs from 'fs';
 
 export class TowerInfo extends plugin {
     constructor() {
