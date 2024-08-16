@@ -1,0 +1,197 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("./fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+hr {
+    display: inline-block;
+    width: auto;
+}
+
+#container {
+    width: 976px;
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    font-family: "MiSans";
+}
+
+#left,
+#right {
+    width: 50%;
+}
+
+.box {
+    position: relative;
+    margin: 20px 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(225, 225, 225, 0.8);
+}
+
+.pool-type {
+    position: absolute;
+    margin: -11px 0px 0px -10px;
+    background-color: #d7b784;
+    color: #fef1de;
+    width: 80px;
+    font-size: 12px;
+    text-align: center;
+    padding: 3px 2px;
+    border-radius: 0px 11px 11px 11px;
+    font-weight: bold;
+}
+
+.user {
+    position: relative;
+    margin: 20px 10px;
+    height: 80px;
+    border-radius: 0px 0px 0px 0px;
+    overflow: hidden;
+}
+
+.user-bg {
+    position: absolute;
+    z-index: -1;
+    height: 80px;
+    width: 448px;
+}
+
+.user-uid {
+    position: relative;
+    left: 30px;
+    top: 10px;
+    color: black;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.user-cost {
+    font-family: "MiSans";
+    position: relative;
+    left: 30px;
+    top: 5px;
+    color: black;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.user-emoji {
+    position: absolute;
+    bottom: 6px;
+    right: 50px;
+    height: 70px;
+}
+
+.box-overview {
+    display: grid;
+    grid-template-columns: 80px 80px 80px 80px 80px;
+    width: 100%;
+    height: 150px;
+    padding: 15px 24.56px;
+}
+
+.box-overview>* {
+    width: 80px;
+    height: 60px;
+    text-align: center;
+}
+
+.value {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.value-unit {
+    font-size: 10px;
+}
+
+.key {
+    color: #949494;
+    font-size: 11px;
+}
+
+.box-time {
+    display: flex;
+    flex-direction: row;
+}
+
+.line-left {
+    vertical-align: middle;
+    text-align: left;
+    display: inline-block;
+    width: 100%;
+    border-top: 1px solid #ccc;
+}
+
+.line-middle {
+    margin-top: -7px;
+    vertical-align: middle;
+    font-size: 10px;
+    color: #999;
+    white-space: nowarp;
+    width: 260%;
+    text-align: center;
+}
+
+.line-right {
+    vertical-align: middle;
+    text-align: right;
+    display: inline-block;
+    width: 100%;
+    border-top: 1px solid #ccc;
+}
+
+.box-rolelist {
+    padding: 15px 24.56px;
+    display: grid;
+    grid-template-columns: 60px 60px 60px 60px 60px 60px;
+    column-gap: 8px;
+    row-gap: 8px;
+}
+
+.role-box {
+    position: relative;
+    background: linear-gradient(#8f6340, #d0894b);
+    background-size: cover;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.role-box>img {
+    width: 60px;
+}
+
+.isup {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    height: 18px;
+    width: 22px;
+    text-align: center;
+    background-color: rgba(66, 66, 66, 1);
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+.gacha-time {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 18px;
+    font-size: 13px;
+    text-align: center;
+    background-color: #feeb73;
+    font-weight: bold;
+    border-radius: 0px 0px 10px 10px;
+}

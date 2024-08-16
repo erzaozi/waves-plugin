@@ -1,0 +1,375 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" type="text/css" href="{{pluginResources}}/Template/gacha/gacha.css" />
+    <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
+</head>
+
+<body id="body">
+    <div id="container">
+        <div id="left">
+            <div class="user">
+                <img src="{{pluginResources}}/Template/gacha/imgs/card.png" class="user-bg">
+                <div class="user-uid">UID：{{data.playerId}}</div>
+                <div class="user-cost"> {{data.upCharPool.info.total}}抽</div>
+                {{if data.upCharPool.info.avg5Star >= 50}}
+                <img src="https://prod-alicdn-community.kurobbs.com/product/emoji/9c612cf1bfd040e9a2b942357bdcee4c20231027.png" class="user-emoji">
+                {{else if data.upCharPool.info.avg5Star >= 20}}
+                <img src="https://prod-alicdn-community.kurobbs.com/product/emoji/fd013990225b41ce907348cc4ad008c920231027.png" class="user-emoji">
+                {{else}}
+                <img src="https://prod-alicdn-community.kurobbs.com/product/emoji/4f9b5f1cf2b6423f9668382a96d84db320231027.png" class="user-emoji">
+                {{/if}}
+            </div>
+            <div class="box">
+                <div class="pool-type">角色UP池</div>
+                <div class="box-overview">
+                    <div>
+                        <span class="value">{{data.upCharPool.info.no5Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">未出五星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upCharPool.info.fiveStar}}</span>
+                        <span class="value-unit">个</span>
+                        <div class="key">五星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upCharPool.info.avg5Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">五星平均</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upCharPool.info.minPit}}</span>
+                        <span class="value-unit">%</span>
+                        <div class="key">小保底不歪</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upCharPool.info.worstLuck}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">最非</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upCharPool.info.no4Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">未出四星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upCharPool.info.std5Star}}</span>
+                        <span class="value-unit">个</span>
+                        <div class="key">五星常驻</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upCharPool.info.avgUP}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">UP平均</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upCharPool.info.upCost}}</span>
+                        <span class="value-unit">W</span>
+                        <div class="key">UP花费星声</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upCharPool.info.bestLuck}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">最欧</div>
+                    </div>
+                </div>
+                <div class="box-time">
+                    <span class="line-left"></span>
+                    <span class="line-middle">五星历史 {{data.upCharPool.info.time[0]}} ~ {{data.upCharPool.info.time[1]}}</span>
+                    <span class="line-right"></span>
+                </div>
+                <div class="box-rolelist">
+                    {{each data.upCharPool.pool role}}
+                    <div class="role-box">
+                        {{if role.isUp}}
+                        <div class="isup">UP</div>
+                        {{/if}}
+                        <img src="{{role.avatar}}">
+                        {{if role.times >= 60}}
+                        <div class="gacha-time" style="background-color: #9f3235;">{{role.times}}</div>
+                        {{else if role.times >= 40}}
+                        <div class="gacha-time"  style="background-color: #6b39b6;">{{role.times}}</div>
+                        {{else if role.times >= 10}}
+                        <div class="gacha-time"  style="background-color: #138d2a;">{{role.times}}</div>
+                        {{else}}
+                        <div class="gacha-time"  style="background-color: #feeb73;">{{role.times}}</div>
+                        {{/if}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="user">
+                <img src="{{pluginResources}}/Template/gacha/imgs/card.png"  class="user-bg">
+                <div class="user-uid">UID：{{data.playerId}}</div>
+                <div class="user-cost"> {{data.stdCharPool.info.total}}抽</div>
+                {{if data.stdCharPool.info.avg5Star >= 50}}
+                <img src="https://prod-alicdn-community.kurobbs.com/product/emoji/e4f6f27f7c16422cb9f7e0f05ffe1c9020240507.gif" class="user-emoji">
+                {{else if data.stdCharPool.info.avg5Star <= 20}}
+                <img src="https://prod-alicdn-community.kurobbs.com/product/emoji/4a129f6e6dac47a98981cb5a3a0864dc20240507.gif" class="user-emoji">
+                {{else}}
+                <img src="https://prod-alicdn-community.kurobbs.com/product/emoji/0dce2f9129c94c79ae7adf17ca9624c020240507.gif" class="user-emoji">
+                {{/if}}
+            </div>
+            <div class="box">
+                <div class="pool-type">常驻角色池</div>
+                <div class="box-overview">
+                    <div>
+                        <span class="value">{{data.stdCharPool.info.no5Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">未出五星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdCharPool.info.fiveStar}}</span>
+                        <span class="value-unit">个</span>
+                        <div class="key">五星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdCharPool.info.avg5Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">五星平均</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdCharPool.info.fourStarWpn}}</span>
+                        <span class="value-unit">个</span>
+                        <div class="key">四星武器</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdCharPool.info.worstLuck}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">最非</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdCharPool.info.no4Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">未出四星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdCharPool.info.fourStar}}</span>
+                        <span class="value-unit">个</span>
+                        <div class="key">四星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdCharPool.info.avg4Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">四星平均</div>
+                    </div>
+                    <div>
+                        <span class="value-unit">{{data.stdCharPool.info.max4Star}}</span><span class="value"> </span>
+                        <div class="key">四星最多</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdCharPool.info.bestLuck}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">最欧</div>
+                    </div>
+                </div>
+                <div class="box-time">
+                    <span class="line-left"></span>
+                    <span class="line-middle">五星历史 {{data.stdCharPool.info.time[0]}} ~ {{data.stdCharPool.info.time[1]}}</span>
+                    <span class="line-right"></span>
+                </div>
+                <div class="box-rolelist">   
+                    {{each data.stdCharPool.pool role}}
+                    <div class="role-box">
+                        <img src="{{role.avatar}}">
+                        {{if role.times >= 60}}
+                        <div class="gacha-time" style="background-color: #9f3235;">{{role.times}}</div>
+                        {{else if role.times >= 40}}
+                        <div class="gacha-time"  style="background-color: #6b39b6;">{{role.times}}</div>
+                        {{else if role.times >= 10}}
+                        <div class="gacha-time"  style="background-color: #138d2a;">{{role.times}}</div>
+                        {{else}}
+                        <div class="gacha-time"  style="background-color: #feeb73;">{{role.times}}</div>
+                        {{/if}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+        <div id="right">
+            <div class="user">
+                <img src="{{pluginResources}}/Template/gacha/imgs/card.png"  class="user-bg">
+                <div class="user-uid">UID：{{data.playerId}}</div>
+                <div class="user-cost"> {{data.upWpnPool.info.total}}抽</div>
+                {{if data.upWpnPool.info.avg5Star >= 50}}
+                <img src="https://prod-alicdn-community.kurobbs.com/product/emoji/68d7a38f74eb4b75b3850a24ece337d220231023.png" class="user-emoji">
+                {{else if data.upWpnPool.info.avg5Star >= 20}}
+                <img src="https://prod-alicdn-community.kurobbs.com/product/emoji/8abc86c656e047eb82499c2c2e9b1b7e20231023.png" class="user-emoji">
+                {{else}}
+                <img src="https://prod-alicdn-community.kurobbs.com/product/emoji/2975ef2224c74a93999dc891af4f447b20231023.png" class="user-emoji">
+                {{/if}}
+            </div>
+            <div class="box">
+                <div class="pool-type">武器UP池</div>
+                <div class="box-overview">
+                    <div>
+                        <span class="value">{{data.upWpnPool.info.no5Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">未出五星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upWpnPool.info.fiveStar}}</span>
+                        <span class="value-unit">个</span>
+                        <div class="key">五星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upWpnPool.info.avg5Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">五星平均</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upWpnPool.info.fourStarWpn}}</span>
+                        <span class="value-unit">个</span>
+                        <div class="key">四星武器</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upWpnPool.info.worstLuck}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">最非</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upWpnPool.info.no4Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">未出四星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upWpnPool.info.fourStar}}</span>
+                        <span class="value-unit">个</span>
+                        <div class="key">四星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upWpnPool.info.avg4Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">四星平均</div>
+                    </div>
+                    <div>
+                        <span class="value-unit">{{data.upWpnPool.info.max4Star}}</span><span class="value"> </span>
+                        <div class="key">四星最多</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.upWpnPool.info.bestLuck}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">最欧</div>
+                    </div>
+                </div>
+                <div class="box-time">
+                    <span class="line-left"></span>
+                    <span class="line-middle">五星历史 {{data.upWpnPool.info.time[0]}} ~ {{data.upWpnPool.info.time[1]}}</span>
+                    <span class="line-right"></span>
+                </div>
+                <div class="box-rolelist">   
+                    {{each data.upWpnPool.pool role}}
+                    <div class="role-box">
+                        <img src="{{role.avatar}}">
+                        {{if role.times >= 60}}
+                        <div class="gacha-time" style="background-color: #9f3235;">{{role.times}}</div>
+                        {{else if role.times >= 40}}
+                        <div class="gacha-time"  style="background-color: #6b39b6;">{{role.times}}</div>
+                        {{else if role.times >= 10}}
+                        <div class="gacha-time" style="background-color: #138d2a;">{{role.times}}</div>
+                        {{else}}
+                        <div class="gacha-time" style="background-color: #feeb73;">{{role.times}}</div>
+                        {{/if}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="user">
+                <img src="{{pluginResources}}/Template/gacha/imgs/card.png"  class="user-bg">
+                <div class="user-uid">UID：{{data.playerId}}</div>
+                <div class="user-cost"> {{data.stdWpnPool.info.total}}抽</div>
+                {{if data.stdWpnPool.info.avg5Star >= 50}}
+                <img src="https://prod-alicdn-community.kurobbs.com/product/emoji/bdcf6053427643859bc069e97df6338820231023.png" class="user-emoji">
+                {{else if data.stdWpnPool.info.avg5Star >20}}
+                <img src="https://prod-alicdn-community.kurobbs.com/product/emoji/3e65524e792443d4ab3c34b47a4752af20231023.png" class="user-emoji">
+                {{else}}
+                <img src="https://prod-alicdn-community.kurobbs.com/product/emoji/2d7b44906afc43cda4e9a0ea812033e020231023.png" class="user-emoji">
+                {{/if}}
+            </div>
+            <div class="box">
+                <div class="pool-type">常驻武器池</div>
+                <div class="box-overview">
+                    <div>
+                        <span class="value">{{data.stdWpnPool.info.no5Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">未出五星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdWpnPool.info.fiveStar}}</span>
+                        <span class="value-unit">个</span>
+                        <div class="key">五星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdWpnPool.info.avg5Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">五星平均</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdWpnPool.info.fourStarWpn}}</span>
+                        <span class="value-unit">个</span>
+                        <div class="key">四星武器</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdWpnPool.info.worstLuck}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">最非</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdWpnPool.info.no4Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">未出四星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdWpnPool.info.fourStar}}</span>
+                        <span class="value-unit">个</span>
+                        <div class="key">四星</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdWpnPool.info.avg4Star}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">四星平均</div>
+                    </div>
+                    <div>
+                        <span class="value-unit">{{data.stdWpnPool.info.max4Star}}</span><span class="value"> </span>
+                        <div class="key">四星最多</div>
+                    </div>
+                    <div>
+                        <span class="value">{{data.stdWpnPool.info.bestLuck}}</span>
+                        <span class="value-unit">抽</span>
+                        <div class="key">最欧</div>
+                    </div>
+                </div>
+                <div class="box-time">
+                    <span class="line-left"></span>
+                    <span class="line-middle">五星历史 {{data.stdWpnPool.info.time[0]}} ~ {{data.stdWpnPool.info.time[1]}}</span>
+                    <span class="line-right"></span>
+                </div>
+                <div class="box-rolelist">   
+                    {{each data.stdWpnPool.pool role}}
+                    <div class="role-box">
+                        <img src="{{role.avatar}}">
+                        {{if role.times >= 60}}
+                        <div class="gacha-time" style="background-color: #9f3235;">{{role.times}}</div>
+                        {{else if role.times >= 40}}
+                        <div class="gacha-time"  style="background-color: #6b39b6;">{{role.times}}</div>
+                        {{else if role.times >= 10}}
+                        <div class="gacha-time"  style="background-color: #138d2a;">{{role.times}}</div>
+                        {{else}}
+                        <div class="gacha-time"  style="background-color: #feeb73;">{{role.times}}</div>
+                        {{/if}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

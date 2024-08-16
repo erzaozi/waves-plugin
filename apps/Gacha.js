@@ -1,18 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
-import { pluginResources } from '../model/path.js'
 import Waves from "../components/Code.js";
 import Wiki from "../components/Wiki.js";
 import Render from '../model/render.js'
-
-const CardPoolTypes = {
-    "1": "角色精准调谐",
-    "2": "武器精准调谐",
-    "3": "角色调谐（常驻池）",
-    "4": "武器调谐（常驻池）",
-    "5": "新手调谐",
-    "6": "新手自选唤取",
-    "7": "新手自选唤取（感恩定向唤取）"
-}
 
 const resident = ["鉴心", "卡卡罗", "安可", "维里奈", "凌阳"]
 
@@ -24,7 +13,7 @@ export class Gacha extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)(常驻(武器|角色)|限定(武器|角色))?抽卡(统计|分析|记录)([\\s\\S]*)$",
+                    reg: "^(～|~|鸣潮)抽卡(统计|分析|记录)([\\s\\S]*)$",
                     fnc: "gachaCount"
                 }
             ]
@@ -32,43 +21,38 @@ export class Gacha extends plugin {
     }
 
     async gachaCount(e) {
-        let message = e.msg.replace(/^(～|~|鸣潮)(常驻(武器|角色)|限定(武器|角色))?抽卡(统计|分析|记录)/, "");
-
-        let jsonData = {};
+        let message = e.msg.replace(/^(～|~|鸣潮)抽卡(统计|分析|记录)/, "");
 
         if (!message) {
-            let data = await redis.get(`Yunzai:waves:gacha:${e.user_id}`);
-            if (!data) {
-                await e.reply(`请在命令后面携带请求体或链接\n例：~抽卡统计{"recordId":"2b798246702...\n各平台抽卡记录获取详细步骤请发送[~抽卡帮助]`);
-                return true;
-            } else {
-                message = data;
-            }
+            await e.reply(`请在命令后面携带请求体或链接\n例：~抽卡统计{"recordId":"2b798246702...\n各平台抽卡记录获取详细步骤请发送[~抽卡帮助]`);
+            return true;
         }
 
-        if (message.startsWith("{")) {
+        let jsonData = {};
+        const isJson = message.startsWith("{");
+        const isUrl = message.match(/https?:\/\/[^\s/$.?#].[^\s]*/g);
+
+        if (isJson) {
             try {
                 jsonData = JSON.parse(message);
                 if (!jsonData.playerId || !jsonData.recordId) {
-                    await e.reply("缺少playerId或recordId，请复制完整请求体");
-                    return true;
+                    throw new Error("缺少playerId或recordId");
                 }
             } catch (error) {
-                await e.reply("无法转换成JSON格式，请复制完整请求体");
+                await e.reply(error.message || "无法转换成JSON格式，请复制完整请求体");
                 return true;
             }
-        } else if (message.match(/https?:\/\/[^\s/$.?#].[^\s]*/g)) {
-            message = message.match(/https?:\/\/[^\s/$.?#].[^\s]*/g)[0].replace(/#/, "");
+        } else if (isUrl) {
+            message = isUrl[0].replace(/#/, "");
             try {
-                const parsedUrl = new URL(message);
-                const params = parsedUrl.searchParams;
+                const params = new URL(message).searchParams;
                 jsonData.playerId = params.get("player_id");
                 jsonData.recordId = params.get("record_id");
+                jsonData.serverId = params.get("svr_id");
                 if (!jsonData.playerId || !jsonData.recordId) {
-                    await e.reply("缺少player_id或record_id，请复制完整链接");
-                    return true;
+                    throw new Error("缺少player_id或record_id");
                 }
-            } catch (error) {
+            } catch {
                 await e.reply("无法解析链接，请复制完整链接");
                 return true;
             }
@@ -86,117 +70,71 @@ export class Gacha extends plugin {
             "recordId": jsonData.recordId
         }
 
-        let cardPool = e.msg.includes("限定角色") ? { "1": "角色精准调谐" } :
-            e.msg.includes("限定武器") ? { "2": "武器精准调谐" } :
-                e.msg.includes("常驻角色") ? { "3": "角色调谐（常驻池）" } :
-                    e.msg.includes("常驻武器") ? { "4": "武器调谐（常驻池）" } :
-                        CardPoolTypes;
+        const waves = new Waves();
+        const upCharPool = await waves.getGaCha({ ...data, "cardPoolId": "1", "cardPoolType": "1" })
+        const upWpnPool = await waves.getGaCha({ ...data, "cardPoolId": "2", "cardPoolType": "2" })
+        const stdCharPool = await waves.getGaCha({ ...data, "cardPoolId": "3", "cardPoolType": "3" })
+        const stdWpnPool = await waves.getGaCha({ ...data, "cardPoolId": "4", "cardPoolType": "4" })
 
-        const messageData = [];
-        for (const [key, value] of Object.entries(cardPool)) {
-            data.cardPoolId = key;
-            data.cardPoolType = key;
-
-            const waves = new Waves();
-            const result = await waves.getGaCha(data);
-
-            if (!result.status) {
-                this.e.reply(result.msg)
-                return true;
-            }
-
-            if (result.data.length === 0) {
-                messageData.push({ message: `${value}：未获取到任何抽卡记录` });
-            } else {
-                const GachaData = await this.dataFormat(result.data, key);
-                GachaData.playerId = jsonData.playerId;
-
-                if (result.status) {
-                    const imageCard = await Render.gachaCount(GachaData);
-                    messageData.push({ message: imageCard });
-                } else {
-                    messageData.push({ message: `${value}：${result.msg}` });
-                }
-            }
-        }
-
-        await redis.set(`Yunzai:waves:gacha:${e.user_id}`, JSON.stringify(jsonData));
-
-        if (messageData.length === 1) {
-            await e.reply(messageData[0].message);
+        if (!upCharPool.status || !upWpnPool.status || !stdCharPool.status || !stdWpnPool.status) {
+            await e.reply("获取抽卡记录失败：" + upCharPool.msg || upWpnPool.msg || stdCharPool.msg || stdWpnPool.msg);
             return true;
         }
 
-        await e.reply(Bot.makeForwardMsg([...messageData]));
+        const renderData = {
+            "playerId": jsonData.playerId,
+            "upCharPool": await this.dataFormat(upCharPool.data),
+            "upWpnPool": await this.dataFormat(upWpnPool.data),
+            "stdCharPool": await this.dataFormat(stdCharPool.data),
+            "stdWpnPool": await this.dataFormat(stdWpnPool.data)
+        }
+
+        const imageCard = await Render.gachaCount(renderData);
+        await e.reply(imageCard);
+
         return true;
     }
 
-    async dataFormat(data, type) {
+    // 处理数据
+    async dataFormat(array) {
+        const no5Star = ((idx => (idx === -1 ? 0 : idx))(array.findIndex(item => item.qualityLevel === 5)));
+        const no4Star = ((idx => (idx === -1 ? 0 : idx))(array.findIndex(item => item.qualityLevel === 4)));
+        const fiveStar = array.filter(item => item.qualityLevel === 5).length;
+        const fourStar = array.filter(item => item.qualityLevel === 4).length;
+        const std5Star = array.filter(item => item.qualityLevel === 5 && resident.includes(item.name)).length;
+        const fourStarWpn = array.filter(item => item.qualityLevel === 4 && item.resourceType === "武器").length;
+        const max4Star = Object.entries(array.filter(item => item.qualityLevel === 4).reduce((acc, item) => (acc[item.name] = (acc[item.name] || 0) + 1, acc), {})).reduce((max, curr) => curr[1] > max[1] ? curr : max, ['无', 0])[0];
+        const avg5Star = (fiveStar !== 0) ? Math.round((array.length - no5Star) / fiveStar) : 0;
+        const avg4Star = (fourStar !== 0) ? Math.round((array.length - no4Star) / fourStar) : 0;
+        const avgUP = (fiveStar - std5Star !== 0) ? Math.round((array.length - no5Star) / (fiveStar - std5Star)) : 0;
+        const minPit = (fiveStar === std5Star ? 0.0 : (((fiveStar - std5Star) - std5Star) / (fiveStar - std5Star) * 100).toFixed(1));
+        const upCost = (avgUP * 160 / 10000).toFixed(2);
+        const worstLuck = Math.max(...(array.map((item, index) => item.qualityLevel === 5 ? index : -1).filter(index => index !== -1).reduce((gaps, curr, i, arr) => (i > 0 ? [...gaps, curr - arr[i - 1]] : gaps), [])), array.length - (array.map((item, index) => item.qualityLevel === 5 ? index : -1).filter(index => index !== -1).slice(-1)[0] + 1)) || 0;
+        const bestLuck = Math.min(...(array.map((item, index) => item.qualityLevel === 5 ? index : -1).filter(index => index !== -1).reduce((gaps, curr, i, arr) => (i > 0 ? [...gaps, curr - arr[i - 1]] : gaps), [])), array.length - (array.map((item, index) => item.qualityLevel === 5 ? index : -1).filter(index => index !== -1).slice(-1)[0] + 1)) || 0;
+
         const wiki = new Wiki();
-        const result = {
-            "pool": CardPoolTypes[type],
-            "total": data.length,
-            "five_num": data.filter(item => item.qualityLevel === 5).length,
-            "four_num": data.filter(item => item.qualityLevel === 4).length,
-            "average": Math.round(((data.findIndex(item => item.qualityLevel === 5) === -1 || data.filter(item => item.qualityLevel === 5).length === 0) ? 0 : (data.length - data.findIndex(item => item.qualityLevel === 5)) / data.filter(item => item.qualityLevel === 5).length) * 160),
-            "five_star": []
-        };
+        const pool = await Promise.all(array.filter(item => item.qualityLevel === 5).map(async (item) => ({ name: item.name, times: (array.slice(array.indexOf(item) + 1).findIndex(x => x.qualityLevel === 5) + 1) || (array.length - array.indexOf(item)), isUp: !resident.includes(item.name), avatar: (await wiki.getRecord(item.name)).record.content.contentUrl })));
 
-        const fiveStarIndexes = data
-            .map((item, index) => item.qualityLevel === 5 ? index : -1)
-            .filter(index => index !== -1);
-
-        async function getCount4Star(startIdx, endIdx) {
-            const count4Star = {};
-            for (let j = startIdx; j < endIdx; j++) {
-                if (data[j].qualityLevel === 4) {
-                    count4Star[data[j].name] = (count4Star[data[j].name] || 0) + 1;
-                }
-            }
-            const sortedEntries = Object.entries(count4Star)
-                .map(async ([name, count]) => {
-                    const recordData = await wiki.getRecord(name);
-                    return { avatar: recordData.record.content.contentUrl, count };
-                });
-
-            return (await Promise.all(sortedEntries))
-                .sort((a, b) => b.count - a.count);
+        return {
+            info: {
+                total: array.length,
+                time: array.length > 0 ? [array[0].time, array[array.length - 1].time] : [null, null],
+                no5Star: no5Star,
+                no4Star: no4Star,
+                fiveStar: fiveStar,
+                fourStar: fourStar,
+                std5Star: std5Star,
+                fourStarWpn: fourStarWpn,
+                max4Star: max4Star,
+                avg5Star: avg5Star,
+                avg4Star: avg4Star,
+                avgUP: avgUP,
+                minPit: minPit,
+                upCost: upCost,
+                worstLuck: worstLuck,
+                bestLuck: bestLuck,
+            },
+            pool: pool
         }
-
-        if (fiveStarIndexes.length > 0) {
-
-            if (fiveStarIndexes[0] !== 0) {
-                result["five_star"].push({
-                    "avatar": pluginResources + "/Template/gachaCount/imgs/unknow.png",
-                    "times": fiveStarIndexes[0],
-                    "time": new Date(data[0].time).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' }).replace(/\//g, '-'),
-                    "four_star": await getCount4Star(0, fiveStarIndexes[0])
-                });
-            }
-
-            const promises = fiveStarIndexes.map(async (index, i) => {
-                const startIdx = index + 1;
-                const endIdx = (i + 1 < fiveStarIndexes.length) ? fiveStarIndexes[i + 1] : data.length;
-                const interval = endIdx - index;
-                const recordData = await wiki.getRecord(data[index].name);
-                return {
-                    "avatar": recordData.record.content.contentUrl,
-                    "times": interval,
-                    "time": new Date(data[index].time).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' }).replace(/\//g, '-'),
-                    "four_star": await getCount4Star(startIdx, endIdx)
-                };
-            });
-            result["five_star"].push(...await Promise.all(promises));
-        } else {
-            const interval = data.length;
-            result["five_star"].push({
-                "avatar": pluginResources + "/Template/gachaCount/imgs/unknow.png",
-                "times": interval,
-                "time": new Date(data[0].time).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' }).replace(/\//g, '-'),
-                "four_star": await getCount4Star(0, data.length)
-            });
-        }
-
-        return result;
     }
 }

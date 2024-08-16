@@ -126,13 +126,13 @@ class Render {
         return base64
     }
 
-    async gachaCount(GachaData) {
+    async gachaCount(data) {
         const base64 = await puppeteer.screenshot('waves-plugin', {
             saveId: 'gachaCount',
             imgType: 'png',
-            tplFile: `${pluginResources}/Template/gachaCount/gachaCount.html`,
+            tplFile: `${pluginResources}/Template/gacha/gacha.html`,
             pluginResources,
-            GachaData
+            data
         })
 
         return base64

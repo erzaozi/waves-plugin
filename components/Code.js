@@ -13,6 +13,7 @@ const CONSTANTS = {
     EXPLORE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/exploreIndex',
     SIGNIN_URL: 'https://api.kurobbs.com/encourage/signIn/v2',
     GACHA_URL: 'https://gmserver-api.aki-game2.com/gacha/record/query',
+    INTL_GACHA_URL: 'https://gmserver-api.aki-game2.net/gacha/record/query',
     ROLE_DETAIL_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/getRoleDetail',
     EVENT_LIST_URL: 'https://api.kurobbs.com/forum/companyEvent/findEventList',
     SELF_TOWER_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/towerDataDetail',
@@ -399,8 +400,10 @@ class Waves {
     // 抽卡记录
     async getGaCha(data) {
 
+        const isCN = data.serverId == "76402e5b20be2c39f095a152090afddc" ? true : false;
+
         try {
-            const response = await axios.post(CONSTANTS.GACHA_URL, data);
+            const response = await axios.post(isCN ? CONSTANTS.GACHA_URL : CONSTANTS.INTL_GACHA_URL, data);
 
             if (response.data.code === 0) {
                 if (response.data.data === null) {
