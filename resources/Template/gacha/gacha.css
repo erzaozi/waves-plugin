@@ -1,6 +1,6 @@
 @font-face {
     font-family: "MiSans";
-    src: url("./fonts/MiSans-Regular.ttf");
+    src: url("../../fonts/MiSans-Regular.ttf");
     font-weight: normal;
     font-style: normal;
 }
@@ -168,6 +168,10 @@ hr {
 
 .role-box>img {
     width: 120px;
+    height: 120px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 20px 20px 20px 20px;
 }
 
 .isup {
@@ -185,7 +189,7 @@ hr {
 
 .gacha-time {
     position: absolute;
-    bottom: -10px;
+    bottom: 0;
     right: 0;
     width: 100%;
     height: 36px;

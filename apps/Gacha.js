@@ -107,7 +107,7 @@ export class Gacha extends plugin {
         const avg5Star = (fiveStar !== 0) ? Math.round((array.length - no5Star) / fiveStar) : 0;
         const avg4Star = (fourStar !== 0) ? Math.round((array.length - no4Star) / fourStar) : 0;
         const avgUP = (fiveStar - std5Star !== 0) ? Math.round((array.length - no5Star) / (fiveStar - std5Star)) : 0;
-        const minPit = ((fiveStar, std5Star) => (fiveStar === std5Star ? 0.0 : ((fiveStar - std5Star * 2) / (fiveStar - std5Star) * 100).toFixed(1)))((resident.includes(array[array.length - 1]) ? 1 : 0) + fiveStar, std5Star);
+        const minPit = ((fiveStar, std5Star) => (fiveStar === std5Star ? 0.0 : ((fiveStar - std5Star * 2) / (fiveStar - std5Star) * 100).toFixed(1)))((resident.includes(array.filter(item => item.qualityLevel === 5)[0]?.name) ? 1 : 0) + fiveStar, std5Star);
         const upCost = (avgUP * 160 / 10000).toFixed(2);
         const worstLuck = Math.max(...(array.map((item, index) => item.qualityLevel === 5 ? index : -1).filter(index => index !== -1).reduce((gaps, curr, i, arr) => (i > 0 ? [...gaps, curr - arr[i - 1]] : gaps), [])), array.length - (array.map((item, index) => item.qualityLevel === 5 ? index : -1).filter(index => index !== -1).slice(-1)[0] + 1)) || 0;
         const bestLuck = Math.min(...(array.map((item, index) => item.qualityLevel === 5 ? index : -1).filter(index => index !== -1).reduce((gaps, curr, i, arr) => (i > 0 ? [...gaps, curr - arr[i - 1]] : gaps), [])), array.length - (array.map((item, index) => item.qualityLevel === 5 ? index : -1).filter(index => index !== -1).slice(-1)[0] + 1)) || 0;
