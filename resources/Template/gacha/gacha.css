@@ -18,16 +18,15 @@ hr {
 }
 
 #container {
-    width: 1952px;
+    width: auto;
     display: flex;
     flex-direction: row;
     padding: 40px;
     font-family: "MiSans";
 }
 
-#left,
-#right {
-    width: 50%;
+.column {
+    width: 976px;
 }
 
 .box {

@@ -16,7 +16,7 @@ export class Gacha extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)抽卡(统计|分析|记录)([\\s\\S]*)$",
+                    reg: "^(～|~|鸣潮)(常驻)?(角色|武器|武器常驻|自选|新手)?抽卡(统计|分析|记录)([\\s\\S]*)$",
                     fnc: "gachaCount"
                 },
                 {
@@ -32,7 +32,19 @@ export class Gacha extends plugin {
     }
 
     async gachaCount(e) {
-        let message = e.msg.replace(/^(～|~|鸣潮)抽卡(统计|分析|记录)/, "");
+
+        let message = e.msg.replace(/^(～|~|鸣潮)(常驻)?(角色|武器|武器常驻|自选|新手)?抽卡(统计|分析|记录)/, "");
+
+        const poolMapping = {
+            "角色": 1,
+            "武器": 2,
+            "常驻角色": 3,
+            "常驻武器": 4,
+            "新手": 5,
+            "自选": 6
+        };
+
+        const poolType = Object.entries(poolMapping).reduce((type, [key, value]) => e.msg.includes(key) ? value : type, 0);
 
         const boundId = await redis.get(`Yunzai:waves:gachaHistory:${e.user_id}`);
         const filePath = `${_path}/data/wavesGacha/${boundId}_Export.json`;
@@ -43,13 +55,23 @@ export class Gacha extends plugin {
 
             await e.reply(`正在获取UID为 ${data.info.uid} 于 ${new Date(data.info.export_timestamp).toLocaleString()} 的抽卡记录，请稍候...`);
 
-            const renderData = {
-                playerId: data.info.uid,
-                upCharPool: await this.dataFormat(await this.convertData(data.list.filter(item => item.gacha_id == 1), false)),
-                upWpnPool: await this.dataFormat(await this.convertData(data.list.filter(item => item.gacha_id == 2), false)),
-                stdCharPool: await this.dataFormat(await this.convertData(data.list.filter(item => item.gacha_id == 3), false)),
-                stdWpnPool: await this.dataFormat(await this.convertData(data.list.filter(item => item.gacha_id == 4), false)),
-            };
+            let renderData = { playerId: data.info.uid };
+
+            const getPoolData = async (gachaId) =>
+                this.dataFormat(await this.convertData(data.list.filter(item => item.gacha_id == gachaId), false));
+
+            if (poolType === 0) {
+                renderData = {
+                    ...renderData,
+                    upCharPool: await getPoolData(1),
+                    upWpnPool: await getPoolData(2),
+                    stdCharPool: await getPoolData(3),
+                    stdWpnPool: await getPoolData(4)
+                };
+            } else if (poolType > 0) {
+                const key = poolType === 5 ? 'otherPool' : poolType === 6 ? 'upCharPool' : poolType === 1 ? 'upCharPool' : poolType === 2 ? 'upWpnPool' : poolType === 3 ? 'stdCharPool' : 'stdWpnPool';
+                renderData = { ...renderData, [key]: await getPoolData(poolType) };
+            }
 
             let imageCard = await Render.gachaCount(renderData);
             await e.reply(imageCard);
@@ -104,13 +126,17 @@ export class Gacha extends plugin {
         };
 
         const waves = new Waves();
-        const getCardPool = async (poolId, poolType) => await waves.getGaCha({ ...data, cardPoolId: poolId, cardPoolType: poolType });
+        const getCardPool = async (poolId, poolType) =>
+            await waves.getGaCha({ ...data, cardPoolId: poolId, cardPoolType: poolType });
 
         const pools = await Promise.all([
             getCardPool("1", "1"),
             getCardPool("2", "2"),
             getCardPool("3", "3"),
             getCardPool("4", "4"),
+            getCardPool("5", "5"),
+            getCardPool("6", "6"),
+            getCardPool("7", "7"),
         ]);
 
         const failedPool = pools.find(pool => !pool.status);
@@ -119,24 +145,31 @@ export class Gacha extends plugin {
             return true;
         }
 
+        const poolDataMapping = {
+            0: {
+                upCharPool: await this.dataFormat(pools[0].data),
+                upWpnPool: await this.dataFormat(pools[1].data),
+                stdCharPool: await this.dataFormat(pools[2].data),
+                stdWpnPool: await this.dataFormat(pools[3].data)
+            },
+            1: { upCharPool: await this.dataFormat(pools[0].data) },
+            2: { upWpnPool: await this.dataFormat(pools[1].data) },
+            3: { stdCharPool: await this.dataFormat(pools[2].data) },
+            4: { stdWpnPool: await this.dataFormat(pools[3].data) },
+            5: { otherPool: await this.dataFormat(pools[4].data) },
+            6: { upCharPool: await this.dataFormat(pools[5].data) },
+        };
+
+        const selectedPools = poolDataMapping[poolType] || {};
         const renderData = {
             playerId: jsonData.playerId,
-            upCharPool: await this.dataFormat(pools[0].data),
-            upWpnPool: await this.dataFormat(pools[1].data),
-            stdCharPool: await this.dataFormat(pools[2].data),
-            stdWpnPool: await this.dataFormat(pools[3].data),
+            ...selectedPools
         };
 
         let imageCard = await Render.gachaCount(renderData);
         await e.reply(imageCard);
 
         await redis.set(`Yunzai:waves:gachaHistory:${e.user_id}`, jsonData.playerId);
-
-        const rookiePools = await Promise.all([
-            getCardPool("5", "5"),
-            getCardPool("6", "6"),
-            getCardPool("7", "7"),
-        ]);
 
         const json = {
             info: {
@@ -153,9 +186,9 @@ export class Gacha extends plugin {
                 ...pools[1].data,
                 ...pools[2].data,
                 ...pools[3].data,
-                ...rookiePools[0].data,
-                ...rookiePools[1].data,
-                ...rookiePools[2].data,
+                ...pools[4].data,
+                ...pools[5].data,
+                ...pools[6].data
             ], true)
         }
 
@@ -339,8 +372,8 @@ export class Gacha extends plugin {
                     "0003": "角色常驻唤取",
                     "0004": "武器常驻唤取",
                     "0005": "新手唤取",
-                    "0006": "6",
-                    "0007": "7"
+                    "0006": "新手自选唤取",
+                    "0007": "新手自选唤取（感恩定向唤取）"
                 }
             },
             reverse: {
