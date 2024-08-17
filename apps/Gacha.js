@@ -1,5 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import { pluginRoot, _path } from '../model/path.js'
+import Config from "../components/Config.js";
 import Waves from "../components/Code.js";
 import Wiki from "../components/Wiki.js";
 import Render from '../model/render.js'
@@ -180,6 +181,8 @@ export class Gacha extends plugin {
 
 
     async importGacha(e) {
+
+        if (!Config.getConfig().allow_import) return await e.reply("当前不允许导入抽卡记录，请使用[~抽卡记录]进行更新");
 
         if (e.isGroup) return e.reply("请私聊导出抽卡记录")
 

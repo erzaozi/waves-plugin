@@ -185,6 +185,12 @@ export function supportGuoba() {
           bottomHelpMessage: "允许未绑定用户使用绑定用户的Token进行查询",
           component: "Switch",
         },
+        {
+          field: "allow_import",
+          label: "允许导入抽卡记录",
+          bottomHelpMessage: "无法验证导入数据真实性，可能存在虚假数据覆盖真实数据情况，请谨慎开启",
+          component: "Switch",
+        },
       ],
       getConfigData() {
         let config = Config.getConfig()
