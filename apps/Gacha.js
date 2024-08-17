@@ -1,7 +1,9 @@
 import plugin from '../../../lib/plugins/plugin.js'
+import { pluginRoot, _path } from '../model/path.js'
 import Waves from "../components/Code.js";
 import Wiki from "../components/Wiki.js";
 import Render from '../model/render.js'
+import fs from 'fs'
 
 const resident = ["鉴心", "卡卡罗", "安可", "维里奈", "凌阳"]
 
@@ -15,6 +17,14 @@ export class Gacha extends plugin {
                 {
                     reg: "^(～|~|鸣潮)抽卡(统计|分析|记录)([\\s\\S]*)$",
                     fnc: "gachaCount"
+                },
+                {
+                    reg: "^(～|~|鸣潮)导入抽卡记录$",
+                    fnc: "importGacha"
+                },
+                {
+                    reg: "^(～|~|鸣潮)导出抽卡记录$",
+                    fnc: "exportGacha"
                 }
             ]
         })
@@ -22,6 +32,28 @@ export class Gacha extends plugin {
 
     async gachaCount(e) {
         let message = e.msg.replace(/^(～|~|鸣潮)抽卡(统计|分析|记录)/, "");
+
+        const boundId = await redis.get(`Yunzai:waves:gachaHistory:${e.user_id}`);
+        const filePath = `${_path}/data/wavesGacha/${boundId}_Export.json`;
+
+        if (boundId && fs.existsSync(filePath) && !message) {
+
+            let data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+
+            await e.reply(`正在获取UID为 ${data.info.uid} 于 ${new Date(data.info.export_timestamp).toLocaleString()} 的抽卡记录，请稍候...`);
+
+            const renderData = {
+                playerId: data.info.uid,
+                upCharPool: await this.dataFormat(await this.convertData(data.list.filter(item => item.gacha_id == 1), false)),
+                upWpnPool: await this.dataFormat(await this.convertData(data.list.filter(item => item.gacha_id == 2), false)),
+                stdCharPool: await this.dataFormat(await this.convertData(data.list.filter(item => item.gacha_id == 3), false)),
+                stdWpnPool: await this.dataFormat(await this.convertData(data.list.filter(item => item.gacha_id == 4), false)),
+            };
+
+            let imageCard = await Render.gachaCount(renderData);
+            await e.reply(imageCard);
+            return true;
+        }
 
         if (!message) {
             await e.reply(`请在命令后面携带请求体或链接\n例：~抽卡统计{"recordId":"2b798246702...\n各平台抽卡记录获取详细步骤请发送[~抽卡帮助]`);
@@ -61,36 +93,183 @@ export class Gacha extends plugin {
             return true;
         }
 
-        await e.reply("正在分析您的抽卡记录，请稍后...");
+        await e.reply(`正在分析UID为 ${jsonData.playerId} 的抽卡记录，请稍候...`);
 
         const data = {
-            "playerId": jsonData.playerId,
-            "serverId": jsonData.serverId || "76402e5b20be2c39f095a152090afddc",
-            "languageCode": jsonData.languageCode || "zh-Hans",
-            "recordId": jsonData.recordId
-        }
+            playerId: jsonData.playerId,
+            serverId: jsonData.serverId || "76402e5b20be2c39f095a152090afddc",
+            languageCode: jsonData.languageCode || "zh-Hans",
+            recordId: jsonData.recordId
+        };
 
         const waves = new Waves();
-        const upCharPool = await waves.getGaCha({ ...data, "cardPoolId": "1", "cardPoolType": "1" })
-        const upWpnPool = await waves.getGaCha({ ...data, "cardPoolId": "2", "cardPoolType": "2" })
-        const stdCharPool = await waves.getGaCha({ ...data, "cardPoolId": "3", "cardPoolType": "3" })
-        const stdWpnPool = await waves.getGaCha({ ...data, "cardPoolId": "4", "cardPoolType": "4" })
+        const getCardPool = async (poolId, poolType) => await waves.getGaCha({ ...data, cardPoolId: poolId, cardPoolType: poolType });
 
-        if (!upCharPool.status || !upWpnPool.status || !stdCharPool.status || !stdWpnPool.status) {
-            await e.reply("获取抽卡记录失败：" + upCharPool.msg || upWpnPool.msg || stdCharPool.msg || stdWpnPool.msg);
+        const pools = await Promise.all([
+            getCardPool("1", "1"),
+            getCardPool("2", "2"),
+            getCardPool("3", "3"),
+            getCardPool("4", "4"),
+        ]);
+
+        const failedPool = pools.find(pool => !pool.status);
+        if (failedPool) {
+            await e.reply("获取抽卡记录失败：" + failedPool.msg);
             return true;
         }
 
         const renderData = {
-            "playerId": jsonData.playerId,
-            "upCharPool": await this.dataFormat(upCharPool.data),
-            "upWpnPool": await this.dataFormat(upWpnPool.data),
-            "stdCharPool": await this.dataFormat(stdCharPool.data),
-            "stdWpnPool": await this.dataFormat(stdWpnPool.data)
+            playerId: jsonData.playerId,
+            upCharPool: await this.dataFormat(pools[0].data),
+            upWpnPool: await this.dataFormat(pools[1].data),
+            stdCharPool: await this.dataFormat(pools[2].data),
+            stdWpnPool: await this.dataFormat(pools[3].data),
+        };
+
+        let imageCard = await Render.gachaCount(renderData);
+        await e.reply(imageCard);
+
+        await redis.set(`Yunzai:waves:gachaHistory:${e.user_id}`, jsonData.playerId);
+
+        const rookiePools = await Promise.all([
+            getCardPool("5", "5"),
+            getCardPool("6", "6"),
+            getCardPool("7", "7"),
+        ]);
+
+        const json = {
+            info: {
+                lang: "zh-cn",
+                region_time_zone: 8,
+                export_timestamp: Date.now(),
+                export_app: "Waves-Plugin",
+                export_app_version: JSON.parse(fs.readFileSync(`${pluginRoot}/package.json`, 'utf-8')).version,
+                wwgf_version: "v0.1b",
+                uid: jsonData.playerId
+            },
+            list: await this.convertData([
+                ...pools[0].data,
+                ...pools[1].data,
+                ...pools[2].data,
+                ...pools[3].data,
+                ...rookiePools[0].data,
+                ...rookiePools[1].data,
+                ...rookiePools[2].data,
+            ], true)
         }
 
-        const imageCard = await Render.gachaCount(renderData);
-        await e.reply(imageCard);
+        if (fs.existsSync(`${_path}/data/wavesGacha/${jsonData.playerId}_Export.json`)) {
+            const list = JSON.parse(fs.readFileSync(`${_path}/data/wavesGacha/${jsonData.playerId}_Export.json`, 'utf-8')).list;
+
+            const filteredList = Object.values(list.reduce((acc, item) => {
+                (acc[item.gacha_id] = acc[item.gacha_id] || []).push(item);
+                return acc;
+            }, {})).filter(group => group.some(item => json.list.some(newItem => newItem.id === item.id)))
+                .flat();
+
+            json.list = [...json.list, ...filteredList].filter((item, index, self) => index === self.findIndex(t => t.id === item.id));
+
+            json.list.sort((a, b) => a.gacha_id - b.gacha_id || b.id - a.id);
+        }
+
+        fs.writeFileSync(`${_path}/data/wavesGacha/${jsonData.playerId}_Export.json`, JSON.stringify(json, null, 2));
+        logger.info(`[Waves-Plugin] 已写入本地文件 ${jsonData.playerId}_Export.json`)
+
+        return true;
+    }
+
+
+    async importGacha(e) {
+
+        if (e.isGroup) return e.reply("请私聊导出抽卡记录")
+
+        this.setContext('readFile');
+        await this.reply('请发送Json文件');
+    }
+
+    async readFile() {
+        this.finish('readFile');
+
+        if (!this.e.file) {
+            return await this.e.reply("未获取到Json文件，请再次使用[~导入抽卡记录]导入抽卡记录");
+        }
+
+        const path = `${_path}/data/wavesGacha/cache_${this.e.file.name}`;
+        const { url, fid } = this.e.file;
+        const groupUrl = this.e.group?.getFileUrl ? await this.e.group.getFileUrl(fid) : null;
+        const friendUrl = this.e.friend?.getFileUrl ? await this.e.friend.getFileUrl(fid) : null;
+
+        const fileUrl = url || groupUrl || friendUrl;
+
+        if (!fileUrl) {
+            return await this.reply("未获取到文件URL，请检查文件是否有效", true);
+        }
+
+        try {
+            await Bot.download(fileUrl, path);
+        } catch (err) {
+            logger.error(`文件下载错误：${logger.red(err.stack)}`);
+            await this.reply(`导入抽卡记录失败：${err.message || '未知错误'}`, true);
+            return true;
+        }
+
+        const json = JSON.parse(fs.readFileSync(path, 'utf-8'));
+
+        if (!json || !json.info || !json.list) {
+            await this.e.reply("导入抽卡记录失败：文件内容格式错误，请检查文件是否为WWGF标准格式");
+            return true;
+        }
+
+        const { uid } = json.info;
+
+        if (!uid) {
+            await this.e.reply("未能获取到抽卡记录的UID，请检查文件是否为WWGF标准格式");
+            return true;
+        }
+
+        const exportPath = `${_path}/data/wavesGacha/${uid}_Export.json`;
+        if (fs.existsSync(exportPath)) {
+            const { list } = JSON.parse(fs.readFileSync(exportPath, 'utf-8'));
+
+            const filteredList = Object.values(list.reduce((acc, item) => {
+                (acc[item.gacha_id] = acc[item.gacha_id] || []).push(item);
+                return acc;
+            }, {})).filter(group => group.some(item => json.list.some(newItem => newItem.id === item.id)))
+                .flat();
+
+            json.list = [...json.list, ...filteredList].filter((item, index, self) => index === self.findIndex(t => t.id === item.id));
+
+            json.list.sort((a, b) => a.gacha_id - b.gacha_id || b.id - a.id);
+        }
+
+        fs.writeFileSync(exportPath, JSON.stringify(json, null, 2));
+        fs.unlinkSync(path);
+
+        await this.e.reply(`导入UID为 ${uid} 的抽卡记录成功，共计${json.list.length}条记录`);
+        await redis.set(`Yunzai:waves:gachaHistory:${this.e.user_id}`, uid);
+        logger.info(`[Waves-Plugin] 已写入本地文件 ${uid}_Export.json`);
+
+        return true;
+    }
+    async exportGacha(e) {
+        const id = await redis.get(`Yunzai:waves:gachaHistory:${e.user_id}`);
+        const path = `${_path}/data/wavesGacha/${id}_Export.json`;
+
+        if (id && fs.existsSync(path)) {
+            const { list } = JSON.parse(fs.readFileSync(path, 'utf-8'));
+
+            await e.reply(`导出 ${id}_Export.json 成功，共计${list.length}条记录 \n请接收文件`);
+
+            const sendFile = e.group?.sendFile || e.friend?.sendFile;
+
+            if (sendFile) {
+                await sendFile.call(e.group || e.friend, path);
+            } else {
+                await e.reply('导出失败：暂不支持发送文件');
+            }
+        } else {
+            await e.reply("未能找到您在本地的抽卡记录，请发送[~抽卡记录]获取抽卡记录");
+        }
 
         return true;
     }
@@ -137,4 +316,79 @@ export class Gacha extends plugin {
             pool: pool
         }
     }
+
+    // 处理数据
+    async convertData(dataArray, toWWGF) {
+        const mappings = {
+            forward: {
+                gacha: {
+                    "角色精准调谐": "0001",
+                    "武器精准调谐": "0002",
+                    "角色调谐（常驻池）": "0003",
+                    "武器调谐（常驻池）": "0004",
+                    "新手调谐": "0005",
+                    "6": "0006",
+                    "7": "0007"
+                },
+                type: {
+                    "0001": "角色活动唤取",
+                    "0002": "武器活动唤取",
+                    "0003": "角色常驻唤取",
+                    "0004": "武器常驻唤取",
+                    "0005": "新手唤取",
+                    "0006": "6",
+                    "0007": "7"
+                }
+            },
+            reverse: {
+                "0001": "角色精准调谐",
+                "0002": "武器精准调谐",
+                "0003": "角色调谐（常驻池）",
+                "0004": "武器调谐（常驻池）",
+                "0005": "新手调谐",
+                "0006": "新手自选唤取",
+                "0007": "新手自选唤取（感恩定向唤取）"
+            }
+        };
+
+        const generateId = (ts, poolId, drawNum) => `${String(ts).padStart(10, '0')}${String(poolId).padStart(4, '0')}000${String(drawNum).padStart(2, '0')}`;
+
+        const timestampCount = {};
+
+        return dataArray.map(item => {
+            const ts = Math.floor(new Date(item.time).getTime() / 1000);
+            if (toWWGF) {
+                const poolId = mappings.forward.gacha[item.cardPoolType];
+
+                timestampCount[ts] = timestampCount[ts] || Math.min(dataArray.filter(record =>
+                    Math.floor(new Date(record.time).getTime() / 1000) === ts
+                ).length, 10);
+
+                const drawNum = timestampCount[ts]--;
+                const uniqueId = generateId(ts, poolId, drawNum);
+
+                return {
+                    gacha_id: poolId,
+                    gacha_type: mappings.forward.type[poolId],
+                    item_id: String(item.resourceId),
+                    count: String(item.count),
+                    time: item.time,
+                    name: item.name,
+                    item_type: item.resourceType,
+                    rank_type: String(item.qualityLevel),
+                    id: uniqueId
+                };
+            } else {
+                return {
+                    cardPoolType: mappings.reverse[item.gacha_id],
+                    resourceId: Number(item.item_id),
+                    qualityLevel: Number(item.rank_type),
+                    resourceType: item.item_type,
+                    name: item.name,
+                    count: Number(item.count),
+                    time: item.time
+                };
+            }
+        });
+    };
 }

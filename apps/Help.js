@@ -116,8 +116,8 @@ export class Help extends plugin {
                     },
                     {
                         "icon": 15,
-                        "title": "~安可面板",
-                        "desc": "角色面板"
+                        "title": "~导入/导出抽卡记录",
+                        "desc": "导入导出抽卡记录"
                     },
                     {
                         "icon": 16,
@@ -126,41 +126,46 @@ export class Help extends plugin {
                     },
                     {
                         "icon": 17,
+                        "title": "~安可面板",
+                        "desc": "角色面板"
+                    },
+                    {
+                        "icon": 18,
                         "title": "~吟霖图鉴",
                         "desc": "万物图鉴"
                     },
                     {
-                        "icon": 18,
+                        "icon": 19,
                         "title": "~今汐攻略",
                         "desc": "角色攻略"
                     },
                     {
-                        "icon": 19,
+                        "icon": 20,
                         "title": "~公告",
                         "desc": "最新官方公告"
                     },
                     {
-                        "icon": 20,
+                        "icon": 21,
                         "title": "~日历",
                         "desc": "活动日历"
                     },
                     {
-                        "icon": 21,
+                        "icon": 22,
                         "title": "~开启公告推送",
                         "desc": "推送官方公告"
                     },
                     {
-                        "icon": 22,
+                        "icon": 23,
                         "title": "~十连",
                         "desc": "抽卡模拟器"
                     },
                     {
-                        "icon": 23,
+                        "icon": 24,
                         "title": "~帮助",
                         "desc": "查看帮助面板"
                     },
                     {
-                        "icon": 24,
+                        "icon": 25,
                         "title": "~更新",
                         "desc": "更新插件"
                     }
