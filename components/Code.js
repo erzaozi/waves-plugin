@@ -36,11 +36,10 @@ class Waves {
         let data = qs.stringify({
             mobile,
             code,
-            devCode
         });
 
         try {
-            const response = await axios.post(CONSTANTS.LOGIN_URL, data, { headers: CONSTANTS.REQUEST_HEADERS_BASE });
+            const response = await axios.post(CONSTANTS.LOGIN_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, devCode } });
 
             if (response.data.code === 200) {
                 logger.info(`验证码登录成功，库街区用户：${response.data.data.userName}`);
