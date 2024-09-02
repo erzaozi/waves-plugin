@@ -19,7 +19,7 @@ export class Calendar extends plugin {
 
     async calendar(e) {
         try {
-            const { data } = await axios.get('https://ww.kuro.wiki/data/zhHans/activities.json');
+            const { data } = await axios.get('https://ww.kuro.wiki/data/zhHans/activities.json', { headers: { 'Referer': 'https://ww.kuro.wiki' } });
             const now = Date.now();
             const ago = now - 7 * 24 * 60 * 60 * 1000;
             const soon = now + 7 * 24 * 60 * 60 * 1000;
