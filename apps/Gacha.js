@@ -312,8 +312,8 @@ export class Gacha extends plugin {
 
     // 处理数据
     async dataFormat(array) {
-        const no5Star = ((idx => (idx === -1 ? 0 : idx))(array.findIndex(item => item.qualityLevel === 5)));
-        const no4Star = ((idx => (idx === -1 ? 0 : idx))(array.findIndex(item => item.qualityLevel === 4)));
+        const no5Star = ((idx => (idx === -1 ? array.length : idx))(array.findIndex(item => item.qualityLevel === 5)));
+        const no4Star = ((idx => (idx === -1 ? array.length : idx))(array.findIndex(item => item.qualityLevel === 4)));
         const fiveStar = array.filter(item => item.qualityLevel === 5).length;
         const fourStar = array.filter(item => item.qualityLevel === 4).length;
         const std5Star = array.filter(item => item.qualityLevel === 5 && resident.includes(item.name)).length;

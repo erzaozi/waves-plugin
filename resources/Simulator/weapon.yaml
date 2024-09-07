@@ -1,16 +1,16 @@
 pool_name: 「浮声沉兵」
 five_star:
   up_pool:
-    - name: 琼枝冰绡
+    - name: 诸方玄枢
   other_pool: []
   basic: 0.008
   increase: 0.0902
   other: 0
 four_star:
   up_pool:
-    - name: 今州守望
-    - name: 骇行
-    - name: 永夜长明
+    - name: 呼啸重音
+    - name: 东落
+    - name: 飞逝
   other_pool:
     - name: 行进序曲
     - name: 华彩乐段
@@ -25,13 +25,13 @@ four_star:
     - name: 秋水
     - name: 渊武
     - name: 无眠烈火
-    - name: 呼啸重音
+    - name: 今州守望
     - name: 奇幻变奏
     - name: 袍泽之固
     - name: 异响空灵
     - name: 不归孤军
-    - name: 东落
-    - name: 飞逝
+    - name: 骇行
+    - name: 永夜长明
     - name: 异度
   basic: 0.06
   other: 0.5
