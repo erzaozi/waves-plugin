@@ -4,20 +4,21 @@ import qs from 'qs';
 
 const CONSTANTS = {
     LOGIN_URL: 'https://api.kurobbs.com/user/sdkLogin',
-    REFRESH_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/refreshData',
+    REFRESH_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/refreshData',
     GAME_DATA_URL: 'https://api.kurobbs.com/gamer/widget/game3/refresh',
-    BASE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/baseData',
-    ROLE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/roleData',
-    CALABASH_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/calabashData',
-    CHALLENGE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/challengeDetails',
-    EXPLORE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/exploreIndex',
+    BASE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/baseData',
+    ROLE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/roleData',
+    CALABASH_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/calabashData',
+    CHALLENGE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/challengeDetails',
+    EXPLORE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/exploreIndex',
     SIGNIN_URL: 'https://api.kurobbs.com/encourage/signIn/v2',
     GACHA_URL: 'https://gmserver-api.aki-game2.com/gacha/record/query',
     INTL_GACHA_URL: 'https://gmserver-api.aki-game2.net/gacha/record/query',
-    ROLE_DETAIL_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/getRoleDetail',
+    ROLE_DETAIL_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/getRoleDetail',
     EVENT_LIST_URL: 'https://api.kurobbs.com/forum/companyEvent/findEventList',
-    SELF_TOWER_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/towerDataDetail',
-    OTHER_TOWER_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/aki/towerIndex',
+    SELF_TOWER_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/towerDataDetail',
+    OTHER_TOWER_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/towerIndex',
+    DECRYPT_SERVER: 'https://code.yunzai.art',
 
     REQUEST_HEADERS_BASE: {
         "source": "android",
@@ -149,6 +150,7 @@ class Waves {
             const response = await axios.post(CONSTANTS.BASE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
+                response.data.data = (await this.decryptData(response.data.data)).data
                 if (response.data.data === null) {
                     logger.info('获取我的资料失败，返回数据为null');
                     return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
@@ -180,6 +182,7 @@ class Waves {
             const response = await axios.post(CONSTANTS.ROLE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
+                response.data.data = (await this.decryptData(response.data.data)).data
                 if (response.data.data === null) {
                     logger.info('获取共鸣者失败，返回数据为null');
                     return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
@@ -211,6 +214,7 @@ class Waves {
             const response = await axios.post(CONSTANTS.CALABASH_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
+                response.data.data = (await this.decryptData(response.data.data)).data
                 if (response.data.data === null) {
                     logger.info('获取数据坞失败，返回数据为null');
                     return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
@@ -243,6 +247,7 @@ class Waves {
             const response = await axios.post(CONSTANTS.CHALLENGE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
+                response.data.data = (await this.decryptData(response.data.data)).data
                 if (response.data.data === null) {
                     logger.info('获取挑战数据失败，返回数据为null');
                     return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
@@ -275,6 +280,7 @@ class Waves {
             const response = await axios.post(CONSTANTS.EXPLORE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
+                response.data.data = (await this.decryptData(response.data.data)).data
                 if (response.data.data === null) {
                     logger.info('获取探索数据失败，返回数据为null');
                     return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
@@ -306,6 +312,7 @@ class Waves {
             const response = await axios.post(CONSTANTS.ROLE_DETAIL_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
+                response.data.data = (await this.decryptData(response.data.data)).data
                 if (response.data.data === null) {
                     logger.info('获取角色详细信息失败，返回数据为null');
                     return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
@@ -370,9 +377,11 @@ class Waves {
             const response = await axios.post(CONSTANTS.SELF_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
 
             if (response.data.code === 200) {
+                response.data.data = (await this.decryptData(response.data.data)).data
                 if (response.data.data === null) {
                     const otherResponse = await axios.post(CONSTANTS.OTHER_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
                     if (otherResponse.data.code === 200) {
+                        otherResponse.data.data = (await this.decryptData(otherResponse.data.data)).data
                         if (otherResponse.data.data === null) {
                             logger.info('获取逆境深塔数据失败，返回数据为null');
                             return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
@@ -465,6 +474,25 @@ class Waves {
         } catch (error) {
             logger.error('获取活动列表失败，疑似网络问题：\n', error);
             return { status: false, msg: '获取活动列表失败，疑似网络问题，请检查控制台日志' };
+        }
+    }
+
+    // 解密数据
+    // 使用API接口形式，暂不开源，等市面上有大佬做出成熟解决方案再开源
+    async decryptData(data) {
+        try {
+            const response = await axios.post(CONSTANTS.DECRYPT_SERVER, { code: data }, { headers: { 'Referer': 'https://github.com/erzaozi/waves-plugin' } })
+
+            if (response.data.code === 200) {
+                logger.info('解密数据成功');
+                return { status: true, data: JSON.parse(response.data.data) };
+            } else {
+                logger.error('解密数据失败');
+                return { status: false, data: null };
+            }
+        } catch (error) {
+            logger.error('解密数据失败，疑似网络问题：\n', error);
+            return { status: false, msg: '解密数据失败，疑似网络问题，请检查控制台日志' };
         }
     }
 }

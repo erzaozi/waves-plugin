@@ -59,7 +59,7 @@ class Render {
             const challenges = challengeData.challengeInfo[key];
 
             for (let i = challenges.length - 1; i >= 0; i--) {
-                if (challenges[i].roles !== null) {
+                if (challenges[i].roles) {
                     result.push(challenges[i]);
                     break;
                 }
@@ -87,7 +87,7 @@ class Render {
     }
 
     async exploreData(baseData, exploreData) {
-        exploreData = [exploreData]
+        exploreData = exploreData.exploreList
 
         const base64 = await puppeteer.screenshot('waves-plugin', {
             saveId: 'exploreIndex',

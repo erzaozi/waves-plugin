@@ -17,8 +17,8 @@
     {{each exploreData country}}
     <div class="country">
         <div class="title">
-            <img src="{{pluginResources}}/Template/exploreIndex/imgs/area/{{country.countryName}}.png" class="country-logo">
-            <div class="exploratory-name">{{country.countryName}}</div>
+            <img src="{{pluginResources}}/Template/exploreIndex/imgs/area/{{country.country.countryName}}.png" class="country-logo">
+            <div class="exploratory-name">{{country.country.countryName}}</div>
             <div class="exploratory-degree">探索度：{{country.countryProgress}}%</div>
         </div>
         {{each country.areaInfoList area}}
