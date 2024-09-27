@@ -14,13 +14,33 @@
         {{if data.roleDetail.data.weightVersion}}
         <div id="weight-version">当前权重文件版本 : v{{data.roleDetail.data.weightVersion}}</div>
         {{/if}}
+
         <div id="header">
             <div id="user-id">UID:{{data.uid}}</div>
-            <img src="{{pluginResources}}/Template/charProfile/imgs/attribute/{{data.roleDetail.data.role.attributeId}}.png" id="attribute-icon">
-            <div id="role-name">{{data.roleDetail.data.role.roleName}}</div>
-            <div id="role-level">LV.{{data.roleDetail.data.role.level}}</div>
-            <img src="{{pluginResources}}/Template/charProfile/imgs/{{data.roleDetail.data.role.starLevel}}star.png" id="role-star">
-            <img src="{{data.roleDetail.data.role.rolePicUrl}}" id="role-pic">
+            <div id="role-info-container">
+                <div id="role-info">
+                    <div id="attribute-container">
+                        <!-- 属性背景图 -->
+                        <img src="{{pluginResources}}/Template/charProfile/imgs/attributeBG.png" id="attributeBG">
+                        <img src="{{pluginResources}}/Template/charProfile/imgs/attribute/{{data.roleDetail.data.role.attributeId}}.png"
+                            id="attribute-icon">
+                    </div>
+
+                    <div id="text-container">
+                        <div id="role-name">{{data.roleDetail.data.role.roleName}}</div>
+                        <div id="role-level">LV.{{data.roleDetail.data.role.level}}</div>
+                    </div>
+                </div>
+                <!-- 根据星级动态生成星星图片 -->
+                <div id="role-stars" data-star-src="{{pluginResources}}/Template/charProfile/imgs/star.png"></div>
+                <!-- 星星图片的容器 -->
+            </div>
+
+            <!-- 角色图片 -->
+            <div id="role-pic-container">
+                <img src="{{data.rolePicUrl}}" id="role-pic">
+            </div>
+
             <div id="chain">
                 <div id="chain-list">
                     {{each data.roleDetail.data.chainList chain}}
@@ -32,138 +52,211 @@
         <div id="skill">
             <div id="skill-list">
                 {{each data.roleDetail.data.skillList skill idx}}
-                {{if idx<5}}
-                <div class="skill-item">
+                {{if idx<5}} <div class="skill-item">
                     <img src="{{skill.skill.iconUrl}}" class="skill-icon">
                     <div class="skill-level">LV.{{skill.level}}</div>
-                </div>
-                {{/if}}
-                {{/each}}
-            </div>
-        </div>
-        <div class="total-score-table">
-            {{if data.roleDetail.data.phantomData.statistic}}
-            <div class="total-score-table-left">
-                <div class="total-score-key">声骸总分</div>
-                <div class="total-score-value" style="{{data.roleDetail.data.phantomData.statistic.color || "#a0a0a0"}}">{{data.roleDetail.data.phantomData.statistic.totalScore.toFixed(2)}}</div>
-                <div class="total-score-key">声骸评级</div>
-                <div class="total-score-value" style="{{data.roleDetail.data.phantomData.statistic.color || "#a0a0a0"}}">{{data.roleDetail.data.phantomData.statistic.rank}}</div>
-            </div>
-            <div class="total-score-table-right">
-                <div class="total-score-table-right-row1">
-                    <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='攻击').color}}">
-                        <span class="score-key">攻击</span>
-                        <span class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='攻击').value.toFixed(2)}}</span>
-                    </div>
-                    <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='攻击百分比').color}}">
-                        <span class="score-key">攻击百分比</span>
-                        <span class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='攻击百分比').value.toFixed(2)}}%</span>
-                    </div>
-                    <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='暴击').color}}">
-                        <span class="score-key">暴击</span>
-                        <span class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='暴击').value.toFixed(2)}}%</span>
-                    </div>
-                    <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='普攻伤害加成').color}}">
-                        <span class="score-key">普攻</span>
-                        <span class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='普攻伤害加成').value.toFixed(2)}}%</span>
-                    </div>
-                    <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='重击伤害加成').color}}">
-                        <span class="score-key">重击</span>
-                        <span class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='重击伤害加成').value.toFixed(2)}}%</span>
-                    </div>
-                </div>
-                <div class="total-score-table-right-row2">
-                    <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='生命').color}}">
-                        <span class="score-key">生命</span>
-                        <span class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='生命').value.toFixed(2)}}</span>
-                    </div>
-                    <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='生命百分比').color}}">
-                        <span class="score-key">生命百分比</span>
-                        <span class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='生命百分比').value.toFixed(2)}}%</span>
-                    </div>
-                    <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='暴击伤害').color}}">
-                        <span class="score-key">暴击伤害</span>
-                        <span class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='暴击伤害').value.toFixed(2)}}%</span>
-                    </div>
-                    <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣技能伤害加成').color}}">
-                        <span class="score-key">共鸣技能</span>
-                        <span class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣技能伤害加成').value.toFixed(2)}}%</span>
-                    </div>
-                </div>
-                <div class="total-score-table-right-row3">
-                    <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='防御').color}}">
-                        <span class="score-key">防御</span>
-                        <span class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='防御').value.toFixed(2)}}</span>
-                    </div>
-                    <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='防御百分比').color}}">
-                        <span class="score-key">防御百分比</span>
-                        <span class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='防御百分比').value.toFixed(2)}}%</span>
-                    </div>
-                    <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣效率').color}}">
-                        <span class="score-key">共鸣效率</span>
-                        <span class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣效率').value.toFixed(2)}}%</span>
-                    </div>
-                    <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣解放伤害加成').color}}">
-                        <span class="score-key">共鸣解放</span>
-                        <span class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣解放伤害加成').value.toFixed(2)}}%</span>
-                    </div>
-                </div>
-            </div>
-            {{else}}
-            <div style="color: #585858;font-style: italic;font-size: 50px;margin: 30px 134px;">
-                当前角色暂无评分
-            </div>
-            {{/if}}
-        </div>
-
-        <div id="table">
-            <div>
-                <div id="weapon-icon-box">
-                    <img src="{{data.roleDetail.data.weaponData.weapon.weaponIcon}}" id="weapon-icon">
-                    <div class="phantom-level">LV.{{data.roleDetail.data.weaponData.level}}</div>
-                </div>
-                <div class="weapon-header-right">
-                    <div id="weapon-name">{{data.roleDetail.data.weaponData.weapon.weaponName}}</div>
-                    <div id="weapon-level-box">
-                        <span id="reson-level" style="{{data.roleDetail.data.weaponData.color}}">精{{data.roleDetail.data.weaponData.resonLevel}}</span>
-                    </div>
-                </div>
-                <div id="weapon-effect-name">{{data.roleDetail.data.weaponData.weapon.weaponEffectName}}</div>
-                <div id="effect-description">{{data.roleDetail.data.weaponData.weapon.effectDescription}}</div>
-            </div>
-            {{each data.roleDetail.data.phantomData.equipPhantomList phantom}}
-            {{if phantom}}
-            <div class="phantom-list">
-                <div class="phantom-header">
-                    <img src="{{phantom.phantomProp.iconUrl}}" class="phantom-icon">
-                    <div class="phantom-level">+{{phantom.level}}</div>
-                    <img src="{{phantom.fetterDetail.iconUrl}}" class="fetter-icon">
-                    <div class="phantom-header-right">
-                        <div class="phantom-name">{{phantom.phantomProp.name.replace("（","(").replace("）",")")}}</div>
-                        {{if phantom.realScore}}
-                        <div class="phantom-rank-score" style="{{phantom.color}}">{{phantom.realScore.toFixed(2)}}-{{phantom.rank}}</div>
-                        {{else}}
-                        <div class="phantom-rank-score" style="color: #a0a0a0;">暂无评分</div>
-                        {{/if}}
-                    </div>
-                </div>
-                <div class="phantom-attribute">
-                    {{each phantom.mainProps prop}}
-                    <div class="phantom-attribute-item" style="font-weight: bold;">
-                        <span class="phantom-attribute-key">{{prop.attributeName}}</span> <span class="phantom-attribute-value">{{prop.attributeValue}}</span>
-                    </div>
-                    {{/each}}
-                    {{each phantom.subProps prop}}
-                    <div class="phantom-attribute-item" style="{{prop.color}}">
-                        <span class="phantom-attribute-key">{{prop.attributeName}}</span> <span class="phantom-attribute-value">{{prop.attributeValue}}</span>
-                    </div>
-                    {{/each}}
-                </div>
             </div>
             {{/if}}
             {{/each}}
         </div>
     </div>
+    <div class="total-score-table">
+        {{if data.roleDetail.data.phantomData.statistic}}
+        <div class="total-score-table-left">
+            <div class="total-score-key">声骸总分</div>
+            <div class="total-score-value" style="{{data.roleDetail.data.phantomData.statistic.color || " #a0a0a0"}}">
+                {{data.roleDetail.data.phantomData.statistic.totalScore.toFixed(2)}}</div>
+            <div class="total-score-key">声骸评级</div>
+            <div class="total-score-value" style="{{data.roleDetail.data.phantomData.statistic.color || " #a0a0a0"}}">
+                {{data.roleDetail.data.phantomData.statistic.rank}}</div>
+        </div>
+        <div class="total-score-table-right">
+            <div class="total-score-table-right-row1">
+                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='攻击').color}}">
+                    <span class="score-key">攻击</span>
+                    <span
+                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='攻击').value.toFixed(2)}}</span>
+                </div>
+                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='攻击百分比').color}}">
+                    <span class="score-key">攻击百分比</span>
+                    <span
+                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='攻击百分比').value.toFixed(2)}}%</span>
+                </div>
+                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='暴击').color}}">
+                    <span class="score-key">暴击</span>
+                    <span
+                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='暴击').value.toFixed(2)}}%</span>
+                </div>
+                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='普攻伤害加成').color}}">
+                    <span class="score-key">普攻</span>
+                    <span
+                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='普攻伤害加成').value.toFixed(2)}}%</span>
+                </div>
+                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='重击伤害加成').color}}">
+                    <span class="score-key">重击</span>
+                    <span
+                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='重击伤害加成').value.toFixed(2)}}%</span>
+                </div>
+            </div>
+            <div class="total-score-table-right-row2">
+                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='生命').color}}">
+                    <span class="score-key">生命</span>
+                    <span
+                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='生命').value.toFixed(2)}}</span>
+                </div>
+                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='生命百分比').color}}">
+                    <span class="score-key">生命百分比</span>
+                    <span
+                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='生命百分比').value.toFixed(2)}}%</span>
+                </div>
+                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='暴击伤害').color}}">
+                    <span class="score-key">暴击伤害</span>
+                    <span
+                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='暴击伤害').value.toFixed(2)}}%</span>
+                </div>
+                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣技能伤害加成').color}}">
+                    <span class="score-key">共鸣技能</span>
+                    <span
+                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣技能伤害加成').value.toFixed(2)}}%</span>
+                </div>
+            </div>
+            <div class="total-score-table-right-row3">
+                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='防御').color}}">
+                    <span class="score-key">防御</span>
+                    <span
+                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='防御').value.toFixed(2)}}</span>
+                </div>
+                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='防御百分比').color}}">
+                    <span class="score-key">防御百分比</span>
+                    <span
+                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='防御百分比').value.toFixed(2)}}%</span>
+                </div>
+                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣效率').color}}">
+                    <span class="score-key">共鸣效率</span>
+                    <span
+                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣效率').value.toFixed(2)}}%</span>
+                </div>
+                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣解放伤害加成').color}}">
+                    <span class="score-key">共鸣解放</span>
+                    <span
+                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣解放伤害加成').value.toFixed(2)}}%</span>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div style="color: #585858;font-style: italic;font-size: 50px;margin: 30px 134px;">
+            当前角色暂无评分
+        </div>
+        {{/if}}
+    </div>
+
+    <div id="table">
+        <div>
+            <div id="weapon-icon-box">
+                <img src="{{data.roleDetail.data.weaponData.weapon.weaponIcon}}" id="weapon-icon">
+                <div class="phantom-level">LV.{{data.roleDetail.data.weaponData.level}}</div>
+            </div>
+            <div class="weapon-header-right">
+                <div id="weapon-name">{{data.roleDetail.data.weaponData.weapon.weaponName}}</div>
+                <div id="weapon-level-box">
+                    <div id="weapon-star" data-star-src="{{pluginResources}}/Template/charProfile/imgs/star.png"
+                        data-star-level="{{data.roleDetail.data.weaponData.weapon.weaponStarLevel}}">
+                    </div>
+
+                    <span id="reson-level"
+                        style="{{data.roleDetail.data.weaponData.color}}">精{{data.roleDetail.data.weaponData.resonLevel}}</span>
+                </div>
+            </div>
+            <div id="weapon-effect-name">{{data.roleDetail.data.weaponData.weapon.weaponEffectName}}</div>
+            <div id="effect-description">{{data.roleDetail.data.weaponData.weapon.effectDescription}}</div>
+        </div>
+        {{each data.roleDetail.data.phantomData.equipPhantomList phantom}}
+        {{if phantom}}
+        <div class="phantom-list">
+            <div class="phantom-header">
+                <img src="{{phantom.phantomProp.iconUrl}}" class="phantom-icon">
+                <div class="phantom-level">+{{phantom.level}}</div>
+                <img src="{{phantom.fetterDetail.iconUrl}}" class="fetter-icon">
+                <div class="phantom-header-right">
+                    <div class="phantom-name">{{phantom.phantomProp.name.replace("（","(").replace("）",")")}}</div>
+                    {{if phantom.realScore}}
+                    <div class="phantom-rank-score" style="{{phantom.color}}">
+                        {{phantom.realScore.toFixed(2)}}-{{phantom.rank}}</div>
+                    {{else}}
+                    <div class="phantom-rank-score" style="color: #a0a0a0;">暂无评分</div>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="phantom-attribute">
+                {{each phantom.mainProps prop}}
+                <div class="phantom-attribute-item" style="font-weight: bold;">
+                    <span class="phantom-attribute-key">{{prop.attributeName}}</span> <span
+                        class="phantom-attribute-value">{{prop.attributeValue}}</span>
+                </div>
+                {{/each}}
+                {{each phantom.subProps prop}}
+                <div class="phantom-attribute-item" style="{{prop.color}}">
+                    <span class="phantom-attribute-key">{{prop.attributeName}}</span> <span
+                        class="phantom-attribute-value">{{prop.attributeValue}}</span>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        {{/if}}
+        {{/each}}
+    </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', function () {
+            const img = document.getElementById('role-pic');
+            img.onload = function () {
+                const width = img.naturalWidth;
+                const height = img.naturalHeight;
+                console.log(width, height);
+
+                if (width > height) {
+                    img.classList.add('landscape'); // 横图
+                    console.log('横图');
+                } else {
+                    img.classList.add('portrait'); // 竖图
+                    console.log('竖图');
+                }
+            };
+
+            // Trigger load event manually if image is already cached
+            if (img.complete) {
+                img.onload();
+            }
+
+            // 动态生成星级
+            const roleStarsContainer = document.getElementById('role-stars');
+            const starLevel = parseInt('{{data.roleDetail.data.role.starLevel}}', 10); // 转换为数字
+            const starSrc = roleStarsContainer.getAttribute('data-star-src'); // 获取星星图片的路径
+            for (let i = 0; i < starLevel; i++) {
+                const starImg = document.createElement('img');
+                starImg.src = starSrc;
+                starImg.classList.add('role-star');
+                roleStarsContainer.appendChild(starImg);
+            }
+
+            const createStars = (containerId, starSrc, starLevel) => {
+                const container = document.getElementById(containerId);
+                for (let i = 0; i < starLevel; i++) {
+                    const starImg = document.createElement('img');
+                    starImg.src = starSrc;
+                    starImg.classList.add(containerId === 'weapon-star' ? 'weapon-star' : 'phantom-star');
+                    container.appendChild(starImg);
+                }
+            };
+
+            // 动态生成 weapon-star 的星星
+            const weaponStarContainer = document.getElementById('weapon-star');
+            const weaponStarLevel = parseInt(weaponStarContainer.getAttribute('data-star-level'), 10);
+            const weaponStarSrc = weaponStarContainer.getAttribute('data-star-src');
+            createStars('weapon-star', weaponStarSrc, weaponStarLevel);
+        });
+    </script>
 
     <script>
         const dataContent = JSON.parse(document.getElementById('body').getAttribute('data-content'))

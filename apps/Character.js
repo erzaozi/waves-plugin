@@ -4,6 +4,9 @@ import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
 import Wiki from '../components/Wiki.js';
 import Render from '../model/render.js';
+import { pluginResources } from '../model/path.js';
+import fs from 'fs';
+import path from 'path';
 
 export class Character extends plugin {
     constructor() {
@@ -59,6 +62,8 @@ export class Character extends plugin {
 
         let data = [];
         let deleteroleId = [];
+        // 用于获取原图.
+        let imgList = [];
 
         await Promise.all(accountList.map(async (account) => {
             const usability = await waves.isAvailable(account.token);
@@ -107,8 +112,18 @@ export class Character extends plugin {
                 return;
             }
 
+            let rolePicUrl = roleDetail.data.role.rolePicUrl;
+            const rolePicDir = path.join(pluginResources, 'rolePic', name);
+            if (fs.existsSync(rolePicDir)) {
+                const picList = fs.readdirSync(rolePicDir).filter(file => path.extname(file).toLowerCase() === '.webp');
+                if (picList.length) {
+                    rolePicUrl = `file://${rolePicDir}/${picList[Math.floor(Math.random() * picList.length)]}`;
+                }
+            }
+            imgList.push(rolePicUrl);
+
             roleDetail.data = (new WeightCalculator(roleDetail.data)).calculate()
-            const imageCard = await Render.charProfile({ uid: account.roleId, roleDetail });
+            const imageCard = await Render.charProfile({ uid: account.roleId, rolePicUrl, roleDetail });
             data.push({ message: imageCard });
 
         }));
@@ -118,12 +133,29 @@ export class Character extends plugin {
             Config.setUserConfig(e.user_id, newAccountList);
         }
 
+        imgList = [ ...new Set(imgList) ];
+
+        let msgRes;
         if (data.length === 1) {
-            await e.reply(data[0].message);
-            return true;
+            msgRes = await e.reply(data[0].message);
         }
 
-        await e.reply(Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]));
+        msgRes = await e.reply(Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]));
+
+        if (msgRes) {
+            const message_id = [];
+            if (Array.isArray(msgRes.message_id)) {
+                message_id.push(...msgRes.message_id);
+            }
+            else {
+                message_id.push(msgRes.message_id);
+            }
+        }
+
+        for (const i of message_id) {
+            await redis.set(`waves:original-picture:${i}`, JSON.stringify({ type: 'profile', img: imgList }), { EX: 3600 * 3 });
+        }
+        
         return true;
     }
 }
