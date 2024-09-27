@@ -139,8 +139,9 @@ export class Character extends plugin {
         if (data.length === 1) {
             msgRes = await e.reply(data[0].message);
         }
-
-        msgRes = await e.reply(Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]));
+        else {
+            msgRes = await e.reply(Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]));
+        }
 
         if (msgRes) {
             const message_id = [];
