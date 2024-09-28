@@ -63,9 +63,10 @@
   justify-content: flex-start;
   gap: 10px;
   z-index: 2;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(255, 255, 255, 0);
   padding: 10px;
   border-radius: 10px;
+  backdrop-filter: blur(10px);
 }
 
 #role-info {
@@ -95,9 +96,16 @@
   text-shadow: 0 0 7px #000, 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
-#role-name,
+#role-name {
+  font-size: 36px;
+  color: white;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+}
+
 #role-level {
-  font-size: 34px;
+  font-size: 26px;
   color: white;
   text-overflow: ellipsis;
   overflow: hidden;

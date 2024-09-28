@@ -173,6 +173,38 @@ export function supportGuoba() {
         },
         {
           component: "Divider",
+          label: "Waves 面板图配置",
+          componentProps: {
+            orientation: "left",
+            plain: true,
+          },
+        },
+        {
+          field: "allowImgUpload",
+          label: "上传面板图",
+          bottomHelpMessage: "是否允许普通用户上传面板图",
+          component: "Switch",
+        },
+        {
+          field: "allowGetOrigin",
+          label: "获取原图",
+          bottomHelpMessage: "是否允许普通用户获取原图",
+          component: "Switch",
+        },
+        {
+          field: "allowGetList",
+          label: "获取面板图列表",
+          bottomHelpMessage: "是否允许普通用户获取面板图列表",
+          component: "Switch",
+        },
+        {
+          field: "allowImgDelete",
+          label: "删除面板图",
+          bottomHelpMessage: "是否允许普通用户删除面板图",
+          component: "Switch",
+        },
+        {
+          component: "Divider",
           label: "Waves 其他配置",
           componentProps: {
             orientation: "left",

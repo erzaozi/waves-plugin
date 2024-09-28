@@ -13,7 +13,7 @@ allow_import: false
 # 是否允许普通用户上传面板图
 allowImgUpload: false
 # 是否允许普通用户获取原图
-allowGetOrigin: false
+allowGetOrigin: true
 # 是否允许普通用户获取面板图列表
 allowGetList: false
 # 是否允许普通用户删除面板图

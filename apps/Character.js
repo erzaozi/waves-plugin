@@ -1,12 +1,12 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import WeightCalculator from '../utils/Calculate.js'
+import { pluginResources } from '../model/path.js';
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
 import Wiki from '../components/Wiki.js';
 import Render from '../model/render.js';
-import { pluginResources } from '../model/path.js';
-import fs from 'fs';
 import path from 'path';
+import fs from 'fs';
 
 export class Character extends plugin {
     constructor() {
@@ -62,7 +62,6 @@ export class Character extends plugin {
 
         let data = [];
         let deleteroleId = [];
-        // 用于获取原图.
         let imgList = [];
 
         await Promise.all(accountList.map(async (account) => {
@@ -112,14 +111,11 @@ export class Character extends plugin {
                 return;
             }
 
-            let rolePicUrl = roleDetail.data.role.rolePicUrl;
             const rolePicDir = path.join(pluginResources, 'rolePic', name);
-            if (fs.existsSync(rolePicDir)) {
-                const picList = fs.readdirSync(rolePicDir).filter(file => path.extname(file).toLowerCase() === '.webp');
-                if (picList.length) {
-                    rolePicUrl = `file://${rolePicDir}/${picList[Math.floor(Math.random() * picList.length)]}`;
-                }
-            }
+            const rolePicUrl = fs.existsSync(rolePicDir) 
+                ? `file://${rolePicDir}/${fs.readdirSync(rolePicDir).filter(file => path.extname(file).toLowerCase() === '.webp')[Math.floor(Math.random() * fs.readdirSync(rolePicDir).length)]}` 
+                : roleDetail.data.role.rolePicUrl;
+            
             imgList.push(rolePicUrl);
 
             roleDetail.data = (new WeightCalculator(roleDetail.data)).calculate()
@@ -133,28 +129,19 @@ export class Character extends plugin {
             Config.setUserConfig(e.user_id, newAccountList);
         }
 
-        imgList = [ ...new Set(imgList) ];
+        imgList = [...new Set(imgList)];
 
-        let msgRes;
-        if (data.length === 1) {
-            msgRes = await e.reply(data[0].message);
-        }
-        else {
-            msgRes = await e.reply(Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]));
-        }
-
-        if (msgRes) {
-            const message_id = [];
-            if (Array.isArray(msgRes.message_id)) {
-                message_id.push(...msgRes.message_id);
-            }
-            else {
-                message_id.push(msgRes.message_id);
-            }
-        }
-
-        for (const i of message_id) {
-            await redis.set(`waves:original-picture:${i}`, JSON.stringify({ type: 'profile', img: imgList }), { EX: 3600 * 3 });
+        const msgData = data.length === 1 
+            ? data[0].message 
+            : Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]);
+            
+        const msgRes = await e.reply(msgData);
+        const message_id = Array.isArray(msgRes?.message_id) 
+            ? msgRes.message_id 
+            : [msgRes?.message_id].filter(Boolean);
+        
+        for (const id of message_id) {
+            await redis.set(`Yunzai:waves:originpic:${id}`, JSON.stringify({ type: 'profile', img: imgList }), { EX: 3600 * 3 });
         }
         
         return true;
