@@ -52,41 +52,102 @@
   color: #d3d3d3;
 }
 
-#attribute-icon {
+#role-info-container {
+  position: absolute;
+  top: 68px;
+  left: 40px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#role-info {
+  display: flex;
+  justify-content: flex-start;
+  gap: 5px;
+  align-items: center;
+}
+
+#attribute-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   width: 100px;
-  left: 20px;
-  top: 48px;
 }
 
-#role-name {
-  position: relative;
-  top: -45px;
-  left: 126px;
-  font-size: 34px;
-}
-
-#role-level {
-  position: relative;
-  top: -50px;
-  left: 126px;
-  color: #5e4f2e;
-  font-size: 24px;
-}
-
-#role-star {
-  position: relative;
-  top: -36px;
-  left: 30px;
-  height: 30px;
-}
-
-#role-pic {
+#attribute-icon {
   position: absolute;
-  right: 6px;
-  top: 20px;
-  height: 476px;
+  width: 100px;
+}
+
+#text-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  text-shadow: 0 0 7px #000, 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+#role-name,
+#role-level {
+  font-size: 34px;
+  color: white;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+#role-stars {
+  display: flex;
+  gap: 5px;
+}
+
+.role-star {
+  width: 40px;
+  height: 100%;
+}
+
+#role-pic-container {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50.5%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 680px;
+  height: 430px;
+  z-index: 1;
+  overflow: hidden;
+  /* 裁切超出边界的内容 */
+}
+
+/* 竖图样式（高宽比大于1） */
+.portrait {
+  max-width: 100%;
+  object-fit: contain;
   mask-image: linear-gradient(to top, transparent 0%, #000 90px);
+  max-height: 430px;
+}
+
+
+/* 横图样式（宽高比大于1） */
+.landscape {
+  max-width: 100%;
+  mask-image: linear-gradient(to top, transparent 0%, #000 90px);
+  object-fit: cover;
+  aspect-ratio: 1018 / 645;
+  object-position: top;
+  border-bottom-left-radius: 27px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 27px;
 }
 
 #chain {
@@ -101,10 +162,11 @@
   display: grid;
   grid-template-columns: 68px 68px 68px 68px 68px 68px;
   column-gap: 40px;
-  top: 31px;
+  top: 245px;
   left: 70px;
   height: 70px;
   width: 608px;
+  z-index: 2;
 }
 
 .chain-icon-actived {
@@ -211,6 +273,7 @@
   color: #bda757;
   font-size: 20px;
   font-weight: 600;
+  margin-top: -5px;
 }
 
 #weapon-level-box {
@@ -220,6 +283,12 @@
   vertical-align: top;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+}
+
+.weapon-star {
+  height: 15px;
+  margin-right: 1px;
 }
 
 #reson-level {
@@ -227,7 +296,6 @@
   padding-bottom: 6px;
   height: 20px;
   width: 32px;
-  background: rgb(117, 117, 117);
   color: #fff;
   border-radius: 5px;
   text-align: center;
@@ -351,8 +419,8 @@
   position: relative;
   margin-bottom: 21px;
   display: flex;
-  left: 44px;
-  width: 668px;
+  left: 40.5px;
+  width: 680px;
   height: 120px;
   background-color: #f0ecf0;
   border-radius: 15px;
@@ -363,7 +431,7 @@
   flex-shrink: 0;
   display: grid;
   grid-template-rows: 19px 40px 19px 40px;
-  width: 121px;
+  width: 133px;
   margin: 1px 0px 0px 1px;
   text-align: center;
 }
