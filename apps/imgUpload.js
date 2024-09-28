@@ -34,7 +34,7 @@ export class ImgUploader extends plugin {
     }
 
     async uploadImage(e) {
-        const { allowImgUpload } = { ...Config.getDefConfig(), ...Config.getConfig() };
+        const { allowImgUpload } = Config.getConfig();
 
         if (!e.isMaster && !allowImgUpload) {
             e.reply('只有主人才能上传面板图');
@@ -69,6 +69,15 @@ export class ImgUploader extends plugin {
                             forwardMessages.forEach(item => images.push(...item.message.filter(itm => itm.type === 'image').map(itm => itm.url)));
                         }
                     }
+                }
+            }
+        }
+
+        if (e.reply_id) {
+            let reply = (await e.getReply(e.reply_id)).message;
+            for (const val of reply) {
+                if (val.type === "image") {
+                    images.push(val.url);
                 }
             }
         }
@@ -194,7 +203,7 @@ export class ImgUploader extends plugin {
 
         if (!e.isMaster && !allowImgDelete) return e.reply('只有主人才能删除面板图');
 
-        const character = e.msg.match(this.rule[3].reg)?.[2];
+        let character = e.msg.match(this.rule[3].reg)?.[2];
         if (!character) return e.reply('未找到角色, 请使用 "~删除今汐面板图1" 进行删除');
 
         character = await new Wiki().getAlias(character);

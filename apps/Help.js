@@ -1,6 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js';
 import Render from '../components/Render.js';
 import { style } from '../resources/help/imgs/config.js';
+import Config from '../components/Config.js';
 import _ from 'lodash';
 
 export class Help extends plugin {
@@ -172,6 +173,34 @@ export class Help extends plugin {
                 ],
             },
         ]
+        if ( e.isMaster || Config.getConfig()?.allowImgUpload) {
+            helpList.push({
+                "group": "面板图管理",
+                "list": [
+                    
+                    {
+                        "icon": 26,
+                        "title": "~上传今汐面板图",
+                        "desc": "上传面板图"
+                    },
+                    {
+                        "icon": 27,
+                        "title": "~原图",
+                        "desc": "获取面板图"
+                    },
+                    {
+                        "icon": 28,
+                        "title": "~今汐面板图列表",
+                        "desc": "查看该角色全部面板图"
+                    },
+                    {
+                        "icon": 29,
+                        "title": "~删除今汐面板图1",
+                        "desc": "删除面板图"
+                    }
+                ],
+            })
+        }
         let helpGroup = []
         _.forEach(helpList, (group) => {
             _.forEach(group.list, (help) => {

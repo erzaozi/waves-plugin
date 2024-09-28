@@ -38,7 +38,7 @@
 
             <!-- 角色图片 -->
             <div id="role-pic-container">
-                <img src="{{data.rolePicUrl}}" id="role-pic">
+                <img src="{{data.rolePicUrl}}">
             </div>
 
             <div id="chain">
@@ -210,25 +210,7 @@
     <script>
         window.addEventListener('load', function () {
             const img = document.getElementById('role-pic');
-            img.onload = function () {
-                const width = img.naturalWidth;
-                const height = img.naturalHeight;
-                console.log(width, height);
-
-                if (width > height) {
-                    img.classList.add('landscape'); // 横图
-                    console.log('横图');
-                } else {
-                    img.classList.add('portrait'); // 竖图
-                    console.log('竖图');
-                }
-            };
-
-            // Trigger load event manually if image is already cached
-            if (img.complete) {
-                img.onload();
-            }
-
+            
             // 动态生成星级
             const roleStarsContainer = document.getElementById('role-stars');
             const starLevel = parseInt('{{data.roleDetail.data.role.starLevel}}', 10); // 转换为数字
