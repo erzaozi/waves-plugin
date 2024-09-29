@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
-import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
-import fetch from 'node-fetch';
+import Server from "../components/Server.js";
+import Waves from "../components/Code.js";
 
 export class BindToken extends plugin {
     constructor() {
@@ -28,7 +28,6 @@ export class BindToken extends plugin {
 
     async bindToken(e) {
         const message = e.msg.replace(/^(～|~|鸣潮)(登录|登陆|绑定)/, '').trim();
-
         const waves = new Waves();
         let token;
 
@@ -36,95 +35,49 @@ export class BindToken extends plugin {
             token = message;
         } else if (/^\d{9}$/.test(message)) {
             await redis.set(`Yunzai:waves:bind:${e.user_id}`, message);
-            await e.reply("绑定成功！")
-            return true;
-        } else if (!message) {
-            try {
-                const auth = Math.random().toString(36).substring(2, 10);
-                let response = await fetch('https://waves.yunzai.art/get', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': auth,
-                    },
-                    body: JSON.stringify({
-                        self_id: e.self_id,
-                        user_id: e.user_id,
-                    }),
-                });
-
-                let data = await response.json();
-                if (data.code !== 200) {
-                    await e.reply(`登录失败！原因：${data.msg}\n使用[~登录帮助]查看登录方法！`);
-                    return true;
-                }
-
-                await e.reply(`请复制登录地址到浏览器打开：\nhttps://waves.yunzai.art${data.data}\n您的识别码为【${e.user_id}】\n登录地址10分钟内有效`);
-                const startTime = Date.now();
-                while (Date.now() - startTime < 600000) {
-                    response = await fetch('https://waves.yunzai.art/token', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': auth,
-                        }
-                    });
-
-                    data = await response.json();
-                    if (data.code === 200) {
-                        token = data.data;
-                        break;
-                    }
-                    await new Promise(resolve => setTimeout(resolve, 5000));
-                }
-            } catch (error) {
-                logger.error(error.message);
-                await e.reply("无法与远程服务器取得连接，使用[~登录帮助]查看其他登录方法！");
-                return true;
-            }
-        } else {
+            return await e.reply("绑定成功！");
+        } else if (message) {
             const [mobile, _, code] = message.split(/(:|：)/);
-
             if (!mobile || !code) {
-                await e.reply("请输入正确的手机号与验证码\n使用[~登录帮助]查看登录方法！");
-                return true;
+                return await e.reply("请输入正确的手机号与验证码\n使用[~登录帮助]查看登录方法！");
             }
-
             const data = await waves.getToken(mobile, code);
-
             if (!data.status) {
-                await e.reply(`登录失败！原因：${data.msg}\n使用[~登录帮助]查看登录方法！`);
-                return true;
+                return await e.reply(`登录失败！原因：${data.msg}\n使用[~登录帮助]查看登录方法！`);
             }
-
             token = data.data.token;
+        } else {
+            if (!Config.getConfig().allow_login) {
+                return await e.reply("当前网页登录功能已被禁用，请联系主人开启或使用其他登录方式进行登录\n使用[~登录帮助]查看登录方法！");
+            }
+            const id = Math.random().toString(36).substring(2, 12);
+            Server.data[id] = { user_id: e.user_id };
+            await e.reply(`请复制登录地址到浏览器打开：\n${Config.getConfig().public_link}/login/${id}\n您的识别码为【${e.user_id}】\n登录地址10分钟内有效`);
+
+            const timeout = Date.now() + 10 * 60 * 1000;
+            while (!Server.data[id].token && Date.now() < timeout) {
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+            if (!Server.data[id].token) {
+                return await e.reply('在线登录超时，请重新登录');
+            }
+            token = Server.data[id].token;
+            delete Server.data[id];
         }
 
         const gameData = await waves.getGameData(token);
-
         if (!gameData.status) {
-            await e.reply(`登录失败！原因：${gameData.msg}\n使用[~登录帮助]查看登录方法！`);
-            return true;
+            return await e.reply(`登录失败！原因：${gameData.msg}\n使用[~登录帮助]查看登录方法！`);
         }
 
         const userConfig = Config.getUserConfig(e.user_id);
-        const userData = {
-            token: token,
-            userId: gameData.data.userId,
-            serverId: gameData.data.serverId,
-            roleId: gameData.data.roleId,
-        };
+        const userData = { token, userId: gameData.data.userId, serverId: gameData.data.serverId, roleId: gameData.data.roleId };
         const userIndex = userConfig.findIndex(item => item.userId === gameData.data.userId);
-
         userIndex !== -1 ? (userConfig[userIndex] = userData) : userConfig.push(userData);
 
         Config.setUserConfig(e.user_id, userConfig);
-
-        const msg = `${gameData.data.roleName}(${gameData.data.roleId}) 登录成功！`;
-
-        return await e.reply(msg, true);
+        return await e.reply(`${gameData.data.roleName}(${gameData.data.roleId}) 登录成功！`, true);
     }
-
     async unbindToken(e) {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
 

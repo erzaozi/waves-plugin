@@ -4,7 +4,7 @@ import crypto from 'crypto';
 import qs from 'qs';
 
 const CONSTANTS = {
-    LOGIN_URL: 'https://api.kurobbs.com/user/sdkLogin',
+    LOGIN_URL: 'https://api.kurobbs.com/user/sdkLoginForH5',
     REFRESH_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/refreshData',
     GAME_DATA_URL: 'https://api.kurobbs.com/gamer/widget/game3/refresh',
     BASE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/baseData',
@@ -21,7 +21,7 @@ const CONSTANTS = {
     OTHER_TOWER_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/towerIndex',
 
     REQUEST_HEADERS_BASE: {
-        "source": "android",
+        "source": "h5",
     },
 };
 

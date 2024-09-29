@@ -173,6 +173,41 @@ export function supportGuoba() {
         },
         {
           component: "Divider",
+          label: "Waves 登录服务器配置",
+          componentProps: {
+            orientation: "left",
+            plain: true,
+          },
+        },
+        {
+          field: "allow_login",
+          label: "允许网页登录",
+          bottomHelpMessage: "是否允许网页登录",
+          component: "Switch",
+        },
+        {
+          field: "server_port",
+          label: "开放端口",
+          bottomHelpMessage: "登录HTTP服务器开放端口",
+          component: "InputNumber",
+          componentProps: {
+            placeholder: '请输入端口',
+            min: 1,
+            max: 65535,
+            step: 1,
+          },
+        },
+        {
+          field: "public_link",
+          label: "登录服务公开地址",
+          bottomHelpMessage: "展示给用户的自定义登录地址",
+          component: "Input",
+          componentProps: {
+            placeholder: '请输入服务地址，例：http://39.156.66.10:25088',
+          },
+        },
+        {
+          component: "Divider",
           label: "Waves 面板图配置",
           componentProps: {
             orientation: "left",

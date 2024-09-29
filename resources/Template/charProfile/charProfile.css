@@ -135,7 +135,7 @@
   height: 430px;
   z-index: 1;
   overflow: hidden;
-  border: 10px 27px 0px 27px;
+  border-radius: 10px 27px 0px 27px;
   mask-image: linear-gradient(to bottom, #000 0px, #000 340px, transparent 430px);
 }
 
