@@ -46,31 +46,37 @@
 }
 
 .title {
+    position: relative;
     margin: 52px 0px 0px 58px;
-    background: url(imgs/title.png) no-repeat;
-    background-size: cover;
-    width: 1118px;
+    width: 1108px;
     height: 242px;
 }
 
-.title>.country-logo {
-    position: relative;
-    top: 42px;
-    left: 40px;
-    width: 196px;
+.title>img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 }
 
-.title>.exploratory-name {
+.title>.exploratory-text {
     position: relative;
-    top: -85px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    left: 300px;
+    height: 242px;
+    width: 758px;
+    justify-content: space-between;
+}
+
+.exploratory-text>.exploratory-name {
     left: 272px;
     color: #fdf8ea;
     font-size: 67px;
 }
 
-.title>.exploratory-degree {
-    position: relative;
-    top: -160px;
+.exploratory-text>.exploratory-degree {
     right: 58px;
     text-align: right;
     color: #f1e5be;
@@ -107,23 +113,25 @@
 }
 
 .progress {
-    height: 94px;
+    min-height: 94px;
+    display: flex;
+    flex-direction: row;
     width: 1108px;
     border: 3px solid #e9e2dc;
     border-top-color: transparent;
+    align-items: center;
 }
 
 .progress-name {
-    padding: 18px 0px 0px 24px;
+    margin: 22px 0px;
+    padding-left: 16px;
     color: #353535;
     font-size: 38px;
     font-weight: 700;
+    width: 190px;
 }
 
 .progress-bar-frame {
-    position: relative;
-    left: 152px;
-    top: -41px;
     height: 32px;
     width: 802px;
     border-radius: 16px;
@@ -146,14 +154,13 @@
     border-radius: 20px;
 }
 
-.progress-number  {
-    position: relative;
-    top: -82px;
-    right: 30px;
+.progress-number {
+    width: 100px;
     color: #353535;
     font-size: 38px;
     font-weight: 700;
     text-align: right;
+    float: right;
 }
 
 #footer {

@@ -1,7 +1,7 @@
-pool_name: 「千机逐星野」
+pool_name: 「直至海水褪色」
 five_star:
   up_pool:
-    - name: 相里要
+    - name: 守岸人
   other_pool:
     - name: 维里奈
     - name: 安可
@@ -13,16 +13,21 @@ five_star:
   other: 0.5
 four_star:
   up_pool:
-    - name: 丹瑾
-    - name: 秋水
-    - name: 渊武
-  other_pool:
-    - name: 炽霞
-    - name: 散华
     - name: 桃祈
-    - name: 莫特斐
     - name: 秧秧
+    - name: 炽霞
+  other_pool:
+    - name: 渊武
+    - name: 散华
+    - name: 丹瑾
+    - name: 莫特斐
+    - name: 秋水
     - name: 白芷
+    - name: 东落
+    - name: 西升
+    - name: 飞逝
+    - name: 骇行
+    - name: 异度
     - name: 永夜长明
     - name: 不归孤军
     - name: 无眠烈火
@@ -33,11 +38,6 @@ four_star:
     - name: 华彩乐段
     - name: 呼啸重音
     - name: 奇幻变奏
-    - name: 东落
-    - name: 西升
-    - name: 飞逝
-    - name: 骇行
-    - name: 异度
   basic: 0.06
   other: 0.5
 three_star:

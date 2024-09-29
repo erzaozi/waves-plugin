@@ -85,6 +85,8 @@ export class Character extends plugin {
                 return;
             }
 
+            const rolePicDir = path.join(pluginResources, 'rolePic', name);
+
             // 处理主角名称
             if (name == '漂泊者-男-衍射' || name == '漂泊者-女-衍射') {
                 name = '漂泊者'
@@ -111,7 +113,6 @@ export class Character extends plugin {
                 return;
             }
 
-            const rolePicDir = path.join(pluginResources, 'rolePic', name);
             const rolePicUrl = fs.existsSync(rolePicDir) 
                 ? `file://${rolePicDir}/${fs.readdirSync(rolePicDir).filter(file => path.extname(file).toLowerCase() === '.webp')[Math.floor(Math.random() * fs.readdirSync(rolePicDir).length)]}` 
                 : roleDetail.data.role.rolePicUrl;
