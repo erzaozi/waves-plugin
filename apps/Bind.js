@@ -32,11 +32,13 @@ export class BindToken extends plugin {
         let token;
 
         if (message.startsWith("eyJhbGc")) {
+            if (e.isGroup) e.group.recallMsg(e.message_id)
             token = message;
         } else if (/^\d{9}$/.test(message)) {
             await redis.set(`Yunzai:waves:bind:${e.user_id}`, message);
             return await e.reply("绑定成功！");
         } else if (message) {
+            if (e.isGroup) e.group.recallMsg(e.message_id)
             const [mobile, _, code] = message.split(/(:|：)/);
             if (!mobile || !code) {
                 return await e.reply("请输入正确的手机号与验证码\n使用[~登录帮助]查看登录方法！");
@@ -59,7 +61,8 @@ export class BindToken extends plugin {
                 await new Promise(resolve => setTimeout(resolve, 1000));
             }
             if (!Server.data[id].token) {
-                return await e.reply('在线登录超时，请重新登录');
+                delete Server.data[id];
+                return await e.reply('在线登录超时，请重新登录', true);
             }
             token = Server.data[id].token;
             delete Server.data[id];
