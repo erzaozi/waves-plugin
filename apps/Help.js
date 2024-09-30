@@ -261,7 +261,7 @@ export class Help extends plugin {
         let themeStyle = theme.style || {}
         let ret = [`
           body{background-image:url(${theme.bg}) no-repeat;width:${width}px;}
-          .container{background-image:url(${theme.main});width:${width}px;}
+          .container{background-image:url(${theme.main});background-size:cover;}
           .help-table .td,.help-table .th{width:${100 / colCount}%}
           `]
         let css = function (sel, css, key, def, fn) {

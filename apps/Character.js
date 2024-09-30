@@ -109,7 +109,8 @@ export class Character extends plugin {
             }
 
             if (!roleDetail.data.role) {
-                data.push({ message: `UID: ${account.roleId} 未在库街区展示共鸣者 ${name}，请在库街区展示此角色，或使用[~绑定]绑定账号后即可查看所有角色` });
+                const showroleList = roleData.data.showRoleIdList.map(roleId => roleData.data.roleList.find(role => role.roleId === roleId).roleName);
+                data.push({ message: `UID: ${account.roleId} 未在库街区展示共鸣者 ${name}，请在库街区展示此角色\n\n当前展示角色有：\n${showroleList.join('、')}\n\n使用[~绑定]绑定该账号后即可查看所有角色` });
                 return;
             }
 
