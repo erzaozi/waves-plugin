@@ -38,6 +38,48 @@ pnpm install --filter=waves-plugin
 
 > [!WARNING]
 > 非常不建议手动修改配置文件，本插件已兼容 [Guoba-plugin](https://github.com/guoba-yunzai/guoba-plugin) ，请使用锅巴插件对配置项进行修改
+> 
+> > <details><summary>使用 Cloudflare Tunnel 实现本地化登录服务</summary>
+> > <br>
+> > 
+> > 在开始之前，请确保您已准备好以下内容：
+> > - 一个注册好的 Cloudflare 账户
+> > - 一个已经交给 Cloudflare 托管的域名
+> > 
+> > #### 步骤详解
+> > 
+> > 1. **访问 Cloudflare Zero Trust 工作台**
+> >    - 打开浏览器，在地址栏打开 [Cloudflare Zero Trust](https://one.dash.cloudflare.com/) 并登录您的 Cloudflare 账户
+> > 
+> > 2. **创建隧道**
+> >    - 在工作台面板上，依次点击左侧导航栏中的 `Networks` 选项
+> >    - 在下拉菜单中选择 `Tunnels`
+> >    - 点击页面左上角的 `Create a tunnel` 按钮
+> >    - 在 `Select your tunnel type` 中选择 `Cloudflared`，点击 `Next`
+> >    - 在接下来的网页中，输入一个易于辨识的隧道名称（如 `kuro-login-tunnel`），然后点击 `Save tunnel`
+> > 
+> > 3. **选择环境**
+> >    - 在 `Choose your environment` 部分，选择与您运行的机器人相对应的环境（例如，Linux、Windows、macOS等）
+> >    - 根据所选环境，查看底部的 `Install and run a connector` 部分，按照指示进行必要的安装和配置
+> > 
+> > 4. **配置隧道设置**
+> >    - 在页面的最后部分进行隧道设置，以便配置您的登录网址：
+> >      - 在 `Subdomain` 字段中输入您希望使用的子域名，例如 `waves`
+> >      - 在 `Domain` 下拉菜单中选择您托管的域名，例如 `example.com`
+> >      - 在 `Path` 字段中保持为空，除非您有特定的路径需要设置
+> >      - 在 `Type` 选项中选择 `HTTP`
+> >      - 在 `URL` 字段中输入您本地服务的地址（例如 `localhost:25088`）。请根据您的实际服务端口进行调整
+> > 
+> > 5. **保存和测试**
+> >    - 确认所有配置无误后，点击 `Save tunnel` 完成设置
+> >    - 返回到隧道管理页面，查看新创建的隧道状态，确保其为活跃在线状态
+> >    - 通过访问 `https://waves.example.com/` 来测试您的本地化登录服务是否能够正常工作，如果跳转到项目 Github 首页，说明配置正确
+> > 
+> > #### 注意事项
+> > - 确保防火墙或安全组设置允许流量通过指定的端口（如25088）
+> > - 对于不同环境，Cloudflare 连接器的安装细节可能略有不同，请参考 Cloudflare 的官方文档进行具体操作
+> > 
+> > </details>
 
 ## 功能列表
 
