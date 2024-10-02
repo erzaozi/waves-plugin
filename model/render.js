@@ -204,8 +204,8 @@ class Render {
         }
 
         data.content.modules[0].components[0].content = replace(data.content.modules[0].components[0].content)
-        data.content.modules[1].components[0].content = replace(data.content.modules[1].components[0].content)
         data.content.modules[0].components[1].content = replace(data.content.modules[0].components[1].content)
+        data.content.modules[0].components[2].content = replace(data.content.modules[0].components[2].content)
 
         const base64 = await puppeteer.screenshot('waves-plugin', {
             saveId: 'wikiRelics',
