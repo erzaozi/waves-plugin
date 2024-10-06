@@ -1,0 +1,40 @@
+name: Suggestion
+description: '本表单旨在收集您对本插件的建议与意见'
+title: '[Suggestion]: '
+labels:
+  - suggestion
+body:
+  - type: checkboxes
+    id: important-steps
+    attributes:
+      label: 重要步骤
+      description: 在提交建议之前，请务必确保以下事项均已完成
+      options:
+        - label: >-
+            我已确认当前没有其他与此建议相似的反馈已被提交
+          required: true
+  - type: input
+    id: plugin-version
+    attributes:
+      label: 插件版本
+      description: 您可以通过在插件文件夹中运行 `npm pkg get version` 命令来查看插件版本
+      placeholder: 1.4.5
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 建议描述
+      description: 请清晰且详细地描述您希望提出的具体建议，包括功能、用途
+      placeholder: 我希望增加「~全部签到」命令，能够一次性签到所有已登录的用户
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: 建议理由
+      description: 请详细说明您认为此建议潜在的好处和对用户体验的影响
+      placeholder: |
+        1. 插件在进行批量签到时，容易发生中断，希望能够实现补签功能，确保没有用户遗漏签到
+    validations:
+      required: true

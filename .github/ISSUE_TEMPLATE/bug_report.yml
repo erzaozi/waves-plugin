@@ -1,0 +1,84 @@
+name: Bug Report
+description: '此表单旨在收集您在使用本插件过程中所遇到的问题信息'
+title: '[Bug]: '
+labels:
+  - bug
+body:
+  - type: checkboxes
+    id: important-steps
+    attributes:
+      label: 重要步骤
+      description: 在提交新的 Bug 反馈之前，请务必确保以下事项均已完成
+      options:
+        - label: >-
+            我已核实插件已更新至最新版本，并确认该问题在最新版中依然存在
+          required: true
+        - label: >-
+            我已仔细阅读 README 文件，并尝试了所有提供的解决方案
+          required: true
+        - label: >-
+            我已搜索现有的 Issues，并未找到与当前问题相似或相同的反馈
+          required: true
+  - type: input
+    id: plugin-version
+    attributes:
+      label: 插件版本
+      description: 您可以通过在插件文件夹中运行 `npm pkg get version` 命令来查看插件版本
+      placeholder: 1.4.5
+    validations:
+      required: true
+  - type: input
+    id: adapter-name
+    attributes:
+      label: 协议端名称
+      description: 请提供您使用的协议端名称
+      placeholder: ICQQ v1.2.6
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 请详细描述您所遇到的问题，包括相关的上下文信息
+      placeholder: |
+        使用「~安可面板」命令时，机器人返回「业务异常」的提示信息
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果
+      description: 请描述您预期得到的结果或行为
+      placeholder: |
+        期望在使用「~安可面板」命令时，机器人能够查询指定角色的面板信息，并返回渲染后的面板图片
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 请提供详细的步骤，以便他人能够复现您所遇到的问题
+      placeholder: |
+        1. 使用「~登录」命令获取在线登录链接
+        2. 打开在线登录链接并登录库街区账号
+        3. 输入「~安可面板」命令
+    validations:
+      required: true
+  - type: input
+    id: start-logs
+    attributes:
+      label: 启动日志
+      description: >
+        请将机器人启动时的日志内容上传至 [pastebin](https://pastebin.com/) 网站，并将生成的链接粘贴在此处。请勿直接粘贴日志内容
+      placeholder: 'https://pastebin.com/.....'
+    validations:
+      required: true
+  - type: input
+    id: logs
+    attributes:
+      label: 问题日志
+      description: >
+        请将发生问题时的日志内容上传至 [pastebin](https://pastebin.com/) 网站，并将生成的链接粘贴在此处。请勿直接粘贴日志内容
+      placeholder: 'https://pastebin.com/.....'
+    validations:
+      required: true
