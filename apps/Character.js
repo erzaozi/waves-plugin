@@ -33,7 +33,7 @@ export class Character extends plugin {
 
         if (!accountList.length) {
             if (match || await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
-                let publicCookie = await waves.getPublicCookie();
+                let publicCookie = await waves.pubCookie();
                 if (!publicCookie) {
                     return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行绑定');
                 } else {

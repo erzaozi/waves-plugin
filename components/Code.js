@@ -150,7 +150,7 @@ class Waves {
             const response = await axios.post(CONSTANTS.BASE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
-                response.data.data = await this.decryptData(response.data.data)
+                response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
                     logger.info('获取我的资料失败，返回数据为null');
                     return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
@@ -182,7 +182,7 @@ class Waves {
             const response = await axios.post(CONSTANTS.ROLE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
-                response.data.data = await this.decryptData(response.data.data)
+                response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
                     logger.info('获取共鸣者失败，返回数据为null');
                     return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
@@ -214,7 +214,7 @@ class Waves {
             const response = await axios.post(CONSTANTS.CALABASH_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
-                response.data.data = await this.decryptData(response.data.data)
+                response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
                     logger.info('获取数据坞失败，返回数据为null');
                     return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
@@ -247,7 +247,7 @@ class Waves {
             const response = await axios.post(CONSTANTS.CHALLENGE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
-                response.data.data = await this.decryptData(response.data.data)
+                response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
                     logger.info('获取挑战数据失败，返回数据为null');
                     return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
@@ -280,7 +280,7 @@ class Waves {
             const response = await axios.post(CONSTANTS.EXPLORE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
-                response.data.data = await this.decryptData(response.data.data)
+                response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
                     logger.info('获取探索数据失败，返回数据为null');
                     return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
@@ -312,7 +312,7 @@ class Waves {
             const response = await axios.post(CONSTANTS.ROLE_DETAIL_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
-                response.data.data = await this.decryptData(response.data.data)
+                response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
                     logger.info('获取角色详细信息失败，返回数据为null');
                     return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
@@ -377,11 +377,11 @@ class Waves {
             const response = await axios.post(CONSTANTS.SELF_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
 
             if (response.data.code === 200) {
-                response.data.data = await this.decryptData(response.data.data)
+                response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
                     const otherResponse = await axios.post(CONSTANTS.OTHER_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
                     if (otherResponse.data.code === 200) {
-                        otherResponse.data.data = await this.decryptData(otherResponse.data.data)
+                        otherResponse.data.data = JSON.parse(otherResponse.data.data)
                         if (otherResponse.data.data === null) {
                             logger.info('获取逆境深塔数据失败，返回数据为null');
                             return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
@@ -431,7 +431,7 @@ class Waves {
     }
 
     // 获取公共Cookie
-    async getPublicCookie() {
+    async pubCookie() {
         if (!Config.getConfig().use_public_cookie) return false;
 
         const keys = await redis.keys('Yunzai:waves:users:*');
@@ -475,15 +475,6 @@ class Waves {
             logger.error('获取活动列表失败，疑似网络问题：\n', error);
             return { status: false, msg: '获取活动列表失败，疑似网络问题，请检查控制台日志' };
         }
-    }
-
-    // 解密数据
-    async decryptData(value) {
-        const key = Buffer.from("XSNLFgNCth8j8oJI3cNIdw==", 'base64');
-        const encrypted = Buffer.from(value, 'base64');
-        const decipher = crypto.createDecipheriv('aes-128-ecb', key, null);
-        const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()]);
-        return JSON.parse(decrypted.toString('utf8'));
     }
 }
 
