@@ -35,7 +35,7 @@ export class Character extends plugin {
             if (match || await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
                 let publicCookie = await waves.pubCookie();
                 if (!publicCookie) {
-                    return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行绑定');
+                    return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行登录');
                 } else {
                     if (match) {
                         publicCookie.roleId = match[0];
@@ -46,7 +46,7 @@ export class Character extends plugin {
                     accountList.push(publicCookie);
                 }
             } else {
-                return await e.reply('当前没有绑定任何账号，请使用[~登录]进行绑定');
+                return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
             }
         }
 
@@ -68,7 +68,7 @@ export class Character extends plugin {
             const usability = await waves.isAvailable(account.token);
 
             if (!usability) {
-                data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新绑定Token` });
+                data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
                 deleteroleId.push(account.roleId);
                 return;
             }
@@ -110,14 +110,14 @@ export class Character extends plugin {
 
             if (!roleDetail.data.role) {
                 const showroleList = roleData.data.showRoleIdList.map(roleId => roleData.data.roleList.find(role => role.roleId === roleId).roleName);
-                data.push({ message: `UID: ${account.roleId} 未在库街区展示共鸣者 ${name}，请在库街区展示此角色\n\n当前展示角色有：\n${showroleList.join('、')}\n\n使用[~绑定]绑定该账号后即可查看所有角色` });
+                data.push({ message: `UID: ${account.roleId} 未在库街区展示共鸣者 ${name}，请在库街区展示此角色\n\n当前展示角色有：\n${showroleList.join('、')}\n\n使用[~登录]登录该账号后即可查看所有角色` });
                 return;
             }
 
-            const rolePicUrl = fs.existsSync(rolePicDir) 
-                ? `file://${rolePicDir}/${fs.readdirSync(rolePicDir).filter(file => path.extname(file).toLowerCase() === '.webp')[Math.floor(Math.random() * fs.readdirSync(rolePicDir).length)]}` 
+            const rolePicUrl = fs.existsSync(rolePicDir)
+                ? `file://${rolePicDir}/${fs.readdirSync(rolePicDir).filter(file => path.extname(file).toLowerCase() === '.webp')[Math.floor(Math.random() * fs.readdirSync(rolePicDir).length)]}`
                 : roleDetail.data.role.rolePicUrl;
-            
+
             imgList.push(rolePicUrl);
 
             roleDetail.data = (new WeightCalculator(roleDetail.data)).calculate()
@@ -133,19 +133,19 @@ export class Character extends plugin {
 
         imgList = [...new Set(imgList)];
 
-        const msgData = data.length === 1 
-            ? data[0].message 
+        const msgData = data.length === 1
+            ? data[0].message
             : Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]);
-            
+
         const msgRes = await e.reply(msgData);
-        const message_id = Array.isArray(msgRes?.message_id) 
-            ? msgRes.message_id 
+        const message_id = Array.isArray(msgRes?.message_id)
+            ? msgRes.message_id
             : [msgRes?.message_id].filter(Boolean);
-        
+
         for (const id of message_id) {
             await redis.set(`Yunzai:waves:originpic:${id}`, JSON.stringify({ type: 'profile', img: imgList }), { EX: 3600 * 3 });
         }
-        
+
         return true;
     }
 }

@@ -16,7 +16,7 @@ export class Help extends plugin {
                     fnc: "help"
                 },
                 {
-                    reg: "^(～|~|鸣潮)(登录|登陆|绑定)帮助$",
+                    reg: "^(～|~|鸣潮)(登录|登陆)帮助$",
                     fnc: "bindHelp"
                 },
                 {
@@ -31,7 +31,6 @@ export class Help extends plugin {
         const helpCfg = {
             "themeSet": false,
             "title": "WAVES-PLUGIN 帮助",
-            // "subTitle": "Yunzai-Bot & waves-plugin",
             "subTitle": "WAVES-PLUGIN HELP",
             "colWidth": 265,
             "theme": "all",
@@ -48,12 +47,12 @@ export class Help extends plugin {
                     {
                         "icon": 1,
                         "title": "~登录",
-                        "desc": "绑定账户Token"
+                        "desc": "登录账户Token"
                     },
                     {
                         "icon": 2,
                         "title": "~登录帮助",
-                        "desc": "绑定账户Token教程"
+                        "desc": "登录账户Token教程"
                     },
                     {
                         "icon": 3,
@@ -63,7 +62,7 @@ export class Help extends plugin {
                     {
                         "icon": 4,
                         "title": "~库街区Token",
-                        "desc": "查看自己已绑定的Token"
+                        "desc": "查看自己已登录的Token"
                     },
                     {
                         "icon": 5,
@@ -173,11 +172,11 @@ export class Help extends plugin {
                 ],
             },
         ]
-        if ( e.isMaster || Config.getConfig()?.allowImgUpload) {
+        if (e.isMaster || Config.getConfig()?.allow_img_upload) {
             helpList.push({
                 "group": "面板图管理",
                 "list": [
-                    
+
                     {
                         "icon": 26,
                         "title": "~上传今汐面板图",
@@ -199,6 +198,28 @@ export class Help extends plugin {
                         "desc": "删除面板图"
                     }
                 ],
+            })
+        }
+        if (e.isMaster) {
+            helpList.push({
+                "group": "用户管理",
+                "list": [
+                    {
+                        "icon": 30,
+                        "title": "~全部签到",
+                        "desc": "批量执行所有账号签到"
+                    },
+                    {
+                        "icon": 31,
+                        "title": "~用户统计",
+                        "desc": "查看用户数量统计"
+                    },
+                    {
+                        "icon": 32,
+                        "title": "~删除失效用户",
+                        "desc": "删除失效的Token"
+                    }
+                ]
             })
         }
         let helpGroup = []

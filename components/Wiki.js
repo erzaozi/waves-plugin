@@ -1,4 +1,5 @@
 import { pluginResources } from "../model/path.js";
+import Config from './Config.js';
 import axios from 'axios';
 import qs from 'qs';
 import fs from 'fs';
@@ -113,7 +114,9 @@ class Wiki {
             const response = await axios.post(CONSTANTS.WIKI_ENTRYDETAIL_URL, data, { headers: CONSTANTS.REQUEST_HEADERS_BASE });
 
             if (response.data.code === 200) {
-                logger.info(`获取Wiki详情成功`);
+                if (Config.getConfig().enable_log) {
+                    logger.info(`获取Wiki详情成功`);
+                }
                 return { status: true, data: response.data.data };
             } else {
                 logger.error('获取Wiki详情失败：', response.data.msg);
@@ -155,7 +158,9 @@ class Wiki {
                 if (response.data.data.results === null) {
                     return { status: false, msg: '未找到该词条的Wiki信息' };
                 }
-                logger.info(`搜索Wiki成功`);
+                if (Config.getConfig().enable_log) {
+                    logger.info(`搜索Wiki成功`);
+                }
                 return { status: true, data: response.data.data };
             } else {
                 logger.error('搜索Wiki失败：', response.data.msg);

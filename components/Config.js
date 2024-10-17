@@ -9,7 +9,7 @@ class Config {
                 fs.readFileSync(`${pluginRoot}/config/config/config.yaml`, 'utf-8')
             )
         } catch (err) {
-            logger.warn('读取config.yaml失败', err)
+            logger.warn('读取 config.yaml 失败', err)
             return false
         }
     }
@@ -20,7 +20,7 @@ class Config {
                 fs.readFileSync(`${pluginRoot}/config/config_default.yaml`, 'utf-8')
             )
         } catch (err) {
-            logger.warn('读取config_default.yaml失败', err)
+            logger.warn('读取 config_default.yaml 失败', err)
             return false
         }
     }
@@ -33,36 +33,45 @@ class Config {
             )
             return true
         } catch (err) {
-            logger.warn('写入config.yaml失败', err)
+            logger.warn('写入 config.yaml 失败', err)
             return false
         }
     }
 
     getUserConfig(userId) {
+        const userConfigPath = `${_path}/data/waves/${userId}.yaml`;
+
         try {
-            if (fs.existsSync(`${_path}/data/waves/${userId}.yaml`)) {
-                return YAML.parse(
-                    fs.readFileSync(`${_path}/data/waves/${userId}.yaml`, 'utf-8')
-                )
-            } else {
-                return []
+            if (fs.existsSync(userConfigPath)) {
+                const configFileContent = fs.readFileSync(userConfigPath, 'utf-8');
+                return YAML.parse(configFileContent);
             }
-        } catch (err) {
-            logger.warn(`读取用户配置${userId}.yaml失败`, err)
-            return false
+
+            return [];
+        } catch (error) {
+            logger.warn(`读取用户配置 ${userId}.yaml 失败`, error);
+            return [];
         }
     }
 
-    setUserConfig(userId, data) {
+    setUserConfig(userId, userData) {
+        const userConfigPath = `${_path}/data/waves/${userId}.yaml`;
+
         try {
-            fs.writeFileSync(
-                `${_path}/data/waves/${userId}.yaml`,
-                YAML.stringify(data),
-            )
-            redis.set(`Yunzai:waves:users:${userId}`, JSON.stringify(data));
-        } catch (err) {
-            logger.warn(`写入用户配置${userId}.yaml失败`, err)
-            return false
+            if (userData.length === 0) {
+                fs.unlinkSync(userConfigPath);
+                redis.del(`Yunzai:waves:users:${userId}`);
+                return true;
+            }
+
+            const yamlData = YAML.stringify(userData);
+            fs.writeFileSync(userConfigPath, yamlData);
+            redis.set(`Yunzai:waves:users:${userId}`, JSON.stringify(userData));
+
+            return true;
+        } catch (error) {
+            logger.warn(`写入用户配置 ${userId}.yaml 失败`, error);
+            return false;
         }
     }
 }

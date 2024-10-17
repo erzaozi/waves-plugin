@@ -13,6 +13,11 @@ export class SignIn extends plugin {
                 {
                     reg: "^(～|~|鸣潮)签到$",
                     fnc: "signIn"
+                },
+                {
+                    reg: "^(～|~|鸣潮)全部签到$",
+                    fnc: "autoSignIn",
+                    permission: 'master'
                 }
             ]
         })
@@ -28,7 +33,7 @@ export class SignIn extends plugin {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
 
         if (!accountList || !accountList.length) {
-            return await e.reply('当前没有绑定任何账号，请使用[~登录]进行绑定');
+            return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
         }
 
         const waves = new Waves();
@@ -39,7 +44,7 @@ export class SignIn extends plugin {
             const usability = await waves.isAvailable(account.token);
 
             if (!usability) {
-                data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新绑定Token` });
+                data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
                 deleteroleId.push(account.roleId);
                 continue;
             }
@@ -69,10 +74,12 @@ export class SignIn extends plugin {
     }
 
     async autoSignIn() {
-        const { waves_auto_signin_list: autoSignInList } = Config.getConfig();
+        if (this.e) await this.e.reply('正在执行全部签到，稍后会推送签到结果');
+
+        const { waves_auto_signin_list: autoSignInList, signin_interval: interval } = Config.getConfig();
         let success = 0;
         for (let user of autoSignInList) {
-            const [botId, groupId, userId] = user.split(':');
+            const { botId, groupId, userId } = user;
             const accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${userId}`)) || await Config.getUserConfig(userId);
             if (!accountList.length) {
                 continue;
@@ -86,7 +93,7 @@ export class SignIn extends plugin {
                 const usability = await waves.isAvailable(account.token);
 
                 if (!usability) {
-                    data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新绑定Token` });
+                    data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
                     deleteroleId.push(account.roleId);
                     continue;
                 }
@@ -95,7 +102,7 @@ export class SignIn extends plugin {
 
                 if (result.status) success++
 
-                await new Promise(resolve => setTimeout(resolve, 53000 + Math.floor((Math.random() * 42000))))
+                await new Promise(resolve => setTimeout(resolve, interval * 1000));
             }
 
             if (deleteroleId.length) {
@@ -106,13 +113,19 @@ export class SignIn extends plugin {
             if (data.length) Bot[botId]?.pickUser(userId).sendMsg(Bot.makeForwardMsg(data))
         }
 
-        if (!Bot.sendMasterMsg) {
-            const cfg = (await import("../../../lib/config/config.js")).default
-            Bot.sendMasterMsg = async m => { for (const i of cfg.masterQQ) await Bot.pickFriend(i).sendMsg(m) }
+        if (this.e) {
+            await this.e.reply(`[Waves-Plugin] 全部签到\n成功签到 ${success} 个账号`);
+        } else {
+            if (!Bot.sendMasterMsg) {
+                const cfg = (await import("../../../lib/config/config.js")).default
+                Bot.sendMasterMsg = async m => { for (const i of cfg.masterQQ) await Bot.pickFriend(i).sendMsg(m) }
+            }
+
+            if (autoSignInList.length) {
+                Bot.sendMasterMsg?.(`[Waves-Plugin] 自动签到\n今日成功签到 ${success} 个账号`)
+            }
         }
 
-        if (autoSignInList.length) {
-            Bot.sendMasterMsg?.(`[Waves-Plugin] 自动签到\n今日成功签到 ${success} 个账号`)
-        }
+        return true;
     }
 }

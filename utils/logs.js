@@ -8,7 +8,7 @@ try {
     currentVersion = package_json.version
   }
 } catch (err) {
-  console.log('读取package.json失败', err)
+  logger.error('读取package.json失败', err)
 }
 
 /** 快捷logger：i-info m-mark w-warn e-error

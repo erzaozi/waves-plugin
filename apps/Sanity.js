@@ -28,7 +28,7 @@ export class Sanity extends plugin {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
 
         if (!accountList || !accountList.length) {
-            return await e.reply('当前没有绑定任何账号，请使用[~登录]进行绑定');
+            return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
         }
 
         const waves = new Waves();
@@ -39,7 +39,7 @@ export class Sanity extends plugin {
             const usability = await waves.isAvailable(account.token);
 
             if (!usability) {
-                data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新绑定Token` });
+                data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
                 deleteroleId.push(account.roleId);
                 continue;
             }
@@ -71,7 +71,7 @@ export class Sanity extends plugin {
     async autoPush() {
         const { waves_auto_push_list: autoPushList } = Config.getConfig();
         await Promise.all(autoPushList.map(async user => {
-            const [botId, groupId, userId] = user.split(':');
+            const { botId, groupId, userId } = user;
             let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${userId}`)) || await Config.getUserConfig(userId);
             if (!accountList.length) {
                 return
@@ -85,7 +85,7 @@ export class Sanity extends plugin {
                 const usability = await waves.isAvailable(account.token);
 
                 if (!usability) {
-                    data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新绑定Token` });
+                    data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
                     deleteroleId.push(account.roleId);
                     continue;
                 }
@@ -102,7 +102,7 @@ export class Sanity extends plugin {
                 const threshold = await redis.get(`Yunzai:waves:sanity_threshold:${userId}`) || result.data.energyData.total;
                 const isFull = result.data.energyData.cur >= threshold;
                 if (isFull && !isPushed) {
-                    data.push({ message: `漂泊者${result.data.roleName}(${result.data.roleId})，你的结晶波片已经恢复满了哦~` })
+                    data.push({ message: `漂泊者${result.data.roleName}(${result.data.roleId})，你的结晶波片已经恢复至 ${threshold} 了哦~` })
                     await redis.set(key, 'true');
                 } else if (!isFull && isPushed) {
                     await redis.del(key);
@@ -116,14 +116,14 @@ export class Sanity extends plugin {
 
             if (data.length) {
                 if (data.length === 1) {
-                    if (groupId === "undefined") {
+                    if (!groupId) {
                         await Bot[botId]?.pickUser(userId).sendMsg(data[0].message)
                     } else {
                         await Bot[botId]?.pickGroup(groupId).sendMsg([segment.at(userId), data[0].message])
                     }
                     return true;
                 } else {
-                    if (groupId === "undefined") {
+                    if (!groupId) {
                         await Bot[botId]?.pickUser(userId).sendMsg(Bot.makeForwardMsg([{ message: `用户 ${userId}` }, ...data]))
                     } else {
                         await Bot[botId]?.pickGroup(groupId).sendMsg(segment.at(userId))

@@ -4,10 +4,14 @@ signin_time: 0 0 4 * * ?
 sanity_push_time: 0 */7 * * * ?
 
 # ---------- 通用配置 ----------
+# 签到间隔时间
+signin_interval: 74
 # 是否使用公共cookie
 use_public_cookie: true
 # 是否允许用户导入抽卡记录
 allow_import: false
+# 是否开启成功日志输出
+enable_log: false
 
 # ---------- 登录服务器配置 ----------
 # 允许在线登录
@@ -19,13 +23,13 @@ public_link: 'http://127.0.0.1:25088'
 
 # ---------- 面板图相关 ----------
 # 是否允许普通用户上传面板图
-allowImgUpload: false
+allow_img_upload: false
 # 是否允许普通用户获取原图
-allowGetOrigin: true
+allow_get_origin: true
 # 是否允许普通用户获取面板图列表
-allowGetList: false
+allow_get_list: false
 # 是否允许普通用户删除面板图
-allowImgDelete: false
+allow_img_delete: false
 
 # ---------- 定时任务列表 ----------
 # 自动签到列表

@@ -59,9 +59,9 @@ export class News extends plugin {
         const postId = newsData.data.list[0].postId;
         if (postId != await redis.get(`Yunzai:waves:news`)) {
             await Promise.all(autoPushList.map(async (user) => {
-                const [botId, groupId, userId] = user.split(':');
+                const { botId, groupId, userId } = user;
 
-                let isGroup = groupId != "undefined";
+                let isGroup = !!groupId;
                 let id = isGroup ? groupId : userId;
 
                 if (isGroup) {

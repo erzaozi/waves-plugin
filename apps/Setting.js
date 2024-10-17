@@ -30,15 +30,24 @@ export class Setting extends plugin {
 
     async setAutoSign(e) {
         const accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
-        if (!accountList.length) return e.reply("你还没有绑定任何账号呢，请使用[~登录]进行绑定");
+        if (!accountList.length) return e.reply("你还没有登录任何账号呢，请使用[~登录]进行登录");
 
         const config = await Config.getConfig();
-        const key = `${e.self_id}:${e.group_id}:${e.user_id}`;
-        const index = config["waves_auto_signin_list"].indexOf(key);
+        const newUser = {
+            botId: e.self_id || '',
+            groupId: e.group_id || '',
+            userId: e.user_id || '',
+        };
+
+        const index = config.waves_auto_signin_list.findIndex(user =>
+            user.botId === newUser.botId &&
+            user.groupId === newUser.groupId &&
+            user.userId === newUser.userId
+        );
 
         if (e.msg.includes('开启')) {
             if (index === -1) {
-                config["waves_auto_signin_list"].push(key);
+                config.waves_auto_signin_list.push(newUser);
                 Config.setConfig(config);
                 return e.reply("已开启自动签到");
             }
@@ -46,7 +55,7 @@ export class Setting extends plugin {
         }
 
         if (index !== -1) {
-            config["waves_auto_signin_list"].splice(index, 1);
+            config.waves_auto_signin_list.splice(index, 1);
             Config.setConfig(config);
             return e.reply("已关闭自动签到");
         }
@@ -55,15 +64,24 @@ export class Setting extends plugin {
 
     async setAutoPush(e) {
         const accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
-        if (!accountList.length) return e.reply("你还没有绑定任何账号呢，请使用[~登录]进行绑定");
+        if (!accountList.length) return e.reply("你还没有登录任何账号呢，请使用[~登录]进行登录");
 
         const config = await Config.getConfig();
-        const key = `${e.self_id}:${e.group_id}:${e.user_id}`;
-        const index = config["waves_auto_push_list"].indexOf(key);
+        const newUser = {
+            botId: e.self_id || '',
+            groupId: e.group_id || '',
+            userId: e.user_id || '',
+        };
+
+        const index = config.waves_auto_push_list.findIndex(user =>
+            user.botId === newUser.botId &&
+            user.groupId === newUser.groupId &&
+            user.userId === newUser.userId
+        );
 
         if (e.msg.includes('开启')) {
             if (index === -1) {
-                config["waves_auto_push_list"].push(key);
+                config.waves_auto_push_list.push(newUser);
                 Config.setConfig(config);
                 return e.reply("已开启结晶波片推送，可以使用[~体力阈值]来自定义提醒阈值");
             }
@@ -71,7 +89,7 @@ export class Setting extends plugin {
         }
 
         if (index !== -1) {
-            config["waves_auto_push_list"].splice(index, 1);
+            config.waves_auto_push_list.splice(index, 1);
             Config.setConfig(config);
             return e.reply("已关闭结晶波片推送");
         }
@@ -79,23 +97,29 @@ export class Setting extends plugin {
     }
 
     async setAutoNews(e) {
-        let key;
-
+        const newUser = {
+            botId: e.self_id || '',
+            groupId: e.isGroup ? e.group_id || '' : '',
+            userId: e.isGroup ? '' : e.user_id || '',
+        };
+        
         if (e.isGroup) {
-            if (!e.group.pickMember(e.user_id).is_owner && !e.group.pickMember(e.user_id).is_admin && !e.isMaster) {
+            const member = e.group.pickMember(e.user_id);
+            if (!member.is_owner && !member.is_admin && !e.isMaster) {
                 return e.reply("只有管理员和群主才能开启活动推送");
             }
-            key = `${e.self_id}:${e.group_id}:undefined`;
-        } else {
-            key = `${e.self_id}:undefined:${e.user_id}`;
         }
 
         const config = await Config.getConfig();
-        const index = config.waves_auto_news_list.indexOf(key);
+        const index = config.waves_auto_news_list.findIndex(user =>
+            user.botId === newUser.botId &&
+            user.groupId === newUser.groupId &&
+            user.userId === newUser.userId
+        );
 
         if (e.msg.includes('开启')) {
             if (index === -1) {
-                config.waves_auto_news_list.push(key);
+                config.waves_auto_news_list.push(newUser);
                 Config.setConfig(config);
                 return e.reply("已开启活动推送");
             }

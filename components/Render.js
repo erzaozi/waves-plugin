@@ -13,7 +13,7 @@ const Render = {
     async render(path, params, cfg) {
         let { e } = cfg
         if (!e.runtime) {
-            console.log('未找到e.runtime，请升级至最新版Yunzai')
+            logger.error('未找到e.runtime，请升级至最新版Yunzai')
         }
 
         let BotName = Version.isMiao ? 'Miao-Yunzai' : Version.isTrss ? 'TRSS-Yunzai' : 'Yunzai-Bot'
@@ -50,9 +50,6 @@ const Render = {
                         scale: scale(cfg.scale || 1)
                     },
                     copyright: `Created By ${BotName}<span class="version">${Version.yunzai}</span>${pluginName}</span>`,
-                    pageGotoParams: {
-                        waitUntil: 'networkidle2'
-                    }
                 }
             }
         })

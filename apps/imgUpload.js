@@ -34,9 +34,9 @@ export class ImgUploader extends plugin {
     }
 
     async uploadImage(e) {
-        const { allowImgUpload } = Config.getConfig();
+        const { allow_img_upload } = Config.getConfig();
 
-        if (!e.isMaster && !allowImgUpload) {
+        if (!e.isMaster && !allow_img_upload) {
             e.reply('只有主人才能上传面板图');
             return true;
         }
@@ -119,9 +119,9 @@ export class ImgUploader extends plugin {
     }
 
     async fetchOriginalPic(e) {
-        const { allowGetOrigin } = { ...Config.getDefConfig(), ...Config.getConfig() };
+        const { allow_get_origin } = { ...Config.getDefConfig(), ...Config.getConfig() };
 
-        if (!e.isMaster && !allowGetOrigin) {
+        if (!e.isMaster && !allow_get_origin) {
             e.reply(`已禁止获取原图，请联系主人开启`);
             return true;
         }
@@ -152,9 +152,9 @@ export class ImgUploader extends plugin {
     }
 
     async listImages(e) {
-        const { allowGetList } = { ...Config.getDefConfig(), ...Config.getConfig() };
+        const { allow_get_list } = { ...Config.getDefConfig(), ...Config.getConfig() };
 
-        if (!e.isMaster && !allowGetList) {
+        if (!e.isMaster && !allow_get_list) {
             e.reply('只有主人才能获取面板图列表~');
             return true;
         }
@@ -199,9 +199,9 @@ export class ImgUploader extends plugin {
     }
 
     async deleteImage(e) {
-        const { allowImgDelete } = { ...Config.getDefConfig(), ...Config.getConfig() };
+        const { allow_img_delete } = { ...Config.getDefConfig(), ...Config.getConfig() };
 
-        if (!e.isMaster && !allowImgDelete) return e.reply('只有主人才能删除面板图');
+        if (!e.isMaster && !allow_img_delete) return e.reply('只有主人才能删除面板图');
 
         let character = e.msg.match(this.rule[3].reg)?.[2];
         if (!character) return e.reply('未找到角色, 请使用 "~删除今汐面板图1" 进行删除');

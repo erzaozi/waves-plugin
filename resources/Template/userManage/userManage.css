@@ -1,0 +1,89 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("../../fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+#body {
+    font-family: "MiSans";
+}
+
+#container {
+    background-image: url(./imgs/background.jpg);
+    background-size: cover;
+    position: inherit;
+    display: flex;
+    flex-direction: row;
+    width: 1520px;
+    height: 700PX;
+}
+
+#left {
+    height: 630PX;
+    width: 660px;
+    margin: 70px 0px 0px 40px;
+}
+
+#circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 400px;
+    margin: 190px 0 0 130px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center,
+            rgba(186, 159, 89, 0.6),
+            rgba(186, 159, 89, 0.4) 50%,
+            rgba(186, 159, 89, 0) 60%,
+            rgb(233, 203, 126) 70%);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+#total-tokens {
+    display: inherit;
+    flex-direction: column;
+    align-self: center;
+    font-size: 100px;
+    color: #ffdd6b;
+    font-weight: 700;
+    text-align: center;
+}
+
+#total-tokens>span {
+    align-self: center;
+    font-size: 30px;
+}
+
+#right {
+    height: 100%;
+    width: 820px;
+}
+
+#tag {
+    font-size: 60px;
+    padding: 65px 0px 0px 390px;
+    font-weight: bold;
+    color: #313131;
+}
+
+ul {
+    list-style-type: none;
+    padding: 40px 0 0 80px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #313131;
+}
+
+li {
+    margin: 60px 0px;
+}

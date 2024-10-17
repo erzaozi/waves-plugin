@@ -30,7 +30,7 @@ export class UserInfo extends plugin {
             if (match || await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
                 let publicCookie = await waves.pubCookie();
                 if (!publicCookie) {
-                    return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行绑定');
+                    return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行登录');
                 } else {
                     if (match) {
                         publicCookie.roleId = match[0];
@@ -41,7 +41,7 @@ export class UserInfo extends plugin {
                     accountList.push(publicCookie);
                 }
             } else {
-                return await e.reply('当前没有绑定任何账号，请使用[~登录]进行绑定');
+                return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
             }
         }
 
@@ -52,7 +52,7 @@ export class UserInfo extends plugin {
             const usability = await waves.isAvailable(account.token);
 
             if (!usability) {
-                data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新绑定Token` });
+                data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
                 deleteroleId.push(account.roleId);
                 return;
             }

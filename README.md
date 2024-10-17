@@ -22,10 +22,10 @@ git clone https://github.com/erzaozi/waves-plugin.git ./plugins/waves-plugin
 ```
 
 > [!NOTE]
-> 如果你的网络环境较差，无法连接到 Github，可以使用 [GitHub Proxy](https://mirror.ghproxy.com/) 提供的文件代理加速下载服务
+> 如果你的网络环境较差，无法连接到 Github，可以使用 [GitHub Proxy](https://ghp.ci/) 提供的文件代理加速下载服务
 >
 > ```
-> git clone https://mirror.ghproxy.com/https://github.com/erzaozi/waves-plugin.git ./plugins/waves-plugin
+> git clone https://ghp.ci/https://github.com/erzaozi/waves-plugin.git ./plugins/waves-plugin
 > ```
 
 #### 2. 安装依赖
@@ -44,10 +44,14 @@ pnpm install --filter=waves-plugin
 > > 
 > > 在开始之前，请确保您已准备好以下内容：
 > > - 一个注册好的 Cloudflare 账户
-> > - 一个已经交给 Cloudflare 托管的域名
+> > - 一个已经交给 Cloudflare 托管的域名 [注册免费域名](https://register.us.kg/auth/login)
 > > 
 > > #### 步骤详解
 > > 
+> > 0. **打开在线登录服务**
+> >    - 在锅巴的本插件配置面板中，找到 `允许网页登录` 配置项，将其开关打开后，**重启机器人**
+> >    - 使用本地浏览器访问 `http://127.0.0.1:25088`，如果跳转到项目 Github 首页，说明服务已开启
+> >
 > > 1. **访问 Cloudflare Zero Trust 工作台**
 > >    - 打开浏览器，在地址栏打开 [Cloudflare Zero Trust](https://one.dash.cloudflare.com/) 并登录您的 Cloudflare 账户
 > > 
@@ -73,10 +77,13 @@ pnpm install --filter=waves-plugin
 > > 5. **保存和测试**
 > >    - 确认所有配置无误后，点击 `Save tunnel` 完成设置
 > >    - 返回到隧道管理页面，查看新创建的隧道状态，确保其为活跃在线状态
-> >    - 通过访问 `https://waves.example.com/` 来测试您的本地化登录服务是否能够正常工作，如果跳转到项目 Github 首页，说明配置正确
+> >    - 通过访问 `https://waves.example.com` 来测试您的本地化登录服务是否能够正常工作，如果跳转到项目 Github 首页，说明配置正确
+> >
+> > 6. **配置插件**
+> >    - 在锅巴的本插件配置面板中，找到 `登录服务公开地址` 配置项，将您刚刚配置的隧道地址填入，例如 `https://waves.example.com`
+> >    - 向机器人发送命令 `~登录`，尝试访问机器人给出的登录地址，如果能访问登录页面说明配置正确
 > > 
 > > #### 注意事项
-> > - 确保防火墙或安全组设置允许流量通过指定的端口（如25088）
 > > - 对于不同环境，Cloudflare 连接器的安装细节可能略有不同，请参考 Cloudflare 的官方文档进行具体操作
 > > 
 > > </details>
@@ -85,7 +92,7 @@ pnpm install --filter=waves-plugin
 
 请使用 `~帮助` 获取完整帮助
 
-- [x] 绑定账号
+- [x] 登录账号
 - [x] 自动签到
 - [x] 用户信息查询
 - [x] 日常数据查询
@@ -104,6 +111,7 @@ pnpm install --filter=waves-plugin
 - [x] 角色卡片查询
 - [x] 计算声骸得分
 - [x] 活动日历查询
+- [x] 用户统计
 
 ## 功能列表
 
@@ -111,7 +119,7 @@ pnpm install --filter=waves-plugin
 
 | 命令      | 功能                       | 示例                                                                                                |
 | --------- | -------------------------- | --------------------------------------------------------------------------------------------------- |
-| ~登录     | 绑定账户 Token             | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Bind.png)      |
+| ~登录     | 登录账户 Token             | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Bind.png)      |
 | ~卡片     | 获取用户详细信息           | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/User.png)      |
 | ~签到     | 库街区签到                 | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/SignIn.png)    |
 | ~体力     | 获取用户日常数据卡片       | ![renderings](https://cdn.jsdelivr.net/gh/erzaozi/waves-plugin@main/resources/readme/Sanity.png)    |

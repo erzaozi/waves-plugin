@@ -20,6 +20,7 @@ files.forEach((file) => {
 ret = await Promise.allSettled(ret);
 
 let apps = {};
+
 for (let i in files) {
   let name = files[i].replace('.js', '');
 

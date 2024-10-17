@@ -289,7 +289,19 @@ class Render {
             pluginResources,
             data
         })
-    
+
+        return base64
+    }
+
+    async userManage(data) {
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: 'manage',
+            imgType: 'png',
+            tplFile: `${pluginResources}/Template/userManage/userManage.html`,
+            pluginResources,
+            data
+        })
+
         return base64
     }
 }
