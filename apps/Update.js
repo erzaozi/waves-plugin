@@ -65,9 +65,9 @@ export class Update extends plugin {
    * @returns
    */
   async runUpdate(isForce) {
-    let command = 'git -C ./plugins/waves-plugin/ pull --no-rebase'
+    let command = `git -C ./plugins/waves-plugin/ pull`
     if (isForce) {
-      command = `git -C ./plugins/waves-plugin/ checkout . && ${command}`
+      command = `git -C ./plugins/waves-plugin/ reset --hard origin/main && ${command} --rebase`
       this.e.reply('正在执行强制更新操作，请稍等')
     } else {
       this.e.reply('正在执行更新操作，请稍等')

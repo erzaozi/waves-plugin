@@ -3,6 +3,7 @@ import { pluginResources } from './path.js'
 
 class Render {
     constructor() {
+        this.time = {};
     }
 
     async userInfo(baseData, roleData) {
@@ -10,7 +11,7 @@ class Render {
             return b.starLevel - a.starLevel
         })
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'userInfo',
+            saveId: this.getsaveId('userInfo'),
             imgType: 'png',
             tplFile: `${pluginResources}/Template/userInfo/userInfo.html`,
             pluginResources,
@@ -23,7 +24,7 @@ class Render {
 
     async dailyData(gameData) {
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'dailyData',
+            saveId: this.getsaveId('dailyData'),
             imgType: 'png',
             tplFile: `${pluginResources}/Template/dailyData/dailyData.html`,
             pluginResources,
@@ -41,7 +42,7 @@ class Render {
             return b.star - a.star
         })
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'calaBash',
+            saveId: this.getsaveId('calaBash'),
             imgType: 'png',
             tplFile: `${pluginResources}/Template/calaBash/calaBash.html`,
             pluginResources,
@@ -75,7 +76,7 @@ class Render {
         }
 
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'challengeDetails',
+            saveId: this.getsaveId('challengeDetails'),
             imgType: 'png',
             tplFile: `${pluginResources}/Template/challengeDetails/challengeDetails.html`,
             pluginResources,
@@ -90,7 +91,7 @@ class Render {
         exploreData = exploreData.exploreList
 
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'exploreIndex',
+            saveId: this.getsaveId('exploreIndex'),
             imgType: 'png',
             tplFile: `${pluginResources}/Template/exploreIndex/exploreIndex.html`,
             pluginResources,
@@ -103,7 +104,7 @@ class Render {
 
     async towerData(baseData, towerData) {
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'towerData',
+            saveId: this.getsaveId('towerData'),
             imgType: 'png',
             tplFile: `${pluginResources}/Template/towerData/tower.html`,
             pluginResources,
@@ -116,7 +117,7 @@ class Render {
 
     async signInData(signInData) {
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'signIn',
+            saveId: this.getsaveId('signIn'),
             imgType: 'png',
             tplFile: `${pluginResources}/Template/signIn/signIn.html`,
             pluginResources,
@@ -128,7 +129,7 @@ class Render {
 
     async gachaCount(data) {
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'gachaCount',
+            saveId: this.getsaveId('gachaCount'),
             imgType: 'png',
             tplFile: `${pluginResources}/Template/gacha/gacha.html`,
             pluginResources,
@@ -141,7 +142,7 @@ class Render {
     async simulatorGacha(gachaData) {
 
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'simulatorGacha',
+            saveId: this.getsaveId('simulatorGacha'),
             imgType: 'png',
             tplFile: `${pluginResources}/Template/simulatorGacha/simulatorGacha.html`,
             pluginResources,
@@ -167,7 +168,7 @@ class Render {
         data.content.modules[1].components[0].tabs[5].content = replace(data.content.modules[1].components[0].tabs[5].content)
 
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'wikiRole',
+            saveId: this.getsaveId('wikiRole'),
             imgType: 'png',
             tplFile: `${pluginResources}/Wiki/role/role.html`,
             pluginResources,
@@ -188,7 +189,7 @@ class Render {
         data.content.modules[1].components[0].content = replace(data.content.modules[1].components[0].content)
 
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'wikiWeapon',
+            saveId: this.getsaveId('wikiWeapon'),
             imgType: 'png',
             tplFile: `${pluginResources}/Wiki/weapon/weapon.html`,
             pluginResources,
@@ -208,7 +209,7 @@ class Render {
         data.content.modules[0].components[1].content = replace(data.content.modules[0].components[1].content)
 
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'wikiRelics',
+            saveId: this.getsaveId('wikiRelics'),
             imgType: 'png',
             tplFile: `${pluginResources}/Wiki/relics/relics.html`,
             pluginResources,
@@ -227,7 +228,7 @@ class Render {
         data.content.modules[0].components[1].tabs[0].content = replace(data.content.modules[0].components[1].tabs[0].content)
 
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'wikiEnemy',
+            saveId: this.getsaveId('wikiEnemy'),
             imgType: 'png',
             tplFile: `${pluginResources}/Wiki/enemy/enemy.html`,
             pluginResources,
@@ -245,7 +246,7 @@ class Render {
         data.content.modules[0].components[0].content = replace(data.content.modules[0].components[0].content)
 
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'wikiProps',
+            saveId: this.getsaveId('wikiProps'),
             imgType: 'png',
             tplFile: `${pluginResources}/Wiki/props/props.html`,
             pluginResources,
@@ -258,7 +259,7 @@ class Render {
     async wikiSearch(data) {
 
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'wikiSearch',
+            saveId: this.getsaveId('wikiSearch'),
             imgType: 'png',
             tplFile: `${pluginResources}/Wiki/search/search.html`,
             pluginResources,
@@ -271,7 +272,7 @@ class Render {
     async charProfile(data) {
 
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'charProfile',
+            saveId: this.getsaveId('charProfile'),
             imgType: 'png',
             tplFile: `${pluginResources}/Template/charProfile/charProfile.html`,
             pluginResources,
@@ -283,7 +284,7 @@ class Render {
 
     async calendar(data) {
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'calendar',
+            saveId: this.getsaveId('calendar'),
             imgType: 'png',
             tplFile: `${pluginResources}/Template/calendar/calendar.html`,
             pluginResources,
@@ -295,7 +296,7 @@ class Render {
 
     async userManage(data) {
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: 'manage',
+            saveId: this.getsaveId('manage'),
             imgType: 'png',
             tplFile: `${pluginResources}/Template/userManage/userManage.html`,
             pluginResources,
@@ -303,6 +304,20 @@ class Render {
         })
 
         return base64
+    }
+
+    getsaveId(name) {
+        if (!this.time[name]) this.time[name] = 0;
+
+        this.time[name]++;
+
+        if (this.time[name] === 1) {
+            setTimeout(() => {
+                this.time[name] = 0;
+            }, 10000);
+        }
+
+        return `${name}_${this.time[name]}`;
     }
 }
 
