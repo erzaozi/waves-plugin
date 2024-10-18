@@ -141,7 +141,7 @@ export class Setting extends plugin {
             return true
         }
         if (threshold > 240 || threshold < 0) {
-            await e.reply("波片阈值必须在0-240之间，请重新输入");
+            await e.reply("波片阈值必须在0-240之间，请重新输入，如[~体力阈值150]");
             return true
         }
         await redis.set(`Yunzai:waves:sanity_threshold:${e.user_id}`, threshold)

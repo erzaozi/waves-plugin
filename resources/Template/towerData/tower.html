@@ -15,10 +15,10 @@
     </div>
     <div class="tower-body">
         {{each towerData.difficultyList area}}
-        {{if area.difficulty == 3}}
+        {{if area.difficulty == towerData.difficulty}}
         {{each area.towerAreaList tower}}
         <div class="tower-area">
-            <span class="tower-name">{{tower.areaName}}</span>
+            <span class="tower-name">{{towerData.diffiname}}·{{tower.areaName}}</span>
             <span class="tower-star">{{tower.star}}/{{tower.maxStar}}</span>
         </div>
         {{each tower.floorList floor}}

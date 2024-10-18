@@ -37,7 +37,7 @@ export class Help extends plugin {
             "themeExclude": [
                 "default"
             ],
-            "colCount": 2,
+            "colCount": 3,
             "bgBlur": true
         }
         const helpList = [
@@ -45,161 +45,176 @@ export class Help extends plugin {
                 "group": "功能列表",
                 "list": [
                     {
-                        "icon": 1,
-                        "title": "~登录",
-                        "desc": "登录账户Token"
-                    },
-                    {
-                        "icon": 2,
-                        "title": "~登录帮助",
-                        "desc": "登录账户Token教程"
-                    },
-                    {
-                        "icon": 3,
-                        "title": "~解绑",
-                        "desc": "解绑账户Token"
-                    },
-                    {
                         "icon": 4,
+                        "title": "~绑定",
+                        "desc": "绑定特征码"
+                    },
+                    {
+                        "icon": 7,
+                        "title": "~登录",
+                        "desc": "登录库街区账号"
+                    },
+                    {
+                        "icon": 8,
+                        "title": "~登录帮助",
+                        "desc": "获取登录账号教程"
+                    },
+                    {
+                        "icon": 10,
+                        "title": "~解绑",
+                        "desc": "解绑登录账号"
+                    },
+                    {
+                        "icon": 21,
                         "title": "~库街区Token",
-                        "desc": "查看自己已登录的Token"
+                        "desc": "查看已登录账号Token"
                     },
                     {
-                        "icon": 5,
+                        "icon": 20,
                         "title": "~签到",
-                        "desc": "社区签到"
+                        "desc": "库街区签到"
                     },
                     {
-                        "icon": 6,
+                        "icon": 50,
                         "title": "~体力",
                         "desc": "查看日常数据"
                     },
                     {
-                        "icon": 7,
+                        "icon": 53,
                         "title": "~卡片",
                         "desc": "查看账号卡片"
                     },
                     {
-                        "icon": 8,
+                        "icon": 51,
                         "title": "~数据坞",
                         "desc": "查看数据坞信息"
                     },
                     {
-                        "icon": 9,
+                        "icon": 57,
                         "title": "~全息战略",
                         "desc": "查看全息战略挑战信息"
                     },
                     {
-                        "icon": 10,
-                        "title": "~逆境深塔",
-                        "desc": "查看深境区挑战信息"
+                        "icon": 60,
+                        "title": "~深境区",
+                        "desc": "查看逆境深塔挑战信息"
                     },
                     {
-                        "icon": 11,
+                        "icon": 67,
                         "title": "~探索度",
                         "desc": "查看地图探索度"
                     },
                     {
-                        "icon": 12,
+                        "icon": 35,
                         "title": "~开启自动签到",
-                        "desc": "每天四点自动执行所有账号签到"
+                        "desc": "每天自动社区签到"
                     },
                     {
-                        "icon": 13,
+                        "icon": 37,
                         "title": "~开启体力推送",
-                        "desc": "结晶波片回满提醒"
+                        "desc": "结晶波片恢复提醒"
                     },
                     {
-                        "icon": 14,
+                        "icon": 40,
+                        "title": "~体力阈值",
+                        "desc": "设置体力阈值"
+                    },
+                    {
+                        "icon": 69,
                         "title": "~抽卡记录",
-                        "desc": "抽卡记录"
+                        "desc": "查看抽卡记录"
                     },
                     {
-                        "icon": 15,
+                        "icon": 76,
                         "title": "~导入/导出抽卡记录",
                         "desc": "导入导出抽卡记录"
                     },
                     {
-                        "icon": 16,
+                        "icon": 77,
                         "title": "~抽卡帮助",
                         "desc": "获取抽卡记录教程"
                     },
                     {
-                        "icon": 17,
+                        "icon": 18,
                         "title": "~安可面板",
-                        "desc": "角色面板"
+                        "desc": "查看角色面板"
                     },
                     {
-                        "icon": 18,
+                        "icon": 90,
                         "title": "~吟霖图鉴",
                         "desc": "万物图鉴"
                     },
                     {
-                        "icon": 19,
+                        "icon": 95,
                         "title": "~今汐攻略",
-                        "desc": "角色攻略"
+                        "desc": "查看角色攻略"
                     },
                     {
-                        "icon": 20,
+                        "icon": 72,
                         "title": "~公告",
-                        "desc": "最新官方公告"
+                        "desc": "查看最新官方公告"
                     },
                     {
-                        "icon": 21,
+                        "icon": 59,
                         "title": "~日历",
-                        "desc": "活动日历"
+                        "desc": "查看活动日历"
                     },
                     {
-                        "icon": 22,
+                        "icon": 63,
                         "title": "~开启公告推送",
                         "desc": "推送官方公告"
                     },
                     {
-                        "icon": 23,
+                        "icon": 71,
                         "title": "~十连",
                         "desc": "抽卡模拟器"
                     },
                     {
-                        "icon": 24,
+                        "icon": 48,
                         "title": "~帮助",
                         "desc": "查看帮助面板"
-                    },
-                    {
-                        "icon": 25,
-                        "title": "~更新",
-                        "desc": "更新插件"
                     }
                 ],
             },
         ]
+
+        if (e.isMaster) {
+            helpList[0].list.push({
+                "icon": 12,
+                "title": "~更新",
+                "desc": "更新插件"
+            })
+        }
+
         if (e.isMaster || Config.getConfig()?.allow_img_upload) {
             helpList.push({
                 "group": "面板图管理",
                 "list": [
 
                     {
-                        "icon": 26,
+                        "icon": 86,
                         "title": "~上传今汐面板图",
                         "desc": "上传面板图"
                     },
                     {
-                        "icon": 27,
+                        "icon": 87,
                         "title": "~原图",
                         "desc": "获取面板图"
                     },
                     {
-                        "icon": 28,
+                        "icon": 93,
                         "title": "~今汐面板图列表",
                         "desc": "查看该角色全部面板图"
                     },
                     {
-                        "icon": 29,
+                        "icon": 96,
                         "title": "~删除今汐面板图1",
                         "desc": "删除面板图"
                     }
                 ],
             })
         }
+
         if (e.isMaster) {
             helpList.push({
                 "group": "用户管理",
@@ -215,13 +230,14 @@ export class Help extends plugin {
                         "desc": "查看用户数量统计"
                     },
                     {
-                        "icon": 32,
+                        "icon": 28,
                         "title": "~删除失效用户",
                         "desc": "删除失效的Token"
                     }
                 ]
             })
         }
+
         let helpGroup = []
         _.forEach(helpList, (group) => {
             _.forEach(group.list, (help) => {

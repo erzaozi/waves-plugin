@@ -11,7 +11,7 @@ export class TowerInfo extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)(逆境)?深(塔|渊)(\\d{9})?$",
+                    reg: "^(～|~|鸣潮)(逆境)?(深(塔|渊)|(稳定|实验|超载|深境)(区)?)(\\d{9})?$",
                     fnc: "towerInfo"
                 }
             ]
@@ -70,6 +70,9 @@ export class TowerInfo extends plugin {
             if (!baseData.status || !towerData.status) {
                 data.push({ message: baseData.msg || towerData.msg });
             } else {
+                const Mapping = { '稳定': 1, '实验': 2, '深境': 3, '超载': 4 },
+                    key = e.msg.match(/稳定|实验|超载|深境/)?.[0] || '深境';
+                towerData.data = { ...towerData.data, difficulty: Mapping[key] || 3, diffiname: `${key}区` };
                 const imageCard = await Render.towerData(baseData.data, towerData.data);
                 data.push({ message: imageCard });
             }
