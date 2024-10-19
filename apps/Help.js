@@ -150,7 +150,7 @@ export class Help extends plugin {
                         "desc": "查看角色攻略"
                     },
                     {
-                        "icon": 72,
+                        "icon": 85,
                         "title": "~公告",
                         "desc": "查看最新官方公告"
                     },
@@ -170,7 +170,7 @@ export class Help extends plugin {
                         "desc": "抽卡模拟器"
                     },
                     {
-                        "icon": 48,
+                        "icon": 72,
                         "title": "~帮助",
                         "desc": "查看帮助面板"
                     }
@@ -210,6 +210,30 @@ export class Help extends plugin {
                         "icon": 96,
                         "title": "~删除今汐面板图1",
                         "desc": "删除面板图"
+                    }
+                ],
+            })
+        }
+
+        if (e.isMaster || Config.getConfig()?.allow_set_alias) {
+            helpList.push({
+                "group": "别名管理",
+                "list": [
+
+                    {
+                        "icon": 41,
+                        "title": "~添加炽霞别名马小芳",
+                        "desc": "添加别名"
+                    },
+                    {
+                        "icon": 45,
+                        "title": "~炽霞别名",
+                        "desc": "获取别名列表"
+                    },
+                    {
+                        "icon": 46,
+                        "title": "~删除炽霞别名马小芳",
+                        "desc": "删除别名"
                     }
                 ],
             })

@@ -32,7 +32,7 @@ class Server {
                 let data = await fs.readFile(pluginResources + filePath, 'utf8');
                 res.setHeader('Content-Type', 'text/html');
                 if (this.data[id]) {
-                    res.setHeader('userId', this.data[id].user_id);
+                    data = data.replace(/undefined/g, this.data[id].user_id);
                 }
                 res.send(data);
             } catch (err) {

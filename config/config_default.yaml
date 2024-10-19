@@ -31,6 +31,10 @@ allow_get_list: false
 # 是否允许普通用户删除面板图
 allow_img_delete: false
 
+# ---------- 别名相关 ----------
+# 是否允许普通用户设置别名
+allow_set_alias: false
+
 # ---------- 定时任务列表 ----------
 # 自动签到列表
 waves_auto_signin_list: []

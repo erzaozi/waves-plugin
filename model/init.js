@@ -23,6 +23,10 @@ class Init {
         if (!fs.existsSync(`${_path}/data/wavesGacha`)) {
             fs.mkdirSync(`${_path}/data/wavesGacha`, { recursive: true })
         }
+        // 创建自定义别名目录
+        if (!fs.existsSync(`${pluginRoot}/resources/Alias/custom`)) {
+            fs.mkdirSync(`${pluginRoot}/resources/Alias/custom`, { recursive: true })
+        }
         // 检查默认配置文件
         const config_default_path = `${pluginRoot}/config/config_default.yaml`
         if (!fs.existsSync(config_default_path)) {

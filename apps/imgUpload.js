@@ -119,7 +119,7 @@ export class ImgUploader extends plugin {
     }
 
     async fetchOriginalPic(e) {
-        const { allow_get_origin } = { ...Config.getDefConfig(), ...Config.getConfig() };
+        const { allow_get_origin } = Config.getConfig();
 
         if (!e.isMaster && !allow_get_origin) {
             e.reply(`已禁止获取原图，请联系主人开启`);
@@ -152,7 +152,7 @@ export class ImgUploader extends plugin {
     }
 
     async listImages(e) {
-        const { allow_get_list } = { ...Config.getDefConfig(), ...Config.getConfig() };
+        const { allow_get_list } = Config.getConfig();
 
         if (!e.isMaster && !allow_get_list) {
             e.reply('只有主人才能获取面板图列表~');
@@ -199,7 +199,7 @@ export class ImgUploader extends plugin {
     }
 
     async deleteImage(e) {
-        const { allow_img_delete } = { ...Config.getDefConfig(), ...Config.getConfig() };
+        const { allow_img_delete } = Config.getConfig();
 
         if (!e.isMaster && !allow_img_delete) return e.reply('只有主人才能删除面板图');
 

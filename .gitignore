@@ -1,3 +1,4 @@
 node_modules/
 config/config/*.yaml
+resources/Alias/custom/*.yaml
 .idea/

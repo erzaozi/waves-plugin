@@ -242,6 +242,20 @@ export function supportGuoba() {
         },
         {
           component: "Divider",
+          label: "Waves 别名配置",
+          componentProps: {
+            orientation: "left",
+            plain: true,
+          },
+        },
+        {
+          field: "allow_set_alias",
+          label: "设置别名",
+          bottomHelpMessage: "是否允许普通用户设置别名",
+          component: "Switch",
+        },
+        {
+          component: "Divider",
           label: "Waves 其他配置",
           componentProps: {
             orientation: "left",

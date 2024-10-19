@@ -130,13 +130,20 @@ class Wiki {
 
     // 获取别名
     async getAlias(name) {
-        const files = fs.readdirSync(pluginResources + '/Alias');
-        for (const file of files) {
-            const content = fs.readFileSync(pluginResources + '/Alias/' + file, 'utf8');
-            const alias = YAML.parse(content);
-            for (const key in alias) {
-                if (alias[key].includes(name)) {
-                    return key;
+        const paths = [
+            pluginResources + '/Alias',
+            pluginResources + '/Alias/custom'
+        ];
+
+        for (const path of paths) {
+            const files = fs.readdirSync(path).filter(file => file.endsWith('.yaml'));
+            for (const file of files) {
+                const content = fs.readFileSync(`${path}/${file}`, 'utf8');
+                const alias = YAML.parse(content);
+                for (const [key, values] of Object.entries(alias)) {
+                    if (values.includes(name)) {
+                        return key;
+                    }
                 }
             }
         }

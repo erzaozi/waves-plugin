@@ -160,7 +160,7 @@ export class Simulator extends plugin {
 
         await Promise.all(promises);
 
-        const imageCard = await Render.simulatorGacha({ poolName: data.pool_name, times: JSON.parse(await redis.get(`Yunzai:waves:simulator:${type}:${e.user_id}`)).five_star_time, list: gachaData })
+        const imageCard = await Render.simulatorGacha({ userName: e.sender.nickname, poolName: data.pool_name, times: JSON.parse(await redis.get(`Yunzai:waves:simulator:${type}:${e.user_id}`)).five_star_time, list: gachaData })
         await e.reply(imageCard)
         return true
     }

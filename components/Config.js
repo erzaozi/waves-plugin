@@ -59,7 +59,7 @@ class Config {
 
         try {
             if (userData.length === 0) {
-                fs.unlinkSync(userConfigPath);
+                fs.existsSync(userConfigPath) && fs.unlinkSync(userConfigPath);
                 redis.del(`Yunzai:waves:users:${userId}`);
                 return true;
             }
