@@ -28,6 +28,8 @@ export class Manage extends plugin {
     async Total(e) {
         if (!e.isMaster) return false;
 
+        await e.reply('[Waves-Plugin] 正在统计用户总数，请稍等...');
+
         const waves = new Waves();
         const dir = `${_path}/data/waves`;
 
@@ -63,6 +65,8 @@ export class Manage extends plugin {
 
     async Delete(e) {
         if (!e.isMaster) return false;
+
+        await e.reply('[Waves-Plugin] 正在删除失效账号，请稍等...');
 
         const waves = new Waves();
         const dir = `${_path}/data/waves`;

@@ -125,8 +125,8 @@ class Waves {
 
             if (response.data.code === 200) {
                 if (response.data.data === null) {
-                    logger.info('获取日常数据失败，返回数据为null');
-                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
+                    logger.info('获取日常数据失败，返回空数据');
+                    return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
                 }
                 if (Config.getConfig().enable_log) {
                     logger.info('获取日常数据成功');
@@ -158,9 +158,9 @@ class Waves {
 
             if (response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
-                if (response.data.data === null) {
-                    logger.info('获取我的资料失败，返回数据为null');
-                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
+                if (response.data.data === null || !response.data.data.showToGuest) {
+                    logger.info('获取我的资料失败，返回空数据');
+                    return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
                 }
                 if (Config.getConfig().enable_log) {
                     logger.info('获取我的资料成功');
@@ -192,9 +192,9 @@ class Waves {
 
             if (response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
-                if (response.data.data === null) {
-                    logger.info('获取共鸣者失败，返回数据为null');
-                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
+                if (response.data.data === null || !response.data.data.showToGuest) {
+                    logger.info('获取共鸣者失败，返回空数据');
+                    return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
                 }
                 if (Config.getConfig().enable_log) {
                     logger.info('获取共鸣者成功');
@@ -227,8 +227,8 @@ class Waves {
             if (response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
-                    logger.info('获取数据坞失败，返回数据为null');
-                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
+                    logger.info('获取数据坞失败，返回空数据');
+                    return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
                 }
                 if (Config.getConfig().enable_log) {
                     logger.info('获取数据坞成功');
@@ -261,9 +261,9 @@ class Waves {
 
             if (response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
-                if (response.data.data === null) {
-                    logger.info('获取挑战数据失败，返回数据为null');
-                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
+                if (response.data.data === null || !response.data.data.open) {
+                    logger.info('获取挑战数据失败，返回空数据');
+                    return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
                 }
                 if (Config.getConfig().enable_log) {
                     logger.info('获取挑战数据成功');
@@ -296,9 +296,9 @@ class Waves {
 
             if (response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
-                if (response.data.data === null) {
-                    logger.info('获取探索数据失败，返回数据为null');
-                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
+                if (response.data.data === null || !response.data.data.open) {
+                    logger.info('获取探索数据失败，返回空数据');
+                    return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
                 }
                 if (Config.getConfig().enable_log) {
                     logger.info('获取探索数据成功');
@@ -331,8 +331,8 @@ class Waves {
             if (response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
-                    logger.info('获取角色详细信息失败，返回数据为null');
-                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
+                    logger.info('获取角色详细信息失败，返回空数据');
+                    return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
                 }
                 if (Config.getConfig().enable_log) {
                     logger.info('获取角色详细信息成功');
@@ -367,8 +367,8 @@ class Waves {
 
             if (response.data.code === 200) {
                 if (response.data.data === null) {
-                    logger.info('签到失败，返回数据为null');
-                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
+                    logger.info('签到失败，返回空数据');
+                    return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
                 }
                 if (Config.getConfig().enable_log) {
                     logger.info('签到成功');
@@ -400,20 +400,20 @@ class Waves {
             if (response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
-                    const otherResponse = await axios.post(CONSTANTS.OTHER_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
-                    if (otherResponse.data.code === 200) {
-                        otherResponse.data.data = JSON.parse(otherResponse.data.data)
-                        if (otherResponse.data.data === null) {
-                            logger.info('获取逆境深塔数据失败，返回数据为null');
-                            return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
+                    const other = await axios.post(CONSTANTS.OTHER_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
+                    if (other.data.code === 200) {
+                        other.data.data = JSON.parse(other.data.data)
+                        if (other.data.data === null) {
+                            logger.info('获取逆境深塔数据失败，返回空数据');
+                            return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
                         }
                         if (Config.getConfig().enable_log) {
                             logger.info('获取逆境深塔数据成功');
                         }
-                        return { status: true, data: otherResponse.data.data };
+                        return { status: true, data: other.data.data };
                     } else {
-                        logger.error('获取逆境深塔数据失败：', otherResponse.data.msg);
-                        return { status: false, msg: otherResponse.data.msg };
+                        logger.error('获取逆境深塔数据失败：', other.data.msg);
+                        return { status: false, msg: other.data.msg };
                     }
                 }
                 if (Config.getConfig().enable_log) {
@@ -440,8 +440,8 @@ class Waves {
 
             if (response.data.code === 0) {
                 if (response.data.data === null) {
-                    logger.info('获取抽卡记录失败，返回数据为null');
-                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
+                    logger.info('获取抽卡记录失败，返回空数据');
+                    return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
                 }
                 if (Config.getConfig().enable_log) {
                     logger.info('获取抽卡记录成功');
@@ -489,8 +489,8 @@ class Waves {
 
             if (response.data.code === 200) {
                 if (response.data.data === null) {
-                    logger.info('获取活动列表失败，返回数据为null');
-                    return { status: false, msg: "官方API返回null，请检查库街区展示是否打开" };
+                    logger.info('获取活动列表失败，返回空数据');
+                    return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
                 }
                 if (Config.getConfig().enable_log) {
                     logger.info('获取活动列表成功');
