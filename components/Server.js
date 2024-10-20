@@ -34,6 +34,7 @@ class Server {
                 if (this.data[id]) {
                     data = data.replace(/undefined/g, this.data[id].user_id);
                 }
+                data = data.replace(/background_image/g, await Config.getConfig().background_api);
                 res.send(data);
             } catch (err) {
                 logger.error(err);

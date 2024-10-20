@@ -209,6 +209,16 @@ export function supportGuoba() {
           },
         },
         {
+          field: "background_api",
+          label: "登录页背景图",
+          bottomHelpMessage: "背景图API地址",
+          component: "Input",
+          required: true,
+          componentProps: {
+            placeholder: '请输入API地址，例：https://www.loliapi.com/acg',
+          },
+        },
+        {
           component: "Divider",
           label: "Waves 面板图配置",
           componentProps: {

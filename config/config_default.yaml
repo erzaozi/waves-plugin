@@ -20,6 +20,8 @@ allow_login: false
 server_port: 25088
 # 登录地址获取
 public_link: 'http://127.0.0.1:25088'
+# 背景图API
+background_api: 'https://www.loliapi.com/acg'
 
 # ---------- 面板图相关 ----------
 # 是否允许普通用户上传面板图
