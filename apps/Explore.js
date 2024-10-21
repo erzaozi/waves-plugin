@@ -85,7 +85,7 @@ export class Explore extends plugin {
             return true;
         }
 
-        await e.reply(Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]));
+        await e.reply(await e.runtime?.common?.makeForwardMsg(e, [{ message: `用户 ${e.user_id}` }, ...data]));
         return true;
     }
 }

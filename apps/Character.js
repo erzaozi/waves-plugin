@@ -135,7 +135,7 @@ export class Character extends plugin {
 
         const msgData = data.length === 1
             ? data[0].message
-            : Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]);
+            : await e.runtime?.common?.makeForwardMsg(e, [{ message: `用户 ${e.user_id}` }, ...data]);
 
         const msgRes = await e.reply(msgData);
         const message_id = Array.isArray(msgRes?.message_id)

@@ -182,12 +182,7 @@ export class ImgUploader extends plugin {
             `如需删除图片, 请使用 "~删除${character}面板图1" 删除第一张图片, 以此类推`,
         ];
 
-        const message = await Promise.resolve(
-            e.runtime?.common?.makeForwardMsg(e, msg)
-        ).catch(error => {
-            logger.error(error);
-            return msg;
-        });
+        const message = await e.runtime?.common?.makeForwardMsg(e, msg);
 
         const msgRes = await e.reply(message);
         if (!msgRes?.message_id) {

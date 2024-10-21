@@ -37,7 +37,7 @@ export class News extends plugin {
                 data.push({ message: [segment.image(item.coverUrl), `${item.postTitle}\nhttps://www.kurobbs.com/mc/post/${item.postId}\n\n${new Date(item.publishTime).toLocaleString()}`] });
             });
         }
-        await e.reply(Bot.makeForwardMsg(data));
+        await e.reply(await e.runtime?.common?.makeForwardMsg(e, data));
         return true;
     }
 

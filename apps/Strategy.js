@@ -52,7 +52,7 @@ export class Strategy extends plugin {
             return false;
         }
 
-        await e.reply(Bot.makeForwardMsg(messages));
+        await e.reply(await e.runtime?.common?.makeForwardMsg(e, messages));
         return true;
     }
 }
