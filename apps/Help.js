@@ -75,6 +75,16 @@ export class Help extends plugin {
                         "desc": "库街区签到"
                     },
                     {
+                        "icon": 16,
+                        "title": "~每日任务",
+                        "desc": "库街区每日任务"
+                    },
+                    {
+                        "icon": 11,
+                        "title": "~任务列表",
+                        "desc": "查看每日任务状态"
+                    },
+                    {
                         "icon": 50,
                         "title": "~体力",
                         "desc": "查看日常数据"
@@ -108,6 +118,11 @@ export class Help extends plugin {
                         "icon": 35,
                         "title": "~开启自动签到",
                         "desc": "每天自动社区签到"
+                    },
+                    {
+                        "icon": 26,
+                        "title": "~开启自动任务",
+                        "desc": "每天自动社区任务"
                     },
                     {
                         "icon": 37,
@@ -249,12 +264,17 @@ export class Help extends plugin {
                         "desc": "批量执行所有账号签到"
                     },
                     {
+                        "icon": 36,
+                        "title": "~全部每日任务",
+                        "desc": "批量执行所有账号任务"
+                    },
+                    {
                         "icon": 31,
                         "title": "~用户统计",
                         "desc": "查看用户数量统计"
                     },
                     {
-                        "icon": 28,
+                        "icon": 39,
                         "title": "~删除失效用户",
                         "desc": "删除失效的Token"
                     }

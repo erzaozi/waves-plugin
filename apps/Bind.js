@@ -34,9 +34,9 @@ export class Bind extends plugin {
         const message = e.msg.replace(/^(～|~|鸣潮)绑定/, '').trim();
         if (/^\d{9}$/.test(message)) {
             await redis.set(`Yunzai:waves:bind:${e.user_id}`, message);
-            return await e.reply("绑定特征码成功！\n当前仅可查询部分信息，若想使用完整功能请使用[~登录]命令");
+            return await e.reply("绑定特征码成功！\n当前仅可查询部分信息，若想使用完整功能请使用[~登录]命令", true);
         } else {
-            return await e.reply("请输入正确的特征码！如：[~绑定100000000]");
+            return await e.reply("请输入正确的特征码！如：[~绑定100000000]", true);
         }
     }
 

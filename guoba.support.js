@@ -81,6 +81,53 @@ export function supportGuoba() {
           },
         },
         {
+          field: "waves_auto_task_list",
+          label: "自动任务配置",
+          bottomHelpMessage: "自动任务列表",
+          component: "GSubForm",
+          componentProps: {
+            multiple: true,
+            schemas: [
+              {
+                field: "botId",
+                label: "任务使用的机器人",
+                component: "Input",
+                required: true,
+                componentProps: {
+                  placeholder: '请输入机器人账号ID',
+                },
+              },
+              {
+                field: "groupId",
+                label: "任务失败通知群",
+                component: "Input",
+                required: false,
+                componentProps: {
+                  placeholder: '请输入群号，不填默认私聊',
+                },
+              },
+              {
+                field: "userId",
+                label: "自动任务用户",
+                component: "Input",
+                required: true,
+                componentProps: {
+                  placeholder: '请输入用户账号ID',
+                },
+              },
+            ],
+          },
+        },
+        {
+          field: 'task_time',
+          label: '定时表达式配置',
+          bottomHelpMessage: '定时任务',
+          component: 'EasyCron',
+          componentProps: {
+            placeholder: '请输入或选择Cron表达式',
+          },
+        },
+        {
           field: "waves_auto_push_list",
           label: "体力推送配置",
           bottomHelpMessage: "体力推送列表",
@@ -287,6 +334,17 @@ export function supportGuoba() {
         {
           field: "signin_interval",
           label: "签到间隔时间",
+          bottomHelpMessage: "单位：秒，请勿设置过短，风险自负",
+          component: "InputNumber",
+          required: true,
+          componentProps: {
+            placeholder: '请输入间隔时间',
+            step: 1,
+          },
+        },
+        {
+          field: "task_interval",
+          label: "任务间隔时间",
           bottomHelpMessage: "单位：秒，请勿设置过短，风险自负",
           component: "InputNumber",
           required: true,
