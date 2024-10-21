@@ -9,6 +9,7 @@ const CONSTANTS = {
     WIKI_PAGE_URL: 'https://api.kurobbs.com/wiki/core/catalogue/item/getPage',
     WIKI_ENTRYDETAIL_URL: 'https://api.kurobbs.com/wiki/core/catalogue/item/getEntryDetail',
     WIKI_SEARCH_URL: 'https://api.kurobbs.com/wiki/core/catalogue/item/search',
+    WIKI_HOMEPAGE_URL: 'https://api.kurobbs.com/wiki/core/homepage/getPage',
     REQUEST_HEADERS_BASE: {
         "wiki_type": "9",
     },
@@ -191,6 +192,26 @@ class Wiki {
             }
         } else {
             return { status: false, msg: '未找到该类型' };
+        }
+    }
+
+    // 获取首页
+    async getHomePage() {
+        try {
+            const response = await axios.post(CONSTANTS.WIKI_HOMEPAGE_URL, null, { headers: CONSTANTS.REQUEST_HEADERS_BASE });
+
+            if (response.data.code === 200) {
+                if (Config.getConfig().enable_log) {
+                    logger.info(`获取Wiki首页成功`);
+                }
+                return { status: true, data: response.data.data };
+            } else {
+                logger.error('获取Wiki首页失败：', response.data.msg);
+                return { status: false, msg: response.data.msg };
+            }
+        } catch (error) {
+            logger.error('获取Wiki首页失败，疑似网络问题：\n', error);
+            return { status: false, msg: '获取Wiki首页失败，疑似网络问题，请检查控制台日志' };
         }
     }
 }

@@ -1,5 +1,5 @@
-import plugin from '../../../lib/plugins/plugin.js'
-import axios from 'axios'
+import plugin from '../../../lib/plugins/plugin.js';
+import Wiki from '../components/Wiki.js';
 import Render from '../model/render.js'
 
 export class Calendar extends plugin {
@@ -14,77 +14,59 @@ export class Calendar extends plugin {
                     fnc: "calendar"
                 }
             ]
-        })
+        });
     }
 
     async calendar(e) {
-        try {
-            const { data } = await axios.get('https://ww.kuro.wiki/data/zhHans/activities.json', { headers: { 'Referer': 'https://ww.kuro.wiki' } });
-            const now = Date.now();
-            const ago = now - 7 * 24 * 60 * 60 * 1000;
-            const soon = now + 7 * 24 * 60 * 60 * 1000;
-            const oneYear = 365 * 24 * 60 * 60 * 1000;
+        const wiki = new Wiki();
+        const pageData = await wiki.getHomePage();
+        const currentDate = new Date();
 
-            const calcTimeDiff = (s, e) => {
-
-                const getDiff = (t) => {
-                    const diff = Math.abs(now - t);
-                    if (diff < 1000 * 60) return `${Math.floor(diff / 1000)} 秒`;
-                    if (diff < 1000 * 60 * 60) return `${Math.floor(diff / 1000 / 60)} 分钟`;
-                    if (diff < 1000 * 60 * 60 * 24) return `${Math.floor(diff / 1000 / 60 / 60)} 小时`;
-                    return `${Math.floor(diff / 1000 / 60 / 60 / 24)} 天`;
-                };
-
-                return {
-                    toStart: getDiff(s),
-                    toEnd: getDiff(e)
-                };
-            };
-
-            const classify = (act, isRegular) => {
-                let [start = 0, dur = 0] = isRegular ? act.time : act.time || [],
-                    end = isRegular ? start + dur * (Math.floor((now - start) / dur) + 1) : dur;
-
-                if (isRegular) start += dur * Math.floor((now - start) / dur);
-
-                act.time = isRegular ? [start, end] : act.time;
-
-                const { toStart, toEnd } = calcTimeDiff(start, end);
-
-                if (!Array.isArray(act.time)) return null;
-                act.time = act.time.map(t => new Date(t).toLocaleString('zh-CN', { hour12: false }));
-
-                act.desc = act.desc ? act.desc.replace(/<br>/g, '\n') : '';
-
-                if (end < now && end >= ago) {
-                    act.time[2] = '（已结束' + toEnd + '）';
-                    return { type: 'ended', act };
-                }
-                if (now >= start && now <= end && (end - now) <= oneYear) {
-                    act.time[2] = '（' + toEnd + '后结束）';
-                    return { type: 'ongoing', act };
-                }
-                if (start > now && start <= soon) {
-                    act.time[2] = '（' + toStart + '后开始）';
-                    return { type: 'upcoming', act };
-                }
-                return null;
-            };
-
-            const cat = { ended: [], ongoing: [], upcoming: [] };
-
-            [...data.data.regular, ...data.data.schedule].forEach(act => {
-                const result = classify(act, !!act.type);
-                if (result) cat[result.type].push(result.act);
-            });
-
-            const imageCard = await Render.calendar(cat);
-            await e.reply(imageCard);
-            return true;
-        } catch (error) {
-            logger.error(`[Waves-Plugin] 获取日历数据失败：\n`, error);
-            await e.reply('获取活动日历失败，请稍后再试')
-            return false;
+        if (!pageData.status) {
+            return e.reply(data.msg);
         }
+
+        const data = (pageData.data.contentJson?.sideModules?.[2]?.content || []).map(item => {
+            const dateRange = item.countDown?.dateRange || ["", ""];
+            const [startDateStr, endDateStr] = dateRange.map(dateStr => dateStr ? new Date(dateStr) : null);
+            const startDate = startDateStr || null;
+            const endDate = endDateStr || null;
+
+            const startTime = startDate ? `${startDate.toISOString().slice(5, 10).replace('-', '.')} ${startDate.toTimeString().slice(0, 5)}` : '';
+            const endTime = endDate ? `${endDate.toISOString().slice(5, 10).replace('-', '.')} ${endDate.toTimeString().slice(0, 5)}` : '';
+
+            const activeStatus = item.countDown
+                ? (startDate && currentDate >= startDate ? '进行中' : '未开始')
+                : '';
+
+            const remain = activeStatus === '进行中' && endDate
+                ? this.format(Math.round((endDate - currentDate) / 1000))
+                : '';
+
+            const progress = startDate && endDate && currentDate >= startDate
+                ? Math.round(((currentDate - startDate) / (endDate - startDate)) * 100)
+                : 0;
+
+            return {
+                contentUrl: item.contentUrl || '',
+                title: item.title || '',
+                time: startTime && endTime ? `${startTime} - ${endTime}` : '',
+                active: activeStatus,
+                remain: remain,
+                progress: progress + '%',
+            };
+        });
+
+        const imageCard = await Render.calendar(data);
+        await e.reply(imageCard);
+        return true;
+    }
+
+    format(seconds) {
+        const days = Math.floor(seconds / 86400);
+        const hours = Math.floor((seconds % 86400) / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+
+        return `${days ? `${days}天` : ''}${days || hours ? `${hours}小时` : ''}${days || hours || minutes ? `${minutes}分钟` : ''}`.trim();
     }
 }

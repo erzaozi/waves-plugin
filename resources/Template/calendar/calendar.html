@@ -10,61 +10,51 @@
 
 <body id="body">
     <div id="container">
-        <hr>
-        {{each data.ongoing event}}
-        <div class="event continuing">
-            <div class="event-name">{{event.title}}<span style="font-size: 20px;font-style: italic;">{{event.time[2]}}</span></div>
-            <div class="time">{{event.time[0]}} - {{event.time[1]}}</div>
-            <div class="event-desc">{{event.desc}}</div>
-            <div class="event-cond">{{event.cond}}</div>
-            <div class="event-drops">
-                {{each event.drops drop}}
-                <div class="reward">
-                    <img src="https://ww.kuro.wiki/UIResources/{{drop.icon}}">
-                    <div class="reward-value">{{drop.value || '-'}}</div>
-                </div> 
-                {{/each}}
+        <div id="header">
+            <img src="{{pluginResources}}/Template/calendar/imgs/texture.svg"
+                style="position: absolute; right: -62.7px;top: -28px; height: 320px;"></img>
+            <img src="{{pluginResources}}/Template/calendar/imgs/logo.png" id="logo">
+            <div id="header-text">
+                <span>版本活动</span>
+                <img src="{{pluginResources}}/Template/calendar/imgs/rune.svg">
             </div>
         </div>
-        <hr>
-        {{/each}}
-
-        {{each data.upcoming event}}
-        <div class="event upcoming">
-            <div class="event-name">{{event.title}}<span style="font-size: 20px;font-style: italic;">{{event.time[2]}}</span></div>
-            <div class="time">{{event.time[0]}} - {{event.time[1]}}</div>
-            <div class="event-desc">{{event.desc}}</div>
-            <div class="event-cond">{{event.cond}}</div>
-            <div class="event-drops">
-                {{each event.drops drop}}
-                <div class="reward">
-                    <img src="https://ww.kuro.wiki/UIResources/{{drop.icon}}">
-                    <div class="reward-value">{{drop.value || '-'}}</div>
-                </div> 
-                {{/each}}
-            </div>
+        <div class="bottom-line">
+            <div class="black-block"></div>
+            <div class="black-block"></div>
         </div>
-        <hr>
-        {{/each}}
-        
-        {{each data.ended event}}
-        <div class="event expiration">
-            <div class="event-name">{{event.title}}<span style="font-size: 20px;font-style: italic;">{{event.time[2]}}</span></div>
-            <div class="time">{{event.time[0]}} - {{event.time[1]}}</div>
-            <div class="event-desc">{{event.desc}}</div>
-            <div class="event-cond">{{event.cond}}</div>
-            <div class="event-drops">
-                {{each event.drops drop}}
-                <div class="reward">
-                    <img src="https://ww.kuro.wiki/UIResources/{{drop.icon}}">
-                    <div class="reward-value">{{drop.value || '-'}}</div>
-                </div> 
-                {{/each}}
-            </div>
-        </div>
-        <hr>
-        {{/each}}
-
+        <ul>
+            {{each data activity idx}}
+            <li>
+                <div>
+                    <img src="{{activity.contentUrl}}">
+                    <div class="activity-info">
+                        <div class="line-1">{{activity.title}}</div>
+                        <div class="line-2">{{activity.time}}</div>
+                        <div class="line-3">
+                            {{if activity.active}}
+                            <svg width="44" height="44" viewBox="0 0 16 16" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M7.99994 14.5C11.5898 14.5 14.4999 11.5899 14.4999 8C14.4999 4.41015 11.5898 1.5 7.99994 1.5C4.41009 1.5 1.49994 4.41015 1.49994 8C1.49994 11.5899 4.41009 14.5 7.99994 14.5ZM7.99994 16C12.4182 16 15.9999 12.4183 15.9999 8C15.9999 3.58172 12.4182 0 7.99994 0C3.58166 0 -6.10352e-05 3.58172 -6.10352e-05 8C-6.10352e-05 12.4183 3.58166 16 7.99994 16ZM7 3H9V7.58638L11.9177 9.392L10.8653 11.0927L7 8.7007L7.0009 8.69925H7V3Z"
+                                    fill="#6C665E"></path>
+                                <circle opacity="0.5" cx="7.99994" cy="8" r="4.75" stroke="#6C665E" stroke-width="0.5">
+                                </circle>
+                            </svg>
+                            {{/if}}
+                            <span style="margin-left: 10px;color: #6c665e;">{{activity.active}}</span>
+                            <span style="margin-left: 10px;color: #181818; font-weight: 400;">{{activity.remain}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" style="--width: {{activity.progress}};">
+                    </div>
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
 </body>
 
 </html>
