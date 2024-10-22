@@ -9,11 +9,89 @@
 </head>
 
 <body id="body">
-    <div id="container">
+    <div id="top-half">
+        <div id="left">
+            <div class="container">
+                <div id="header">
+                    <img src="{{pluginResources}}/Template/calendar/imgs/texture.svg"
+                        style="position: absolute; right: -62.7px;top: -28px; height: 320px;"></img>
+                    <img src="{{pluginResources}}/Template/calendar/imgs/logo-rolepool.png" id="logo">
+                    <div id="header-text">
+                        <span>角色唤取活动</span>
+                        <img src="{{pluginResources}}/Template/calendar/imgs/rune.svg">
+                    </div>
+                </div>
+                <div class="bottom-line">
+                    <div class="black-block"></div>
+                    <div class="black-block"></div>
+                </div>
+                <div class="pool-time">
+                    <div style="padding: 8px 0px 0px 18px;">
+                        <span style="color: #fff;">进行中：</span>
+                        <span style="color: #cdb56b;">{{data.role.time}}</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" style="--width: {{data.role.progress}}%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="pool-name">{{data.role.description}}</div>
+                <div class="pool-pic">
+                    {{each data.role.imgs img idx}}
+                    <div>
+                        <img
+                            src="{{img}}">
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+        <div id="right">
+            <div class="container">
+                <div id="header">
+                    <img src="{{pluginResources}}/Template/calendar/imgs/texture.svg"
+                        style="position: absolute; right: -62.7px;top: -28px; height: 320px;"></img>
+                    <img src="{{pluginResources}}/Template/calendar/imgs/logo-weaponpool.png" id="logo">
+                    <div id="header-text">
+                        <span>武器活动唤取</span>
+                        <img src="{{pluginResources}}/Template/calendar/imgs/rune.svg">
+                    </div>
+                </div>
+                <div class="bottom-line">
+                    <div class="black-block"></div>
+                    <div class="black-block"></div>
+                </div>
+                <div class="pool-time">
+                    <div style="padding: 8px 0px 0px 18px;">
+                        <span style="color: #fff;">进行中：</span>
+                        <span style="color: #cdb56b;">{{data.weapon.time}}</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" style="--width: {{data.weapon.progress}}%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="pool-name">{{data.weapon.description}}</div>
+                <div class="pool-pic">
+                    {{each data.weapon.imgs img idx}}
+                    <div>
+                        <img
+                            src="{{img}}">
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="container" id="activity" style="margin: 0px 50px;">
         <div id="header">
             <img src="{{pluginResources}}/Template/calendar/imgs/texture.svg"
                 style="position: absolute; right: -62.7px;top: -28px; height: 320px;"></img>
-            <img src="{{pluginResources}}/Template/calendar/imgs/logo.png" id="logo">
+            <img src="{{pluginResources}}/Template/calendar/imgs/logo-activity.png" id="logo">
             <div id="header-text">
                 <span>版本活动</span>
                 <img src="{{pluginResources}}/Template/calendar/imgs/rune.svg">
@@ -24,7 +102,7 @@
             <div class="black-block"></div>
         </div>
         <ul>
-            {{each data activity idx}}
+            {{each data.activity activity idx}}
             <li>
                 <div>
                     <img src="{{activity.contentUrl}}">
@@ -48,7 +126,7 @@
                     </div>
                 </div>
                 <div class="progress">
-                    <div class="progress-bar" style="--width: {{activity.progress}};">
+                    <div class="progress-bar" style="--width: {{activity.progress}}%;">
                     </div>
                 </div>
             </li>
