@@ -314,7 +314,7 @@ export class Help extends plugin {
             { message: '4.发送 ~登录<手机号>:<验证码> 即可完成登录(例：~登录17041039503:1865)，注意：手机号验证码之间有冒号间隔' },
             { message: '机器人可以和库街区APP一起使用，互不干扰，但是在网页登录库街区账号会导致机器人Token失效' },
         ]
-        await e.reply(await e.runtime?.common?.makeForwardMsg(e, helpStep))
+        await e.reply(Bot.makeForwardMsg(helpStep))
         return true
     }
 
@@ -324,7 +324,7 @@ export class Help extends plugin {
             { message: '二、IOS 手机方法\n\n1.在 AppStore 搜索 Stream 并下载安装\n\n2.打开 Stream，按照提示配置好权限并开启 HTTPS 抓包。在 Stream 中点击 开始抓包 > 安装证书 > 在弹出的窗口中选择允许 > 证书已经下载到了你的设备中，然后打开系统设置 > 通用 > VPN与设备管理 > 选择 Stream Generated CA 并安装。打开系统设置 > 通用 > 关于本机 > (最下方)证书信任设置 > 打开 Stream Generated CA 开关即可\n\n3.在 Stream 中点击开始抓包，回到游戏中点击唤取记录\n\n4.回到 Stream 并点击停止抓包，点击抓包历史 > 选择最新的记录 > 找到链接为 https://gmserver-api.aki-game2.com/gacha/record/query 的POST请求点进去 > 点击位于总览右侧的请求标签页 > 点击最下方查看JSON > 全选复制\n\n5.向机器人发送[~抽卡统计 + 你复制的内容]，即可开始分析' },
             { message: '三、PC端方法\n\n1.进入游戏，打开唤取界面，点击唤取记录\n\n2.右键鸣潮图标，选择打开文件所在位置\n\n2.依次打开目录 Wuthering Waves Game\/Client\/Saved\/Logs 找到 Client.log 文件\n\n3.使用文本编辑器打开，搜索 https://aki-gm-resources.aki-game.com/aki/gacha/index.html 找到位置\n\n4.复制链接以及跟随后面的参数（有换行请仔细查看不要漏掉）\n\n5.向机器人发送[~抽卡统计 + 你复制的内容]，即可开始分析' },
         ]
-        await e.reply(await e.runtime?.common?.makeForwardMsg(e, helpStep))
+        await e.reply(Bot.makeForwardMsg(helpStep))
         return true
     }
 

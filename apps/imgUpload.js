@@ -145,9 +145,9 @@ export class ImgUploader extends plugin {
         if (!res) return false;
 
         const images = JSON.parse(res).img || [];
-        const msg = [...images.map(img => ({ ...segment.image(img), origin: true }))];
+        const msg = [...images.map(img => ({ message: { ...segment.image(img), origin: true } }))];
 
-        e.reply(msg.length > 1 ? await e.runtime.common.makeForwardMsg(msg) : msg);
+        e.reply(msg.length > 1 ? Bot.makeForwardMsg(msg) : msg[0].message);
         return true;
     }
 
@@ -176,13 +176,13 @@ export class ImgUploader extends plugin {
         }
 
         const msg = [
-            `角色 ${character} 的面板图列表：`,
-            ...images.map((item, index) => [`${index + 1}. `, segment.image(`file:///${path.join(imageDir, item)}`)]),
-            `请注意: 面板图均为网络采集或网友上传, 请勿用于商业用途, 仅供学习交流使用.\n如果这些图片侵犯了您的权益, 请及时联系我们删除, ${e.bot.nickname}主人不负任何法律责任`,
-            `如需删除图片, 请使用 "~删除${character}面板图1" 删除第一张图片, 以此类推`,
+            { message: `角色 ${character} 的面板图列表：` },
+            ...images.map((item, index) => ({ message: [`${index + 1}.`, segment.image(`file:///${path.join(imageDir, item)}`)] })),
+            { message: `请注意: 面板图均为网络采集或网友上传, 请勿用于商业用途, 仅供学习交流使用.\n如果这些图片侵犯了您的权益, 请及时联系我们删除, ${e.bot.nickname}主人不负任何法律责任` },
+            { message: `如需删除图片, 请使用 "~删除${character}面板图1" 删除第一张图片, 以此类推` },
         ];
 
-        const message = await e.runtime?.common?.makeForwardMsg(e, msg);
+        const message = Bot.makeForwardMsg(msg);
 
         const msgRes = await e.reply(message);
         if (!msgRes?.message_id) {

@@ -131,7 +131,7 @@ export class Bind extends plugin {
             tokenList.push({ message: item.token })
         })
 
-        await e.reply(await e.runtime?.common?.makeForwardMsg(e, tokenList))
+        await e.reply(Bot.makeForwardMsg(tokenList))
         return true;
     }
 }
