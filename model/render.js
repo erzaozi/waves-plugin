@@ -306,6 +306,19 @@ class Render {
         return base64
     }
 
+    async taskList(taskData, coinData) {
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: this.getsaveId('taskList'),
+            imgType: 'png',
+            tplFile: `${pluginResources}/Template/taskList/taskList.html`,
+            pluginResources,
+            taskData,
+            coinData
+        })
+
+        return base64
+    }
+
     getsaveId(name) {
         if (!this.time[name]) this.time[name] = 0;
 

@@ -111,6 +111,7 @@ pnpm install --filter=waves-plugin
 - [x] 角色卡片查询
 - [x] 计算声骸得分
 - [x] 活动日历查询
+- [x] 库街区签到
 - [x] 用户统计
 
 ## 功能列表

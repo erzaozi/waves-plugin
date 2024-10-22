@@ -1,6 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Kuro from "../components/Kuro.js";
 import Config from "../components/Config.js";
+import Render from '../model/render.js'
 
 export class Task extends plugin {
     constructor() {
@@ -124,10 +125,8 @@ export class Task extends plugin {
             if (!taskData.status || !coinData.status) {
                 data.push({ message: taskData.msg || coinData.msg })
             } else {
-                const msg = taskData.data.dailyTask.map(task => {
-                    return `[${task.remark}]：${task.completeTimes}/${task.needActionTimes}`;
-                }).join('\n');
-                data.push({ message: `账号 ${account.userId} 的任务列表\n\n${msg}\n\n当前库洛币总数：${coinData.data.goldNum}` });
+                const imageCard = await Render.taskList(taskData.data, coinData.data)
+                data.push({ message: imageCard });
             }
         }
 
@@ -213,7 +212,7 @@ export class Task extends plugin {
                 Bot.sendMasterMsg = async m => { for (const i of cfg.masterQQ) await Bot.pickFriend(i).sendMsg(m) }
             }
 
-            if (autoSignInList.length) {
+            if (autoTaskList.length) {
                 Bot.sendMasterMsg?.(`[Waves-Plugin] 自动任务\n今日成功任务 ${success} 个账号`)
             }
         }

@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<link rel="shortcut icon" href="#" />
+	<link rel="stylesheet" type="text/css" href="{{pluginResources}}/Template/taskList/taskList.css" />
+	<link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
+</head>
+
+<body id="body">
+	<div id="container">
+		<div id="task-card">
+			<img src="{{pluginResources}}/Template/taskList/imgs/kurocoin.webp" id="kurocoin-pic">
+			<div id="kurocoin">
+				<div>库洛币</div>
+				<div style="color: #ffe4c4;font-size: 60px;">{{coinData.goldNum}}</div>
+			</div>
+			<div id="daily-limitation">
+				<div>
+					<span style="color: #ffeac4;font-size: 60px;">{{taskData.currentDailyGold}}</span>
+					<span>/ {{taskData.maxDailyGold}}</span>
+				</div>
+				<div>今日获取上限</div>
+			</div>
+		</div>
+		<div id="tasks-list">
+			{{each taskData.dailyTask task idx}}
+			<div class="task">
+				<div class="task-name">{{task.remark}}</div>
+				<img src="{{pluginResources}}/Template/taskList/imgs/kurocoin.webp" class="taskcoin-pic">
+				<div class="task-gain">{{task.gainGold}}</div>
+				<div class="task-progress">
+					<div class="progress-bar-total">
+						<div class="progress-bar" style="width: {{task.completeTimes / task.needActionTimes * 100}}%;"></div>
+					</div>
+					<div class="progress-num">
+						<span style="font-weight: 600;">{{task.completeTimes}}</span>
+						<span style="font-size: 26px;color: rgb(124, 124, 124);">/ {{task.needActionTimes}}</span>
+					</div>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+	</div>
+</body>
+
+</html>

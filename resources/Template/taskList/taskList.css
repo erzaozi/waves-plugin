@@ -1,0 +1,128 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("../../fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    font-family: MiSans;
+}
+
+#container {
+    position: relative;
+    padding: 50px;
+    width: 960px;
+    height: auto;
+    background-color: #f0f0f0;
+}
+
+#task-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 70px;
+    width: 860px;
+    height: 210px;
+    background:
+        url(./imgs/bg_task_shop.webp) no-repeat,
+        url(./imgs/task_card.webp) no-repeat;
+    background-position: right 8% center, center;
+    background-size: auto 80%, cover;
+}
+
+#kurocoin-pic {
+    margin-left: 50px;
+    width: 140px;
+    height: 140px;
+}
+
+#kurocoin {
+    height: auto;
+    width: 300px;
+    margin-left: 30px;
+    color: #fff;
+    font-size: 34px;
+}
+
+#daily-limitation {
+    margin-left: auto;
+    position: relative;
+    text-align: right;
+    color: #ffffff;
+    font-size: 34px;
+}
+
+#tasks-list {
+    width: 860px;
+}
+
+.task {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+    height: 170px;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.task-name {
+    position: absolute;
+    left: 50px;
+    top: 30px;
+    font-size: 40px;
+}
+
+.taskcoin-pic {
+    position: absolute;
+    left: 50px;
+    top: 90px;
+    height: 40px;
+}
+
+.task-gain {
+    position: absolute;
+    left: 100px;
+    top: 92px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #b3aaaa;
+}
+
+.task-progress {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 0;
+    height: 100%;
+    width: 360px;
+    background-color: #fafafa;
+}
+
+.progress-bar-total {
+    position: relative;
+    margin-left: 50px;
+    width: 200px;
+    height: 16px;
+    background-color: #e6e6e6;
+    border-radius: 20px;
+}
+
+.progress-bar {
+    height: 16px;
+    line-height: 28px;
+    background-color: #34dddd;
+    border-radius: 20px;
+}
+
+.progress-num {
+    margin-left: 16px;
+    font-size: 42px;
+}
