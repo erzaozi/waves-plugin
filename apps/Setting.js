@@ -55,7 +55,7 @@ export class Setting extends plugin {
                 Config.setConfig(config);
                 return e.reply("已开启自动签到", true);
             }
-            return e.reply("你已经开启了自动签到", true);
+            return e.reply("你已经开启了自动签到，无需再次开启", true);
         }
 
         if (index !== -1) {
@@ -63,7 +63,7 @@ export class Setting extends plugin {
             Config.setConfig(config);
             return e.reply("已关闭自动签到", true);
         }
-        return e.reply("你已经关闭了自动签到", true);
+        return e.reply("你已经关闭了自动签到，无需再次关闭", true);
     }
 
     async setAutoTask(e) {
@@ -89,7 +89,7 @@ export class Setting extends plugin {
                 Config.setConfig(config);
                 return e.reply("已开启自动任务", true);
             }
-            return e.reply("你已经开启了自动任务", true);
+            return e.reply("你已经开启了自动任务，无需再次开启", true);
         }
 
         if (index !== -1) {
@@ -97,7 +97,7 @@ export class Setting extends plugin {
             Config.setConfig(config);
             return e.reply("已关闭自动任务", true);
         }
-        return e.reply("你已经关闭了自动任务", true);
+        return e.reply("你已经关闭了自动任务，无需再次关闭", true);
     }
 
     async setAutoPush(e) {
@@ -123,7 +123,7 @@ export class Setting extends plugin {
                 Config.setConfig(config);
                 return e.reply("已开启结晶波片推送，可以使用[~体力阈值]来自定义提醒阈值", true);
             }
-            return e.reply("你已经开启了结晶波片推送，可以使用[~体力阈值]来自定义提醒阈值", true);
+            return e.reply("你已经开启了结晶波片推送，，无需再次开启", true);
         }
 
         if (index !== -1) {
@@ -131,7 +131,7 @@ export class Setting extends plugin {
             Config.setConfig(config);
             return e.reply("已关闭结晶波片推送", true);
         }
-        return e.reply("你已经关闭了结晶波片推送", true);
+        return e.reply("你已经关闭了结晶波片推送，无需再次关闭", true);
     }
 
     async setAutoNews(e) {
@@ -161,7 +161,7 @@ export class Setting extends plugin {
                 Config.setConfig(config);
                 return e.reply("已开启活动推送", true);
             }
-            return e.reply("你已经开启了活动推送", true);
+            return e.reply("你已经开启了活动推送，无需再次开启", true);
         }
 
         if (index !== -1) {
@@ -169,7 +169,7 @@ export class Setting extends plugin {
             Config.setConfig(config);
             return e.reply("已关闭活动推送", true);
         }
-        return e.reply("你已经关闭了活动推送", true);
+        return e.reply("你已经关闭了活动推送，无需再次关闭", true);
     }
 
     async setSanityThreshold(e) {

@@ -12,6 +12,7 @@ const CONSTANTS = {
     CHALLENGE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/challengeDetails',
     EXPLORE_DATA_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/exploreIndex',
     SIGNIN_URL: 'https://api.kurobbs.com/encourage/signIn/v2',
+    QUERY_RECORD_URL: 'https://api.kurobbs.com/encourage/signIn/queryRecordV2',
     GACHA_URL: 'https://gmserver-api.aki-game2.com/gacha/record/query',
     INTL_GACHA_URL: 'https://gmserver-api.aki-game2.net/gacha/record/query',
     ROLE_DETAIL_URL: 'https://api.kurobbs.com/gamer/roleBox/akiBox/getRoleDetail',
@@ -381,6 +382,39 @@ class Waves {
         } catch (error) {
             logger.error('签到失败，疑似网络问题：\n', error);
             return { status: false, msg: '签到失败，疑似网络问题，请检查控制台日志' };
+        }
+    }
+
+    // 签到领取记录
+    async queryRecord(serverId, roleId, token) {
+
+        await this.refreshData(serverId, roleId, token)
+
+        let data = qs.stringify({
+            'gameId': 3,
+            'serverId': serverId,
+            'roleId': roleId
+        });
+
+        try {
+            const response = await axios.post(CONSTANTS.QUERY_RECORD_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+
+            if (response.data.code === 200) {
+                if (response.data.data === null) {
+                    logger.info('查询签到领取记录失败，返回空数据');
+                    return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
+                }
+                if (Config.getConfig().enable_log) {
+                    logger.info('查询签到领取记录成功');
+                }
+                return { status: true, data: response.data.data };
+            } else {
+                logger.error('查询签到领取记录失败：', response.data.msg);
+                return { status: false, msg: response.data.msg };
+            }
+        } catch (error) {
+            logger.error('查询签到领取记录失败，疑似网络问题：\n', error);
+            return { status: false, msg: '查询签到领取记录失败，疑似网络问题，请检查控制台日志' };
         }
     }
 

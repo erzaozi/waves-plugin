@@ -15,6 +15,10 @@ export class SignIn extends plugin {
                     fnc: "signIn"
                 },
                 {
+                    reg: "^(～|~|鸣潮)签到记录$",
+                    fnc: "signInList"
+                },
+                {
                     reg: "^(～|~|鸣潮)全部签到$",
                     fnc: "autoSignIn",
                     permission: 'master'
@@ -51,10 +55,54 @@ export class SignIn extends plugin {
 
             const signInData = await waves.signIn(account.serverId, account.roleId, account.userId, account.token);
 
-            if (!signInData.status) {
-                data.push({ message: signInData.msg });
+            let message = `账号 ${account.userId} 的签到结果\n\n`;
+            message += signInData.status ? `[游戏签到] 签到成功` : `[游戏签到] 签到失败，原因：${signInData.msg}`;
+            message += `\n\n签到已完成，发送[~签到记录]查看近期签到记录`;
+
+            data.push({ message: message });
+        }
+
+        if (deleteroleId.length) {
+            let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
+            Config.setUserConfig(e.user_id, newAccountList);
+        }
+
+        if (data.length === 1) {
+            await e.reply(data[0].message);
+            return true;
+        }
+
+        await e.reply(Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]));
+        return true;
+    }
+
+    async signInList(e) {
+        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+
+        if (!accountList || !accountList.length) {
+            return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
+        }
+
+        const waves = new Waves();
+        const data = [];
+        let deleteroleId = [];
+
+        for (let account of accountList) {
+            const usability = await waves.isAvailable(account.token);
+
+            if (!usability) {
+                data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
+                deleteroleId.push(account.roleId);
+                continue;
+            }
+
+            const listData = await waves.queryRecord(account.serverId, account.roleId, account.token);
+
+            if (!listData.status) {
+                data.push({ message: listData.msg })
             } else {
-                const imageCard = await Render.signInData(signInData.data)
+                listData.data = listData.data.slice(0, 50);
+                const imageCard = await Render.queryRecord(listData.data)
                 data.push({ message: imageCard });
             }
         }

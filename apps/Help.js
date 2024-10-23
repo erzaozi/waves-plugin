@@ -75,6 +75,11 @@ export class Help extends plugin {
                         "desc": "库街区签到"
                     },
                     {
+                        "icon": 22,
+                        "title": "~签到记录",
+                        "desc": "库街区签到记录"
+                    },
+                    {
                         "icon": 16,
                         "title": "~每日任务",
                         "desc": "库街区每日任务"
@@ -335,7 +340,7 @@ export class Help extends plugin {
         let colWidth = Math.min(500, Math.max(100, parseInt(helpConfig?.colWidth) || 265))
         let width = Math.min(2500, Math.max(800, colCount * colWidth + 30))
         let theme = {
-            main: `${resPath}/main.png`,
+            main: `${resPath}/bg.jpg`,
             bg: `${resPath}/bg.jpg`,
             style: style
         }

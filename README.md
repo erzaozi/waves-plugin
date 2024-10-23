@@ -149,6 +149,7 @@ pnpm install --filter=waves-plugin
 1. 图鉴：[库街区 Wiki](https://wiki.kurobbs.com/mc/home)
 2. 角色攻略：[小沐XMu](https://www.kurobbs.com/person-center?id=10450567) & [moealkyne](https://www.kurobbs.com/person-center?id=10422445) & [金铃子](https://www.kurobbs.com/person-center?id=10584798)
 3. 声骸评分：[燊林大火](https://github.com/SLDHshenlindahuo)
+4. 帮助背景图：[loong](https://x.com/loong_blo/status/1848708696521773257)
 
 ## 许可证
 

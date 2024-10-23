@@ -115,13 +115,13 @@ class Render {
         return base64
     }
 
-    async signInData(signInData) {
+    async queryRecord(listData) {
         const base64 = await puppeteer.screenshot('waves-plugin', {
-            saveId: this.getsaveId('signIn'),
+            saveId: this.getsaveId('queryRecord'),
             imgType: 'png',
-            tplFile: `${pluginResources}/Template/signIn/signIn.html`,
+            tplFile: `${pluginResources}/Template/queryRecord/queryRecord.html`,
             pluginResources,
-            signInData
+            listData
         })
 
         return base64
