@@ -120,6 +120,11 @@ export class Help extends plugin {
                         "desc": "查看地图探索度"
                     },
                     {
+                        "icon": 64,
+                        "title": "~练度统计",
+                        "desc": "查看所有角色练度"
+                    },
+                    {
                         "icon": 35,
                         "title": "~开启自动签到",
                         "desc": "每天自动社区签到"

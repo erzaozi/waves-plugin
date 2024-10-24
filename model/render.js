@@ -319,6 +319,19 @@ class Render {
         return base64
     }
 
+    async Training(baseData, roleList) {
+        const base64 = await puppeteer.screenshot('waves-plugin', {
+            saveId: this.getsaveId('training'),
+            imgType: 'png',
+            tplFile: `${pluginResources}/Template/training/training.html`,
+            pluginResources,
+            baseData,
+            roleList
+        })
+
+        return base64
+    }
+
     getsaveId(name) {
         if (!this.time[name]) this.time[name] = 0;
 

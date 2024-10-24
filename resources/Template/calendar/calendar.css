@@ -185,7 +185,6 @@ li>div>img {
 }
 
 .progress-bar {
-    background: #cdb56b;
     height: 100%;
     width: var(--width);
 }

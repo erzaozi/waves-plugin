@@ -1,0 +1,267 @@
+@font-face {
+    font-family: "MiSans";
+    src: url("./fonts/MiSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    font-family: "MiSans";
+    font-weight: 600;
+}
+
+body {
+    width: 2080px;
+}
+
+#box {
+    position: relative;
+    width: 2080px;
+    padding-bottom: 10px;
+    background: url(./imgs/bg.jpg) no-repeat;
+    background-color: rgba(64, 102, 167);
+}
+
+#header {
+    position: relative;
+    margin: 0px 50px;
+    height: 240px;
+    width: 1980px;
+    color: #fff;
+}
+
+#user-name {
+    position: absolute;
+    font-family: sans-serif;
+    font-weight: 700;
+    letter-spacing: 30px;
+    text-shadow: 0 0 3px #000, 3px 3px 20px #000;
+    font-style: italic;
+    font-size: 100px;
+    top: 50px;
+    left: 50px;
+}
+
+#user-uid {
+    position: absolute;
+    font-size: 60px;
+    font-weight: 700;
+    letter-spacing: 10px;
+    text-shadow: 0 0 3px #000, 3px 3px 20px #000;
+    font-style: italic;
+    font-size: 50px;
+    top: 200px;
+    left: 50px;
+}
+
+#container-1 {
+    position: relative;
+    margin: 50px;
+    font-family: "MiSans";
+    height: auto;
+    width: 1980px;
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+ul {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 20px 20px 0px 0px;
+}
+
+li:nth-child(odd)::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(119, 119, 119, 0.2);
+}
+
+li:nth-child(even)::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(175, 175, 175, 0.2);
+}
+
+li:first-child::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: none;
+    z-index: -2;
+}
+
+.star-5 {
+    background-color: rgba(253, 255, 125, 0.5);
+}
+
+.star-4 {
+    background-color: rgba(132, 237, 255, 0.5);
+}
+
+li {
+    display: grid;
+    grid-template-columns: 5% 25% 27% 25% 18%;
+    position: relative;
+    list-style-type: none;
+    width: 100%;
+    height: 80px;
+}
+
+li>* {
+    height: 80px;
+    border: 1px rgba(170, 170, 170, 0.3) solid;
+    border-style: none solid;
+}
+
+li:first-child {
+    background-color: rgba(167, 167, 167, 0.3);
+}
+
+.center {
+    text-align: center;
+    line-height: 80px;
+    font-size: 30px;
+}
+
+.index {
+    font-style: italic;
+}
+
+.role {
+    display: flex;
+    flex-direction: row;
+}
+
+.level {
+    margin: 20px 0px 20px 10px;
+    height: 40px;
+    line-height: 40px;
+    width: 86px;
+    font-size: 32px;
+    color: #000;
+    font-weight: 600;
+}
+
+.reson {
+    width: 36px;
+    height: 50px;
+    line-height: 50px;
+    margin: 15px 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    color: white;
+}
+
+.reson-0 {
+    background-color: #a0a0a0;
+}
+
+.reson-1 {
+    background-color: #00D200;
+}
+
+.reson-2 {
+    background-color: #6640ff;
+}
+
+.reson-3 {
+    background-color: #9f00ed;
+}
+
+.reson-4 {
+    background-color: #eec900;
+}
+
+.reson-5 {
+    background-color: #f08a5d;
+}
+
+.reson-6 {
+    background-color: #9d2933;
+}
+
+.name {
+    margin: 0px 5px;
+}
+
+.role-pic>img {
+    margin: 5px 15px;
+    height: 70px;
+    width: 70px;
+}
+
+.weapon {
+    display: flex;
+    flex-direction: row;
+}
+
+.weapon-pic>img {
+    margin: 5px 15px;
+    height: 70px;
+    width: 70px;
+}
+
+.skill {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    font-size: 36px;
+    color: #797979;
+}
+
+.skill>* {
+    position: relative;
+    border: 1px rgba(170, 170, 170, 0.3) solid;
+    border-style: none solid;
+}
+
+.skill img {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    width: 80%;
+    z-index: 0;
+    filter: brightness(0.85);
+    mix-blend-mode: multiply;
+}
+
+.phantom {
+    display: flex;
+    flex-direction: row;
+}
+
+.phantom-pic>img {
+    margin: 5px 30px;
+    height: 70px;
+    width: 70px;
+}
+
+.phantom-rank {
+    margin: 15px 0px;
+    width: 80px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 10px;
+    color: white;
+}
+
+.phantom-score {
+    margin-left: 15px;
+    font-weight: 700;
+    font-size: 34px;
+}

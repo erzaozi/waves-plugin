@@ -126,7 +126,11 @@
                     </div>
                 </div>
                 <div class="progress">
-                    <div class="progress-bar" style="--width: {{activity.progress}}%;">
+                    {{if activity.progress < 100}}
+                    <div class="progress-bar" style="--width: {{activity.progress}}%;background: #cdb56b;">
+                    {{else}}
+                    <div class="progress-bar" style="--width: 100%;background: #eb8e93;">
+                    {{/if}}
                     </div>
                 </div>
             </li>

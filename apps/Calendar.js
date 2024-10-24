@@ -52,7 +52,8 @@ export class Calendar extends plugin {
             const endTime = endDate ? `${endDate.toISOString().slice(5, 10).replace('-', '.')} ${endDate.toTimeString().slice(0, 5)}` : '';
 
             const activeStatus = item.countDown
-                ? (startDate && currentDate >= startDate ? '进行中' : '未开始')
+                ? (startDate && currentDate >= endDate ? '已结束' :
+                    (startDate && currentDate >= startDate ? '进行中' : '未开始'))
                 : '';
 
             const remain = activeStatus === '进行中' && endDate

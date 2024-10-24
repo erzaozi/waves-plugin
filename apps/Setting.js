@@ -44,8 +44,6 @@ export class Setting extends plugin {
         };
 
         const index = config.waves_auto_signin_list.findIndex(user =>
-            user.botId === newUser.botId &&
-            user.groupId === newUser.groupId &&
             user.userId === newUser.userId
         );
 
