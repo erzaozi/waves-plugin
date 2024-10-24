@@ -1,7 +1,7 @@
-pool_name: 「直至海水褪色」
+pool_name: 「夜将寒色去」
 five_star:
   up_pool:
-    - name: 守岸人
+    - name: 忌炎
   other_pool:
     - name: 维里奈
     - name: 安可
@@ -13,14 +13,15 @@ five_star:
   other: 0.5
 four_star:
   up_pool:
-    - name: 桃祈
-    - name: 秧秧
-    - name: 炽霞
-  other_pool:
-    - name: 渊武
+    - name: 釉瑚
     - name: 散华
-    - name: 丹瑾
     - name: 莫特斐
+  other_pool:
+    - name: 桃祈
+    - name: 渊武
+    - name: 秧秧
+    - name: 丹瑾
+    - name: 炽霞
     - name: 秋水
     - name: 白芷
     - name: 东落

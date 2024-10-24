@@ -1,16 +1,16 @@
 pool_name: 「浮声沉兵」
 five_star:
   up_pool:
-    - name: 星序协响
+    - name: 苍鳞千嶂
   other_pool: []
   basic: 0.008
   increase: 0.0902
   other: 0
 four_star:
   up_pool:
-    - name: 永续坍缩
-    - name: 异响空灵
-    - name: 异度
+    - name: 东落
+    - name: 奇幻变奏
+    - name: 尘云旋臂
   other_pool:
     - name: 西升
     - name: 秧秧
@@ -21,13 +21,14 @@ four_star:
     - name: 桃祈
     - name: 秋水
     - name: 渊武
-    - name: 东落
     - name: 骇行
     - name: 飞逝
+    - name: 异度
     - name: 莫特斐
+    - name: 永续坍缩
     - name: 无眠烈火
     - name: 今州守望
-    - name: 奇幻变奏
+    - name: 异响空灵
     - name: 袍泽之固
     - name: 行进序曲
     - name: 华彩乐段
