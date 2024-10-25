@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{{pluginResources}}/Template/charProfile/charProfile.css" />
     <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
     <link rel="preload" href="{{pluginResources}}/fonts/framdit.ttf" as="font" />
+    <script src="{{pluginResources}}/Template/charProfile/echarts.common.min.js"></script>
 </head>
 
 <body id="body" data-content='{{data}}'>
@@ -70,79 +71,7 @@
             <div class="total-score-value" style="{{data.roleDetail.data.phantomData.statistic.color || " #a0a0a0"}}">
                 {{data.roleDetail.data.phantomData.statistic.rank}}</div>
         </div>
-        <div class="total-score-table-right">
-            <div class="total-score-table-right-row1">
-                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='攻击').color}}">
-                    <span class="score-key">攻击</span>
-                    <span
-                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='攻击').value.toFixed(2)}}</span>
-                </div>
-                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='攻击百分比').color}}">
-                    <span class="score-key">攻击百分比</span>
-                    <span
-                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='攻击百分比').value.toFixed(2)}}%</span>
-                </div>
-                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='暴击').color}}">
-                    <span class="score-key">暴击</span>
-                    <span
-                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='暴击').value.toFixed(2)}}%</span>
-                </div>
-                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='普攻伤害加成').color}}">
-                    <span class="score-key">普攻</span>
-                    <span
-                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='普攻伤害加成').value.toFixed(2)}}%</span>
-                </div>
-                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='重击伤害加成').color}}">
-                    <span class="score-key">重击</span>
-                    <span
-                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='重击伤害加成').value.toFixed(2)}}%</span>
-                </div>
-            </div>
-            <div class="total-score-table-right-row2">
-                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='生命').color}}">
-                    <span class="score-key">生命</span>
-                    <span
-                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='生命').value.toFixed(2)}}</span>
-                </div>
-                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='生命百分比').color}}">
-                    <span class="score-key">生命百分比</span>
-                    <span
-                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='生命百分比').value.toFixed(2)}}%</span>
-                </div>
-                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='暴击伤害').color}}">
-                    <span class="score-key">暴击伤害</span>
-                    <span
-                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='暴击伤害').value.toFixed(2)}}%</span>
-                </div>
-                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣技能伤害加成').color}}">
-                    <span class="score-key">共鸣技能</span>
-                    <span
-                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣技能伤害加成').value.toFixed(2)}}%</span>
-                </div>
-            </div>
-            <div class="total-score-table-right-row3">
-                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='防御').color}}">
-                    <span class="score-key">防御</span>
-                    <span
-                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='防御').value.toFixed(2)}}</span>
-                </div>
-                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='防御百分比').color}}">
-                    <span class="score-key">防御百分比</span>
-                    <span
-                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='防御百分比').value.toFixed(2)}}%</span>
-                </div>
-                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣效率').color}}">
-                    <span class="score-key">共鸣效率</span>
-                    <span
-                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣效率').value.toFixed(2)}}%</span>
-                </div>
-                <div style="{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣解放伤害加成').color}}">
-                    <span class="score-key">共鸣解放</span>
-                    <span
-                        class="score-value">+{{data.roleDetail.data.phantomData.statistic.dist.find(tag=>tag.name==='共鸣解放伤害加成').value.toFixed(2)}}%</span>
-                </div>
-            </div>
-        </div>
+        <div id="column" style="position: relative;left: -20px;top: -30px;width:100%;height:249px;"></div>
         {{else}}
         <div style="color: #585858;font-style: italic;font-size: 50px;margin: 30px 134px;">
             当前角色暂无评分
@@ -210,7 +139,7 @@
     <script>
         window.addEventListener('load', function () {
             const img = document.getElementById('role-pic');
-            
+
             // 动态生成星级
             const roleStarsContainer = document.getElementById('role-stars');
             const starLevel = parseInt('{{data.roleDetail.data.role.starLevel}}', 10); // 转换为数字
@@ -263,6 +192,87 @@
             const borderColor = `rgba(${color.slice(4, -1).split(",").map(c => parseInt(c) * factor).join(",")}, 0.6)`;
             img.style.border = `5px solid ${borderColor}`;
         });
+    </script>
+    <script>
+        const handler = [
+            (i) => i / 21,
+            (i) => i / 10.5,
+            (i) => i / 11.6,
+            (i) => i / 11.6,
+            (i) => i / 14.7,
+            (i) => i / 12.4,
+            (i) => i / 11.6,
+            (i) => i / 11.6,
+            (i) => i / 11.6,
+            (i) => i / 11.6,
+            (i) => i / 60,
+            (i) => i / 580,
+            (i) => i / 60,
+        ]
+        const computedColor = []
+        const computedValue = []
+        const data = dataContent.roleDetail.data.phantomData.statistic?.dist.map((tag, i) => {
+            let name = tag.name
+            if (name.includes("百分比")) name = "大" + name;
+            name = name.replace(/(伤害加成|百分比)/, "");
+            computedColor.push(tag.color.replace("color:", "").replace(";", ""));
+            computedValue.push(handler[i](tag.value))
+            return {
+                name,
+                value: tag.value.toFixed(1),
+            }
+        });
+
+
+        const columnChart = echarts.init(document.getElementById('column'));
+
+        const option = {
+            animation: false,
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data: ['成长值']
+            },
+            xAxis: {
+                data: data.map(tag => tag.name),
+                axisTick: {
+                    length: 6,
+                    lineStyle: {
+                        type: 'dashed',
+                    },
+                    boundaryGap: true
+                },
+                axisLabel: {
+                    color: "#000",
+                    fontSize: 8,
+                    rotate: 25,
+                    align: 'center'
+                },
+            },
+            yAxis: {
+                max: 5,
+            },
+            series: [
+                {
+                    type: 'bar',
+                    data: computedValue,
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: (params) => computedValue[params.dataIndex].toFixed(1) + `\n(${data[params.dataIndex].value + (!/^(生命|防御|攻击)$/.test(data[params.dataIndex].name) ? '%' : '')})`
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: (params) => { return computedColor[params.dataIndex] }
+                        }
+                    },
+                }
+            ]
+        };
+        columnChart.setOption(option);
+        document.getElementById('column').querySelector('canvas').style.width = '110%';
     </script>
 </body>
 

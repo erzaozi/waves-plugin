@@ -23,13 +23,13 @@
 #container {
   position: relative;
   width: 761px;
-  height: 1522px;
+  height: 1582px;
   background-image: url(./imgs/rolecard.png);
 }
 
 #weight-version {
   position: absolute;
-  top: 782px;
+  top: 842px;
   right: 50px;
   font-size: 12px;
   font-style: italic;
@@ -220,10 +220,10 @@
 }
 
 #table {
-  margin: 0px 0px 0px 44px;
+  margin: 0px 0px 0px 36px;
   display: grid;
   grid-template-columns: 214px 214px 214px;
-  column-gap: 13px;
+  column-gap: 20.3px;
   row-gap: 12px;
   height: 593px;
   width: 668px;
@@ -381,17 +381,11 @@
   white-space: nowrap;
 }
 
-.phantom-attribute>div:nth-child(odd),
-.total-score-table-right-row1>div:nth-child(odd),
-.total-score-table-right-row2>div:nth-child(even),
-.total-score-table-right-row3>div:nth-child(odd) {
+.phantom-attribute>div:nth-child(odd){
   background-color: #e1e1e1;
 }
 
-.phantom-attribute>div:nth-child(even),
-.total-score-table-right-row1>div:nth-child(even),
-.total-score-table-right-row2>div:nth-child(odd),
-.total-score-table-right-row3>div:nth-child(even) {
+.phantom-attribute>div:nth-child(even){
   background-color: #f0ecf0;
 }
 
@@ -415,9 +409,9 @@
   position: relative;
   margin-bottom: 21px;
   display: flex;
-  left: 40.5px;
+  left: 36px;
   width: 680px;
-  height: 120px;
+  height: 180px;
   background-color: #f0ecf0;
   border-radius: 15px;
   overflow: hidden;
@@ -426,37 +420,10 @@
 .total-score-table-left {
   flex-shrink: 0;
   display: grid;
-  grid-template-rows: 19px 40px 19px 40px;
-  width: 133px;
-  margin: 1px 0px 0px 1px;
+  grid-template-rows: 30px 60px 30px 60px;
+  width: 170px;
   text-align: center;
 }
-
-.total-score-table-right {
-  position: relative;
-  margin-top: 1px;
-  left: 0;
-  width: 100%;
-}
-
-.total-score-table-right-row1 {
-  height: 38px;
-  display: grid;
-  grid-template-columns: 106.5px 146.5px 97.67px 97.67px 97.67px;
-}
-
-.total-score-table-right-row2,
-.total-score-table-right-row3 {
-  height: 40px;
-  display: grid;
-  grid-template-columns: 106.5px 146.5px 146.5px 146.5px;
-}
-
-/* .total-score-table-right-row1>*,
-.total-score-table-right-row2>*,
-.total-score-table-right-row3>*{
-  box-shadow: 0 1px 20px -8px rgba(0, 0, 0, 0.2) inset;
-} */
 
 .total-score-table-left>* {
   border-right: none;
@@ -478,15 +445,17 @@
 }
 
 .total-score-key {
+  line-height: 30px;
   background-color: #d8d8d8;
   color: #000;
-  font-size: 14px
+  font-size: 20px
 }
 
 .total-score-value {
+  line-height: 60px;
   font-family: "framdit";
   background-color: #f3f3f3;
   color: #e9c130;
   font-weight: 700;
-  font-size: 32px;
+  font-size: 46px;
 }
