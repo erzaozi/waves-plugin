@@ -3,9 +3,9 @@ baseDefense: 1002
 baseHP: 12812
 subProps:
   - name: 暴击伤害
-    weight: 0.5
+    weight: 0.3
   - name: 暴击
-    weight: 0.5
+    weight: 0.3
   - name: 攻击百分比
     weight: 0
   - name: 生命百分比
@@ -21,7 +21,7 @@ subProps:
   - name: 共鸣技能伤害加成
     weight: 0
   - name: 共鸣解放伤害加成
-    weight: 0.1
+    weight: 0.2
 mainProps:
   C4:
     - name: 暴击伤害

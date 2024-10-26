@@ -3,9 +3,9 @@ baseDefense: 1002
 baseHP: 12812
 subProps:
   - name: 暴击伤害
-    weight: 0.5
+    weight: 0.8
   - name: 暴击
-    weight: 0.5
+    weight: 0
   - name: 攻击百分比
     weight: 0
   - name: 生命百分比
@@ -25,13 +25,13 @@ subProps:
 mainProps:
   C4:
     - name: 暴击伤害
-      weight: 0
+      weight: 0.5
     - name: 暴击
-      weight: 0.25
+      weight: 0
     - name: 治疗效果加成
       weight: 0.5
     - name: 生命百分比
-      weight: 0.25
+      weight: 0.5
     - name: 攻击百分比
       weight: 0
     - name: 防御百分比

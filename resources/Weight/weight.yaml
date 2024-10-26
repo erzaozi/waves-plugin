@@ -1,4 +1,4 @@
-version: 1.0.0
+version: 1.0.1
 subProps:
   - name: 暴击伤害
     max: 21
