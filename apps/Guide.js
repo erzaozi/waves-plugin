@@ -64,7 +64,6 @@ export class Guide extends plugin {
         const entryData = await wiki.getEntry(name, type)
 
         if (!entryData.status) {
-            logger.warn(`[Waves-Plugin] 未能获取图鉴内容：${message}`)
             if (e.msg.startsWith("~") || e.msg.startsWith("～") || e.msg.startsWith("鸣潮")) {
                 logger.info(`[Waves-Plugin] 尝试搜索图鉴：${message}`)
                 let result = await wiki.search(message)

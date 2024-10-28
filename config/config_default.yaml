@@ -9,6 +9,8 @@ news_push_time: 0 */15 * * * ?
 signin_interval: 37
 # 任务间隔时间
 task_interval: 37
+# 攻略图提供方
+strategy_provide: all
 # 是否使用公共cookie
 use_public_cookie: true
 # 是否允许用户导入抽卡记录

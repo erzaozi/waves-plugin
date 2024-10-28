@@ -326,6 +326,20 @@ export function supportGuoba() {
           component: "Switch",
         },
         {
+          field: "strategy_provide",
+          label: "攻略图提供方",
+          bottomHelpMessage: "选择角色攻略图提供方",
+          component: "Select",
+          componentProps: {
+            options: [
+              { label: "全部", value: "all" },
+              { label: "小沐XMu", value: "XMu" },
+              { label: "Moealkyne", value: "moealkyne" },
+              { label: "金铃子攻略组", value: "Linn" }
+            ],
+          },
+        },
+        {
           field: "allow_import",
           label: "允许导入抽卡记录",
           bottomHelpMessage: "无法验证导入数据真实性，可能存在虚假数据覆盖真实数据情况，请谨慎开启",
