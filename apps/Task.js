@@ -4,6 +4,9 @@ import Config from "../components/Config.js";
 import Render from '../model/render.js'
 
 export class Task extends plugin {
+
+    static locked = false;
+
     constructor() {
         super({
             name: "鸣潮-库街区任务",
@@ -28,8 +31,7 @@ export class Task extends plugin {
         this.task = {
             name: '[Waves-Plugin] 自动任务',
             fnc: () => this.autoTask(),
-            cron: Config.getConfig().task_time,
-            log: true
+            cron: Config.getConfig().task_time
         }
     }
 
@@ -145,6 +147,9 @@ export class Task extends plugin {
     }
 
     async autoTask() {
+        if (Task.locked && (this.e ? await this.e.reply('已有社区任务运行中，请勿重复执行') : false)) return true;
+        Task.locked = true;
+
         if (this.e) await this.e.reply('正在执行全部任务，稍后会推送签到结果');
 
         const { waves_auto_task_list: autoTaskList, task_interval: interval } = Config.getConfig();
@@ -217,6 +222,7 @@ export class Task extends plugin {
             }
         }
 
+        Task.locked = false;
         return true;
     }
 }

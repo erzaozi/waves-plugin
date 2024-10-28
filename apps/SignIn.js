@@ -4,6 +4,9 @@ import Config from "../components/Config.js";
 import Render from '../model/render.js'
 
 export class SignIn extends plugin {
+
+    static locked = false;
+
     constructor() {
         super({
             name: "鸣潮-用户签到",
@@ -28,8 +31,7 @@ export class SignIn extends plugin {
         this.task = {
             name: '[Waves-Plugin] 自动签到',
             fnc: () => this.autoSignIn(),
-            cron: Config.getConfig().signin_time,
-            log: true
+            cron: Config.getConfig().signin_time
         }
     }
 
@@ -53,10 +55,13 @@ export class SignIn extends plugin {
                 continue;
             }
 
-            const signInData = await waves.signIn(account.serverId, account.roleId, account.userId, account.token);
+            const [signInData, listData] = await Promise.all([
+                waves.signIn(account.serverId, account.roleId, account.userId, account.token),
+                waves.queryRecord(account.serverId, account.roleId, account.token)
+            ]);
 
             let message = `账号 ${account.userId} 的签到结果\n\n`;
-            message += signInData.status ? `[游戏签到] 签到成功` : `[游戏签到] 签到失败，原因：${signInData.msg}`;
+            message += signInData.status ? `[游戏签到] 签到成功，获得「${listData.data[0].goodsName} × ${listData.data[0].goodsNum}」` : `[游戏签到] 签到失败，原因：${signInData.msg}`;
             message += `\n\n签到已完成，发送[~签到记录]查看近期签到记录`;
 
             data.push({ message: message });
@@ -122,6 +127,9 @@ export class SignIn extends plugin {
     }
 
     async autoSignIn() {
+        if (SignIn.locked && (this.e ? await this.e.reply('已有签到任务运行中，请勿重复执行') : false)) return true;
+        SignIn.locked = true;
+
         if (this.e) await this.e.reply('正在执行全部签到，稍后会推送签到结果');
 
         const { waves_auto_signin_list: autoSignInList, signin_interval: interval } = Config.getConfig();
@@ -174,6 +182,7 @@ export class SignIn extends plugin {
             }
         }
 
+        SignIn.locked = false;
         return true;
     }
 }
