@@ -16,7 +16,7 @@ export class Gacha extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)(常驻)?(角色|武器|武器常驻|自选|新手)?抽卡(统计|分析|记录)([\\s\\S]*)$",
+                    reg: "^(?:～|~|鸣潮)(?:常驻)?(?:角色|武器|武器常驻|自选|新手)?抽卡(?:统计|分析|记录)([\\s\\S]*)$",
                     fnc: "gachaCount"
                 },
                 {
@@ -33,7 +33,7 @@ export class Gacha extends plugin {
 
     async gachaCount(e) {
 
-        let message = e.msg.replace(/^(～|~|鸣潮)(常驻)?(角色|武器|武器常驻|自选|新手)?抽卡(统计|分析|记录)/, "");
+        let [, message] = e.msg.match(this.rule[0].reg);
 
         const poolMapping = {
             "角色": 1,

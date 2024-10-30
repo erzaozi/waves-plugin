@@ -11,27 +11,27 @@ export class Bind extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)(登录|登陆).*$",
-                    fnc: "Login"
+                    reg: "^(?:～|~|鸣潮)绑定(.*)$",
+                    fnc: "bindUid"
                 },
                 {
-                    reg: "^(～|~|鸣潮)绑定.*$",
-                    fnc: "Bind"
+                    reg: "^(?:～|~|鸣潮)(?:登录|登陆)(.*)$",
+                    fnc: "loginAcc"
                 },
                 {
-                    reg: "^(～|~|鸣潮)解绑.*$",
-                    fnc: "Unlogin"
+                    reg: "^(?:～|~|鸣潮)(?:删除登录|解除登录|解绑)(.*)$",
+                    fnc: "unLogin"
                 },
                 {
-                    reg: "^(～|~)?库街区Token$",
-                    fnc: "Get"
+                    reg: "^(～|~|鸣潮)(我的|库街区)[Tt]o?k(en)?$",
+                    fnc: "getToken"
                 }
             ]
         })
     }
 
-    async Bind(e) {
-        const message = e.msg.replace(/^(～|~|鸣潮)绑定/, '').trim();
+    async bindUid(e) {
+        const [, message] = e.msg.match(this.rule[0].reg);
         if (/^\d{9}$/.test(message)) {
             await redis.set(`Yunzai:waves:bind:${e.user_id}`, message);
             return await e.reply("绑定特征码成功！\n当前仅可查询部分信息，若想使用完整功能请使用[~登录]命令", true);
@@ -40,8 +40,8 @@ export class Bind extends plugin {
         }
     }
 
-    async Login(e) {
-        const message = e.msg.replace(/^(～|~|鸣潮)(登录|登陆)/, '').trim();
+    async loginAcc(e) {
+        const [, message] = e.msg.match(this.rule[1].reg);
         const waves = new Waves();
         let token;
 
@@ -92,20 +92,20 @@ export class Bind extends plugin {
         Config.setUserConfig(e.user_id, userConfig);
         return await e.reply(`${gameData.data.roleName}(${gameData.data.roleId}) 登录成功！`, true);
     }
-    async Unlogin(e) {
+    async unLogin(e) {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
 
         if (!accountList || !accountList.length) {
             return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
         }
 
-        let roleId = e.msg.replace(/^(～|~|鸣潮)解绑/, '').trim();
+        const [, roleId] = e.msg.match(this.rule[2].reg);
         if (!roleId || !accountList.map(item => item.roleId).includes(roleId)) {
             let msg = '当前登录的特征码有：'
             accountList.forEach(item => {
                 msg += `\n${item.roleId}`
             })
-            msg += `\n请使用[~解绑 + 特征码]的格式进行解绑。`
+            msg += `\n请使用[~解除登录 + 特征码]的格式进行解绑。`
             await e.reply(msg);
         } else {
             let index = accountList.findIndex(item => item.roleId == roleId);
@@ -116,7 +116,7 @@ export class Bind extends plugin {
         return true;
     }
 
-    async Get(e) {
+    async getToken(e) {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
 
         if (!accountList || !accountList.length) {

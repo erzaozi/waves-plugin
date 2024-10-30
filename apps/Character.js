@@ -16,7 +16,7 @@ export class Character extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮).*面板(\\d{9})?$",
+                    reg: "^(?:～|~|鸣潮)(.*)面板(\\d{9})?$",
                     fnc: "character"
                 }
             ]
@@ -29,16 +29,18 @@ export class Character extends plugin {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
         const waves = new Waves();
 
-        const match = e.msg.match(/\d{9}$/);
+        const [, message, roleId] = e.msg.match(this.rule[0].reg);
+
+        if (!message) return e.reply('请输入正确的命令格式，如：[~安可面板]')
 
         if (!accountList.length) {
-            if (match || await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
+            if (roleId || await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
                 let publicCookie = await waves.pubCookie();
                 if (!publicCookie) {
                     return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行登录');
                 } else {
-                    if (match) {
-                        publicCookie.roleId = match[0];
+                    if (roleId) {
+                        publicCookie.roleId = roleId;
                         await redis.set(`Yunzai:waves:bind:${e.user_id}`, publicCookie.roleId);
                     } else if (await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
                         publicCookie.roleId = await redis.get(`Yunzai:waves:bind:${e.user_id}`);
@@ -49,13 +51,6 @@ export class Character extends plugin {
                 return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
             }
         }
-
-        const matchName = e.msg.match(/(～|~|鸣潮)?(.*?)面板/);
-        if (!matchName || !matchName[2]) {
-            return false
-        }
-
-        const message = matchName[2];
 
         const wiki = new Wiki();
         let name = await wiki.getAlias(message);
@@ -73,8 +68,8 @@ export class Character extends plugin {
                 return;
             }
 
-            if (match) {
-                account.roleId = match[0];
+            if (roleId) {
+                account.roleId = roleId;
                 await redis.set(`Yunzai:waves:bind:${e.user_id}`, account.roleId);
             }
 
@@ -113,7 +108,7 @@ export class Character extends plugin {
                     const role = roleData.data.roleList.find(role => role.roleId === roleId || role.mapRoleId === roleId);
                     return role ? role.roleName : null;
                 }).filter(Boolean);
-                
+
                 data.push({ message: `UID: ${account.roleId} 未在库街区展示共鸣者 ${name}，请在库街区展示此角色\n\n当前展示角色有：\n${showroleList.join('、')}\n\n使用[~登录]登录该账号后即可查看所有角色` });
                 return;
             }

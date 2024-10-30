@@ -12,7 +12,7 @@ export class Training extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)练度(统计)?(\\d{9})?$",
+                    reg: "^(?:～|~|鸣潮)(?:练度|练度统计)(\\d{9})?$",
                     fnc: "training"
                 }
             ]
@@ -25,16 +25,16 @@ export class Training extends plugin {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
         const waves = new Waves();
 
-        const match = e.msg.match(/\d{9}$/);
+        const [, roleId] = e.msg.match(this.rule[0].reg);
 
         if (!accountList.length) {
-            if (match || await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
+            if (roleId || await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
                 let publicCookie = await waves.pubCookie();
                 if (!publicCookie) {
                     return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行登录');
                 } else {
-                    if (match) {
-                        publicCookie.roleId = match[0];
+                    if (roleId) {
+                        publicCookie.roleId = roleId;
                         await redis.set(`Yunzai:waves:bind:${e.user_id}`, publicCookie.roleId);
                     } else if (await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
                         publicCookie.roleId = await redis.get(`Yunzai:waves:bind:${e.user_id}`);
@@ -58,8 +58,8 @@ export class Training extends plugin {
                 return;
             }
 
-            if (match) {
-                account.roleId = match[0];
+            if (roleId) {
+                account.roleId = roleId;
                 await redis.set(`Yunzai:waves:bind:${e.user_id}`, account.roleId);
             }
 
@@ -73,18 +73,18 @@ export class Training extends plugin {
                 return;
             }
 
-            const Promises = roleData.data.roleList.map(role => 
-                waves.getRoleDetail(account.serverId, account.roleId, role.roleId, account.token).then(data => 
+            const Promises = roleData.data.roleList.map(role =>
+                waves.getRoleDetail(account.serverId, account.roleId, role.roleId, account.token).then(data =>
                     data.status && data.data.role ? { ...role, ...data.data } : null
                 )
             );
-            
+
             const roleList = (await Promise.all(Promises)).filter(Boolean).map(role => {
                 const calculatedRole = new WeightCalculator(role).calculate();
                 calculatedRole.chainCount = calculatedRole.chainList.filter(chain => chain.unlocked).length;
                 return calculatedRole;
             });
-            
+
             roleList.sort((a, b) => b.starLevel - a.starLevel || b.phantomData.statistic.totalScore - a.phantomData.statistic.totalScore);
 
             const imageCard = await Render.Training(baseData.data, roleList);

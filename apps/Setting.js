@@ -25,8 +25,8 @@ export class Setting extends plugin {
                     fnc: "setAutoNews"
                 },
                 {
-                    reg: "^(～|~|鸣潮)(波片|体力)阈值.*$",
-                    fnc: "setSanityThreshold"
+                    reg: "^(?:～|~|鸣潮)(?:波片|体力)阈值(.*)$",
+                    fnc: "setThreshold"
                 }
             ]
         })
@@ -170,18 +170,23 @@ export class Setting extends plugin {
         return e.reply("你已经关闭了活动推送，无需再次关闭", true);
     }
 
-    async setSanityThreshold(e) {
-        const threshold = e.msg.replace(/^(～|~|鸣潮)(波片|体力)阈值/, "");
+    async setThreshold(e) {
+        const [, threshold] = e.msg.match(this.rule[4].reg);
+        if (!threshold) {
+            const threshold = await redis.get(`Yunzai:waves:sanity_threshold:${e.user_id}`)
+            await e.reply(`当前波片阈值为 ${threshold || 240}，使用[~体力阈值]可自定义设定波片推送阈值，如：[~体力阈值230]`, true);
+            return true
+        }
         if (!/^\d+$/.test(threshold)) {
-            await e.reply("波片阈值必须是数字，请重新输入", true);
+            await e.reply("波片阈值必须是数字，如：[~体力阈值230]", true);
             return true
         }
         if (threshold > 240 || threshold < 0) {
-            await e.reply("波片阈值必须在0-240之间，请重新输入，如[~体力阈值150]", true);
+            await e.reply("波片阈值必须在0-240之间，请重新输入，如：[~体力阈值230]", true);
             return true
         }
         await redis.set(`Yunzai:waves:sanity_threshold:${e.user_id}`, threshold)
-        await e.reply(`波片阈值已设置为${threshold}，使用[~开启体力推送]后，达到该设定值后会向您推送提醒哦`, true);
+        await e.reply(`波片阈值已设置为 ${threshold}，使用[~开启体力推送]后，达到该设定值后会向您推送提醒哦`, true);
         return true
     }
 }

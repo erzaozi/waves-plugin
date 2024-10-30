@@ -13,7 +13,7 @@ export class Help extends plugin {
             rule: [
                 {
                     reg: "^(～|~|鸣潮)帮助$",
-                    fnc: "help"
+                    fnc: "allHelp"
                 },
                 {
                     reg: "^(～|~|鸣潮)(登录|登陆)帮助$",
@@ -27,7 +27,7 @@ export class Help extends plugin {
         })
     }
 
-    async help(e) {
+    async allHelp(e) {
         const helpCfg = {
             "themeSet": false,
             "title": "WAVES-PLUGIN 帮助",
@@ -61,12 +61,12 @@ export class Help extends plugin {
                     },
                     {
                         "icon": 10,
-                        "title": "~解绑",
-                        "desc": "解绑登录账号"
+                        "title": "~解除登录",
+                        "desc": "解除登录账号"
                     },
                     {
                         "icon": 21,
-                        "title": "~库街区Token",
+                        "title": "~我的tk",
                         "desc": "查看已登录账号Token"
                     },
                     {

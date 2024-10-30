@@ -12,7 +12,7 @@ export class Sanity extends plugin {
             rule: [
                 {
                     reg: "^(～|~|鸣潮)(波片|体力|日常数据)$",
-                    fnc: "querySanity"
+                    fnc: "sanity"
                 }
             ]
         })
@@ -24,7 +24,7 @@ export class Sanity extends plugin {
         }
     }
 
-    async querySanity(e) {
+    async sanity(e) {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
 
         if (!accountList || !accountList.length) {

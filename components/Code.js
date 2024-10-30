@@ -512,10 +512,11 @@ class Waves {
     }
 
     // 获取活动列表
-    async getEventList() {
+    async getEventList(eventType = 0) {
 
         let data = qs.stringify({
-            'gameId': 3
+            'gameId': 3,
+            'eventType': eventType
         });
 
         try {

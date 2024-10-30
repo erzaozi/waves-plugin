@@ -15,17 +15,17 @@ export class Manage extends plugin {
             rule: [
                 {
                     reg: "^(～|~|鸣潮)(用户|账号|账户|tk)统计$",
-                    fnc: "Total"
+                    fnc: "allUser"
                 },
                 {
                     reg: "^(～|~|鸣潮)删除失效(用户|账号|账户|tk)$",
-                    fnc: "Delete"
+                    fnc: "delUser"
                 }
             ]
         });
     }
 
-    async Total(e) {
+    async allUser(e) {
         if (!e.isMaster) return false;
 
         await e.reply('[Waves-Plugin] 正在统计用户总数，请稍等...');
@@ -63,7 +63,7 @@ export class Manage extends plugin {
         }
     }
 
-    async Delete(e) {
+    async delUser(e) {
         if (!e.isMaster) return false;
 
         await e.reply('[Waves-Plugin] 正在删除失效账号，请稍等...');

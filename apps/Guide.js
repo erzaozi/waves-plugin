@@ -24,7 +24,7 @@ export class Guide extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)?.*图鉴$",
+                    reg: "^(?:～|~|鸣潮)?(.*)图鉴$",
                     fnc: "guide"
                 }
             ]
@@ -33,16 +33,13 @@ export class Guide extends plugin {
 
     async guide(e) {
 
-        const match = e.msg.match(/(～|~|鸣潮)?(.*?)图鉴/);
-        if (!match || !match[2]) {
-            return false
-        }
+        let [, message] = e.msg.match(this.rule[0].reg)
 
-        let message = match[2]
+        if (!message) return e.reply('请输入正确的命令格式，如：[~吟霖图鉴]')
 
         const wiki = new Wiki()
 
-        if (e.msg.startsWith("~") || e.msg.startsWith("～") || e.msg.startsWith("鸣潮")) {
+        if (/^(～|~|鸣潮)/.test(e.msg)) {
             let typeList = await wiki.getTypeList(message)
             if (typeList.status) {
                 let imageCard = await Render.wikiSearch(typeList.data)
@@ -64,7 +61,7 @@ export class Guide extends plugin {
         const entryData = await wiki.getEntry(name, type)
 
         if (!entryData.status) {
-            if (e.msg.startsWith("~") || e.msg.startsWith("～") || e.msg.startsWith("鸣潮")) {
+            if (/^(～|~|鸣潮)/.test(e.msg)) {
                 logger.info(`[Waves-Plugin] 尝试搜索图鉴：${message}`)
                 let result = await wiki.search(message)
                 if (!result.status) {

@@ -11,29 +11,29 @@ export class UserInfo extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)(信息|卡片)(\\d{9})?$",
-                    fnc: "userInfo"
+                    reg: "^(?:～|~|鸣潮)(?:信息|卡片)(\\d{9})?$",
+                    fnc: "user"
                 }
             ]
         })
     }
 
-    async userInfo(e) {
+    async user(e) {
 
         if (e.at) e.user_id = e.at;
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
         const waves = new Waves();
 
-        const match = e.msg.match(/\d{9}$/);
+        const [, roleId] = e.msg.match(this.rule[0].reg);
 
         if (!accountList.length) {
-            if (match || await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
+            if (roleId || await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
                 let publicCookie = await waves.pubCookie();
                 if (!publicCookie) {
                     return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行登录');
                 } else {
                     if (match) {
-                        publicCookie.roleId = match[0];
+                        publicCookie.roleId = roleId;
                         await redis.set(`Yunzai:waves:bind:${e.user_id}`, publicCookie.roleId);
                     } else if (await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
                         publicCookie.roleId = await redis.get(`Yunzai:waves:bind:${e.user_id}`);
@@ -57,8 +57,8 @@ export class UserInfo extends plugin {
                 return;
             }
 
-            if (match) {
-                account.roleId = match[0];
+            if (roleId) {
+                account.roleId = roleId;
                 await redis.set(`Yunzai:waves:bind:${e.user_id}`, account.roleId);
             }
 

@@ -14,19 +14,19 @@ export class ImgUploader extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)上传(.*)面板图$",
+                    reg: "^(?:～|~|鸣潮)上传(.*)面板图$",
                     fnc: 'uploadImage'
                 },
                 {
                     reg: "^(～|~|鸣潮)原图$",
-                    fnc: 'fetchOriginalPic'
+                    fnc: 'originalPic'
                 },
                 {
-                    reg: "^(～|~|鸣潮)(.*)面板图列表$",
+                    reg: "^(?:～|~|鸣潮)(.*)面板图列表$",
                     fnc: "listImages"
                 },
                 {
-                    reg: "^(～|~|鸣潮)删除(.*)面板图(\\d+)$",
+                    reg: "^(?:～|~|鸣潮)删除(.*)面板图(\\d+)$",
                     fnc: "deleteImage"
                 },
             ]
@@ -41,9 +41,9 @@ export class ImgUploader extends plugin {
             return true;
         }
 
-        let character = e.msg.match(this.rule[0].reg)?.[2] || '';
+        let [, character] = e.msg.match(this.rule[0].reg);
         if (!character) {
-            e.reply('未找到角色, 请使用 "~上传今汐面板图" 进行上传');
+            e.reply('请输入正确的命令格式，如：[~上传今汐面板图]');
             return true;
         }
 
@@ -118,7 +118,7 @@ export class ImgUploader extends plugin {
         }));
     }
 
-    async fetchOriginalPic(e) {
+    async originalPic(e) {
         const { allow_get_origin } = Config.getConfig();
 
         if (!e.isMaster && !allow_get_origin) {
@@ -159,9 +159,9 @@ export class ImgUploader extends plugin {
             return true;
         }
 
-        let character = e.msg.match(this.rule[2].reg)?.[2] || '';
+        let [, character] = e.msg.match(this.rule[2].reg);
         if (!character) {
-            e.reply('未找到角色, 请使用 "~今汐面板图列表" 获取');
+            e.reply('请输入正确的命令格式，如：[~今汐面板图列表]');
             return true;
         }
 
@@ -198,8 +198,8 @@ export class ImgUploader extends plugin {
 
         if (!e.isMaster && !allow_img_delete) return e.reply('只有主人才能删除面板图');
 
-        let character = e.msg.match(this.rule[3].reg)?.[2];
-        if (!character) return e.reply('未找到角色, 请使用 "~删除今汐面板图1" 进行删除');
+        let [, character, index] = e.msg.match(this.rule[3].reg);
+        if (!character) return e.reply('请输入正确的命令格式，如：[~删除今汐面板图1]');
 
         character = await new Wiki().getAlias(character);
 
@@ -207,7 +207,6 @@ export class ImgUploader extends plugin {
         const imageList = fs.existsSync(imageDir) ? fs.readdirSync(imageDir) : [];
         if (!imageList.length) return e.reply(`未找到 ${character} 的面板图`);
 
-        const index = Number(e.msg.match(/(\d+)/)?.[1]);
         if (index <= 0 || index > imageList.length) return e.reply(index > imageList.length
             ? `未找到第 ${index} 张图片, 请检查后重试`
             : '请输入正确的图片序号');

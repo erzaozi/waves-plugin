@@ -18,7 +18,7 @@ export class Strategy extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)?.*攻略$",
+                    reg: "^(?:～|~|鸣潮)?(.*)攻略$",
                     fnc: "strategy"
                 }
             ]
@@ -26,10 +26,10 @@ export class Strategy extends plugin {
     }
 
     async strategy(e) {
-        const match = e.msg.match(/(～|~|鸣潮)?(.*?)攻略/);
-        if (!match || !match[2]) return false;
+        const [, message] = e.msg.match(this.rule[0].reg);
 
-        const message = match[2];
+        if (!message) return e.reply("请输入正确的命令格式，如：[～今汐攻略]")
+
         const wiki = new Wiki();
         const name = await wiki.getAlias(message);
         const provide = await Config.getConfig().strategy_provide;

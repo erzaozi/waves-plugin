@@ -10,7 +10,7 @@ export class News extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)(活动|新闻|公告)$",
+                    reg: "^(～|~|鸣潮)(活动|新闻|公告|资讯)$",
                     fnc: "queryNews",
                 }
             ]
@@ -24,9 +24,10 @@ export class News extends plugin {
     }
 
     async queryNews(e) {
+        const eventType = e.msg.includes('活动') ? 1 : e.msg.includes('资讯') ? 2 : e.msg.includes('公告') ? 3 : 0;
 
         const waves = new Waves();
-        const newsData = await waves.getEventList();
+        const newsData = await waves.getEventList(eventType);
 
         const data = [];
 

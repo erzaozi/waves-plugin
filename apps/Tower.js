@@ -11,29 +11,29 @@ export class TowerInfo extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)(逆境)?(深(塔|渊)|(稳定|实验|超载|深境)(区)?)(\\d{9})?$",
-                    fnc: "towerInfo"
+                    reg: "^(?:～|~|鸣潮)(?:逆境)?(?:深(?:塔|渊)|(稳定|实验|超载|深境)(?:区)?)(\\d{9})?$",
+                    fnc: "tower"
                 }
             ]
         })
     }
 
-    async towerInfo(e) {
+    async tower(e) {
 
         if (e.at) e.user_id = e.at;
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
         const waves = new Waves();
 
-        const match = e.msg.match(/\d{9}$/);
+        let [, key, roleId] = e.msg.match(this.rule[0].reg)
 
         if (!accountList.length) {
-            if (match || await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
+            if (roleId || await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
                 let publicCookie = await waves.pubCookie();
                 if (!publicCookie) {
                     return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行登录');
                 } else {
                     if (match) {
-                        publicCookie.roleId = match[0];
+                        publicCookie.roleId = roleId;
                         await redis.set(`Yunzai:waves:bind:${e.user_id}`, publicCookie.roleId);
                     } else if (await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
                         publicCookie.roleId = await redis.get(`Yunzai:waves:bind:${e.user_id}`);
@@ -57,8 +57,8 @@ export class TowerInfo extends plugin {
                 return;
             }
 
-            if (match) {
-                account.roleId = match[0];
+            if (roleId) {
+                account.roleId = roleId;
                 await redis.set(`Yunzai:waves:bind:${e.user_id}`, account.roleId);
             }
 
@@ -70,8 +70,8 @@ export class TowerInfo extends plugin {
             if (!baseData.status || !towerData.status) {
                 data.push({ message: baseData.msg || towerData.msg });
             } else {
-                const Mapping = { '稳定': 1, '实验': 2, '深境': 3, '超载': 4 },
-                    key = e.msg.match(/稳定|实验|超载|深境/)?.[0] || '深境';
+                const Mapping = { '稳定': 1, '实验': 2, '深境': 3, '超载': 4 };
+                if (!key) key = '深境';
                 towerData.data = { ...towerData.data, difficulty: Mapping[key] || 3, diffiname: `${key}区` };
                 const imageCard = await Render.towerData(baseData.data, towerData.data);
                 data.push({ message: imageCard });

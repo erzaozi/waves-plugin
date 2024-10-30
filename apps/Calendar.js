@@ -1,4 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js';
+import { pluginResources } from '../model/path.js'
 import Wiki from '../components/Wiki.js';
 import Render from '../model/render.js'
 
@@ -10,7 +11,7 @@ export class Calendar extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)日历$",
+                    reg: "^(～|~|鸣潮)(日历|日历列表|当前卡池)$",
                     fnc: "calendar"
                 }
             ]
@@ -72,6 +73,21 @@ export class Calendar extends plugin {
                 remain: remain,
                 progress: progress,
             };
+        });
+
+        const s = 1716753600000;
+        const d = 1209600000;
+
+        activity.unshift({
+            contentUrl: pluginResources + '/Template/calendar/imgs/tower.png',
+            title: '深境再临',
+            time: (() => {
+                const cs = s + Math.floor((currentDate - s) / d) * d;
+                return `${new Date(cs).toLocaleDateString().slice(5).replace('/', '.')} ${new Date(cs).toTimeString().slice(0, 5)} - ${new Date(cs + d).toLocaleDateString().slice(5).replace('/', '.')} ${new Date(cs + d).toTimeString().slice(0, 5)}`;
+            })(),
+            active: '进行中',
+            remain: this.format(Math.round((s + Math.floor((currentDate - s) / d) * d + d - currentDate) / 1000)),
+            progress: Math.round(((currentDate - (s + Math.floor((currentDate - s) / d) * d)) / d) * 100),
         });
 
         const imageCard = await Render.calendar({ activity, role, weapon });
