@@ -2,7 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js';
 import Config from "../components/Config.js";
 import Waves from "../components/Code.js";
 import { _path } from '../model/path.js';
-import Render from '../model/render.js';
+import Render from '../components/Render.js';
 import fs from 'fs/promises';
 import YAML from 'yaml';
 
@@ -55,7 +55,10 @@ export class Manage extends plugin {
                 expired: expired
             };
 
-            const imageCard = await Render.userManage(data);
+            const imageCard = await Render.render('Template/userManage/userManage', {
+                data,
+            }, { e, retType: 'base64' });
+
             await e.reply(imageCard);
         } catch (err) {
             logger.error('计算总用户数时出现错误', err);

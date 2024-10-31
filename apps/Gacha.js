@@ -3,8 +3,8 @@ import { pluginRoot, _path } from '../model/path.js'
 import Config from "../components/Config.js";
 import Waves from "../components/Code.js";
 import Wiki from "../components/Wiki.js";
-import Render from '../model/render.js'
-import fs from 'fs'
+import Render from '../components/Render.js';
+import fs from 'fs';
 
 const resident = ["鉴心", "卡卡罗", "安可", "维里奈", "凌阳"]
 
@@ -73,7 +73,10 @@ export class Gacha extends plugin {
                 renderData = { ...renderData, [key]: await getPoolData(poolType) };
             }
 
-            let imageCard = await Render.gachaCount(renderData);
+            let imageCard = await Render.render('Template/gacha/gacha', {
+                data: renderData,
+            }, { e, retType: 'base64' });
+
             await e.reply(imageCard);
             return true;
         }
@@ -166,7 +169,10 @@ export class Gacha extends plugin {
             ...selectedPools
         };
 
-        let imageCard = await Render.gachaCount(renderData);
+        let imageCard = await Render.render('Template/gacha/gacha', {
+            data: renderData,
+        }, { e, retType: 'base64' });
+
         await e.reply(imageCard);
 
         await redis.set(`Yunzai:waves:gachaHistory:${e.user_id}`, jsonData.playerId);

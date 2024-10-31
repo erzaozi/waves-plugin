@@ -13,10 +13,15 @@
 }
 
 #body {
+    transform-origin: top left;
     width: 1081.8px;
     height: auto;
-    background: url(./imgs/enemy.png) no-repeat;
     font-family: "MiSans";
+}
+
+#body>div {
+    width: 100%;
+    background: url(./imgs/enemy.png) no-repeat;
 }
 
 a {
@@ -24,15 +29,15 @@ a {
     color: #41b5bf;
 }
 
-#container {
-    padding-bottom: 100px;
+#main-box {
+    display: flex;
+    flex-direction: row;
     margin-bottom: 50px;
 }
 
 #left {
     height: auto;
     width: 50%;
-    float: left;
 }
 
 #icon-frame {
@@ -66,7 +71,6 @@ a {
 #right {
     height: 200px;
     width: 50%;
-    float: right;
 }
 
 #name {
@@ -81,4 +85,21 @@ a {
 #attribute {
     margin: 50px 16px 0px 50px;
     width: 80%;
+}
+
+#copyright {
+    position: relative;
+    width: 35%;
+    font-size: 0.9em;
+    margin: 0 auto;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+#copyright .version {
+    color: #d3bc8e;
+    display: inline-block;
+    padding: 0 3px;
 }

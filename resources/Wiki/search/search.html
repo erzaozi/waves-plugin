@@ -8,16 +8,19 @@
     <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
 </head>
 
-<body id="body">
-    <div id="list">
-        {{each data.results.records item}}
-        <div class="item">
-            <img src="{{pluginResources}}/Wiki/search/imgs/" class="item-bg">
-            <img src="{{item.content.contentUrl}}" class="item-icon">
-            <div class="item-name">{{item.name}}</div>
-            <div class="item-star">{{item.content.star}}</div>
+<body id="body" {{sys.scale}}>
+    <div>
+        <div id="list">
+            {{each data.results.records item}}
+            <div class="item">
+                <img src="{{pluginResources}}/Wiki/search/imgs/" class="item-bg">
+                <img src="{{item.content.contentUrl}}" class="item-icon">
+                <div class="item-name">{{item.name}}</div>
+                <div class="item-star">{{item.content.star}}</div>
+            </div>
+            {{/each}}
         </div>
-        {{/each}}
+        <div id="copyright">{{@copyright}}</div>
     </div>
 
     <script>

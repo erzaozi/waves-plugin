@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
-import Render from '../model/render.js'
+import Render from '../components/Render.js';
 
 export class UserInfo extends plugin {
     constructor() {
@@ -70,7 +70,15 @@ export class UserInfo extends plugin {
             if (!baseData.status || !roleData.status) {
                 data.push({ message: baseData.msg || roleData.msg });
             } else {
-                const imageCard = await Render.userInfo(baseData.data, roleData.data)
+                roleData.data.roleList.sort((a, b) => {
+                    return b.starLevel - a.starLevel
+                })
+
+                const imageCard = Render.render('Template/userInfo/userInfo', {
+                    baseData: baseData.data,
+                    roleData: roleData.data,
+                }, { e, retType: 'base64' });
+
                 data.push({ message: imageCard });
             }
         }));

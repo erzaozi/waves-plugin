@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
-import Render from '../model/render.js'
+import Render from '../components/Render.js';
 
 export class SignIn extends plugin {
 
@@ -107,7 +107,10 @@ export class SignIn extends plugin {
                 data.push({ message: listData.msg })
             } else {
                 listData.data = listData.data.slice(0, 50);
-                const imageCard = await Render.queryRecord(listData.data)
+                const imageCard = await Render.render('Template/queryRecord/queryRecord', {
+                    listData: listData.data,
+                }, { e, retType: 'base64' });
+
                 data.push({ message: imageCard });
             }
         }

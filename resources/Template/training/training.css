@@ -15,6 +15,7 @@
 }
 
 body {
+    transform-origin: top left;
     width: 2080px;
 }
 
@@ -264,4 +265,21 @@ li:first-child {
     margin-left: 15px;
     font-weight: 700;
     font-size: 34px;
+}
+
+#copyright {
+    position: relative;
+    width: 35%;
+    font-size: 1em;
+    margin: 0 auto;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+#copyright .version {
+    color: #d3bc8e;
+    display: inline-block;
+    padding: 0 3px;
 }

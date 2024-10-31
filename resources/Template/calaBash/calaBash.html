@@ -8,37 +8,40 @@
     <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
 </head>
 
-<body id="body">
-    <div id="account">
-        <div id="user-name">{{baseData.name}}</div>
-        <div id="user-uid">{{baseData.id}}</div>
-    </div>
-    <div id="data">
-        <div id="gourd-level">{{calabashData.level}}</div>
-        <div id="base-sbsorb">{{calabashData.baseCatch}}</div>
-        <div id="enhanced-absorb">{{calabashData.strengthenCatch}}</div>
-        <div id="absorbable">
-            {{if calabashData.catchQuality === 5}}
-            <span style="color: #c49e55;">五星</span>
-            {{else if calabashData.catchQuality === 4}}
-            <span style="color: #c96dfe;">四星</span>
-            {{else if calabashData.catchQuality === 3}}
-            <span style="color: #59b4d3;">三星</span>
-            {{else if calabashData.catchQuality === 3}}
-            <span style="color: #5cc35e;">二星</span>
-            {{/if}}
+<body id="body" {{sys.scale}}>
+    <div>
+        <div id="account">
+            <div id="user-name">{{baseData.name}}</div>
+            <div id="user-uid">{{baseData.id}}</div>
         </div>
-        <div id="max-cost">{{calabashData.cost}}</div>
-    </div>
-    <div id="collection">{{calabashData.unlockCount}}/{{calabashData.maxCount}}</div>
-    <div id="pets">
-        {{each calabashData.phantomList phantom idx}}
-        <div class="pet">
-            <img src="{{phantom.phantom.iconUrl}}" id="pet-avatar">
-            <div id="pet-name">{{phantom.phantom.name}}</div>
-            <img src="{{pluginResources}}/Template/calaBash/imgs/{{phantom.star}}.png" id="pet-cover">
+        <div id="data">
+            <div id="gourd-level">{{calabashData.level}}</div>
+            <div id="base-sbsorb">{{calabashData.baseCatch}}</div>
+            <div id="enhanced-absorb">{{calabashData.strengthenCatch}}</div>
+            <div id="absorbable">
+                {{if calabashData.catchQuality === 5}}
+                <span style="color: #c49e55;">五星</span>
+                {{else if calabashData.catchQuality === 4}}
+                <span style="color: #c96dfe;">四星</span>
+                {{else if calabashData.catchQuality === 3}}
+                <span style="color: #59b4d3;">三星</span>
+                {{else if calabashData.catchQuality === 2}}
+                <span style="color: #5cc35e;">二星</span>
+                {{/if}}
+            </div>
+            <div id="max-cost">{{calabashData.cost}}</div>
         </div>
-        {{/each}}
+        <div id="collection">{{calabashData.unlockCount}}/{{calabashData.maxCount}}</div>
+        <div id="pets">
+            {{each calabashData.phantomList phantom idx}}
+            <div class="pet">
+                <img src="{{phantom.phantom.iconUrl}}" id="pet-avatar">
+                <div id="pet-name">{{phantom.phantom.name}}</div>
+                <img src="{{pluginResources}}/Template/calaBash/imgs/{{phantom.star}}.png" id="pet-cover">
+            </div>
+            {{/each}}
+        </div>
+        <div id="copyright">{{@copyright}}</div>
     </div>
 </body>
 

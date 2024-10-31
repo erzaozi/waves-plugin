@@ -14,11 +14,16 @@
 }
 
 body {
+    transform-origin: top left;
     width: 1060px;
-    padding: 50px;
+    padding: 50px 50px 0 50px;
 }
 
-.container {
+#body>div {
+    width: 100%;
+}
+
+.main-box {
     position: relative;
     font-family: "MiSans";
     height: auto;
@@ -141,4 +146,21 @@ li>img {
 .status {
     font-size: 35px;
     color: #4e4e4e;
+}
+
+#copyright {
+    position: relative;
+    width: 35%;
+    font-size: 0.8em;
+    margin: 0 auto;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    text-align: center;
+    padding: 30px 0;
+}
+
+#copyright .version {
+    color: #d3bc8e;
+    display: inline-block;
+    padding: 0 3px;
 }

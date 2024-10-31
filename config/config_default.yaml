@@ -17,6 +17,8 @@ use_public_cookie: true
 allow_import: false
 # 是否开启成功日志输出
 enable_log: false
+# 图片渲染精度
+render_scale: 100
 
 # ---------- 登录服务器配置 ----------
 # 允许在线登录

@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
-import Render from '../model/render.js'
+import Render from '../components/Render.js';
 
 export class Sanity extends plugin {
     constructor() {
@@ -49,7 +49,10 @@ export class Sanity extends plugin {
             if (!gameData.status) {
                 data.push({ message: gameData.msg });
             } else {
-                const imageCard = await Render.dailyData(gameData.data)
+                const imageCard = await Render.render('Template/dailyData/dailyData', {
+                    gameData: gameData.data,
+                }, { e, retType: 'base64' });
+
                 data.push({ message: imageCard });
             }
         }

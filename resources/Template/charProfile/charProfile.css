@@ -20,10 +20,14 @@
   font-family: MiSans;
 }
 
+#body {
+  transform-origin: top left;
+}
+
 #container {
   position: relative;
   width: 761px;
-  height: 1582px;
+  height: 1552px;
   background-image: url(./imgs/rolecard.png);
 }
 
@@ -225,7 +229,7 @@
   grid-template-columns: 214px 214px 214px;
   column-gap: 20.3px;
   row-gap: 12px;
-  height: 593px;
+  height: 652x;
   width: 668px;
 }
 
@@ -381,11 +385,11 @@
   white-space: nowrap;
 }
 
-.phantom-attribute>div:nth-child(odd){
+.phantom-attribute>div:nth-child(odd) {
   background-color: #e1e1e1;
 }
 
-.phantom-attribute>div:nth-child(even){
+.phantom-attribute>div:nth-child(even) {
   background-color: #f0ecf0;
 }
 
@@ -458,4 +462,21 @@
   color: #e9c130;
   font-weight: 700;
   font-size: 46px;
+}
+
+#copyright {
+  position: relative;
+  width: 35%;
+  font-size: 11px;
+  margin: 0 auto;
+  color: white;
+  text-shadow: 2px 2px 2px black;
+  text-align: center;
+  padding: 10px 0;
+}
+
+#copyright .version {
+  color: #d3bc8e;
+  display: inline-block;
+  padding: 0 3px;
 }

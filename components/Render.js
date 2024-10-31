@@ -1,12 +1,27 @@
 import Version from './Version.js'
-import { pluginRoot } from '../model/path.js'
+import Config from './Config.js'
+import { pluginRoot, pluginResources } from '../model/path.js'
 import fs from 'fs'
 
-function scale(pct = 1) {
-    let scale = 100
-    scale = Math.min(2, Math.max(0.5, scale / 100))
-    pct = pct * scale
-    return `style=transform:scale(${pct})`
+function getScale(pct = null) {
+    pct = pct || (Config.getConfig().render_scale / 100)
+    pct = Math.min(2, Math.max(0.5, pct))
+    return `style=transform:scale(${pct});`
+}
+
+const time = {}
+function getsaveId(name) {
+    if (!time[name]) time[name] = 0;
+
+    time[name]++;
+
+    if (time[name] === 1) {
+        setTimeout(() => {
+            time[name] = 0;
+        }, 10000);
+    }
+
+    return `${name}_${time[name]}`;
 }
 
 const Render = {
@@ -28,28 +43,29 @@ const Render = {
             logger.error('读取package.json失败', err)
         }
         return e.runtime.render('waves-plugin', path, params, {
-            retType: cfg.retMsgId ? 'msgId' : 'default',
+            retType: cfg.retType || cfg.retMsgId ? 'msgId' : 'default',
             beforeRender({ data }) {
                 let pluginName = ''
                 if (data.pluginName !== false) {
                     pluginName = ` & ${data.pluginName || 'waves-plugin'}`
                     if (data.pluginVersion !== false) {
-                        pluginName += `<span class="version">${currentVersion}`
+                        pluginName += `<span class="version">${currentVersion}</span>`
                     }
                 }
                 let resPath = data.pluResPath
                 const layoutPath = process.cwd() + '/plugins/waves-plugin/resources/common/layout/'
                 return {
                     ...data,
+                    pluginResources,
                     _res_path: resPath,
-                    _mc_path: resPath,
                     _layout_path: layoutPath,
                     defaultLayout: layoutPath + 'default.html',
                     elemLayout: layoutPath + 'elem.html',
                     sys: {
-                        scale: scale(cfg.scale || 1)
+                        scale: getScale(cfg.scale)
                     },
-                    copyright: `Created By ${BotName}<span class="version">${Version.yunzai}</span>${pluginName}</span>`,
+                    saveId: getsaveId(data.saveId),
+                    copyright: `Created By ${BotName}<span class="version">${Version.yunzai}</span>${pluginName}`,
                 }
             }
         })

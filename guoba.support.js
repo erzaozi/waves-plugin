@@ -372,7 +372,20 @@ export function supportGuoba() {
           label: "输出成功日志",
           bottomHelpMessage: "输出成功日志，用于调试和向开发者反馈问题",
           component: "Switch",
-        }
+        },
+        {
+          field: "render_scale",
+          label: "图片渲染精度",
+          bottomHelpMessage: "图片渲染精度，建议 50-200 ，默认 100",
+          component: "InputNumber",
+          required: true,
+          componentProps: {
+            min: 50,
+            max: 200,
+            placeholder: '请输入渲染精度',
+            step: 1
+          },
+        },
       ],
       getConfigData() {
         let config = Config.getConfig()

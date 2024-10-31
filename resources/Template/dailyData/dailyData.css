@@ -13,12 +13,22 @@
 }
 
 #body {
+    transform-origin: top left;
     width: 1220px;
     height: 1173px;
-    background: url(imgs/background.png) no-repeat;
     font-family: "Misans";
 }
 
+#body>div {
+    background: url(imgs/background.png) no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 1173px;
+}
+
+#account {
+    height: 500px;
+}
 
 #user-name {
     position: relative;
@@ -40,11 +50,10 @@
 
 #data {
     position: relative;
-    top: 524px;
+    margin-top: 152px;
     left: 52px;
     height: 402px;
     width: 1118px;
-    margin-bottom: 120px;
 }
 
 #stamina {
@@ -92,4 +101,21 @@
     height: 16px;
     mask: linear-gradient(90deg, #000 60%, #0000 0) 0/2%;
     -webkit-mask: linear-gradient(90deg, #000 60%, #0000 0) 0/2%;
+}
+
+#copyright {
+    position: relative;
+    width: 35%;
+    font-size: 1em;
+    margin: 0 auto;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    text-align: center;
+    padding: 45px 0;
+}
+
+#copyright .version {
+    color: #d3bc8e;
+    display: inline-block;
+    padding: 0 3px;
 }

@@ -13,9 +13,10 @@
 }
 
 #body {
+    transform-origin: top left;
     width: 1196px;
     height: auto;
-    padding: 50px;
+    padding: 50px 50px 0 50px;
     font-family: "Misans";
     background: url(./imgs/search.png) no-repeat;
 }
@@ -61,4 +62,21 @@
     overflow: hidden;
     height: 40px;
     line-height: 20px;
+}
+
+#copyright {
+    position: relative;
+    width: 35%;
+    font-size: 1em;
+    margin: 0 auto;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    text-align: center;
+    padding: 40px 0 40px 0;
+}
+
+#copyright .version {
+    color: #d3bc8e;
+    display: inline-block;
+    padding: 0 3px;
 }

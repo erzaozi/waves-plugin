@@ -14,11 +14,19 @@
 }
 
 body {
+    transform-origin: top left;
     width: 2070px;
     padding: 30px 0px;
 }
 
 #top-half {
+    width: 20200px;
+    margin: 25px;
+    display: flex;
+    flex-direction: row;
+}
+
+#bottom-half {
     width: 20200px;
     margin: 25px;
     display: flex;
@@ -187,4 +195,21 @@ li>div>img {
 .progress-bar {
     height: 100%;
     width: var(--width);
+}
+
+#copyright {
+    position: relative;
+    width: 35%;
+    font-size: 1.6em;
+    margin: 0 auto;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    text-align: center;
+    padding: 10px 0;
+}
+
+#copyright .version {
+    color: #d3bc8e;
+    display: inline-block;
+    padding: 0 3px;
 }

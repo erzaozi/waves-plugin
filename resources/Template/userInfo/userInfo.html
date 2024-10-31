@@ -8,10 +8,12 @@
     <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
 </head>
 
-<body id="body">
-    <div id="account">
-        <div id="user-name">{{baseData.name}}</div>
-        <div id="user-uid">{{baseData.id}}</div>
+<body id="body" {{sys.scale}}>
+    <div>
+        <div id="account">
+            <div id="user-name">{{baseData.name}}</div>
+            <div id="user-uid">{{baseData.id}}</div>
+        </div>
         <div id="profile">
             <div class="value">{{baseData.activeDays}}</div>
             <div class="value">{{baseData.level}}</div>
@@ -33,11 +35,13 @@
                 <div class="char-avatar-frame">
                     <img src="{{character.roleIconUrl}}" class="char-avatar">
                 </div>
-                    <img src="{{pluginResources}}/Template/userInfo/imgs/attribute/{{character.attributeId}}.png" class="char-attr">
+                <img src="{{pluginResources}}/Template/userInfo/imgs/attribute/{{character.attributeId}}.png"
+                    class="char-attr">
                 <span class="char-name">{{character.roleName}}</span>
             </div>
             {{/each}}
         </div>
+        <div id="copyright">{{@copyright}}</div>
     </div>
 </body>
 

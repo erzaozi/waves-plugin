@@ -8,58 +8,60 @@
     <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
 </head>
 
-<body id="body" data-content='{{data}}'>
-    <div id="main">
-        <div>
-            <div id="portray-frame">
-                <img src="{{data.content.modules[0].components[0].role.figures[1].url}}" id="portray">
+<body id="body" {{sys.scale}} data-content='{{data}}'>
+    <div>
+        <div id="main">
+            <div>
+                <div id="portray-frame">
+                    <img src="{{data.content.modules[0].components[0].role.figures[1].url}}" id="portray">
+                </div>
+    
+                <div id="role-desc">
+                    {{data.content.modules[0].components[0].role.roleDescription}}
+                </div>
+    
+    
+                <div id="chain">
+                </div>
+    
+                <div id="meterial">
+                </div>
             </div>
-
-            <div id="role-desc">
-                {{data.content.modules[0].components[0].role.roleDescription}}
-            </div>
-
-
-            <div id="chain">
-            </div>
-
-            <div id="meterial">
+            <div>
+                <div id="role-title">
+                    <img src="{{data.content.modules[0].components[0].role.campIcon}}" id="camp-icon">
+                    <span id="role-name">{{data.content.modules[0].components[0].role.title}}</span>
+                    <span id="role-subtitle">{{data.content.modules[0].components[0].role.subtitle}}</span>
+                </div>
+    
+                <div id="ability">{{data.content.modules[0].components[0].role.roleDescriptionTitle}}</div>
+    
+                <div id="role-info">
+                    <ul id="info-frame">
+                        {{each data.content.modules[0].components[0].role.info info}}
+                        <li class="info-box">{{info.text}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+                <div id="skill">
+                    <div id="skill-1">
+                    </div>
+                    <div id="skill-2">
+                    </div>
+                    <div id="skill-3">
+                    </div>
+                    <div id="skill-4">
+                    </div>
+                    <div id="skill-5">
+                    </div>
+                    <div id="skill-6">
+                    </div>
+                </div>
             </div>
         </div>
-        <div>
-            <div id="role-title">
-                <img src="{{data.content.modules[0].components[0].role.campIcon}}" id="camp-icon">
-                <span id="role-name">{{data.content.modules[0].components[0].role.title}}</span>
-                <span id="role-subtitle">{{data.content.modules[0].components[0].role.subtitle}}</span>
-            </div>
-
-            <div id="ability">{{data.content.modules[0].components[0].role.roleDescriptionTitle}}</div>
-
-            <div id="role-info">
-                <ul id="info-frame">
-                    {{each data.content.modules[0].components[0].role.info info}}
-                    <li class="info-box">{{info.text}}</li>
-                    {{/each}}
-                </ul>
-            </div>
-            <div id="skill">
-                <div id="skill-1">
-                </div>
-                <div id="skill-2">
-                </div>
-                <div id="skill-3">
-                </div>
-                <div id="skill-4">
-                </div>
-                <div id="skill-5">
-                </div>
-                <div id="skill-6">
-                </div>
-            </div>
-        </div>
+        <div id="copyright">{{@copyright}}</div>
     </div>
 
-    <div id="footer"></div>
 
     <script>
         const dataContent = JSON.parse(document.getElementById('body').getAttribute('data-content'));

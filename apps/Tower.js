@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
-import Render from '../model/render.js';
+import Render from '../components/Render.js';
 
 export class TowerInfo extends plugin {
     constructor() {
@@ -73,7 +73,11 @@ export class TowerInfo extends plugin {
                 const Mapping = { '稳定': 1, '实验': 2, '深境': 3, '超载': 4 };
                 if (!key) key = '深境';
                 towerData.data = { ...towerData.data, difficulty: Mapping[key] || 3, diffiname: `${key}区` };
-                const imageCard = await Render.towerData(baseData.data, towerData.data);
+                const imageCard = await Render.render('Template/towerData/tower', {
+                    baseData: baseData.data,
+                    towerData: towerData.data,
+                }, { e, retType: 'base64' });
+
                 data.push({ message: imageCard });
             }
         }));

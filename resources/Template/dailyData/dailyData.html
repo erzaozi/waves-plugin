@@ -8,22 +8,25 @@
     <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
 </head>
 
-<body id="body">
-    <div id="account">
-        <div id="user-name">{{gameData.roleName}}</div>
-        <div id="user-uid">{{gameData.roleId}}</div>
-    </div>
-    <div id="data">
-        <div id="stamina">{{gameData.energyData.cur}}/{{gameData.energyData.total}}</div>
-        <div id="activity">{{gameData.livenessData.cur}}/{{gameData.livenessData.total}}</div>
-        <div id="dailytime">{{gameData.energyData.refreshTimeStamp}}</div>
-        <div id="experience">{{gameData.battlePassData[1].cur}}/{{gameData.battlePassData[1].total}}</div>
-        <div id="level">LV.{{gameData.battlePassData[0].cur}}</div>
-        <div id="progress" style="background: linear-gradient(90deg, #b9a068 0%, #c8c5bc 0%);"></div>
-    </div>
+<body id="body" {{sys.scale}}>
+    <div>
+        <div id="account">
+            <div id="user-name">{{gameData.roleName}}</div>
+            <div id="user-uid">{{gameData.roleId}}</div>
+        </div>
+        <div id="data">
+            <div id="stamina">{{gameData.energyData.cur}}/{{gameData.energyData.total}}</div>
+            <div id="activity">{{gameData.livenessData.cur}}/{{gameData.livenessData.total}}</div>
+            <div id="dailytime">{{gameData.energyData.refreshTimeStamp}}</div>
+            <div id="experience">{{gameData.battlePassData[1].cur}}/{{gameData.battlePassData[1].total}}</div>
+            <div id="level">LV.{{gameData.battlePassData[0].cur}}</div>
+            <div id="progress" style="background: linear-gradient(90deg, #b9a068 0%, #c8c5bc 0%);"></div>
+        </div>
 
-    <div id="curExp" style="display: none;">{{gameData.battlePassData[1].cur}}</div>
-    <div id="totalExp" style="display: none;">{{gameData.battlePassData[1].total}}</div>
+        <div id="curExp" style="display: none;">{{gameData.battlePassData[1].cur}}</div>
+        <div id="totalExp" style="display: none;">{{gameData.battlePassData[1].total}}</div>
+        <div id="copyright">{{@copyright}}</div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

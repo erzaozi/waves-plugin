@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
-import Render from '../model/render.js'
+import Render from '../components/Render.js';
 
 export class Explore extends plugin {
     constructor() {
@@ -62,7 +62,7 @@ export class Explore extends plugin {
                 await redis.set(`Yunzai:waves:bind:${e.user_id}`, account.roleId);
             }
 
-            const [baseData, exploreData] = await Promise.all([
+            let [baseData, exploreData] = await Promise.all([
                 waves.getBaseData(account.serverId, account.roleId, account.token),
                 waves.getExploreData(account.serverId, account.roleId, account.token)
             ]);
@@ -70,7 +70,12 @@ export class Explore extends plugin {
             if (!baseData.status || !exploreData.status) {
                 data.push({ message: baseData.msg || exploreData.msg });
             } else {
-                const imageCard = await Render.exploreData(baseData.data, exploreData.data)
+
+                const imageCard = await Render.render('Template/exploreIndex/exploreIndex', {
+                    baseData: baseData.data,
+                    exploreData: exploreData.data.exploreList,
+                }, { e, retType: 'base64' });
+
                 data.push({ message: imageCard });
             }
         }));

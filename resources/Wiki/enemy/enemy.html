@@ -8,21 +8,24 @@
     <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
 </head>
 
-<body id="body" data-content='{{data}}'>
+<body id="body" {{sys.scale}} data-content='{{data}}'>
 
-    <div id="container">
-        <div id="left">
-            <div id="icon-frame"></div>
-            <div id="desc"></div>
-            <div id="meterials"></div>
+    <div>
+        <div id="main-box">
+            <div id="left">
+                <div id="icon-frame"></div>
+                <div id="desc"></div>
+                <div id="meterials"></div>
 
+            </div>
+
+            <div id="right">
+                <div id="name"></div>
+                <div id="attribute"></div>
+            </div>
+            <div style="clear:both;"></div>
         </div>
-
-        <div id="right">
-            <div id="name"></div>
-            <div id="attribute"></div>
-        </div>
-        <div style="clear:both;"></div>
+        <div id="copyright">{{@copyright}}</div>
     </div>
 
 </body>

@@ -1,6 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import { pluginResources } from "../model/path.js";
-import Render from '../model/render.js'
+import Render from '../components/Render.js';
 import Wiki from '../components/Wiki.js';
 import YAML from 'yaml'
 import fs from 'fs'
@@ -160,7 +160,10 @@ export class Simulator extends plugin {
 
         await Promise.all(promises);
 
-        const imageCard = await Render.simulatorGacha({ userName: e.sender.nickname, poolName: data.pool_name, times: JSON.parse(await redis.get(`Yunzai:waves:simulator:${type}:${e.user_id}`)).five_star_time, list: gachaData })
+        const imageCard = await Render.render('Template/simulatorGacha/simulatorGacha', {
+            gachaData: { userName: e.sender.nickname, poolName: data.pool_name, times: JSON.parse(await redis.get(`Yunzai:waves:simulator:${type}:${e.user_id}`)).five_star_time, list: gachaData },
+        }, { e, retType: 'base64' });
+
         await e.reply(imageCard)
         return true
     }

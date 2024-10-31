@@ -10,130 +10,131 @@
     <script src="{{pluginResources}}/Template/charProfile/echarts.common.min.js"></script>
 </head>
 
-<body id="body" data-content='{{data}}'>
-    <div id="container">
-        {{if data.roleDetail.data.weightVersion}}
-        <div id="weight-version">当前权重文件版本 : v{{data.roleDetail.data.weightVersion}}</div>
-        {{/if}}
+<body id="body" {{sys.scale}} data-content='{{data}}'>
+    <div>
+        <div id="container">
+            {{if data.roleDetail.data.weightVersion}}
+            <div id="weight-version">当前权重文件版本 : v{{data.roleDetail.data.weightVersion}}</div>
+            {{/if}}
 
-        <div id="header">
-            <div id="user-id">UID:{{data.uid}}</div>
-            <div id="role-info-container">
-                <div id="role-info">
-                    <div id="attribute-container">
-                        <!-- 属性背景图 -->
-                        <img src="{{pluginResources}}/Template/charProfile/imgs/attributeBG.png" id="attributeBG">
-                        <img src="{{pluginResources}}/Template/charProfile/imgs/attribute/{{data.roleDetail.data.role.attributeId}}.png"
-                            id="attribute-icon">
+            <div id="header">
+                <div id="user-id">UID:{{data.uid}}</div>
+                <div id="role-info-container">
+                    <div id="role-info">
+                        <div id="attribute-container">
+                            <!-- 属性背景图 -->
+                            <img src="{{pluginResources}}/Template/charProfile/imgs/attributeBG.png" id="attributeBG">
+                            <img src="{{pluginResources}}/Template/charProfile/imgs/attribute/{{data.roleDetail.data.role.attributeId}}.png"
+                                id="attribute-icon">
+                        </div>
+
+                        <div id="text-container">
+                            <div id="role-name">{{data.roleDetail.data.role.roleName}}</div>
+                            <div id="role-level">LV.{{data.roleDetail.data.role.level}}</div>
+                        </div>
                     </div>
+                    <!-- 根据星级动态生成星星图片 -->
+                    <div id="role-stars" data-star-src="{{pluginResources}}/Template/charProfile/imgs/star.png"></div>
+                    <!-- 星星图片的容器 -->
+                </div>
 
-                    <div id="text-container">
-                        <div id="role-name">{{data.roleDetail.data.role.roleName}}</div>
-                        <div id="role-level">LV.{{data.roleDetail.data.role.level}}</div>
+                <!-- 角色图片 -->
+                <div id="role-pic-container">
+                    <img src="{{data.rolePicUrl}}">
+                </div>
+
+                <div id="chain">
+                    <div id="chain-list">
+                        {{each data.roleDetail.data.chainList chain}}
+                        <img src="{{chain.iconUrl}}" actived="{{chain.unlocked}}">
+                        {{/each}}
                     </div>
                 </div>
-                <!-- 根据星级动态生成星星图片 -->
-                <div id="role-stars" data-star-src="{{pluginResources}}/Template/charProfile/imgs/star.png"></div>
-                <!-- 星星图片的容器 -->
             </div>
-
-            <!-- 角色图片 -->
-            <div id="role-pic-container">
-                <img src="{{data.rolePicUrl}}">
-            </div>
-
-            <div id="chain">
-                <div id="chain-list">
-                    {{each data.roleDetail.data.chainList chain}}
-                    <img src="{{chain.iconUrl}}" actived="{{chain.unlocked}}">
-                    {{/each}}
+            <div id="skill">
+                <div id="skill-list">
+                    {{each data.roleDetail.data.skillList skill idx}}
+                    {{if idx<5}} <div class="skill-item">
+                        <img src="{{skill.skill.iconUrl}}" class="skill-icon">
+                        <div class="skill-level">LV.{{skill.level}}</div>
                 </div>
+                {{/if}}
+                {{/each}}
             </div>
         </div>
-        <div id="skill">
-            <div id="skill-list">
-                {{each data.roleDetail.data.skillList skill idx}}
-                {{if idx<5}} <div class="skill-item">
-                    <img src="{{skill.skill.iconUrl}}" class="skill-icon">
-                    <div class="skill-level">LV.{{skill.level}}</div>
+        <div class="total-score-table">
+            {{if data.roleDetail.data.phantomData.statistic}}
+            <div class="total-score-table-left">
+                <div class="total-score-key">声骸总分</div>
+                <div class="total-score-value" style="{{data.roleDetail.data.phantomData.statistic.color || "#a0a0a0"}}">
+                    {{data.roleDetail.data.phantomData.statistic.totalScore.toFixed(2)}}</div>
+                <div class="total-score-key">声骸评级</div>
+                <div class="total-score-value" style="{{data.roleDetail.data.phantomData.statistic.color || "#a0a0a0"}}">
+                    {{data.roleDetail.data.phantomData.statistic.rank}}</div>
+            </div>
+            <div id="column" style="position: relative;left: -20px;top: -30px;width:100%;height:249px;"></div>
+            {{else}}
+            <div style="color: #585858;font-style: italic;font-size: 50px;margin: 30px 134px;">
+                当前角色暂无评分
+            </div>
+            {{/if}}
+        </div>
+        <div id="table">
+            <div>
+                <div id="weapon-icon-box">
+                    <img src="{{data.roleDetail.data.weaponData.weapon.weaponIcon}}" id="weapon-icon">
+                    <div class="phantom-level">LV.{{data.roleDetail.data.weaponData.level}}</div>
+                </div>
+                <div class="weapon-header-right">
+                    <div id="weapon-name">{{data.roleDetail.data.weaponData.weapon.weaponName}}</div>
+                    <div id="weapon-level-box">
+                        <div id="weapon-star" data-star-src="{{pluginResources}}/Template/charProfile/imgs/star.png"
+                            data-star-level="{{data.roleDetail.data.weaponData.weapon.weaponStarLevel}}">
+                        </div>
+
+                        <span id="reson-level"
+                            style="{{data.roleDetail.data.weaponData.color}}">精{{data.roleDetail.data.weaponData.resonLevel}}</span>
+                    </div>
+                </div>
+                <div id="weapon-effect-name">{{data.roleDetail.data.weaponData.weapon.weaponEffectName}}</div>
+                <div id="effect-description">{{data.roleDetail.data.weaponData.weapon.effectDescription}}</div>
+            </div>
+            {{each data.roleDetail.data.phantomData.equipPhantomList phantom}}
+            {{if phantom}}
+            <div class="phantom-list">
+                <div class="phantom-header">
+                    <img src="{{phantom.phantomProp.iconUrl}}" class="phantom-icon">
+                    <div class="phantom-level">+{{phantom.level}}</div>
+                    <img src="{{phantom.fetterDetail.iconUrl}}" class="fetter-icon">
+                    <div class="phantom-header-right">
+                        <div class="phantom-name">{{phantom.phantomProp.name.replace("（","(").replace("）",")")}}</div>
+                        {{if phantom.realScore}}
+                        <div class="phantom-rank-score" style="{{phantom.color}}">
+                            {{phantom.realScore.toFixed(2)}}-{{phantom.rank}}</div>
+                        {{else}}
+                        <div class="phantom-rank-score" style="color: #a0a0a0;">暂无评分</div>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="phantom-attribute">
+                    {{each phantom.mainProps prop}}
+                    <div class="phantom-attribute-item" style="font-weight: bold;">
+                        <span class="phantom-attribute-key">{{prop.attributeName}}</span> <span
+                            class="phantom-attribute-value">{{prop.attributeValue}}</span>
+                    </div>
+                    {{/each}}
+                    {{each phantom.subProps prop}}
+                    <div class="phantom-attribute-item" style="{{prop.color}}">
+                        <span class="phantom-attribute-key">{{prop.attributeName}}</span> <span
+                            class="phantom-attribute-value">{{prop.attributeValue}}</span>
+                    </div>
+                    {{/each}}
+                </div>
             </div>
             {{/if}}
             {{/each}}
         </div>
-    </div>
-    <div class="total-score-table">
-        {{if data.roleDetail.data.phantomData.statistic}}
-        <div class="total-score-table-left">
-            <div class="total-score-key">声骸总分</div>
-            <div class="total-score-value" style="{{data.roleDetail.data.phantomData.statistic.color || " #a0a0a0"}}">
-                {{data.roleDetail.data.phantomData.statistic.totalScore.toFixed(2)}}</div>
-            <div class="total-score-key">声骸评级</div>
-            <div class="total-score-value" style="{{data.roleDetail.data.phantomData.statistic.color || " #a0a0a0"}}">
-                {{data.roleDetail.data.phantomData.statistic.rank}}</div>
-        </div>
-        <div id="column" style="position: relative;left: -20px;top: -30px;width:100%;height:249px;"></div>
-        {{else}}
-        <div style="color: #585858;font-style: italic;font-size: 50px;margin: 30px 134px;">
-            当前角色暂无评分
-        </div>
-        {{/if}}
-    </div>
-
-    <div id="table">
-        <div>
-            <div id="weapon-icon-box">
-                <img src="{{data.roleDetail.data.weaponData.weapon.weaponIcon}}" id="weapon-icon">
-                <div class="phantom-level">LV.{{data.roleDetail.data.weaponData.level}}</div>
-            </div>
-            <div class="weapon-header-right">
-                <div id="weapon-name">{{data.roleDetail.data.weaponData.weapon.weaponName}}</div>
-                <div id="weapon-level-box">
-                    <div id="weapon-star" data-star-src="{{pluginResources}}/Template/charProfile/imgs/star.png"
-                        data-star-level="{{data.roleDetail.data.weaponData.weapon.weaponStarLevel}}">
-                    </div>
-
-                    <span id="reson-level"
-                        style="{{data.roleDetail.data.weaponData.color}}">精{{data.roleDetail.data.weaponData.resonLevel}}</span>
-                </div>
-            </div>
-            <div id="weapon-effect-name">{{data.roleDetail.data.weaponData.weapon.weaponEffectName}}</div>
-            <div id="effect-description">{{data.roleDetail.data.weaponData.weapon.effectDescription}}</div>
-        </div>
-        {{each data.roleDetail.data.phantomData.equipPhantomList phantom}}
-        {{if phantom}}
-        <div class="phantom-list">
-            <div class="phantom-header">
-                <img src="{{phantom.phantomProp.iconUrl}}" class="phantom-icon">
-                <div class="phantom-level">+{{phantom.level}}</div>
-                <img src="{{phantom.fetterDetail.iconUrl}}" class="fetter-icon">
-                <div class="phantom-header-right">
-                    <div class="phantom-name">{{phantom.phantomProp.name.replace("（","(").replace("）",")")}}</div>
-                    {{if phantom.realScore}}
-                    <div class="phantom-rank-score" style="{{phantom.color}}">
-                        {{phantom.realScore.toFixed(2)}}-{{phantom.rank}}</div>
-                    {{else}}
-                    <div class="phantom-rank-score" style="color: #a0a0a0;">暂无评分</div>
-                    {{/if}}
-                </div>
-            </div>
-            <div class="phantom-attribute">
-                {{each phantom.mainProps prop}}
-                <div class="phantom-attribute-item" style="font-weight: bold;">
-                    <span class="phantom-attribute-key">{{prop.attributeName}}</span> <span
-                        class="phantom-attribute-value">{{prop.attributeValue}}</span>
-                </div>
-                {{/each}}
-                {{each phantom.subProps prop}}
-                <div class="phantom-attribute-item" style="{{prop.color}}">
-                    <span class="phantom-attribute-key">{{prop.attributeName}}</span> <span
-                        class="phantom-attribute-value">{{prop.attributeValue}}</span>
-                </div>
-                {{/each}}
-            </div>
-        </div>
-        {{/if}}
-        {{/each}}
-    </div>
+        <div id="copyright">{{@copyright}}</div>
     </div>
 
     <script>
@@ -168,7 +169,6 @@
             createStars('weapon-star', weaponStarSrc, weaponStarLevel);
         });
     </script>
-
     <script>
         const dataContent = JSON.parse(document.getElementById('body').getAttribute('data-content'))
 

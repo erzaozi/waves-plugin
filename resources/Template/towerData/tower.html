@@ -8,39 +8,42 @@
     <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
 </head>
 
-<body id="body">
-    <div id="account">
-        <div id="user-name">{{baseData.name}}</div>
-        <div id="user-uid">{{baseData.id}}</div>
-    </div>
-    <div class="tower-body">
-        {{each towerData.difficultyList area}}
-        {{if area.difficulty == towerData.difficulty}}
-        {{each area.towerAreaList tower}}
-        <div class="tower-area">
-            <span class="tower-name">{{towerData.diffiname}}·{{tower.areaName}}</span>
-            <span class="tower-star">{{tower.star}}/{{tower.maxStar}}</span>
+<body id="body" {{sys.scale}}>
+    <div>
+        <div id="account">
+            <div id="user-name">{{baseData.name}}</div>
+            <div id="user-uid">{{baseData.id}}</div>
         </div>
-        {{each tower.floorList floor}}
-        <div class="floor-list" style="background-image: url({{floor.picUrl}});">
-            <div class="floor-name" floor="{{floor.floor}}"></div>
-            <div class="star-icon" starlevel="{{floor.star}}">
-                <img src="{{pluginResources}}/Template/towerData/imgs/star.jpg">
-                <img src="{{pluginResources}}/Template/towerData/imgs/star.jpg">
-                <img src="{{pluginResources}}/Template/towerData/imgs/star.jpg">
+        <div class="tower-body">
+            {{each towerData.difficultyList area}}
+            {{if area.difficulty == towerData.difficulty}}
+            {{each area.towerAreaList tower}}
+            <div class="tower-area">
+                <span class="tower-name">{{towerData.diffiname}}·{{tower.areaName}}</span>
+                <span class="tower-star">{{tower.star}}/{{tower.maxStar}}</span>
             </div>
-            {{each floor.roleList role}}
-            <div class="avatar-frame">
-                <img src="{{role.iconUrl}}" class="avatar">
+            {{each tower.floorList floor}}
+            <div class="floor-list" style="background-image: url({{floor.picUrl}});">
+                <div class="floor-name" floor="{{floor.floor}}"></div>
+                <div class="star-icon" starlevel="{{floor.star}}">
+                    <img src="{{pluginResources}}/Template/towerData/imgs/star.jpg">
+                    <img src="{{pluginResources}}/Template/towerData/imgs/star.jpg">
+                    <img src="{{pluginResources}}/Template/towerData/imgs/star.jpg">
+                </div>
+                {{each floor.roleList role}}
+                <div class="avatar-frame">
+                    <img src="{{role.iconUrl}}" class="avatar">
+                </div>
+                {{/each}}
             </div>
             {{/each}}
+            {{/each}}
+            {{/if}}
+            {{/each}}
         </div>
-        {{/each}}
-        {{/each}}
-        {{/if}}
-        {{/each}}
+        <div id="copyright">{{@copyright}}</div>
     </div>
-    <div style="height: 50px;width: 1px;"></div>
+
     <script>
         const starList = Array.from(document.getElementsByClassName("star-icon"));
         starList.forEach((ele) => {

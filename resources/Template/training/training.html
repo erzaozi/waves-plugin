@@ -8,7 +8,7 @@
     <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
 </head>
 
-<body id="body">
+<body id="body" {{sys.scale}}>
     <div id="box">
         <div id="header">
             <div id="user-name">练度统计</div>
@@ -81,6 +81,7 @@
                 {{/each}}
             </ul>
         </div>
+        <div id="copyright">{{@copyright}}</div>
     </div>
 </body>
 

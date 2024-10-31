@@ -8,16 +8,91 @@
     <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
 </head>
 
-<body id="body">
-    <div id="top-half">
-        <div id="left">
-            <div class="container">
+<body id="body" {{sys.scale}}>
+    <div>
+        <div id="top-half">
+            <div id="left">
+                <div class="container">
+                    <div id="header">
+                        <img src="{{pluginResources}}/Template/calendar/imgs/texture.svg"
+                            style="position: absolute; right: -62.7px;top: -28px; height: 320px;"></img>
+                        <img src="{{pluginResources}}/Template/calendar/imgs/logo-rolepool.png" id="logo">
+                        <div id="header-text">
+                            <span>角色唤取活动</span>
+                            <img src="{{pluginResources}}/Template/calendar/imgs/rune.svg">
+                        </div>
+                    </div>
+                    <div class="bottom-line">
+                        <div class="black-block"></div>
+                        <div class="black-block"></div>
+                    </div>
+                    <div class="pool-time">
+                        <div style="padding: 8px 0px 0px 18px;">
+                            <span style="color: #fff;">进行中：</span>
+                            <span style="color: #cdb56b;">{{data.role.time}}</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="--width: {{data.role.progress}}%;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pool-name">{{data.role.description}}</div>
+                    <div class="pool-pic">
+                        {{each data.role.imgs img idx}}
+                        <div>
+                            <img src="{{img}}">
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            <div id="right">
+                <div class="container">
+                    <div id="header">
+                        <img src="{{pluginResources}}/Template/calendar/imgs/texture.svg"
+                            style="position: absolute; right: -62.7px;top: -28px; height: 320px;"></img>
+                        <img src="{{pluginResources}}/Template/calendar/imgs/logo-weaponpool.png" id="logo">
+                        <div id="header-text">
+                            <span>武器活动唤取</span>
+                            <img src="{{pluginResources}}/Template/calendar/imgs/rune.svg">
+                        </div>
+                    </div>
+                    <div class="bottom-line">
+                        <div class="black-block"></div>
+                        <div class="black-block"></div>
+                    </div>
+                    <div class="pool-time">
+                        <div style="padding: 8px 0px 0px 18px;">
+                            <span style="color: #fff;">进行中：</span>
+                            <span style="color: #cdb56b;">{{data.weapon.time}}</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="--width: {{data.weapon.progress}}%;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pool-name">{{data.weapon.description}}</div>
+                    <div class="pool-pic">
+                        {{each data.weapon.imgs img idx}}
+                        <div>
+                            <img src="{{img}}">
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="bottom-half">
+            <div class="container" id="activity" style="margin: 0px 25px;">
                 <div id="header">
                     <img src="{{pluginResources}}/Template/calendar/imgs/texture.svg"
                         style="position: absolute; right: -62.7px;top: -28px; height: 320px;"></img>
-                    <img src="{{pluginResources}}/Template/calendar/imgs/logo-rolepool.png" id="logo">
+                    <img src="{{pluginResources}}/Template/calendar/imgs/logo-activity.png" id="logo">
                     <div id="header-text">
-                        <span>角色唤取活动</span>
+                        <span>版本活动</span>
                         <img src="{{pluginResources}}/Template/calendar/imgs/rune.svg">
                     </div>
                 </div>
@@ -25,117 +100,46 @@
                     <div class="black-block"></div>
                     <div class="black-block"></div>
                 </div>
-                <div class="pool-time">
-                    <div style="padding: 8px 0px 0px 18px;">
-                        <span style="color: #fff;">进行中：</span>
-                        <span style="color: #cdb56b;">{{data.role.time}}</span>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar" style="--width: {{data.role.progress}}%;">
+                <ul>
+                    {{each data.activity activity idx}}
+                    <li>
+                        <div>
+                            <img src="{{activity.contentUrl}}">
+                            <div class="activity-info">
+                                <div class="line-1">{{activity.title}}</div>
+                                <div class="line-2">{{activity.time}}</div>
+                                <div class="line-3">
+                                    {{if activity.active}}
+                                    <svg width="44" height="44" viewBox="0 0 16 16" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M7.99994 14.5C11.5898 14.5 14.4999 11.5899 14.4999 8C14.4999 4.41015 11.5898 1.5 7.99994 1.5C4.41009 1.5 1.49994 4.41015 1.49994 8C1.49994 11.5899 4.41009 14.5 7.99994 14.5ZM7.99994 16C12.4182 16 15.9999 12.4183 15.9999 8C15.9999 3.58172 12.4182 0 7.99994 0C3.58166 0 -6.10352e-05 3.58172 -6.10352e-05 8C-6.10352e-05 12.4183 3.58166 16 7.99994 16ZM7 3H9V7.58638L11.9177 9.392L10.8653 11.0927L7 8.7007L7.0009 8.69925H7V3Z"
+                                            fill="#6C665E"></path>
+                                        <circle opacity="0.5" cx="7.99994" cy="8" r="4.75" stroke="#6C665E"
+                                            stroke-width="0.5">
+                                        </circle>
+                                    </svg>
+                                    {{/if}}
+                                    <span style="margin-left: 10px;color: #6c665e;">{{activity.active}}</span>
+                                    <span
+                                        style="margin-left: 10px;color: #181818; font-weight: 400;">{{activity.remain}}</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="pool-name">{{data.role.description}}</div>
-                <div class="pool-pic">
-                    {{each data.role.imgs img idx}}
-                    <div>
-                        <img
-                            src="{{img}}">
-                    </div>
+                        <div class="progress">
+                            {{if activity.progress < 100}} <div class="progress-bar"
+                                style="--width: {{activity.progress}}%;background: #cdb56b;">
+                                {{else}}
+                                <div class="progress-bar" style="--width: 100%;background: #eb8e93;">
+                                    {{/if}}
+                                </div>
+                        </div>
+                    </li>
                     {{/each}}
-                </div>
+                </ul>
             </div>
         </div>
-        <div id="right">
-            <div class="container">
-                <div id="header">
-                    <img src="{{pluginResources}}/Template/calendar/imgs/texture.svg"
-                        style="position: absolute; right: -62.7px;top: -28px; height: 320px;"></img>
-                    <img src="{{pluginResources}}/Template/calendar/imgs/logo-weaponpool.png" id="logo">
-                    <div id="header-text">
-                        <span>武器活动唤取</span>
-                        <img src="{{pluginResources}}/Template/calendar/imgs/rune.svg">
-                    </div>
-                </div>
-                <div class="bottom-line">
-                    <div class="black-block"></div>
-                    <div class="black-block"></div>
-                </div>
-                <div class="pool-time">
-                    <div style="padding: 8px 0px 0px 18px;">
-                        <span style="color: #fff;">进行中：</span>
-                        <span style="color: #cdb56b;">{{data.weapon.time}}</span>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar" style="--width: {{data.weapon.progress}}%;">
-                        </div>
-                    </div>
-                </div>
-                <div class="pool-name">{{data.weapon.description}}</div>
-                <div class="pool-pic">
-                    {{each data.weapon.imgs img idx}}
-                    <div>
-                        <img
-                            src="{{img}}">
-                    </div>
-                    {{/each}}
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <div class="container" id="activity" style="margin: 0px 50px;">
-        <div id="header">
-            <img src="{{pluginResources}}/Template/calendar/imgs/texture.svg"
-                style="position: absolute; right: -62.7px;top: -28px; height: 320px;"></img>
-            <img src="{{pluginResources}}/Template/calendar/imgs/logo-activity.png" id="logo">
-            <div id="header-text">
-                <span>版本活动</span>
-                <img src="{{pluginResources}}/Template/calendar/imgs/rune.svg">
-            </div>
-        </div>
-        <div class="bottom-line">
-            <div class="black-block"></div>
-            <div class="black-block"></div>
-        </div>
-        <ul>
-            {{each data.activity activity idx}}
-            <li>
-                <div>
-                    <img src="{{activity.contentUrl}}">
-                    <div class="activity-info">
-                        <div class="line-1">{{activity.title}}</div>
-                        <div class="line-2">{{activity.time}}</div>
-                        <div class="line-3">
-                            {{if activity.active}}
-                            <svg width="44" height="44" viewBox="0 0 16 16" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M7.99994 14.5C11.5898 14.5 14.4999 11.5899 14.4999 8C14.4999 4.41015 11.5898 1.5 7.99994 1.5C4.41009 1.5 1.49994 4.41015 1.49994 8C1.49994 11.5899 4.41009 14.5 7.99994 14.5ZM7.99994 16C12.4182 16 15.9999 12.4183 15.9999 8C15.9999 3.58172 12.4182 0 7.99994 0C3.58166 0 -6.10352e-05 3.58172 -6.10352e-05 8C-6.10352e-05 12.4183 3.58166 16 7.99994 16ZM7 3H9V7.58638L11.9177 9.392L10.8653 11.0927L7 8.7007L7.0009 8.69925H7V3Z"
-                                    fill="#6C665E"></path>
-                                <circle opacity="0.5" cx="7.99994" cy="8" r="4.75" stroke="#6C665E" stroke-width="0.5">
-                                </circle>
-                            </svg>
-                            {{/if}}
-                            <span style="margin-left: 10px;color: #6c665e;">{{activity.active}}</span>
-                            <span style="margin-left: 10px;color: #181818; font-weight: 400;">{{activity.remain}}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="progress">
-                    {{if activity.progress < 100}}
-                    <div class="progress-bar" style="--width: {{activity.progress}}%;background: #cdb56b;">
-                    {{else}}
-                    <div class="progress-bar" style="--width: 100%;background: #eb8e93;">
-                    {{/if}}
-                    </div>
-                </div>
-            </li>
-            {{/each}}
-        </ul>
+        <div id="copyright">{{@copyright}}</div>
     </div>
 </body>
 

@@ -8,46 +8,49 @@
     <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
 </head>
 
-<body id="body">
-    <div class="container">
-        <div id="header">
-            <img src="{{pluginResources}}/Template/queryRecord/imgs/texture.svg"
-                style="position: absolute; right: -62.7px;top: -28px; height: 320px;"></img>
-            <img src="{{pluginResources}}/Template/queryRecord/imgs/logo-activity.png" id="logo">
-            <div id="header-text">
-                <span>签到记录</span>
-                <img src="{{pluginResources}}/Template/queryRecord/imgs/rune.svg">
-            </div>
-        </div>
-        <div class="bottom-line">
-            <div class="black-block"></div>
-            <div class="black-block"></div>
-        </div>
-        <div id="table">
-            <div>
-                奖励内容
-            </div>
-            <div>
-                发放状态
-            </div>
-        </div>
-        <ul>
-            {{each listData data idx}}
-            <li>
-                <img src="{{data.goodsUrl}}">
-                <div class="reward">
-                    <div class="reward-name">{{data.goodsName}}×{{data.goodsNum}}</div>
-                    <div class="reward-time">{{data.sigInDate}}</div>
+<body id="body" {{sys.scale}}>
+    <div>
+        <div class="main-box">
+            <div id="header">
+                <img src="{{pluginResources}}/Template/queryRecord/imgs/texture.svg"
+                    style="position: absolute; right: -62.7px;top: -28px; height: 320px;"></img>
+                <img src="{{pluginResources}}/Template/queryRecord/imgs/logo-activity.png" id="logo">
+                <div id="header-text">
+                    <span>签到记录</span>
+                    <img src="{{pluginResources}}/Template/queryRecord/imgs/rune.svg">
                 </div>
-                {{if data.sendState}}
-                <div class="status">已发放</div>
-                {{else}}
-                <div class="status">发送中</div>
-                {{/if}}
-            </li>
-            {{/each}}
-        </ul>
-
+            </div>
+            <div class="bottom-line">
+                <div class="black-block"></div>
+                <div class="black-block"></div>
+            </div>
+            <div id="table">
+                <div>
+                    奖励内容
+                </div>
+                <div>
+                    发放状态
+                </div>
+            </div>
+            <ul>
+                {{each listData data idx}}
+                <li>
+                    <img src="{{data.goodsUrl}}">
+                    <div class="reward">
+                        <div class="reward-name">{{data.goodsName}}×{{data.goodsNum}}</div>
+                        <div class="reward-time">{{data.sigInDate}}</div>
+                    </div>
+                    {{if data.sendState}}
+                    <div class="status">已发放</div>
+                    {{else}}
+                    <div class="status">发送中</div>
+                    {{/if}}
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        <div id="copyright">{{@copyright}}</div>
+    </div>
 </body>
 
 </html>

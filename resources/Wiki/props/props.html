@@ -8,12 +8,15 @@
     <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
 </head>
 
-<body id="body" data-content='{{data}}'>
-    <div id="picture">
-        <img src="" id="icon">
-        <div id="name"></div>
-    </div>
-    <div id="info-table">
+<body id="body" {{sys.scale}} data-content='{{data}}'>
+    <div>
+        <div id="picture">
+            <img src="" id="icon">
+            <div id="name"></div>
+        </div>
+        <div id="info-table">
+        </div>
+        <div id="copyright">{{@copyright}}</div>
     </div>
 
     <script>

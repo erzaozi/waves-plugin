@@ -17,20 +17,23 @@
         </style>
 </head>
 
-<body>
-        <div class="info-box">
-                {{gachaData.userName}}<br>{{gachaData.poolName}}<br>{{gachaData.times}}
-        </div>
-        <div id="gacha">
-                {{each gachaData.list gacha idx}}
-                <div class="frame" data-star="{{gacha.star}}">
-                        <img class="img-bottom"
-                                src="{{pluginResources}}/Template/simulatorGacha/imgs/bg-card-{{gacha.star}}.png">
-                        <img class="img-role" src="{{gacha.role}}">
-                        <img class="img-cover"
-                                src="{{pluginResources}}/Template/simulatorGacha/imgs/tb-card-{{gacha.star}}.png">
+<body {{sys.scale}}>
+        <div>
+                <div class="info-box">
+                        {{gachaData.userName}}<br>{{gachaData.poolName}}<br>{{gachaData.times}}
                 </div>
-                {{/each}}
+                <div id="gacha">
+                        {{each gachaData.list gacha idx}}
+                        <div class="frame" data-star="{{gacha.star}}">
+                                <img class="img-bottom"
+                                        src="{{pluginResources}}/Template/simulatorGacha/imgs/bg-card-{{gacha.star}}.png">
+                                <img class="img-role" src="{{gacha.role}}">
+                                <img class="img-cover"
+                                        src="{{pluginResources}}/Template/simulatorGacha/imgs/tb-card-{{gacha.star}}.png">
+                        </div>
+                        {{/each}}
+                </div>
+                <div id="copyright">{{@copyright}}</div>
         </div>
 
         <script>

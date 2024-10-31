@@ -13,20 +13,24 @@
 }
 
 #body {
+    transform-origin: top left;
     width: 1890px;
-    height: 1000px;
-    background: url(./imgs/relics.png) no-repeat;
+    height: 1036px;
     font-family: "MiSans";
 }
 
-#container {
-    padding-bottom: 50px;
+#body>div {
+    width: 100%;
+    background: url(./imgs/relics.png) no-repeat;
+}
+
+#main-box {
+    display: flex;
+    flex-direction: row;
 }
 
 #left {
-    height: auto;
     width: 45%;
-    float: left;
 }
 
 #avatar {
@@ -64,9 +68,7 @@
 }
 
 #right {
-    height: auto;
     width: 55%;
-    float: right;
 }
 
 #data-table {
@@ -83,4 +85,21 @@
 
 #data-table td {
     padding: 0px 30px;
+}
+
+#copyright {
+    position: relative;
+    width: 35%;
+    font-size: 1em;
+    margin: 0 auto;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    text-align: center;
+    padding: 40px 0;
+}
+
+#copyright .version {
+    color: #d3bc8e;
+    display: inline-block;
+    padding: 0 3px;
 }

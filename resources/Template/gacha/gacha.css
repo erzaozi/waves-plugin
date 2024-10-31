@@ -12,16 +12,25 @@
     user-select: none;
 }
 
+#body {
+    transform-origin: top left;
+    display: inline-block;
+}
+
+#body>div {
+    display: inline-block;
+}
+
 hr {
     display: inline-block;
     width: auto;
 }
 
-#container {
+#main-box {
     width: auto;
     display: flex;
     flex-direction: row;
-    padding: 40px;
+    padding: 40px 40px 0 40px;
     font-family: "MiSans";
 }
 
@@ -197,4 +206,21 @@ hr {
     background-color: #feeb73;
     font-weight: bold;
     border-radius: 0px 0px 20px 20px;
+}
+
+#copyright {
+    position: relative;
+    width: 35%;
+    font-size: 14px;
+    margin: 0 auto;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+#copyright .version {
+    color: #d3bc8e;
+    display: inline-block;
+    padding: 0 3px;
 }

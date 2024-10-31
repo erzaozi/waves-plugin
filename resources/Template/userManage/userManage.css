@@ -13,17 +13,23 @@
 }
 
 #body {
+    transform-origin: top left;
+    width: 1520px;
     font-family: "MiSans";
 }
 
-#container {
-    background-image: url(./imgs/background.jpg);
+#body>div {
+    width: 100%;
+    background: url(./imgs/background.jpg) no-repeat;
+}
+
+#main-box {
     background-size: cover;
-    position: inherit;
+    position: relative;
     display: flex;
     flex-direction: row;
     width: 1520px;
-    height: 700PX;
+    height: 700px;
 }
 
 #left {
@@ -86,4 +92,21 @@ ul {
 
 li {
     margin: 60px 0px;
+}
+
+#copyright {
+    position: relative;
+    width: 35%;
+    font-size: 1em;
+    margin: 0 auto;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    text-align: center;
+    padding: 40px 0;
+}
+
+#copyright .version {
+    color: #d3bc8e;
+    display: inline-block;
+    padding: 0 3px;
 }

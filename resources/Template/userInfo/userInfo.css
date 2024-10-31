@@ -13,11 +13,19 @@
 }
 
 #body {
+    transform-origin: top left;
     width: 1220px;
     height: auto;
-    background-image: url(imgs/background.png);
-    background-repeat: no-repeat;
     font-family: "MiSans";
+}
+
+#body>div {
+    width: 100%;
+    background: url(imgs/background.png) no-repeat;
+}
+
+#account {
+    height: 500px;
 }
 
 #user-name {
@@ -36,12 +44,12 @@
 }
 
 #profile {
-    position: absolute;
+    position: relative;
     display: grid;
     grid-template-columns: 267px 267px 267px 267px;
     column-gap: 16px;
     row-gap: 15px;
-    top: 694px;
+    margin-top: 190px;
     left: 52px;
     width: 1117px;
     height: 570px;
@@ -61,9 +69,8 @@
     grid-template-columns: 250px 250px 250px 250px;
     column-gap: 36px;
     row-gap: 36px;
-    padding-top: 1255.2px;
+    padding-top: 180px;
     padding-left: 57px;
-    padding-bottom: 140px;
     width: 1164px;
     height: auto;
 }
@@ -103,4 +110,21 @@
     top: 236px;
     color: white;
     font-size: 25px;
+}
+
+#copyright {
+    position: relative;
+    width: 35%;
+    font-size: 1em;
+    margin: 0 auto;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    text-align: center;
+    padding: 30px 0;
+}
+
+#copyright .version {
+    color: #d3bc8e;
+    display: inline-block;
+    padding: 0 3px;
 }

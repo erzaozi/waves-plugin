@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
-import Render from '../model/render.js'
+import Render from '../components/Render.js';
 
 export class Challenge extends plugin {
     constructor() {
@@ -62,15 +62,40 @@ export class Challenge extends plugin {
                 await redis.set(`Yunzai:waves:bind:${e.user_id}`, account.roleId);
             }
 
-            const [baseData, ChallengeData] = await Promise.all([
+            const [baseData, challengeData] = await Promise.all([
                 waves.getBaseData(account.serverId, account.roleId, account.token),
                 waves.getChallengeData(account.serverId, account.roleId, account.token)
             ]);
 
-            if (!baseData.status || !ChallengeData.status) {
-                data.push({ message: baseData.msg || ChallengeData.msg });
+            if (!baseData.status || !challengeData.status) {
+                data.push({ message: baseData.msg || challengeData.msg });
             } else {
-                const imageCard = await Render.challengeData(baseData.data, ChallengeData.data);
+                const result = [];
+
+                Object.keys(challengeData.data.challengeInfo).forEach(key => {
+                    const challenges = challengeData.data.challengeInfo[key];
+
+                    for (let i = challenges.length - 1; i >= 0; i--) {
+                        if (challenges[i].roles) {
+                            result.push(challenges[i]);
+                            break;
+                        }
+                    }
+                });
+
+                for (let i = 0; i < result.length; i++) {
+                    const passTime = result[i].passTime;
+                    const hours = Math.floor(passTime / 3600);
+                    const minutes = Math.floor((passTime % 3600) / 60);
+                    const seconds = passTime % 60;
+                    result[i].passTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                };
+
+                const imageCard = await Render.render('Template/challengeDetails/challengeDetails', {
+                    baseData: baseData.data,
+                    challengeData: result,
+                }, { e, retType: 'base64' });
+
                 data.push({ message: imageCard });
             }
         }));

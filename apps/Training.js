@@ -2,7 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js'
 import WeightCalculator from '../utils/Calculate.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
-import Render from '../model/render.js'
+import Render from '../components/Render.js';
 
 export class Training extends plugin {
     constructor() {
@@ -87,7 +87,11 @@ export class Training extends plugin {
 
             roleList.sort((a, b) => b.starLevel - a.starLevel || b.phantomData.statistic.totalScore - a.phantomData.statistic.totalScore);
 
-            const imageCard = await Render.Training(baseData.data, roleList);
+            const imageCard = await Render.render('Template/training/training', {
+                baseData: baseData.data,
+                roleList,
+            }, { e, retType: 'base64' });
+
             data.push({ message: imageCard });
         }));
 

@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Kuro from "../components/Kuro.js";
 import Config from "../components/Config.js";
-import Render from '../model/render.js'
+import Render from '../components/Render.js';
 
 export class Task extends plugin {
 
@@ -127,7 +127,11 @@ export class Task extends plugin {
             if (!taskData.status || !coinData.status) {
                 data.push({ message: taskData.msg || coinData.msg })
             } else {
-                const imageCard = await Render.taskList(taskData.data, coinData.data)
+                const imageCard = await Render.render('Template/taskList/taskList', {
+                    taskData: taskData.data,
+                    coinData: coinData.data,
+                }, { e, retType: 'base64' });
+
                 data.push({ message: imageCard });
             }
         }

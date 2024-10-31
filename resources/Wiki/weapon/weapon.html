@@ -9,28 +9,31 @@
 </head>
 
 <body id="body" data-content='{{data}}'>
-    <div id="container">
-        <div id="left">
-            <div id="weapon-display">
+    <div>
+        <div id="main-box">
+            <div id="left">
+                <div id="weapon-display">
+                </div>
+
+                <div id="weapon-desc">
+                </div>
             </div>
 
-            <div id="weapon-desc">
+            <div id="right">
+                <div id="weapon-info">
+                    <div id="weapon-name"></div>
+                    <span id="weapon-subtitle"></span>
+                </div>
+                <div id="weapon-level"></div>
+                <div id="tags">
+                </div>
+                <div id="meterials">
+                </div>
+                <div id="skill"></div>
             </div>
+            <div style="clear:both;"></div>
         </div>
-
-        <div id="right">
-            <div id="weapon-info">
-                <div id="weapon-name"></div>
-                <span id="weapon-subtitle"></span>
-            </div>
-            <div id="weapon-level"></div>
-            <div id="tags">
-            </div>
-            <div id="meterials">
-            </div>
-            <div id="skill"></div>
-        </div>
-        <div style="clear:both;"></div>
+        <div id="copyright">{{@copyright}}</div>
     </div>
 </body>
 

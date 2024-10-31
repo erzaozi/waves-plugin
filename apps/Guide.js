@@ -1,6 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Wiki from '../components/Wiki.js';
-import Render from '../model/render.js'
+import Render from '../components/Render.js';
 
 const typeMap = {
     "共鸣者": "1105",
@@ -42,7 +42,10 @@ export class Guide extends plugin {
         if (/^(～|~|鸣潮)/.test(e.msg)) {
             let typeList = await wiki.getTypeList(message)
             if (typeList.status) {
-                let imageCard = await Render.wikiSearch(typeList.data)
+                let imageCard = await Render.render('Wiki/search/search', {
+                    data: typeList.data,
+                }, { e, retType: 'base64' })
+
                 await e.reply(imageCard)
                 return true
             }
@@ -69,7 +72,10 @@ export class Guide extends plugin {
                     await e.reply(`未能获取到${message}的图鉴，请检查输入是否正确`)
                     return false
                 } else {
-                    let imageCard = await Render.wikiSearch(result.data)
+                    let imageCard = await await Render.render('Wiki/search/search', {
+                        data: result.data,
+                    }, { e, retType: 'base64' })
+
                     await e.reply([`未能获取到${message}的图鉴，你是指以下内容吗？`, imageCard])
                 }
             }
@@ -80,15 +86,15 @@ export class Guide extends plugin {
 
         switch (entryData.type) {
             case "1105":
-                imageCard = await Render.wikiRole(entryData.record)
+                imageCard = this.renderHandler.wikiRole(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1106":
-                imageCard = await Render.wikiWeapon(entryData.record)
+                imageCard = this.renderHandler.wikiWeapon(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1107":
-                imageCard = await Render.wikiRelics(entryData.record)
+                imageCard = this.renderHandler.wikiRelics(entryData.record)
                 await e.reply(imageCard)
                 break
             // 合鸣效果
@@ -96,36 +102,122 @@ export class Guide extends plugin {
                 await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有合鸣效果：${message}的图鉴`])
                 break
             case "1158":
-                imageCard = await Render.wikiEnemy(entryData.record)
+                imageCard = this.renderHandler.wikiEnemy(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1264":
-                imageCard = await Render.wikiProps(entryData.record)
+                imageCard = this.renderHandler.wikiProps(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1265":
-                imageCard = await Render.wikiProps(entryData.record)
+                imageCard = this.renderHandler.wikiProps(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1217":
-                imageCard = await Render.wikiProps(entryData.record)
+                imageCard = this.renderHandler.wikiProps(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1161":
-                imageCard = await Render.wikiProps(entryData.record)
+                imageCard = this.renderHandler.wikiProps(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1218":
-                imageCard = await Render.wikiProps(entryData.record)
+                imageCard = this.renderHandler.wikiProps(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1223":
-                imageCard = await Render.wikiProps(entryData.record)
+                imageCard = this.renderHandler.wikiProps(entryData.record)
                 await e.reply(imageCard)
                 break
             default:
                 return false
         }
         return true
+    }
+
+    renderHandler = {
+        wikiRole: async (data) => {
+            function replace(str) {
+                return str.replace(/\\"/g, '"').replace(/\\n/g, '')
+            }
+
+            data.content.modules[1].components[1].content = replace(data.content.modules[1].components[1].content)
+            data.content.modules[1].components[2].tabs[5].content = replace(data.content.modules[1].components[2].tabs[5].content)
+            data.content.modules[1].components[3].tabs[4].content = replace(data.content.modules[1].components[3].tabs[4].content)
+            data.content.modules[1].components[0].tabs[0].content = replace(data.content.modules[1].components[0].tabs[0].content)
+            data.content.modules[1].components[0].tabs[1].content = replace(data.content.modules[1].components[0].tabs[1].content)
+            data.content.modules[1].components[0].tabs[2].content = replace(data.content.modules[1].components[0].tabs[2].content)
+            data.content.modules[1].components[0].tabs[3].content = replace(data.content.modules[1].components[0].tabs[3].content)
+            data.content.modules[1].components[0].tabs[4].content = replace(data.content.modules[1].components[0].tabs[4].content)
+            data.content.modules[1].components[0].tabs[5].content = replace(data.content.modules[1].components[0].tabs[5].content)
+
+            const base64 = await Render.render('Wiki/role/role', {
+                data,
+            }, { e: this.e, retType: 'base64' });
+
+            return base64
+        },
+
+        wikiWeapon: async (data) => {
+            function replace(str) {
+                return str.replace(/\\"/g, '"').replace(/\\n/g, '')
+            }
+
+            data.content.modules[0].components[0].content = replace(data.content.modules[0].components[0].content)
+            data.content.modules[0].components[1].content = replace(data.content.modules[0].components[1].content)
+            data.content.modules[0].components[2].content = replace(data.content.modules[0].components[2].content)
+            data.content.modules[1].components[0].content = replace(data.content.modules[1].components[0].content)
+
+            const base64 = await Render.render('Wiki/weapon/weapon', {
+                data,
+            }, { e: this.e, retType: 'base64' });
+
+            return base64
+        },
+
+        wikiRelics: async (data) => {
+            function replace(str) {
+                return str.replace(/\\"/g, '"').replace(/\\n/g, '')
+            }
+
+            data.content.modules[0].components[0].content = replace(data.content.modules[0].components[0].content)
+            data.content.modules[1].components[0].content = replace(data.content.modules[1].components[0].content)
+            data.content.modules[0].components[1].content = replace(data.content.modules[0].components[1].content)
+
+            const base64 = await Render.render('Wiki/relics/relics', {
+                data,
+            }, { e: this.e, retType: 'base64' });
+
+            return base64
+        },
+
+        wikiEnemy: async (data) => {
+            function replace(str) {
+                return str.replace(/\\"/g, '"').replace(/\\n/g, '')
+            }
+
+            data.content.modules[0].components[0].content = replace(data.content.modules[0].components[0].content)
+            data.content.modules[0].components[1].tabs[0].content = replace(data.content.modules[0].components[1].tabs[0].content)
+
+            const base64 = await Render.render('Wiki/enemy/enemy', {
+                data,
+            }, { e: this.e, retType: 'base64' });
+
+            return base64
+        },
+
+        wikiProps: async (data) => {
+            function replace(str) {
+                return str.replace(/\\"/g, '"').replace(/\\n/g, '')
+            }
+
+            data.content.modules[0].components[0].content = replace(data.content.modules[0].components[0].content)
+
+            const base64 = Render.render('Wiki/props/props', {
+                data,
+            }, { e: this.e, retType: 'base64' });
+
+            return base64
+        }
     }
 }

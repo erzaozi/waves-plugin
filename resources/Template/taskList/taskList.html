@@ -8,7 +8,7 @@
 	<link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
 </head>
 
-<body id="body">
+<body id="body" {{sys.scale}}>
 	<div id="container">
 		<div id="task-card">
 			<img src="{{pluginResources}}/Template/taskList/imgs/kurocoin.webp" id="kurocoin-pic">
@@ -42,6 +42,7 @@
 			</div>
 			{{/each}}
 		</div>
+		<div id="copyright">{{@copyright}}</div>
 	</div>
 </body>
 

@@ -8,28 +8,29 @@
     <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
 </head>
 
-<body id="body">
-
-    <div id="container">
-        <div id="left">
-            <div id="circle">
-                <div id="total-tokens">
-                    <span>TOKEN总数</span>
-                    {{data.total}}
+<body id="body" {{sys.scale}}>
+    <div>
+        <div id="main-box">
+            <div id="left">
+                <div id="circle">
+                    <div id="total-tokens">
+                        <span>TOKEN总数</span>
+                        {{data.total}}
+                    </div>
                 </div>
             </div>
+            <div id="right">
+                <div id="tag">用户统计</div>
+                <ul>
+                    <li>绑定用户：{{data.bind}}</li>
+                    <li>登录用户：{{data.login}}</li>
+                    <li>可用数量：{{data.available}}</li>
+                    <li>失效数量：{{data.expired}}</li>
+                </ul>
+            </div>
         </div>
-        <div id="right">
-            <div id="tag">用户统计</div>
-            <ul>
-                <li>绑定用户：{{data.bind}}</li>
-                <li>登录用户：{{data.login}}</li>
-                <li>可用数量：{{data.available}}</li>
-                <li>失效数量：{{data.expired}}</li>
-            </ul>
-        </div>
+        <div id="copyright">{{@copyright}}</div>
     </div>
-
 </body>
 
 </html>

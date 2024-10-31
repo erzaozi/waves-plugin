@@ -4,7 +4,7 @@ import { pluginResources } from '../model/path.js';
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
 import Wiki from '../components/Wiki.js';
-import Render from '../model/render.js';
+import Render from '../components/Render.js';
 import path from 'path';
 import fs from 'fs';
 
@@ -120,7 +120,11 @@ export class Character extends plugin {
             imgList.push(rolePicUrl);
 
             roleDetail.data = (new WeightCalculator(roleDetail.data)).calculate()
-            const imageCard = await Render.charProfile({ uid: account.roleId, rolePicUrl, roleDetail });
+
+            const imageCard = await Render.render('Template/charProfile/charProfile', {
+                data: { uid: account.roleId, rolePicUrl, roleDetail },
+            }, { e, retType: 'base64' });
+
             data.push({ message: imageCard });
 
         }));

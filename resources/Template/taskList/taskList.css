@@ -13,6 +13,10 @@
     font-family: MiSans;
 }
 
+#body {
+    transform-origin: top left;
+}
+
 #container {
     position: relative;
     padding: 50px;
@@ -125,4 +129,21 @@
 .progress-num {
     margin-left: 16px;
     font-size: 42px;
+}
+
+#copyright {
+    position: relative;
+    width: 35%;
+    font-size: 0.7em;
+    margin: 0 auto;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    text-align: center;
+    padding-top: 30px;
+}
+
+#copyright .version {
+    color: #d3bc8e;
+    display: inline-block;
+    padding: 0 3px;
 }

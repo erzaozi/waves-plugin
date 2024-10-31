@@ -145,9 +145,13 @@ class WeightCalculator {
         const calMainProps = (COST) => {
             phantom.mainProps.forEach(tag => {
                 const name = tag.attributeName.includes("伤害加成") ? "伤害加成" : tag.attributeName;
-                totalScore += formatNum(tag.attributeValue) /
-                    baseWeight.mainProps[COST].find(item => item.name === name).max *
-                    roleWeight.mainProps[COST].find(item => item.name === name).theoreticalValue;
+                try {
+                    totalScore += formatNum(tag.attributeValue) /
+                        baseWeight.mainProps[COST].find(item => item.name === name).max *
+                        roleWeight.mainProps[COST].find(item => item.name === name).theoreticalValue;
+                } catch (error) {
+                    logger.error(`疑似绝版声骸${JSON.stringify(phantom)}` + error.message)
+                }
             });
         };
 

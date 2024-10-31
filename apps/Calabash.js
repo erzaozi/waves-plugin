@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
-import Render from '../model/render.js'
+import Render from '../components/Render.js';
 
 export class Calabash extends plugin {
     constructor() {
@@ -62,15 +62,27 @@ export class Calabash extends plugin {
                 await redis.set(`Yunzai:waves:bind:${e.user_id}`, account.roleId);
             }
 
-            const [baseData, CalabashData] = await Promise.all([
+            const [baseData, calabashData] = await Promise.all([
                 waves.getBaseData(account.serverId, account.roleId, account.token),
                 waves.getCalabashData(account.serverId, account.roleId, account.token)
             ]);
 
-            if (!baseData.status || !CalabashData.status) {
-                data.push({ message: baseData.msg || CalabashData.msg });
+            if (!baseData.status || !calabashData.status) {
+                data.push({ message: baseData.msg || calabashData.msg });
             } else {
-                const imageCard = await Render.calaBashData(baseData.data, CalabashData.data);
+                if (!calabashData.data.phantomList) {
+                    calabashData.data.phantomList = []
+                };
+                calabashData.data.phantomList.sort((a, b) => {
+                    return b.star - a.star
+                });
+
+                const imageCard = await Render.render('Template/calaBash/calaBash', {
+                    baseData: baseData.data,
+                    calabashData: calabashData.data,
+                }, { e, retType: 'base64' });
+
+                logger.warn(imageCard)
                 data.push({ message: imageCard });
             }
         }));

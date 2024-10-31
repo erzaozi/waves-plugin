@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js';
 import { pluginResources } from '../model/path.js'
 import Wiki from '../components/Wiki.js';
-import Render from '../model/render.js'
+import Render from '../components/Render.js';
 
 export class Calendar extends plugin {
     constructor() {
@@ -90,7 +90,10 @@ export class Calendar extends plugin {
             progress: Math.round(((currentDate - (s + Math.floor((currentDate - s) / d) * d)) / d) * 100),
         });
 
-        const imageCard = await Render.calendar({ activity, role, weapon });
+        const imageCard = await Render.render('Template/calendar/calendar', {
+            data: { activity, role, weapon },
+        }, { e, retType: 'base64' });
+
         await e.reply(imageCard);
         return true;
     }
