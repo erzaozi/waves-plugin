@@ -7,7 +7,7 @@
 
 @font-face {
   font-family: "framdit";
-  src: url("../../fonts/ZiHunBianTaoTi-2.ttf");
+  src: url("../../fonts/ZiHunBianTaoTi.ttf");
   font-weight: normal;
   font-style: normal;
 }
@@ -27,7 +27,7 @@
 #container {
   position: relative;
   width: 761px;
-  height: 1552px;
+  height: 1582px;
   background-image: url(./imgs/rolecard.png);
 }
 
@@ -465,14 +465,16 @@
 }
 
 #copyright {
-  position: relative;
-  width: 35%;
-  font-size: 11px;
-  margin: 0 auto;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: bold;
   color: white;
   text-shadow: 2px 2px 2px black;
   text-align: center;
-  padding: 10px 0;
 }
 
 #copyright .version {

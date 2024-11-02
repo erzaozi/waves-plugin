@@ -269,13 +269,14 @@ li:first-child {
 
 #copyright {
     position: relative;
-    width: 35%;
-    font-size: 1em;
+    font-size: 24px;
+    font-weight: bold;
     margin: 0 auto;
     color: white;
     text-shadow: 2px 2px 2px black;
     text-align: center;
-    padding-bottom: 30px;
+    padding-top: 40px;
+    padding-bottom: 10px;
 }
 
 #copyright .version {

@@ -32,7 +32,7 @@ export class TowerInfo extends plugin {
                 if (!publicCookie) {
                     return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行登录');
                 } else {
-                    if (match) {
+                    if (roleId) {
                         publicCookie.roleId = roleId;
                         await redis.set(`Yunzai:waves:bind:${e.user_id}`, publicCookie.roleId);
                     } else if (await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
@@ -72,6 +72,10 @@ export class TowerInfo extends plugin {
             } else {
                 const Mapping = { '稳定': 1, '实验': 2, '深境': 3, '超载': 4 };
                 if (!key) key = '深境';
+                if (!towerData.data.difficultyList.some(item => item.difficulty === Mapping[key] && item.towerAreaList.length > 0)) {
+                    data.push({ message: `账号 ${account.roleId} 没有${key}区数据` });
+                    return;
+                }
                 towerData.data = { ...towerData.data, difficulty: Mapping[key] || 3, diffiname: `${key}区` };
                 const imageCard = await Render.render('Template/towerData/tower', {
                     baseData: baseData.data,

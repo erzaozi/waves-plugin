@@ -43,7 +43,7 @@ const Render = {
             logger.error('读取package.json失败', err)
         }
         return e.runtime.render('waves-plugin', path, params, {
-            retType: cfg.retType || cfg.retMsgId ? 'msgId' : 'default',
+            retType: cfg.retType || (cfg.retMsgId ? 'msgId' : 'default'),
             beforeRender({ data }) {
                 let pluginName = ''
                 if (data.pluginName !== false) {

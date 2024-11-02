@@ -73,18 +73,20 @@ class Wiki {
             }
             return { status: false, msg: '未找到该词条的Wiki信息' }
         } else {
-            for (const catalogueId in CONSTANTS.CATALOGUEID_MAP) {
-                const response = await this.getPage(catalogueId);
+            const responses = await Promise.all(Object.keys(CONSTANTS.CATALOGUEID_MAP).map(id => this.getPage(id)));
+
+            for (const [i, response] of responses.entries()) {
+                const catalogueId = Object.keys(CONSTANTS.CATALOGUEID_MAP)[i];
+            
                 if (response.status) {
-                    const records = response.data.results.records;
-                    for (const record of records) {
-                        if (record.name === name) {
-                            return { status: true, record: record, type: catalogueId }
-                        }
+                    const record = response.data.results.records.find(record => record.name === name);
+                    if (record) {
+                        return { status: true, record: record, type: catalogueId };
                     }
                 }
             }
-            return { status: false, msg: '未找到该词条的Wiki信息' }
+            
+            return { status: false, msg: '未找到该词条的Wiki信息' };
         }
     }
 

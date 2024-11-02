@@ -32,7 +32,7 @@ export class UserInfo extends plugin {
                 if (!publicCookie) {
                     return await e.reply('当前没有可用的公共Cookie，请使用[~登录]进行登录');
                 } else {
-                    if (match) {
+                    if (roleId) {
                         publicCookie.roleId = roleId;
                         await redis.set(`Yunzai:waves:bind:${e.user_id}`, publicCookie.roleId);
                     } else if (await redis.get(`Yunzai:waves:bind:${e.user_id}`)) {
@@ -74,7 +74,7 @@ export class UserInfo extends plugin {
                     return b.starLevel - a.starLevel
                 })
 
-                const imageCard = Render.render('Template/userInfo/userInfo', {
+                const imageCard = await Render.render('Template/userInfo/userInfo', {
                     baseData: baseData.data,
                     roleData: roleData.data,
                 }, { e, retType: 'base64' });

@@ -132,14 +132,15 @@
 }
 
 #copyright {
-    position: relative;
-    width: 35%;
-    font-size: 0.7em;
-    margin: 0 auto;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    font-weight: bold;
     color: white;
     text-shadow: 2px 2px 2px black;
     text-align: center;
-    padding-top: 30px;
 }
 
 #copyright .version {

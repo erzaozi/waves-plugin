@@ -82,7 +82,6 @@ export class Calabash extends plugin {
                     calabashData: calabashData.data,
                 }, { e, retType: 'base64' });
 
-                logger.warn(imageCard)
                 data.push({ message: imageCard });
             }
         }));

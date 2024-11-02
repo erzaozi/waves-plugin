@@ -72,7 +72,7 @@ export class Guide extends plugin {
                     await e.reply(`未能获取到${message}的图鉴，请检查输入是否正确`)
                     return false
                 } else {
-                    let imageCard = await await Render.render('Wiki/search/search', {
+                    let imageCard = await Render.render('Wiki/search/search', {
                         data: result.data,
                     }, { e, retType: 'base64' })
 
@@ -86,15 +86,15 @@ export class Guide extends plugin {
 
         switch (entryData.type) {
             case "1105":
-                imageCard = this.renderHandler.wikiRole(entryData.record)
+                imageCard = await this.renderHandler.wikiRole(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1106":
-                imageCard = this.renderHandler.wikiWeapon(entryData.record)
+                imageCard = await this.renderHandler.wikiWeapon(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1107":
-                imageCard = this.renderHandler.wikiRelics(entryData.record)
+                imageCard = await this.renderHandler.wikiRelics(entryData.record)
                 await e.reply(imageCard)
                 break
             // 合鸣效果
@@ -102,31 +102,31 @@ export class Guide extends plugin {
                 await e.reply([segment.image((await wiki.getRecord(name)).record.content.contentUrl), `暂时还没有合鸣效果：${message}的图鉴`])
                 break
             case "1158":
-                imageCard = this.renderHandler.wikiEnemy(entryData.record)
+                imageCard = await this.renderHandler.wikiEnemy(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1264":
-                imageCard = this.renderHandler.wikiProps(entryData.record)
+                imageCard = await this.renderHandler.wikiProps(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1265":
-                imageCard = this.renderHandler.wikiProps(entryData.record)
+                imageCard = await this.renderHandler.wikiProps(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1217":
-                imageCard = this.renderHandler.wikiProps(entryData.record)
+                imageCard = await this.renderHandler.wikiProps(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1161":
-                imageCard = this.renderHandler.wikiProps(entryData.record)
+                imageCard = await this.renderHandler.wikiProps(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1218":
-                imageCard = this.renderHandler.wikiProps(entryData.record)
+                imageCard = await this.renderHandler.wikiProps(entryData.record)
                 await e.reply(imageCard)
                 break
             case "1223":
-                imageCard = this.renderHandler.wikiProps(entryData.record)
+                imageCard = await this.renderHandler.wikiProps(entryData.record)
                 await e.reply(imageCard)
                 break
             default:
@@ -213,7 +213,7 @@ export class Guide extends plugin {
 
             data.content.modules[0].components[0].content = replace(data.content.modules[0].components[0].content)
 
-            const base64 = Render.render('Wiki/props/props', {
+            const base64 = await Render.render('Wiki/props/props', {
                 data,
             }, { e: this.e, retType: 'base64' });
 
