@@ -47,7 +47,15 @@ export class ImgUploader extends plugin {
             return true;
         }
 
-        character = await new Wiki().getAlias(character);
+        const wiki = new Wiki();
+        character = await wiki.getAlias(character);
+
+        const wikiData = await wiki.getPage('1105');
+        if (!wikiData.status) { return e.reply('获取Wiki列表失败, 请稍后重试.'); }
+        else {
+            if (!wikiData?.results?.records?.some(item => item.name === character)) { return e.reply(`${char} 是谁啊... 俺找遍了索拉里斯都没找到这人~`); }
+        }
+
         const images = [...(e.img || [])];
 
         if (e.source) {
@@ -165,7 +173,14 @@ export class ImgUploader extends plugin {
             return true;
         }
 
-        character = await new Wiki().getAlias(character);
+        const wiki = new Wiki();
+        character = await wiki.getAlias(character);
+
+        const wikiData = await wiki.getPage('1105');
+        if (!wikiData.status) { return e.reply('获取Wiki列表失败, 请稍后重试.'); }
+        else {
+            if (!wikiData?.results?.records?.some(item => item.name === character)) { return e.reply(`${char} 是谁啊... 俺找遍了索拉里斯都没找到这人~`); }
+        }
 
         const imageDir = path.join(pluginResources, 'rolePic', character);
         const images = fs.existsSync(imageDir) && fs.readdirSync(imageDir);
@@ -201,7 +216,14 @@ export class ImgUploader extends plugin {
         let [, character, index] = e.msg.match(this.rule[3].reg);
         if (!character) return e.reply('请输入正确的命令格式，如：[~删除今汐面板图1]');
 
-        character = await new Wiki().getAlias(character);
+        const wiki = new Wiki();
+        character = await wiki.getAlias(character);
+
+        const wikiData = await wiki.getPage('1105');
+        if (!wikiData.status) { return e.reply('获取Wiki列表失败, 请稍后重试.'); }
+        else {
+            if (!wikiData?.results?.records?.some(item => item.name === character)) { return e.reply(`${char} 是谁啊... 俺找遍了索拉里斯都没找到这人~`); }
+        }
 
         const imageDir = path.join(pluginResources, 'rolePic', character);
         const imageList = fs.existsSync(imageDir) ? fs.readdirSync(imageDir) : [];
