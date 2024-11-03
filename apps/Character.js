@@ -113,8 +113,12 @@ export class Character extends plugin {
                 return;
             }
 
-            const rolePicUrl = fs.existsSync(rolePicDir)
-                ? `file://${rolePicDir}/${fs.readdirSync(rolePicDir).filter(file => path.extname(file).toLowerCase() === '.webp')[Math.floor(Math.random() * fs.readdirSync(rolePicDir).length)]}`
+            const webpFiles = fs.existsSync(rolePicDir)
+                ? fs.readdirSync(rolePicDir).filter(file => path.extname(file).toLowerCase() === '.webp')
+                : [];
+
+            const rolePicUrl = webpFiles.length > 0
+                ? `file://${rolePicDir}/${webpFiles[Math.floor(Math.random() * webpFiles.length)]}`
                 : roleDetail.data.role.rolePicUrl;
 
             imgList.push(rolePicUrl);
