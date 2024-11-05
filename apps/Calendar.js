@@ -49,8 +49,8 @@ export class Calendar extends plugin {
             const startDate = startDateStr || null;
             const endDate = endDateStr || null;
 
-            const startTime = startDate ? `${startDate.toISOString().slice(5, 10).replace('-', '.')} ${startDate.toTimeString().slice(0, 5)}` : '';
-            const endTime = endDate ? `${endDate.toISOString().slice(5, 10).replace('-', '.')} ${endDate.toTimeString().slice(0, 5)}` : '';
+            const startTime = startDate ? `${startDate.toLocaleDateString('zh-CN').slice(5).replace('/', '.')} ${startDate.toTimeString().slice(0, 5)}` : '';
+            const endTime = endDate ? `${endDate.toLocaleDateString('zh-CN').slice(5).replace('/', '.')} ${endDate.toTimeString().slice(0, 5)}` : '';
 
             const activeStatus = item.countDown
                 ? (startDate && currentDate >= endDate ? '已结束' :
@@ -83,7 +83,7 @@ export class Calendar extends plugin {
             title: '深境再临',
             time: (() => {
                 const cs = s + Math.floor((currentDate - s) / d) * d;
-                return `${new Date(cs).toLocaleDateString().slice(5).replace('/', '.')} ${new Date(cs).toTimeString().slice(0, 5)} - ${new Date(cs + d).toLocaleDateString().slice(5).replace('/', '.')} ${new Date(cs + d).toTimeString().slice(0, 5)}`;
+                return `${new Date(cs).toLocaleDateString('zh-CN').slice(5).replace('/', '.')} ${new Date(cs).toTimeString().slice(0, 5)} - ${new Date(cs + d).toLocaleDateString('zh-CN').slice(5).replace('/', '.')} ${new Date(cs + d).toTimeString().slice(0, 5)}`;
             })(),
             active: '进行中',
             remain: this.format(Math.round((s + Math.floor((currentDate - s) / d) * d + d - currentDate) / 1000)),
