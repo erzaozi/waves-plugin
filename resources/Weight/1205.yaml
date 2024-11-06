@@ -7,7 +7,7 @@ subProps:
   - name: 暴击
     weight: 1
   - name: 攻击百分比
-    weight: 0.6
+    weight: 0.5
   - name: 生命百分比
     weight: 0
   - name: 防御百分比

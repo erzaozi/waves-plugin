@@ -15,7 +15,7 @@ subProps:
   - name: 共鸣效率
     weight: 0.3
   - name: 普攻伤害加成
-    weight: 0
+    weight: 0.2
   - name: 重击伤害加成
     weight: 0
   - name: 共鸣技能伤害加成
