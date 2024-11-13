@@ -5,12 +5,13 @@
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <link rel="shortcut icon" href="#" />
     <link rel="stylesheet" type="text/css" href="{{pluginResources}}/Template/dailyData/dailyData.css" />
-    <link rel="preload" href="{{pluginResources}}/fonts/MiSans-Regular.ttf" as="font" />
+    <link rel="preload" href="{{pluginResources}}/fonts/Guruwords.ttf" as="font" />
 </head>
 
 <body id="body" {{sys.scale}}>
     <div>
         <div id="account">
+            {{if avatarUrl}}<img src="{{avatarUrl}}" id="user-avatar">{{/if}}
             <div id="user-name">{{gameData.roleName}}</div>
             <div id="user-uid">{{gameData.roleId}}</div>
         </div>

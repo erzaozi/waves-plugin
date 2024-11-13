@@ -1,6 +1,6 @@
 @font-face {
-    font-family: "MiSans";
-    src: url("../../fonts/MiSans-Regular.ttf");
+    font-family: "Guruwords";
+    src: url("../../fonts/Guruwords.ttf");
     font-weight: normal;
     font-style: normal;
 }
@@ -31,7 +31,7 @@ hr {
     display: flex;
     flex-direction: row;
     padding: 40px 40px 0 40px;
-    font-family: "MiSans";
+    font-family: "Guruwords";
 }
 
 .column {
@@ -83,7 +83,7 @@ hr {
 }
 
 .user-cost {
-    font-family: "MiSans";
+    font-family: "Guruwords";
     position: relative;
     left: 60px;
     top: 10px;

@@ -56,6 +56,7 @@ const Render = {
                 const layoutPath = process.cwd() + '/plugins/waves-plugin/resources/common/layout/'
                 return {
                     ...data,
+                    avatarUrl: params.isSelf && e.friend?.getAvatarUrl?.() || "",
                     pluginResources,
                     _res_path: resPath,
                     _layout_path: layoutPath,

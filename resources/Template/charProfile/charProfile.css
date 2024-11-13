@@ -1,13 +1,13 @@
 @font-face {
-  font-family: "MiSans";
-  src: url("../../fonts/MiSans-Regular.ttf");
+  font-family: "Guruwords";
+  src: url("../../fonts/Guruwords.ttf");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "framdit";
-  src: url("../../fonts/ZiHunBianTaoTi.ttf");
+  src: url("../../fonts/Guruwords.ttf");
   font-weight: normal;
   font-style: normal;
 }
@@ -17,7 +17,7 @@
   padding: 0;
   box-sizing: border-box;
   user-select: none;
-  font-family: MiSans;
+  font-family: Guruwords;
 }
 
 #body {
@@ -70,7 +70,6 @@
   background-color: rgba(255, 255, 255, 0);
   padding: 10px;
   border-radius: 10px;
-  backdrop-filter: blur(10px);
 }
 
 #role-info {
@@ -91,6 +90,7 @@
 #attribute-icon {
   position: absolute;
   width: 100px;
+  filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
 }
 
 #text-container {
@@ -104,7 +104,6 @@
   font-size: 36px;
   color: white;
   text-overflow: ellipsis;
-  overflow: hidden;
   max-width: 100%;
 }
 
@@ -112,13 +111,13 @@
   font-size: 26px;
   color: white;
   text-overflow: ellipsis;
-  overflow: hidden;
   max-width: 100%;
 }
 
 #role-stars {
   display: flex;
   gap: 5px;
+  filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
 }
 
 .role-star {
@@ -295,7 +294,7 @@
   display: inline-block;
   padding-bottom: 6px;
   height: 20px;
-  width: 32px;
+  width: 64px;
   color: #fff;
   border-radius: 5px;
   text-align: center;

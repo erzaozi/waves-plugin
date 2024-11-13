@@ -75,6 +75,7 @@ export class UserInfo extends plugin {
                 })
 
                 const imageCard = await Render.render('Template/userInfo/userInfo', {
+                    isSelf: !!(!roleId && await redis.get(`Yunzai:waves:users:${e.user_id}`)),
                     baseData: baseData.data,
                     roleData: roleData.data,
                 }, { e, retType: 'base64' });

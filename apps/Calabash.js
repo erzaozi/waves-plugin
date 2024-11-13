@@ -78,6 +78,7 @@ export class Calabash extends plugin {
                 });
 
                 const imageCard = await Render.render('Template/calaBash/calaBash', {
+                    isSelf: !!(!roleId && await redis.get(`Yunzai:waves:users:${e.user_id}`)),
                     baseData: baseData.data,
                     calabashData: calabashData.data,
                 }, { e, retType: 'base64' });

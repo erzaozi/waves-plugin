@@ -1,6 +1,6 @@
 @font-face {
-    font-family: "MiSans";
-    src: url("../../fonts/MiSans-Regular.ttf");
+    font-family: "Guruwords";
+    src: url("../../fonts/Guruwords.ttf");
     font-weight: normal;
     font-style: normal;
 }
@@ -10,7 +10,7 @@
     padding: 0;
     box-sizing: border-box;
     user-select: none;
-    font-family: MiSans;
+    font-family: Guruwords;
 }
 
 body {
@@ -36,7 +36,7 @@ body {
 .container {
     margin: 25px;
     position: relative;
-    font-family: "MiSans";
+    font-family: "Guruwords";
     height: auto;
     width: 960px;
     padding: 30px 62.7px;

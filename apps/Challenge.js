@@ -92,6 +92,7 @@ export class Challenge extends plugin {
                 };
 
                 const imageCard = await Render.render('Template/challengeDetails/challengeDetails', {
+                    isSelf: !!(!roleId && await redis.get(`Yunzai:waves:users:${e.user_id}`)),
                     baseData: baseData.data,
                     challengeData: result,
                 }, { e, retType: 'base64' });

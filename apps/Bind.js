@@ -88,6 +88,7 @@ export class Bind extends plugin {
         const userData = { token, userId: gameData.data.userId, serverId: gameData.data.serverId, roleId: gameData.data.roleId };
         const userIndex = userConfig.findIndex(item => item.userId === gameData.data.userId);
         userIndex !== -1 ? (userConfig[userIndex] = userData) : userConfig.push(userData);
+        await redis.set(`Yunzai:waves:bind:${e.user_id}`, gameData.data.roleId);
 
         Config.setUserConfig(e.user_id, userConfig);
         return await e.reply(`${gameData.data.roleName}(${gameData.data.roleId}) 登录成功！`, true);

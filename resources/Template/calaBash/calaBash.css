@@ -1,6 +1,6 @@
 @font-face {
-    font-family: "MiSans";
-    src: url("../../fonts/MiSans-Regular.ttf");
+    font-family: "Guruwords";
+    src: url("../../fonts/Guruwords.ttf");
     font-weight: normal;
     font-style: normal;
 }
@@ -16,13 +16,23 @@
     transform-origin: top left;
     width: 1220px;
     height: auto;
-    font-family: "Misans";
+    font-family: "Guruwords";
 }
 
 #body>div {
     width: 100%;
     background: url(imgs/background.png) no-repeat;
     background-size: cover;
+}
+
+#user-avatar {
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    left: 73px;
+    top: 105px;
+    z-index: 1;
+    border-radius: 50%;
 }
 
 #user-name {
@@ -37,7 +47,7 @@
 #user-uid {
     position: relative;
     left: 462px;
-    top: 146px;
+    top: 143px;
     height: auto;
     color: white;
     font-size: 39px;

@@ -78,6 +78,7 @@ export class TowerInfo extends plugin {
                 }
                 towerData.data = { ...towerData.data, difficulty: Mapping[key] || 3, diffiname: `${key}区` };
                 const imageCard = await Render.render('Template/towerData/tower', {
+                    isSelf: !!(!roleId && await redis.get(`Yunzai:waves:users:${e.user_id}`)),
                     baseData: baseData.data,
                     towerData: towerData.data,
                 }, { e, retType: 'base64' });

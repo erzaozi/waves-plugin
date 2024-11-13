@@ -50,6 +50,7 @@ export class Sanity extends plugin {
                 data.push({ message: gameData.msg });
             } else {
                 const imageCard = await Render.render('Template/dailyData/dailyData', {
+                    isSelf: true,
                     gameData: gameData.data,
                 }, { e, retType: 'base64' });
 

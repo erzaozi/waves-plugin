@@ -30,7 +30,8 @@ export class Calendar extends plugin {
         const role = {
             imgs: (pageData.data.contentJson?.sideModules?.[0]?.content?.tabs?.[0]?.imgs || []).map(item => item.img),
             description: pageData.data.contentJson?.sideModules?.[0]?.content?.tabs?.[0]?.description || '',
-            time: this.format(Math.round((new Date(pageData.data.contentJson?.sideModules?.[0]?.content?.tabs?.[0]?.countDown?.dateRange?.[1]) - currentDate) / 1000)),
+            unstart: new Date(pageData.data.contentJson?.sideModules?.[0]?.content?.tabs?.[0]?.countDown?.dateRange?.[0]) > currentDate,
+            time: this.format(Math.max(Math.round((new Date(pageData.data.contentJson?.sideModules?.[0]?.content?.tabs?.[0]?.countDown?.dateRange?.[1]) - currentDate) / 1000), 0)),
             progress: Math.round(((currentDate - new Date(pageData.data.contentJson?.sideModules?.[0]?.content?.tabs?.[0]?.countDown?.dateRange?.[0])) /
                 (new Date(pageData.data.contentJson?.sideModules?.[0]?.content?.tabs?.[0]?.countDown?.dateRange?.[1]) - new Date(pageData.data.contentJson?.sideModules?.[0]?.content?.tabs?.[0]?.countDown?.dateRange?.[0]))) * 100)
         };
@@ -38,7 +39,8 @@ export class Calendar extends plugin {
         const weapon = {
             imgs: (pageData.data.contentJson?.sideModules?.[1]?.content?.tabs?.[0]?.imgs || []).map(item => item.img),
             description: pageData.data.contentJson?.sideModules?.[1]?.content?.tabs?.[0]?.description || '',
-            time: this.format(Math.round((new Date(pageData.data.contentJson?.sideModules?.[1]?.content?.tabs?.[0]?.countDown?.dateRange?.[1]) - currentDate) / 1000)),
+            unstart: new Date(pageData.data.contentJson?.sideModules?.[1]?.content?.tabs?.[0]?.countDown?.dateRange?.[0]) > currentDate,
+            time: this.format(Math.max(Math.round((new Date(pageData.data.contentJson?.sideModules?.[1]?.content?.tabs?.[0]?.countDown?.dateRange?.[1]) - currentDate) / 1000), 0)),
             progress: Math.round(((currentDate - new Date(pageData.data.contentJson?.sideModules?.[1]?.content?.tabs?.[0]?.countDown?.dateRange?.[0])) /
                 (new Date(pageData.data.contentJson?.sideModules?.[1]?.content?.tabs?.[0]?.countDown?.dateRange?.[1]) - new Date(pageData.data.contentJson?.sideModules?.[1]?.content?.tabs?.[0]?.countDown?.dateRange?.[0]))) * 100)
         }
