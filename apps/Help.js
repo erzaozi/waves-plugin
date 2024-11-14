@@ -12,7 +12,7 @@ export class Help extends plugin {
             priority: 1008,
             rule: [
                 {
-                    reg: "^(～|~|鸣潮)帮助$",
+                    reg: "^(～|~|鸣潮)(帮助|菜单|功能)$",
                     fnc: "allHelp"
                 },
                 {

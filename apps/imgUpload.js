@@ -3,6 +3,7 @@ import { randomUUID, createHash } from 'crypto';
 import Config from '../components/Config.js';
 import Wiki from '../components/Wiki.js';
 import axios from 'axios';
+import sharp from 'sharp';
 import path from 'path';
 import fs from 'fs';
 
@@ -228,17 +229,14 @@ export class ImgUploader extends plugin {
         await fs.promises.mkdir(path.dirname(savePath), { recursive: true });
 
         try {
-            const response = await axios.get(url, {
-                responseType: 'stream',
-                timeout,
-            });
-
-            const fileStream = fs.createWriteStream(savePath);
-            response.data.pipe(fileStream);
+            const response = await axios.get(url, { responseType: 'stream', timeout });
 
             await new Promise((resolve, reject) => {
-                fileStream.on('finish', resolve);
-                fileStream.on('error', reject);
+                response.data
+                    .pipe(sharp().webp())
+                    .pipe(fs.createWriteStream(savePath))
+                    .on('finish', resolve)
+                    .on('error', reject);
             });
 
             return true;

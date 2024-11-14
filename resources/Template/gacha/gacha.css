@@ -15,6 +15,7 @@
 #body {
     transform-origin: top left;
     display: inline-block;
+    font-family: "Guruwords";
 }
 
 #body>div {
