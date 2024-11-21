@@ -82,7 +82,7 @@ export class Gacha extends plugin {
         }
 
         if (!message) {
-            await e.reply(`请在命令后面携带请求体或链接\n例：~抽卡统计{"recordId":"2b798246702...\n各平台抽卡记录获取详细步骤请发送[~抽卡帮助]`);
+            await e.reply(`请在命令后面携带请求体或链接\n例：~抽卡统计https://aki-gm-resource...\n各平台抽卡记录获取详细步骤请发送[~抽卡帮助]`);
             return true;
         }
 
