@@ -2,6 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
 import Render from '../components/Render.js';
+import pLimit from 'p-limit';
 
 export class Sanity extends plugin {
     constructor() {
@@ -25,7 +26,7 @@ export class Sanity extends plugin {
     }
 
     async sanity(e) {
-        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
 
         if (!accountList || !accountList.length) {
             return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
@@ -60,7 +61,7 @@ export class Sanity extends plugin {
 
         if (deleteroleId.length) {
             let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
-            Config.setUserConfig(e.user_id, newAccountList);
+            Config.setUserData(e.user_id, newAccountList);
         }
 
         if (data.length === 1) {
@@ -73,69 +74,72 @@ export class Sanity extends plugin {
     }
 
     async autoPush() {
-        const { waves_auto_push_list: autoPushList } = Config.getConfig();
-        await Promise.all(autoPushList.map(async user => {
-            const { botId, groupId, userId } = user;
-            let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${userId}`)) || await Config.getUserConfig(userId);
-            if (!accountList.length) {
-                return
-            }
-
-            const waves = new Waves();
-            let data = [];
-            let deleteroleId = [];
-
-            for (let account of accountList) {
-                const usability = await waves.isAvailable(account.token);
-
-                if (!usability) {
-                    data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
-                    deleteroleId.push(account.roleId);
-                    continue;
+        const { waves_auto_push_list: autoPushList } = Config.getUserConfig();
+        const limit = pLimit(Config.getConfig().limit);
+        await Promise.all(autoPushList.map(user =>
+            limit(async () => {
+                const { botId, groupId, userId } = user;
+                let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${userId}`)) || await Config.getUserData(userId);
+                if (!accountList.length) {
+                    return
                 }
 
-                const result = await waves.getGameData(account.token);
+                const waves = new Waves();
+                let data = [];
+                let deleteroleId = [];
 
-                if (!result.status) {
-                    data.push({ message: result.msg })
-                    return true;
-                }
+                for (let account of accountList) {
+                    const usability = await waves.isAvailable(account.token);
 
-                const key = `Yunzai:waves:pushed:${result.data.roleId}`;
-                const isPushed = await redis.get(key);
-                const threshold = await redis.get(`Yunzai:waves:sanity_threshold:${userId}`) || result.data.energyData.total;
-                const isFull = result.data.energyData.cur >= threshold;
-                if (isFull && !isPushed) {
-                    data.push({ message: `漂泊者${result.data.roleName}(${result.data.roleId})，你的结晶波片已经恢复至 ${threshold} 了哦~` })
-                    await redis.set(key, 'true');
-                } else if (!isFull && isPushed) {
-                    await redis.del(key);
-                }
-            }
-
-            if (deleteroleId.length) {
-                let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
-                Config.setUserConfig(userId, newAccountList);
-            }
-
-            if (data.length) {
-                if (data.length === 1) {
-                    if (!groupId) {
-                        await Bot[botId]?.pickUser(userId).sendMsg(data[0].message)
-                    } else {
-                        await Bot[botId]?.pickGroup(groupId).sendMsg([segment.at(userId), data[0].message])
+                    if (!usability) {
+                        data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
+                        deleteroleId.push(account.roleId);
+                        continue;
                     }
-                    return true;
-                } else {
-                    if (!groupId) {
-                        await Bot[botId]?.pickUser(userId).sendMsg(Bot.makeForwardMsg([{ message: `用户 ${userId}` }, ...data]))
-                    } else {
-                        await Bot[botId]?.pickGroup(groupId).sendMsg(segment.at(userId))
-                        await Bot[botId]?.pickGroup(groupId).sendMsg(Bot.makeForwardMsg([{ message: `用户 ${userId}` }, ...data]))
+
+                    const result = await waves.getGameData(account.token);
+
+                    if (!result.status) {
+                        data.push({ message: result.msg })
+                        return true;
+                    }
+
+                    const key = `Yunzai:waves:pushed:${result.data.roleId}`;
+                    const isPushed = await redis.get(key);
+                    const threshold = await redis.get(`Yunzai:waves:sanity_threshold:${userId}`) || result.data.energyData.total;
+                    const isFull = result.data.energyData.cur >= threshold;
+                    if (isFull && !isPushed) {
+                        data.push({ message: `漂泊者${result.data.roleName}(${result.data.roleId})，你的结晶波片已经恢复至 ${threshold} 了哦~` })
+                        await redis.set(key, 'true');
+                    } else if (!isFull && isPushed) {
+                        await redis.del(key);
                     }
                 }
-            }
-            return true;
-        }))
+
+                if (deleteroleId.length) {
+                    let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
+                    Config.setUserData(userId, newAccountList);
+                }
+
+                if (data.length) {
+                    if (data.length === 1) {
+                        if (!groupId) {
+                            await Bot[botId]?.pickUser(userId).sendMsg(data[0].message)
+                        } else {
+                            await Bot[botId]?.pickGroup(groupId).sendMsg([segment.at(userId), data[0].message])
+                        }
+                        return true;
+                    } else {
+                        if (!groupId) {
+                            await Bot[botId]?.pickUser(userId).sendMsg(Bot.makeForwardMsg([{ message: `用户 ${userId}` }, ...data]))
+                        } else {
+                            await Bot[botId]?.pickGroup(groupId).sendMsg(segment.at(userId))
+                            await Bot[botId]?.pickGroup(groupId).sendMsg(Bot.makeForwardMsg([{ message: `用户 ${userId}` }, ...data]))
+                        }
+                    }
+                }
+                return true;
+            })
+        ));
     }
 }

@@ -21,7 +21,7 @@ export class UserInfo extends plugin {
     async user(e) {
 
         if (e.at) e.user_id = e.at;
-        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
         const waves = new Waves();
 
         const [, roleId] = e.msg.match(this.rule[0].reg);
@@ -86,7 +86,7 @@ export class UserInfo extends plugin {
 
         if (deleteroleId.length) {
             let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
-            Config.setUserConfig(e.user_id, newAccountList);
+            Config.setUserData(e.user_id, newAccountList);
         }
 
         if (data.length === 1) {

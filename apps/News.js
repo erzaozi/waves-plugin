@@ -1,6 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Waves from "../components/Code.js";
 import Config from "../components/Config.js";
+import pLimit from 'p-limit';
 
 export class News extends plugin {
     constructor() {
@@ -43,7 +44,7 @@ export class News extends plugin {
     }
 
     async autoNews() {
-        const { waves_auto_news_list: autoPushList } = Config.getConfig();
+        const { waves_auto_news_list: autoPushList } = Config.getUserConfig();
 
         if (!autoPushList.length) {
             return true;
@@ -53,36 +54,38 @@ export class News extends plugin {
         const newsData = await waves.getEventList();
 
         if (!newsData.status) {
-            logger.info(newsData.msg);
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(newsData.msg));
             return true;
         }
 
         const postId = newsData.data.list[0].postId;
         if (postId != await redis.get(`Yunzai:waves:news`)) {
-            await Promise.all(autoPushList.map(async (user) => {
-                const { botId, groupId, userId } = user;
+            const limit = pLimit(Config.getConfig().limit);
+            await Promise.all(autoPushList.map(user =>
+                limit(async () => {
+                    const { botId, groupId, userId } = user;
 
-                let isGroup = !!groupId;
-                let id = isGroup ? groupId : userId;
+                    let isGroup = !!groupId;
+                    let id = isGroup ? groupId : userId;
 
-                if (isGroup) {
-                    await Bot[botId]?.pickGroup(id).sendMsg([
-                        segment.image(newsData.data.list[0].coverUrl),
-                        `${newsData.data.list[0].postTitle}\nhttps://www.kurobbs.com/mc/post/${newsData.data.list[0].postId}\n\n${new Date(newsData.data.list[0].publishTime).toLocaleString()}`
-                    ]);
-                } else {
-                    await Bot[botId]?.pickUser(id).sendMsg([
-                        segment.image(newsData.data.list[0].coverUrl),
-                        `${newsData.data.list[0].postTitle}\nhttps://www.kurobbs.com/mc/post/${newsData.data.list[0].postId}\n\n${new Date(newsData.data.list[0].publishTime).toLocaleString()}`
-                    ]);
-                }
+                    if (isGroup) {
+                        await Bot[botId]?.pickGroup(id).sendMsg([
+                            segment.image(newsData.data.list[0].coverUrl),
+                            `${newsData.data.list[0].postTitle}\nhttps://www.kurobbs.com/mc/post/${newsData.data.list[0].postId}\n\n${new Date(newsData.data.list[0].publishTime).toLocaleString()}`
+                        ]);
+                    } else {
+                        await Bot[botId]?.pickUser(id).sendMsg([
+                            segment.image(newsData.data.list[0].coverUrl),
+                            `${newsData.data.list[0].postTitle}\nhttps://www.kurobbs.com/mc/post/${newsData.data.list[0].postId}\n\n${new Date(newsData.data.list[0].publishTime).toLocaleString()}`
+                        ]);
+                    }
 
-                redis.set(`Yunzai:waves:news`, postId);
-                logger.info(`[Waves-Plugin] 新闻推送: 已推送最新公告`);
-                return true;
-            }));
+                    redis.set(`Yunzai:waves:news`, postId);
+                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.green(`已推送最新公告`));
+                    return true;
+                })));
         } else {
-            logger.info(`[Waves-Plugin] 新闻推送: 未获取到新公告`);
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`未获取到新公告`));
             return true;
         }
     }

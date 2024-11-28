@@ -26,7 +26,7 @@ export class Character extends plugin {
     async character(e) {
 
         if (e.at) e.user_id = e.at;
-        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
         const waves = new Waves();
 
         const [, message, roleId] = e.msg.match(this.rule[0].reg);
@@ -135,7 +135,7 @@ export class Character extends plugin {
 
         if (deleteroleId.length) {
             const newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
-            Config.setUserConfig(e.user_id, newAccountList);
+            Config.setUserData(e.user_id, newAccountList);
         }
 
         imgList = [...new Set(imgList)];

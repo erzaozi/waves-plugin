@@ -19,6 +19,8 @@ allow_import: false
 enable_log: false
 # 图片渲染精度
 render_scale: 100
+# 接口并发量
+limit: 10
 
 # ---------- 登录服务器配置 ----------
 # 允许在线登录
@@ -43,13 +45,3 @@ allow_img_delete: false
 # ---------- 别名相关 ----------
 # 是否允许普通用户设置别名
 allow_set_alias: false
-
-# ---------- 定时任务列表 ----------
-# 自动签到列表
-waves_auto_signin_list: []
-# 自动任务列表
-waves_auto_task_list: []
-# 体力推送列表
-waves_auto_push_list: []
-# 公告推送列表
-waves_auto_news_list: []

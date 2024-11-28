@@ -36,7 +36,7 @@ export class SignIn extends plugin {
     }
 
     async signIn(e) {
-        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
 
         if (!accountList || !accountList.length) {
             return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
@@ -69,7 +69,7 @@ export class SignIn extends plugin {
 
         if (deleteroleId.length) {
             let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
-            Config.setUserConfig(e.user_id, newAccountList);
+            Config.setUserData(e.user_id, newAccountList);
         }
 
         if (data.length === 1) {
@@ -82,7 +82,7 @@ export class SignIn extends plugin {
     }
 
     async signInList(e) {
-        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
 
         if (!accountList || !accountList.length) {
             return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
@@ -117,7 +117,7 @@ export class SignIn extends plugin {
 
         if (deleteroleId.length) {
             let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
-            Config.setUserConfig(e.user_id, newAccountList);
+            Config.setUserData(e.user_id, newAccountList);
         }
 
         if (data.length === 1) {
@@ -135,11 +135,12 @@ export class SignIn extends plugin {
 
         if (this.e) await this.e.reply('正在执行全部签到，稍后会推送签到结果');
 
-        const { waves_auto_signin_list: autoSignInList, signin_interval: interval } = Config.getConfig();
+        const { waves_auto_signin_list: autoSignInList } = Config.getUserConfig();
+        const { signin_interval: interval } = Config.getConfig();
         let success = 0;
         for (let user of autoSignInList) {
             const { botId, groupId, userId } = user;
-            const accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${userId}`)) || await Config.getUserConfig(userId);
+            const accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${userId}`)) || await Config.getUserData(userId);
             if (!accountList.length) {
                 continue;
             }
@@ -166,7 +167,7 @@ export class SignIn extends plugin {
 
             if (deleteroleId.length) {
                 let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
-                Config.setUserConfig(userId, newAccountList);
+                Config.setUserData(userId, newAccountList);
             }
 
             if (data.length) Bot[botId]?.pickUser(userId).sendMsg(Bot.makeForwardMsg(data))

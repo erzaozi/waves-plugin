@@ -28,7 +28,7 @@ const Render = {
     async render(path, params, cfg) {
         let { e } = cfg
         if (!e.runtime) {
-            logger.error('未找到e.runtime，请升级至最新版Yunzai')
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`未找到e.runtime，请升级至最新版Yunzai`));
         }
 
         let BotName = Version.isMiao ? 'Miao-Yunzai' : Version.isTrss ? 'TRSS-Yunzai' : 'Yunzai-Bot'
@@ -39,8 +39,8 @@ const Render = {
             if (package_json.version) {
                 currentVersion = package_json.version
             }
-        } catch (err) {
-            logger.error('读取package.json失败', err)
+        } catch (error) {
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`读取 package.json 失败：\n${error}`));
         }
         return e.runtime.render('waves-plugin', path, params, {
             retType: cfg.retType || (cfg.retMsgId ? 'msgId' : 'default'),

@@ -34,7 +34,7 @@ export function supportGuoba() {
           },
         },
         {
-          field: "waves_auto_signin_list",
+          field: "user_config.waves_auto_signin_list",
           label: "自动签到配置",
           bottomHelpMessage: "自动签到列表",
           component: "GSubForm",
@@ -72,7 +72,7 @@ export function supportGuoba() {
           },
         },
         {
-          field: 'signin_time',
+          field: 'config.signin_time',
           label: '定时表达式配置',
           bottomHelpMessage: '定时签到',
           component: 'EasyCron',
@@ -81,7 +81,7 @@ export function supportGuoba() {
           },
         },
         {
-          field: "waves_auto_task_list",
+          field: "user_config.waves_auto_task_list",
           label: "自动任务配置",
           bottomHelpMessage: "自动任务列表",
           component: "GSubForm",
@@ -119,7 +119,7 @@ export function supportGuoba() {
           },
         },
         {
-          field: 'task_time',
+          field: 'config.task_time',
           label: '定时表达式配置',
           bottomHelpMessage: '定时任务',
           component: 'EasyCron',
@@ -128,7 +128,7 @@ export function supportGuoba() {
           },
         },
         {
-          field: "waves_auto_push_list",
+          field: "user_config.waves_auto_push_list",
           label: "体力推送配置",
           bottomHelpMessage: "体力推送列表",
           component: "GSubForm",
@@ -166,7 +166,7 @@ export function supportGuoba() {
           },
         },
         {
-          field: 'sanity_push_time',
+          field: 'config.sanity_push_time',
           label: '定时表达式配置',
           bottomHelpMessage: '体力检查频率',
           component: 'EasyCron',
@@ -175,7 +175,7 @@ export function supportGuoba() {
           },
         },
         {
-          field: "waves_auto_news_lists",
+          field: "user_config.waves_auto_news_lists",
           label: "公告推送配置",
           bottomHelpMessage: "公告推送列表",
           component: "GSubForm",
@@ -210,7 +210,7 @@ export function supportGuoba() {
           },
         },
         {
-          field: 'news_push_time',
+          field: 'config.news_push_time',
           label: '定时表达式配置',
           bottomHelpMessage: '公告检查频率',
           component: 'EasyCron',
@@ -227,13 +227,13 @@ export function supportGuoba() {
           },
         },
         {
-          field: "allow_login",
+          field: "config.allow_login",
           label: "允许网页登录",
           bottomHelpMessage: "是否允许网页登录",
           component: "Switch",
         },
         {
-          field: "server_port",
+          field: "config.server_port",
           label: "开放端口",
           bottomHelpMessage: "登录HTTP服务器开放端口",
           component: "InputNumber",
@@ -246,7 +246,7 @@ export function supportGuoba() {
           },
         },
         {
-          field: "public_link",
+          field: "config.public_link",
           label: "登录服务公开地址",
           bottomHelpMessage: "展示给用户的自定义登录地址",
           component: "Input",
@@ -256,7 +256,7 @@ export function supportGuoba() {
           },
         },
         {
-          field: "background_api",
+          field: "config.background_api",
           label: "登录页背景图",
           bottomHelpMessage: "背景图API地址",
           component: "Input",
@@ -274,25 +274,25 @@ export function supportGuoba() {
           },
         },
         {
-          field: "allow_img_upload",
+          field: "config.allow_img_upload",
           label: "上传面板图",
           bottomHelpMessage: "是否允许普通用户上传面板图",
           component: "Switch",
         },
         {
-          field: "allow_get_origin",
+          field: "config.allow_get_origin",
           label: "获取原图",
           bottomHelpMessage: "是否允许普通用户获取原图",
           component: "Switch",
         },
         {
-          field: "allow_get_list",
+          field: "config.allow_get_list",
           label: "获取面板图列表",
           bottomHelpMessage: "是否允许普通用户获取面板图列表",
           component: "Switch",
         },
         {
-          field: "allow_img_delete",
+          field: "config.allow_img_delete",
           label: "删除面板图",
           bottomHelpMessage: "是否允许普通用户删除面板图",
           component: "Switch",
@@ -306,7 +306,7 @@ export function supportGuoba() {
           },
         },
         {
-          field: "allow_set_alias",
+          field: "config.allow_set_alias",
           label: "设置别名",
           bottomHelpMessage: "是否允许普通用户设置别名",
           component: "Switch",
@@ -320,13 +320,13 @@ export function supportGuoba() {
           },
         },
         {
-          field: "use_public_cookie",
+          field: "config.use_public_cookie",
           label: "使用公共Token",
           bottomHelpMessage: "允许未登录用户使用登录用户的Token进行查询",
           component: "Switch",
         },
         {
-          field: "strategy_provide",
+          field: "config.strategy_provide",
           label: "攻略图提供方",
           bottomHelpMessage: "选择角色攻略图提供方",
           component: "Select",
@@ -340,13 +340,13 @@ export function supportGuoba() {
           },
         },
         {
-          field: "allow_import",
+          field: "config.allow_import",
           label: "允许导入抽卡记录",
           bottomHelpMessage: "无法验证导入数据真实性，可能存在虚假数据覆盖真实数据情况，请谨慎开启",
           component: "Switch",
         },
         {
-          field: "signin_interval",
+          field: "config.signin_interval",
           label: "签到间隔时间",
           bottomHelpMessage: "单位：秒，请勿设置过短，风险自负",
           component: "InputNumber",
@@ -357,7 +357,7 @@ export function supportGuoba() {
           },
         },
         {
-          field: "task_interval",
+          field: "config.task_interval",
           label: "任务间隔时间",
           bottomHelpMessage: "单位：秒，请勿设置过短，风险自负",
           component: "InputNumber",
@@ -368,13 +368,13 @@ export function supportGuoba() {
           },
         },
         {
-          field: "enable_log",
+          field: "config.enable_log",
           label: "输出成功日志",
           bottomHelpMessage: "输出成功日志，用于调试和向开发者反馈问题",
           component: "Switch",
         },
         {
-          field: "render_scale",
+          field: "config.render_scale",
           label: "图片渲染精度",
           bottomHelpMessage: "图片渲染精度，建议 50-200 ，默认 100",
           component: "InputNumber",
@@ -386,38 +386,53 @@ export function supportGuoba() {
             step: 1
           },
         },
+        {
+          field: "config.limit",
+          label: "接口并发量",
+          bottomHelpMessage: "过大的并发将会请求阻塞",
+          component: "InputNumber",
+          required: true,
+          componentProps: {
+            placeholder: '请输入并发量',
+            step: 1,
+          },
+        },
       ],
       getConfigData() {
         let config = Config.getConfig()
-        config["waves_auto_news_lists"] = [];
-        config["waves_auto_news_list"].forEach(user => {
+        let user_config = Config.getUserConfig()
+        user_config["waves_auto_news_lists"] = [];
+        user_config["waves_auto_news_list"].forEach(user => {
           const { botId, groupId, userId } = user;
           let isGroup = !!groupId;
           if (isGroup) {
-            config["waves_auto_news_lists"].push({ botId, isGroup, pushId: groupId });
+            user_config["waves_auto_news_lists"].push({ botId, isGroup, pushId: groupId });
           } else {
-            config["waves_auto_news_lists"].push({ botId, isGroup, pushId: userId });
+            user_config["waves_auto_news_lists"].push({ botId, isGroup, pushId: userId });
           }
         })
-        return config
+        return { config, user_config }
       },
 
       setConfigData(data, { Result }) {
-        let config = {};
+        let last = {};
         for (let [keyPath, value] of Object.entries(data)) {
-          lodash.set(config, keyPath, value);
+          lodash.set(last, keyPath, value);
         }
-        config = lodash.merge({}, Config.getConfig(), config);
+
+        let config = lodash.merge({}, Config.getConfig(), last.config);
+        let user_config = lodash.merge({}, Config.getUserConfig(), last.user_config);
 
         config.public_link = config.public_link.replace(/\/$/, '');
 
-        config["waves_auto_news_list"] = [];
-        config["waves_auto_news_lists"].forEach(({ botId, isGroup, pushId }) => {
-          config["waves_auto_news_list"].push({ botId, groupId: isGroup ? pushId : "", userId: !isGroup ? pushId : "" });
+        user_config["waves_auto_news_list"] = [];
+        user_config["waves_auto_news_lists"].forEach(({ botId, isGroup, pushId }) => {
+          user_config["waves_auto_news_list"].push({ botId, groupId: isGroup ? pushId : "", userId: !isGroup ? pushId : "" });
         });
-        delete config["waves_auto_news_lists"];
+        delete user_config["waves_auto_news_lists"];
 
         Config.setConfig(config)
+        Config.setUserConfig(user_config)
         return Result.ok({}, '保存成功~')
       },
     },

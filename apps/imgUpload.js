@@ -63,7 +63,7 @@ export class ImgUploader extends plugin {
             try {
                 source = (await e[e.isGroup ? 'group' : 'friend']?.getChatHistory(e.isGroup ? e.source?.seq : e.source?.time + 1, 1))?.pop();
             } catch (error) {
-                logger.error(error);
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取历史消息出错：\n${error}`));
             }
 
             if (source) {
@@ -142,7 +142,7 @@ export class ImgUploader extends plugin {
                     e.isGroup ? e.source.seq : e.source.time + 1, 1
                 ))?.pop();
             } catch (error) {
-                logger.error(error);
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取历史消息出错：\n${error}`));
                 return null;
             }
         })();
@@ -247,7 +247,7 @@ export class ImgUploader extends plugin {
                     ? `下载超时`
                     : `保存文件失败: ${error.message}`;
 
-            logger.error(errorMessage);
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(errorMessage));
             return false;
         }
     }

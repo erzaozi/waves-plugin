@@ -4,6 +4,7 @@ import Waves from "../components/Code.js";
 import { _path } from '../model/path.js';
 import Render from '../components/Render.js';
 import fs from 'fs/promises';
+import pLimit from 'p-limit';
 import YAML from 'yaml';
 
 export class Manage extends plugin {
@@ -40,7 +41,10 @@ export class Manage extends plugin {
                 return YAML.parse(content);
             }));
 
-            const results = await Promise.all(userCounts.flat().map(user => waves.isAvailable(user.token, true)));
+            const limit = pLimit(Config.getConfig().limit);
+            const results = await Promise.all(
+                userCounts.flat().map(user => limit(() => waves.isAvailable(user.token, true)))
+            )
 
             const available = results.filter(Boolean).length;
             const expired = results.length - available;
@@ -60,8 +64,8 @@ export class Manage extends plugin {
             }, { e, retType: 'base64' });
 
             await e.reply(imageCard);
-        } catch (err) {
-            logger.error('计算总用户数时出现错误', err);
+        } catch (error) {
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`计算总用户数时出现错误：\n${error}`));
             await e.reply('[Waves-Plugin] 账号总数\n计算总用户数时出现错误，请检查日志');
         }
     }
@@ -86,12 +90,12 @@ export class Manage extends plugin {
                     return valid ? user : null;
                 }));
 
-                Config.setUserConfig(file.slice(0, -5), validUsers.filter(Boolean));
+                Config.setUserData(file.slice(0, -5), validUsers.filter(Boolean));
             }));
 
             await e.reply(`[Waves-Plugin] 删除失效账号\n删除了 ${deleted} 个失效账号`);
-        } catch (err) {
-            logger.error('删除失效账号时出现错误', err);
+        } catch (error) {
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`删除失效账号时出现错误：\n${error}`));
             await e.reply('[Waves-Plugin] 删除失效账号\n删除失效账号时出现错误，请检查日志');
         }
         return true;

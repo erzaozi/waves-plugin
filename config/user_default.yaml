@@ -1,0 +1,9 @@
+# ---------- 定时任务列表 ----------
+# 自动签到列表
+waves_auto_signin_list: []
+# 自动任务列表
+waves_auto_task_list: []
+# 体力推送列表
+waves_auto_push_list: []
+# 公告推送列表
+waves_auto_news_list: []

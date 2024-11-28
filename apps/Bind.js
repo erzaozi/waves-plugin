@@ -84,17 +84,17 @@ export class Bind extends plugin {
             return await e.reply(`登录失败！原因：${gameData.msg}\n使用[~登录帮助]查看登录方法！`);
         }
 
-        const userConfig = Config.getUserConfig(e.user_id);
+        const userConfig = Config.getUserData(e.user_id);
         const userData = { token, userId: gameData.data.userId, serverId: gameData.data.serverId, roleId: gameData.data.roleId };
         const userIndex = userConfig.findIndex(item => item.userId === gameData.data.userId);
         userIndex !== -1 ? (userConfig[userIndex] = userData) : userConfig.push(userData);
         await redis.set(`Yunzai:waves:bind:${e.user_id}`, gameData.data.roleId);
 
-        Config.setUserConfig(e.user_id, userConfig);
+        Config.setUserData(e.user_id, userConfig);
         return await e.reply(`${gameData.data.roleName}(${gameData.data.roleId}) 登录成功！`, true);
     }
     async unLogin(e) {
-        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
 
         if (!accountList || !accountList.length) {
             return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
@@ -112,13 +112,13 @@ export class Bind extends plugin {
             let index = accountList.findIndex(item => item.roleId == roleId);
             accountList.splice(index, 1);
             await e.reply(`已删除账号 ${roleId}`);
-            Config.setUserConfig(e.user_id, accountList);
+            Config.setUserData(e.user_id, accountList);
         }
         return true;
     }
 
     async getToken(e) {
-        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
 
         if (!accountList || !accountList.length) {
             return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');

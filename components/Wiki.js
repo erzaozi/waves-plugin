@@ -50,12 +50,12 @@ class Wiki {
             if (response.data.code === 200) {
                 return { status: true, data: response.data.data };
             } else {
-                logger.error('获取Wiki列表失败：', response.data.msg);
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取 Wiki 列表失败：${response.data.msg}`));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.error('获取Wiki列表失败，疑似网络问题：\n', error);
-            return { status: false, msg: '获取Wiki列表失败，疑似网络问题，请检查控制台日志' };
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取Wiki列表失败，疑似网络问题：\n${error}`));
+            return { status: false, msg: '获取 Wiki 列表失败，疑似网络问题，请检查控制台日志' };
         }
     }
 
@@ -77,7 +77,7 @@ class Wiki {
 
             for (const [i, response] of responses.entries()) {
                 const catalogueId = Object.keys(CONSTANTS.CATALOGUEID_MAP)[i];
-            
+
                 if (response.status) {
                     const record = response.data.results.records.find(record => record.name === name);
                     if (record) {
@@ -85,7 +85,7 @@ class Wiki {
                     }
                 }
             }
-            
+
             return { status: false, msg: '未找到该词条的Wiki信息' };
         }
     }
@@ -118,16 +118,16 @@ class Wiki {
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
-                    logger.info(`获取Wiki详情成功`);
+                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.green(`获取 Wiki 详情成功`));
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.error('获取Wiki详情失败：', response.data.msg);
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取 Wiki 详情失败：${response.data.msg}`));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.error('获取Wiki详情失败，疑似网络问题：\n', error);
-            return { status: false, msg: '获取Wiki详情失败，疑似网络问题，请检查控制台日志' };
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取 Wiki 详情失败，疑似网络问题：\n${error}`));
+            return { status: false, msg: '获取 Wiki 详情失败，疑似网络问题，请检查控制台日志' };
         }
     }
 
@@ -169,16 +169,16 @@ class Wiki {
                     return { status: false, msg: '未找到该词条的Wiki信息' };
                 }
                 if (Config.getConfig().enable_log) {
-                    logger.info(`搜索Wiki成功`);
+                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.green(`搜索 Wiki 成功`));
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.error('搜索Wiki失败：', response.data.msg);
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`搜索 Wiki 失败：${response.data.msg}`));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.error('搜索Wiki失败，疑似网络问题：\n', error);
-            return { status: false, msg: '搜索Wiki失败，疑似网络问题，请检查控制台日志' };
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`搜索 Wiki 失败，疑似网络问题：\n${error}`));
+            return { status: false, msg: '搜索 Wiki 失败，疑似网络问题，请检查控制台日志' };
         }
     }
 
@@ -204,16 +204,16 @@ class Wiki {
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
-                    logger.info(`获取Wiki首页成功`);
+                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.green(`获取 Wiki 首页成功`));
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.error('获取Wiki首页失败：', response.data.msg);
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取 Wiki 首页失败：${response.data.msg}`));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.error('获取Wiki首页失败，疑似网络问题：\n', error);
-            return { status: false, msg: '获取Wiki首页失败，疑似网络问题，请检查控制台日志' };
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取 Wiki 首页失败，疑似网络问题：\n${error}`));
+            return { status: false, msg: '获取 Wiki 首页失败，疑似网络问题，请检查控制台日志' };
         }
     }
 }

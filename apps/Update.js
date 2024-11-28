@@ -15,7 +15,7 @@ let uping = false
 export class Update extends plugin {
   constructor() {
     super({
-      name: 'Waves-更新插件',
+      name: '鸣潮-更新插件',
       event: 'message',
       priority: 1009,
       rule: [

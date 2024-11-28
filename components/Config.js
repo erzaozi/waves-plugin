@@ -1,79 +1,120 @@
-import YAML from 'yaml'
-import fs from 'fs'
-import { pluginRoot, _path } from '../model/path.js'
+import YAML from 'yaml';
+import fs from 'fs';
+import { pluginRoot, _path } from '../model/path.js';
 
 class Config {
-    getConfig() {
+    constructor() {
+        this.cache = {
+            config: null,
+            config_default: null,
+            user: null,
+            user_default: null,
+        };
+
+        this.fileMaps = {
+            config: `${pluginRoot}/config/config/config.yaml`,
+            config_default: `${pluginRoot}/config/config_default.yaml`,
+            user: `${pluginRoot}/config/config/user.yaml`,
+            user_default: `${pluginRoot}/config/user_default.yaml`,
+        };
+
+        this.watchFiles();
+    }
+
+    loadYAML(filePath) {
         try {
-            return YAML.parse(
-                fs.readFileSync(`${pluginRoot}/config/config/config.yaml`, 'utf-8')
-            )
-        } catch (err) {
-            logger.warn('读取 config.yaml 失败', err)
-            return false
+            return YAML.parse(fs.readFileSync(filePath, 'utf-8'));
+        } catch (error) {
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`读取 ${filePath} 失败：\n${error}`));
+            return null;
         }
+    }
+
+    saveConfig(filePath, data) {
+        try {
+            fs.writeFileSync(filePath, YAML.stringify(data));
+            return true;
+        } catch (error) {
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`写入 ${filePath} 失败：\n${error}`));
+            return false;
+        }
+    }
+
+    watchFiles() {
+        Object.entries(this.fileMaps).forEach(([key, filePath]) => {
+            fs.watchFile(filePath, () => {
+                this.cache[key] = this.loadYAML(filePath);
+            });
+        });
+    }
+
+    getConfig() {
+        if (!this.cache.config) {
+            this.cache.config = this.loadYAML(this.fileMaps.config);
+        }
+        return this.cache.config;
     }
 
     getDefConfig() {
-        try {
-            return YAML.parse(
-                fs.readFileSync(`${pluginRoot}/config/config_default.yaml`, 'utf-8')
-            )
-        } catch (err) {
-            logger.warn('读取 config_default.yaml 失败', err)
-            return false
+        if (!this.cache.config_default) {
+            this.cache.config_default = this.loadYAML(this.fileMaps.config_default);
         }
+        return this.cache.config_default;
     }
 
     setConfig(config_data) {
-        try {
-            fs.writeFileSync(
-                `${pluginRoot}/config/config/config.yaml`,
-                YAML.stringify(config_data),
-            )
-            return true
-        } catch (err) {
-            logger.warn('写入 config.yaml 失败', err)
-            return false
+        if (this.saveConfig(this.fileMaps.config, config_data)) {
+            this.cache.config = config_data;
+            return true;
         }
+        return false;
     }
 
-    getUserConfig(userId) {
-        const userConfigPath = `${_path}/data/waves/${userId}.yaml`;
+    getUserConfig() {
+        if (!this.cache.user) {
+            this.cache.user = this.loadYAML(this.fileMaps.user);
+        }
+        return this.cache.user;
+    }
 
+    getDefUserConfig() {
+        if (!this.cache.user_default) {
+            this.cache.user_default = this.loadYAML(this.fileMaps.user_default);
+        }
+        return this.cache.user_default;
+    }
+
+    setUserConfig(user_data) {
+        return this.saveConfig(this.fileMaps.user, user_data);
+    }
+
+    getUserData(userId) {
+        const userConfigData = `${_path}/data/waves/${userId}.yaml`;
         try {
-            if (fs.existsSync(userConfigPath)) {
-                const configFileContent = fs.readFileSync(userConfigPath, 'utf-8');
-                return YAML.parse(configFileContent);
-            }
-
-            return [];
+            return fs.existsSync(userConfigData) ? this.loadYAML(userConfigData) : [];
         } catch (error) {
-            logger.warn(`读取用户配置 ${userId}.yaml 失败`, error);
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`读取用户配置 ${userId}.yaml 失败：\n${error}`));
             return [];
         }
     }
 
-    setUserConfig(userId, userData) {
-        const userConfigPath = `${_path}/data/waves/${userId}.yaml`;
-
+    setUserData(userId, userData) {
+        const userConfigData = `${_path}/data/waves/${userId}.yaml`;
         try {
-            if (userData.length === 0) {
-                fs.existsSync(userConfigPath) && fs.unlinkSync(userConfigPath);
+            if (!userData.length) {
+                if (fs.existsSync(userConfigData)) fs.unlinkSync(userConfigData);
                 redis.del(`Yunzai:waves:users:${userId}`);
                 return true;
             }
 
-            const yamlData = YAML.stringify(userData);
-            fs.writeFileSync(userConfigPath, yamlData);
+            this.saveConfig(userConfigData, userData);
             redis.set(`Yunzai:waves:users:${userId}`, JSON.stringify(userData));
-
             return true;
         } catch (error) {
-            logger.warn(`写入用户配置 ${userId}.yaml 失败`, error);
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`写入用户配置 ${userId}.yaml 失败：\n${error}`));
             return false;
         }
     }
 }
 
-export default new Config()
+export default new Config();

@@ -33,10 +33,10 @@ export class Setting extends plugin {
     }
 
     async setAutoSign(e) {
-        const accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+        const accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
         if (!accountList.length) return e.reply("你还没有登录任何账号呢，请使用[~登录]进行登录");
 
-        const config = await Config.getConfig();
+        const config = await Config.getUserConfig();
         const newUser = {
             botId: e.self_id || '',
             groupId: e.group_id || '',
@@ -50,7 +50,7 @@ export class Setting extends plugin {
         if (e.msg.includes('开启')) {
             if (index === -1) {
                 config.waves_auto_signin_list.push(newUser);
-                Config.setConfig(config);
+                Config.setUserConfig(config);
                 return e.reply("已开启自动签到", true);
             }
             return e.reply("你已经开启了自动签到，无需再次开启", true);
@@ -58,17 +58,17 @@ export class Setting extends plugin {
 
         if (index !== -1) {
             config.waves_auto_signin_list.splice(index, 1);
-            Config.setConfig(config);
+            Config.setUserConfig(config);
             return e.reply("已关闭自动签到", true);
         }
         return e.reply("你已经关闭了自动签到，无需再次关闭", true);
     }
 
     async setAutoTask(e) {
-        const accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+        const accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
         if (!accountList.length) return e.reply("你还没有登录任何账号呢，请使用[~登录]进行登录");
 
-        const config = await Config.getConfig();
+        const config = await Config.getUserConfig();
         const newUser = {
             botId: e.self_id || '',
             groupId: e.group_id || '',
@@ -84,7 +84,7 @@ export class Setting extends plugin {
         if (e.msg.includes('开启')) {
             if (index === -1) {
                 config.waves_auto_task_list.push(newUser);
-                Config.setConfig(config);
+                Config.setUserConfig(config);
                 return e.reply("已开启自动任务", true);
             }
             return e.reply("你已经开启了自动任务，无需再次开启", true);
@@ -92,17 +92,17 @@ export class Setting extends plugin {
 
         if (index !== -1) {
             config.waves_auto_task_list.splice(index, 1);
-            Config.setConfig(config);
+            Config.setUserConfig(config);
             return e.reply("已关闭自动任务", true);
         }
         return e.reply("你已经关闭了自动任务，无需再次关闭", true);
     }
 
     async setAutoPush(e) {
-        const accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+        const accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
         if (!accountList.length) return e.reply("你还没有登录任何账号呢，请使用[~登录]进行登录");
 
-        const config = await Config.getConfig();
+        const config = await Config.getUserConfig();
         const newUser = {
             botId: e.self_id || '',
             groupId: e.group_id || '',
@@ -118,7 +118,7 @@ export class Setting extends plugin {
         if (e.msg.includes('开启')) {
             if (index === -1) {
                 config.waves_auto_push_list.push(newUser);
-                Config.setConfig(config);
+                Config.setUserConfig(config);
                 return e.reply("已开启结晶波片推送，可以使用[~体力阈值]来自定义提醒阈值", true);
             }
             return e.reply("你已经开启了结晶波片推送，，无需再次开启", true);
@@ -126,7 +126,7 @@ export class Setting extends plugin {
 
         if (index !== -1) {
             config.waves_auto_push_list.splice(index, 1);
-            Config.setConfig(config);
+            Config.setUserConfig(config);
             return e.reply("已关闭结晶波片推送", true);
         }
         return e.reply("你已经关闭了结晶波片推送，无需再次关闭", true);
@@ -146,7 +146,7 @@ export class Setting extends plugin {
             }
         }
 
-        const config = await Config.getConfig();
+        const config = await Config.getUserConfig();
         const index = config.waves_auto_news_list.findIndex(user =>
             user.botId === newUser.botId &&
             user.groupId === newUser.groupId &&
@@ -156,7 +156,7 @@ export class Setting extends plugin {
         if (e.msg.includes('开启')) {
             if (index === -1) {
                 config.waves_auto_news_list.push(newUser);
-                Config.setConfig(config);
+                Config.setUserConfig(config);
                 return e.reply("已开启活动推送", true);
             }
             return e.reply("你已经开启了活动推送，无需再次开启", true);
@@ -164,7 +164,7 @@ export class Setting extends plugin {
 
         if (index !== -1) {
             config.waves_auto_news_list.splice(index, 1);
-            Config.setConfig(config);
+            Config.setUserConfig(config);
             return e.reply("已关闭活动推送", true);
         }
         return e.reply("你已经关闭了活动推送，无需再次关闭", true);

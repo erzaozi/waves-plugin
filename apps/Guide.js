@@ -65,10 +65,10 @@ export class Guide extends plugin {
 
         if (!entryData.status) {
             if (/^(～|~|鸣潮)/.test(e.msg)) {
-                logger.info(`[Waves-Plugin] 尝试搜索图鉴：${message}`)
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`尝试搜索图鉴：${message}`));
                 let result = await wiki.search(message)
                 if (!result.status) {
-                    logger.warn(`[Waves-Plugin] 未能搜索到图鉴内容：${message}`)
+                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`未能搜索到图鉴内容：${message}`));
                     await e.reply(`未能获取到${message}的图鉴，请检查输入是否正确`)
                     return false
                 } else {

@@ -21,7 +21,7 @@ export class TowerInfo extends plugin {
     async tower(e) {
 
         if (e.at) e.user_id = e.at;
-        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserConfig(e.user_id);
+        let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
         const waves = new Waves();
 
         let [, key, roleId] = e.msg.match(this.rule[0].reg)
@@ -89,7 +89,7 @@ export class TowerInfo extends plugin {
 
         if (deleteroleId.length) {
             let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
-            Config.setUserConfig(e.user_id, newAccountList);
+            Config.setUserData(e.user_id, newAccountList);
         }
 
         if (data.length === 1) {
