@@ -150,7 +150,7 @@ class WeightCalculator {
                         baseWeight.mainProps[COST].find(item => item.name === name).max *
                         roleWeight.mainProps[COST].find(item => item.name === name).theoreticalValue;
                 } catch (error) {
-                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`疑似该声骸属性异常：${JSON.stringify(phantom)}`));
+                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`疑似该声骸属性异常`), logger.red(JSON.stringify(phantom)));
                 }
             });
         };

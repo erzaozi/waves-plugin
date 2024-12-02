@@ -32,17 +32,17 @@ class Kuro {
             const response = await axios.post(CONSTANTS.TASK_PROCESS_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
 
             if (response.data.code === 220) {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取可用性成功：账号已过期`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取可用性成功，账号已过期`));
                 return false;
             } else {
                 if (Config.getConfig().enable_log) {
-                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.green(`获取可用性成功：账号可用`));
+                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.green(`获取可用性成功，账号可用`));
                 }
                 return true;
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取可用性失败，疑似网络问题：\n${error}`));
-            return strict ? false : true;
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取可用性失败，疑似网络问题`), logger.red(error));
+            return !strict;
         }
     }
 
@@ -62,11 +62,11 @@ class Kuro {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`库街区用户签到失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`库街区用户签到失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`库街区用户签到失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`库街区用户签到失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '库街区用户签到失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -90,11 +90,11 @@ class Kuro {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`库街区点赞失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`库街区点赞失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`库街区点赞失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`库街区点赞失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '库街区点赞失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -114,11 +114,11 @@ class Kuro {
                 }
                 return { status: true, data: response.data.msg };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`库街区分享失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`库街区分享失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`库街区分享失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`库街区分享失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '库街区分享失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -138,11 +138,11 @@ class Kuro {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`库街区浏览帖子失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`库街区浏览帖子失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`库街区浏览帖子失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`库街区浏览帖子失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '库街区浏览帖子失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -163,10 +163,10 @@ class Kuro {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`库街区获取帖子失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`库街区获取帖子失败`), logger.red(response.data.msg));
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`库街区获取帖子失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`库街区获取帖子失败，疑似网络问题`), logger.red(error));
         }
     }
 
@@ -185,11 +185,11 @@ class Kuro {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`库街区获取任务进度失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`库街区获取任务进度失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`库街区获取任务进度失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`库街区获取任务进度失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '库街区获取任务进度失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -206,11 +206,11 @@ class Kuro {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`库街区获取库洛币总数失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`库街区获取库洛币总数失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`库街区获取库洛币总数失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`库街区获取库洛币总数失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '库街区获取库洛币总数失败，疑似网络问题，请检查控制台日志' };
         }
     }

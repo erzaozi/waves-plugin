@@ -50,11 +50,11 @@ class Wiki {
             if (response.data.code === 200) {
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取 Wiki 列表失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取 Wiki 列表失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取Wiki列表失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取Wiki列表失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '获取 Wiki 列表失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -64,7 +64,7 @@ class Wiki {
         if (type) {
             const response = await this.getPage(type);
             if (response.status) {
-                const records = response.data.results.records;
+                const { records } = response.data.results;
                 for (const record of records) {
                     if (record.name === name) {
                         return { status: true, record: record, type: type }
@@ -94,7 +94,7 @@ class Wiki {
     async getEntry(name, type = '') {
         const recordData = await this.getRecord(name, type);
         if (recordData.status) {
-            const linkId = recordData.record.content.linkId;
+            const { linkId } = recordData.record.content;
             const entryData = await this.getEntryDetail(linkId);
             if (entryData.status) {
                 return { status: true, record: entryData.data, type: recordData.type };
@@ -122,11 +122,11 @@ class Wiki {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取 Wiki 详情失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取 Wiki 详情失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取 Wiki 详情失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取 Wiki 详情失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '获取 Wiki 详情失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -173,11 +173,11 @@ class Wiki {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`搜索 Wiki 失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`搜索 Wiki 失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`搜索 Wiki 失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`搜索 Wiki 失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '搜索 Wiki 失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -208,11 +208,11 @@ class Wiki {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取 Wiki 首页失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取 Wiki 首页失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取 Wiki 首页失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取 Wiki 首页失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '获取 Wiki 首页失败，疑似网络问题，请检查控制台日志' };
         }
     }

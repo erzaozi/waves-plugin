@@ -58,7 +58,7 @@ export class News extends plugin {
             return true;
         }
 
-        const postId = newsData.data.list[0].postId;
+        const { postId } = newsData.data.list[0];
         if (postId != await redis.get(`Yunzai:waves:news`)) {
             const limit = pLimit(Config.getConfig().limit);
             await Promise.all(autoPushList.map(user =>

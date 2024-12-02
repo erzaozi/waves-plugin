@@ -129,13 +129,13 @@ export class Sanity extends plugin {
                             await Bot[botId]?.pickGroup(groupId).sendMsg([segment.at(userId), data[0].message])
                         }
                         return true;
-                    } else {
-                        if (!groupId) {
-                            await Bot[botId]?.pickUser(userId).sendMsg(Bot.makeForwardMsg([{ message: `用户 ${userId}` }, ...data]))
-                        } else {
-                            await Bot[botId]?.pickGroup(groupId).sendMsg(segment.at(userId))
-                            await Bot[botId]?.pickGroup(groupId).sendMsg(Bot.makeForwardMsg([{ message: `用户 ${userId}` }, ...data]))
-                        }
+                    }
+                    else if (!groupId) {
+                        await Bot[botId]?.pickUser(userId).sendMsg(Bot.makeForwardMsg([{ message: `用户 ${userId}` }, ...data]))
+                    }
+                    else {
+                        await Bot[botId]?.pickGroup(groupId).sendMsg(segment.at(userId))
+                        await Bot[botId]?.pickGroup(groupId).sendMsg(Bot.makeForwardMsg([{ message: `用户 ${userId}` }, ...data]))
                     }
                 }
                 return true;

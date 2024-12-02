@@ -60,7 +60,7 @@ export class Task extends plugin {
                 return { message: `获取帖子失败，无法继续任务` };
             }
 
-            let postId = postData.data.postList[0].postId;
+            let { postId } = postData.data.postList[0];
             let toUserId = postData.data.postList[0].userId;
             let message = `账号 ${account.userId} 的任务结果\n\n`;
 
@@ -184,7 +184,7 @@ export class Task extends plugin {
                     return { message: `获取帖子失败，无法继续任务` };
                 }
 
-                let postId = postData.data.postList[0].postId;
+                let { postId } = postData.data.postList[0];
                 let toUserId = postData.data.postList[0].userId;
 
                 const signData = await kuro.signIn(account.token);

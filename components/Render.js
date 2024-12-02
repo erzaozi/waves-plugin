@@ -40,7 +40,7 @@ const Render = {
                 currentVersion = package_json.version
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`读取 package.json 失败：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`读取 package.json 失败`), logger.red(error));
         }
         return e.runtime.render('waves-plugin', path, params, {
             retType: cfg.retType || (cfg.retMsgId ? 'msgId' : 'default'),

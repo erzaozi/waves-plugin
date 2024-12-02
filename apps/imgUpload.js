@@ -63,7 +63,7 @@ export class ImgUploader extends plugin {
             try {
                 source = (await e[e.isGroup ? 'group' : 'friend']?.getChatHistory(e.isGroup ? e.source?.seq : e.source?.time + 1, 1))?.pop();
             } catch (error) {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取历史消息出错：\n${error}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取历史消息出错`), logger.red(error));
             }
 
             if (source) {
@@ -142,7 +142,7 @@ export class ImgUploader extends plugin {
                     e.isGroup ? e.source.seq : e.source.time + 1, 1
                 ))?.pop();
             } catch (error) {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取历史消息出错：\n${error}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取历史消息出错`), logger.red(error));
                 return null;
             }
         })();
@@ -241,13 +241,7 @@ export class ImgUploader extends plugin {
 
             return true;
         } catch (error) {
-            const errorMessage = error.response
-                ? `下载文件失败: ${error.response.statusText}`
-                : error.code === 'ECONNABORTED'
-                    ? `下载超时`
-                    : `保存文件失败: ${error.message}`;
-
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(errorMessage));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`下载面板图出错`), logger.red(error));
             return false;
         }
     }

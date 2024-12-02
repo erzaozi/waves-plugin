@@ -31,31 +31,29 @@ export class Simulator extends plugin {
             let userData = JSON.parse(await redis.get(`Yunzai:waves:simulator:${type}:${e.user_id}`)) || { five_star_time: 0, five_star_other: true, four_star_time: 0, four_star_other: true };
             let { five_star_time, five_star_other, four_star_time, four_star_other } = userData;
 
-            if (five_star_time < 70) {
-                if (Math.random() < data.five_star.basic) {
-                    if (five_star_other) {
-                        if (Math.random() < data.five_star.other) {
-                            gachaData.push({ role: data.five_star.other_pool[Math.floor(Math.random() * data.five_star.other_pool.length)].name, star: 5 });
-                            five_star_other = false
-                            five_star_time = 0
-                            await redis.set(`Yunzai:waves:simulator:${type}:${e.user_id}`, JSON.stringify({ five_star_time, five_star_other, four_star_time, four_star_other }))
-                            continue
+            if (five_star_time < 70 && Math.random() < data.five_star.basic) {
+                if (five_star_other) {
+                    if (Math.random() < data.five_star.other) {
+                        gachaData.push({ role: data.five_star.other_pool[Math.floor(Math.random() * data.five_star.other_pool.length)].name, star: 5 });
+                        five_star_other = false
+                        five_star_time = 0
+                        await redis.set(`Yunzai:waves:simulator:${type}:${e.user_id}`, JSON.stringify({ five_star_time, five_star_other, four_star_time, four_star_other }))
+                        continue
 
-                        } else {
-                            gachaData.push({ role: data.five_star.up_pool[Math.floor(Math.random() * data.five_star.up_pool.length)].name, star: 5 });
-                            five_star_other = true
-                            five_star_time = 0
-                            await redis.set(`Yunzai:waves:simulator:${type}:${e.user_id}`, JSON.stringify({ five_star_time, five_star_other, four_star_time, four_star_other }))
-                            continue
-                        }
                     } else {
                         gachaData.push({ role: data.five_star.up_pool[Math.floor(Math.random() * data.five_star.up_pool.length)].name, star: 5 });
                         five_star_other = true
                         five_star_time = 0
                         await redis.set(`Yunzai:waves:simulator:${type}:${e.user_id}`, JSON.stringify({ five_star_time, five_star_other, four_star_time, four_star_other }))
                         continue
-
                     }
+                } else {
+                    gachaData.push({ role: data.five_star.up_pool[Math.floor(Math.random() * data.five_star.up_pool.length)].name, star: 5 });
+                    five_star_other = true
+                    five_star_time = 0
+                    await redis.set(`Yunzai:waves:simulator:${type}:${e.user_id}`, JSON.stringify({ five_star_time, five_star_other, four_star_time, four_star_other }))
+                    continue
+
                 }
             }
 
@@ -89,24 +87,15 @@ export class Simulator extends plugin {
 
             five_star_time++
 
-            if (four_star_time < 9) {
-                if (Math.random() < data.four_star.basic) {
-                    if (four_star_other) {
-                        if (Math.random() < data.four_star.other) {
-                            gachaData.push({ role: data.four_star.other_pool[Math.floor(Math.random() * data.four_star.other_pool.length)].name, star: 4 });
-                            four_star_other = false
-                            four_star_time = 0
-                            await redis.set(`Yunzai:waves:simulator:${type}:${e.user_id}`, JSON.stringify({ five_star_time, five_star_other, four_star_time, four_star_other }))
-                            continue
+            if (four_star_time < 9 && Math.random() < data.four_star.basic) {
+                if (four_star_other) {
+                    if (Math.random() < data.four_star.other) {
+                        gachaData.push({ role: data.four_star.other_pool[Math.floor(Math.random() * data.four_star.other_pool.length)].name, star: 4 });
+                        four_star_other = false
+                        four_star_time = 0
+                        await redis.set(`Yunzai:waves:simulator:${type}:${e.user_id}`, JSON.stringify({ five_star_time, five_star_other, four_star_time, four_star_other }))
+                        continue
 
-                        } else {
-                            gachaData.push({ role: data.four_star.up_pool[Math.floor(Math.random() * data.four_star.up_pool.length)].name, star: 4 });
-                            four_star_other = true
-                            four_star_time = 0
-                            await redis.set(`Yunzai:waves:simulator:${type}:${e.user_id}`, JSON.stringify({ five_star_time, five_star_other, four_star_time, four_star_other }))
-                            continue
-
-                        }
                     } else {
                         gachaData.push({ role: data.four_star.up_pool[Math.floor(Math.random() * data.four_star.up_pool.length)].name, star: 4 });
                         four_star_other = true
@@ -115,6 +104,13 @@ export class Simulator extends plugin {
                         continue
 
                     }
+                } else {
+                    gachaData.push({ role: data.four_star.up_pool[Math.floor(Math.random() * data.four_star.up_pool.length)].name, star: 4 });
+                    four_star_other = true
+                    four_star_time = 0
+                    await redis.set(`Yunzai:waves:simulator:${type}:${e.user_id}`, JSON.stringify({ five_star_time, five_star_other, four_star_time, four_star_other }))
+                    continue
+
                 }
             }
 

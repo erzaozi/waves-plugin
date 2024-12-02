@@ -44,15 +44,15 @@ class Waves {
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
-                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.green(`验证码登录成功，库街区用户：${response.data.data.userName}`));
+                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`验证码登录成功，库街区用户`), logger.green(response.data.data.userName));
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`验证码登录失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`验证码登录失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`验证码登录失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`验证码登录失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '登录失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -70,17 +70,17 @@ class Waves {
             const response = await axios.post(CONSTANTS.GAME_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 220) {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取可用性成功：账号已过期`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取可用性成功，账号已过期`));
                 return false;
             } else {
                 if (Config.getConfig().enable_log) {
-                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.green(`获取可用性成功：账号可用`));
+                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.green(`获取可用性成功，账号可用`));
                 }
                 return true;
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取可用性失败，疑似网络问题：\n${error}`));
-            return strict ? false : true;
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取可用性失败，疑似网络问题`), logger.red(error));
+            return !strict;
         }
     }
 
@@ -102,11 +102,11 @@ class Waves {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`刷新资料失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`刷新资料失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`刷新资料失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`刷新资料失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '刷新资料失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -134,11 +134,11 @@ class Waves {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取日常数据失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取日常数据失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取日常数据失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取日常数据失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '获取日常数据失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -168,11 +168,11 @@ class Waves {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取我的资料失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取我的资料失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取我的资料失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取我的资料失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '获取我的资料失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -202,11 +202,11 @@ class Waves {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取共鸣者失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取共鸣者失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取共鸣者失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取共鸣者失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '获取共鸣者失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -236,11 +236,11 @@ class Waves {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取数据坞失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取数据坞失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取数据坞失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取数据坞失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '获取数据坞失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -271,11 +271,11 @@ class Waves {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取挑战数据失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取挑战数据失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取挑战数据失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取挑战数据失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '获取挑战数据失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -306,11 +306,11 @@ class Waves {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取探索数据失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取探索数据失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取探索数据失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取探索数据失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '获取探索数据失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -340,11 +340,11 @@ class Waves {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取角色详细信息失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取角色详细信息失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取角色详细信息失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取角色详细信息失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '获取角色详细信息失败，疑似网络问题，请检查控制台日志' };
         }
 
@@ -376,11 +376,11 @@ class Waves {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`签到失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`签到失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`签到失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`签到失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '签到失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -409,11 +409,11 @@ class Waves {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`查询签到领取记录失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`查询签到领取记录失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`查询签到领取记录失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`查询签到领取记录失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '查询签到领取记录失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -446,7 +446,7 @@ class Waves {
                         }
                         return { status: true, data: other.data.data };
                     } else {
-                        logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取逆境深塔数据失败：${other.data.msg}`));
+                        logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取逆境深塔数据失败`), logger.red(other.data.msg));
                         return { status: false, msg: other.data.msg };
                     }
                 }
@@ -455,11 +455,11 @@ class Waves {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取逆境深塔数据失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取逆境深塔数据失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取逆境深塔数据失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取逆境深塔数据失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '获取逆境深塔数据失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -467,7 +467,7 @@ class Waves {
     // 抽卡记录
     async getGaCha(data) {
 
-        const isCN = data.serverId == "76402e5b20be2c39f095a152090afddc" ? true : false;
+        const isCN = !!(data.serverId == "76402e5b20be2c39f095a152090afddc");
 
         try {
             const response = await axios.post(isCN ? CONSTANTS.GACHA_URL : CONSTANTS.INTL_GACHA_URL, data);
@@ -482,11 +482,11 @@ class Waves {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取抽卡记录失败：${response.data.message}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取抽卡记录失败`), logger.red(response.data.message));
                 return { status: false, msg: response.data.message };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取抽卡记录失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取抽卡记录失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '获取抽卡记录失败，疑似网络问题，请检查控制台日志' };
         }
     }
@@ -532,11 +532,11 @@ class Waves {
                 }
                 return { status: true, data: response.data.data };
             } else {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取活动列表失败：${response.data.msg}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取活动列表失败`), logger.red(response.data.msg));
                 return { status: false, msg: response.data.msg };
             }
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`获取活动列表失败，疑似网络问题：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取活动列表失败，疑似网络问题`), logger.red(error));
             return { status: false, msg: '获取活动列表失败，疑似网络问题，请检查控制台日志' };
         }
     }

@@ -25,7 +25,8 @@ class Config {
         try {
             return YAML.parse(fs.readFileSync(filePath, 'utf-8'));
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`读取 ${filePath} 失败：\n${error}`));
+            const fileName = filePath.split('/').pop();
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`读取 ${fileName} 失败`), logger.red(error));
             return null;
         }
     }
@@ -35,7 +36,8 @@ class Config {
             fs.writeFileSync(filePath, YAML.stringify(data));
             return true;
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`写入 ${filePath} 失败：\n${error}`));
+            const fileName = filePath.split('/').pop();
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`写入 ${fileName} 失败`), logger.red(error));
             return false;
         }
     }
@@ -93,7 +95,7 @@ class Config {
         try {
             return fs.existsSync(userConfigData) ? this.loadYAML(userConfigData) : [];
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`读取用户配置 ${userId}.yaml 失败：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`读取用户数据 ${userId}.yaml 失败`), logger.red(error));
             return [];
         }
     }
@@ -111,7 +113,7 @@ class Config {
             redis.set(`Yunzai:waves:users:${userId}`, JSON.stringify(userData));
             return true;
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`写入用户配置 ${userId}.yaml 失败：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`写入用户数据 ${userId}.yaml 失败`), logger.red(error));
             return false;
         }
     }

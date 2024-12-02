@@ -84,7 +84,7 @@ export class Challenge extends plugin {
                 });
 
                 for (let i = 0; i < result.length; i++) {
-                    const passTime = result[i].passTime;
+                    const { passTime } = result[i];
                     const hours = Math.floor(passTime / 3600);
                     const minutes = Math.floor((passTime % 3600) / 60);
                     const seconds = passTime % 60;

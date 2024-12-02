@@ -8,7 +8,7 @@ class Init {
         this.compatible()
         this.initConfig()
         this.syncConfig().then(syncCount => {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.white(`同步了`), logger.green(syncCount), logger.white(`个用户信息`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`同步了`), logger.green(syncCount), logger.cyan(`个用户信息`));
         });
     }
 
@@ -105,7 +105,7 @@ class Init {
                 await redis.set(`Yunzai:waves:users:${fileName.split('.')[0]}`, JSON.stringify(userInfo));
                 successCount++;
             } catch (error) {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`同步用户信息失败：\n${error}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`同步用户信息失败`), logger.red(error));
             }
         }
 

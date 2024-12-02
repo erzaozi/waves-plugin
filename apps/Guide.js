@@ -68,7 +68,7 @@ export class Guide extends plugin {
                 logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`尝试搜索图鉴：${message}`));
                 let result = await wiki.search(message)
                 if (!result.status) {
-                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`未能搜索到图鉴内容：${message}`));
+                    logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`未能搜索到图鉴内容`), logger.red(message));
                     await e.reply(`未能获取到${message}的图鉴，请检查输入是否正确`)
                     return false
                 } else {
@@ -151,11 +151,9 @@ export class Guide extends plugin {
             data.content.modules[1].components[0].tabs[4].content = replace(data.content.modules[1].components[0].tabs[4].content)
             data.content.modules[1].components[0].tabs[5].content = replace(data.content.modules[1].components[0].tabs[5].content)
 
-            const base64 = await Render.render('Wiki/role/role', {
+            return await Render.render('Wiki/role/role', {
                 data,
             }, { e: this.e, retType: 'base64' });
-
-            return base64
         },
 
         wikiWeapon: async (data) => {
@@ -168,11 +166,9 @@ export class Guide extends plugin {
             data.content.modules[0].components[2].content = replace(data.content.modules[0].components[2].content)
             data.content.modules[1].components[0].content = replace(data.content.modules[1].components[0].content)
 
-            const base64 = await Render.render('Wiki/weapon/weapon', {
+            return await Render.render('Wiki/weapon/weapon', {
                 data,
             }, { e: this.e, retType: 'base64' });
-
-            return base64
         },
 
         wikiRelics: async (data) => {
@@ -184,11 +180,9 @@ export class Guide extends plugin {
             data.content.modules[1].components[0].content = replace(data.content.modules[1].components[0].content)
             data.content.modules[0].components[1].content = replace(data.content.modules[0].components[1].content)
 
-            const base64 = await Render.render('Wiki/relics/relics', {
+            return await Render.render('Wiki/relics/relics', {
                 data,
             }, { e: this.e, retType: 'base64' });
-
-            return base64
         },
 
         wikiEnemy: async (data) => {
@@ -199,11 +193,9 @@ export class Guide extends plugin {
             data.content.modules[0].components[0].content = replace(data.content.modules[0].components[0].content)
             data.content.modules[0].components[1].tabs[0].content = replace(data.content.modules[0].components[1].tabs[0].content)
 
-            const base64 = await Render.render('Wiki/enemy/enemy', {
+            return await Render.render('Wiki/enemy/enemy', {
                 data,
             }, { e: this.e, retType: 'base64' });
-
-            return base64
         },
 
         wikiProps: async (data) => {
@@ -213,11 +205,9 @@ export class Guide extends plugin {
 
             data.content.modules[0].components[0].content = replace(data.content.modules[0].components[0].content)
 
-            const base64 = await Render.render('Wiki/props/props', {
+            return await Render.render('Wiki/props/props', {
                 data,
             }, { e: this.e, retType: 'base64' });
-
-            return base64
         }
     }
 }

@@ -199,7 +199,7 @@ export class Gacha extends plugin {
         }
 
         if (fs.existsSync(`${_path}/data/wavesGacha/${jsonData.playerId}_Export.json`)) {
-            const list = JSON.parse(fs.readFileSync(`${_path}/data/wavesGacha/${jsonData.playerId}_Export.json`, 'utf-8')).list;
+            const { list } = JSON.parse(fs.readFileSync(`${_path}/data/wavesGacha/${jsonData.playerId}_Export.json`, 'utf-8'));
 
             const filteredList = Object.values(list.reduce((acc, item) => {
                 (acc[item.gacha_id] = acc[item.gacha_id] || []).push(item);
@@ -213,7 +213,7 @@ export class Gacha extends plugin {
         }
 
         fs.writeFileSync(`${_path}/data/wavesGacha/${jsonData.playerId}_Export.json`, JSON.stringify(json, null, 2));
-        logger.mark(logger.blue('[WAVES PLUGIN]'), logger.green(`已写入本地文件 ${jsonData.playerId}_Export.json`));
+        logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`已将抽卡记录写入本地文件`), logger.green(`${jsonData.playerId}_Export.json`));
 
         return true;
     }
@@ -250,7 +250,7 @@ export class Gacha extends plugin {
         try {
             await Bot.download(fileUrl, path);
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`文件下载错误：${error.stack}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`文件下载错误`), logger.red(error.stack));
             await this.reply(`导入抽卡记录失败：${error.message || '未知错误'}`, true);
             return true;
         }
@@ -289,7 +289,7 @@ export class Gacha extends plugin {
 
         await this.e.reply(`导入UID为 ${uid} 的抽卡记录成功，共计${json.list.length}条记录`);
         await redis.set(`Yunzai:waves:gachaHistory:${this.e.user_id}`, uid);
-        logger.mark(logger.blue('[WAVES PLUGIN]'), logger.green(`已写入本地文件 ${uid}_Export.json`));
+        logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`已将抽卡记录写入本地文件`), logger.green(`${uid}_Export.json`));
 
         return true;
     }

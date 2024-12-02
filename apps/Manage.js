@@ -65,7 +65,7 @@ export class Manage extends plugin {
 
             await e.reply(imageCard);
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`计算总用户数时出现错误：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`计算总用户数时出现错误`), logger.red(error));
             await e.reply('[Waves-Plugin] 账号总数\n计算总用户数时出现错误，请检查日志');
         }
     }
@@ -95,7 +95,7 @@ export class Manage extends plugin {
 
             await e.reply(`[Waves-Plugin] 删除失效账号\n删除了 ${deleted} 个失效账号`);
         } catch (error) {
-            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`删除失效账号时出现错误：\n${error}`));
+            logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`删除失效账号时出现错误`), logger.red(error));
             await e.reply('[Waves-Plugin] 删除失效账号\n删除失效账号时出现错误，请检查日志');
         }
         return true;

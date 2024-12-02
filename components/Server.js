@@ -21,7 +21,7 @@ class Server {
         }, 5000);
 
         this.app.get('/login/:id', async (req, res) => {
-            const id = req.params.id;
+            const { id } = req.params;
             const filePath = this.data[id] ? '/server/login.html' : '/server/error.html';
 
             try {
@@ -33,13 +33,13 @@ class Server {
                 data = data.replace(/background_image/g, await Config.getConfig().background_api);
                 res.send(data);
             } catch (error) {
-                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`发送登录页失败：\n${error}}`));
+                logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`发送登录页失败`), logger.red(error));
                 res.status(500).send('Internal Server Error');
             }
         });
 
         this.app.post('/code/:id', async (req, res) => {
-            const id = req.params.id;
+            const { id } = req.params;
             const { mobile, code } = req.body;
 
             if (!this.data[id]) return res.status(200).json({ code: 400, msg: 'Authorization is required' });
@@ -64,16 +64,16 @@ class Server {
         if (allowLogin && !this.server) {
             const port = await Config.getConfig().server_port;
             this.server = this.app.listen(port, () => {
-                logger.mark(logger.blue('[Waves PLUGIN]'), logger.white(`在线登录服务端点`), logger.green(`http://localhost:${port}`));
+                logger.mark(logger.blue('[Waves PLUGIN]'), logger.cyan(`已开启 HTTP 登录服务器，本地端口为`), logger.green(port));
             });
         }
 
         if (!allowLogin && this.server) {
             this.server.close((error) => {
                 if (error) {
-                    logger.mark(logger.blue('[Waves PLUGIN]'), logger.white(`无法关闭登录服务器`), logger.red(error));
+                    logger.mark(logger.blue('[Waves PLUGIN]'), logger.cyan(`无法关闭登录服务器`), logger.red(error));
                 } else {
-                    logger.mark(logger.blue('[Waves PLUGIN]'), logger.white(`已关闭登录服务器`));
+                    logger.mark(logger.blue('[Waves PLUGIN]'), logger.cyan(`已关闭登录服务器`));
                 }
             });
             this.server = null;
