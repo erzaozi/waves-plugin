@@ -66,10 +66,10 @@
             {{if data.roleDetail.data.phantomData.statistic}}
             <div class="total-score-table-left">
                 <div class="total-score-key">声骸总分</div>
-                <div class="total-score-value" style="{{data.roleDetail.data.phantomData.statistic.color || "#a0a0a0"}}">
+                <div class="total-score-value" style="color: {{data.roleDetail.data.phantomData.statistic.color}};">
                     {{data.roleDetail.data.phantomData.statistic.totalScore.toFixed(2)}}</div>
                 <div class="total-score-key">声骸评级</div>
-                <div class="total-score-value" style="{{data.roleDetail.data.phantomData.statistic.color || "#a0a0a0"}}">
+                <div class="total-score-value" style="color: {{data.roleDetail.data.phantomData.statistic.color}};">
                     {{data.roleDetail.data.phantomData.statistic.rank}}</div>
             </div>
             <div id="column" style="position: relative;left: -20px;top: -30px;width:100%;height:249px;"></div>
@@ -93,7 +93,7 @@
                         </div>
 
                         <span id="reson-level"
-                            style="{{data.roleDetail.data.weaponData.color}}">谐振 {{data.roleDetail.data.weaponData.resonLevel}} 阶</span>
+                            style="background: {{data.roleDetail.data.weaponData.color}};">谐振 {{data.roleDetail.data.weaponData.resonLevel}} 阶</span>
                     </div>
                 </div>
                 <div id="weapon-effect-name">{{data.roleDetail.data.weaponData.weapon.weaponEffectName}}</div>
@@ -109,7 +109,7 @@
                     <div class="phantom-header-right">
                         <div class="phantom-name">{{phantom.phantomProp.name.replace("（","(").replace("）",")")}}</div>
                         {{if phantom.realScore}}
-                        <div class="phantom-rank-score" style="{{phantom.color}}">
+                        <div class="phantom-rank-score" style="color: {{phantom.color}};">
                             {{phantom.realScore.toFixed(2)}}-{{phantom.rank}}</div>
                         {{else}}
                         <div class="phantom-rank-score" style="color: #a0a0a0;">暂无评分</div>
@@ -124,7 +124,7 @@
                     </div>
                     {{/each}}
                     {{each phantom.subProps prop}}
-                    <div class="phantom-attribute-item" style="{{prop.color}}">
+                    <div class="phantom-attribute-item" style="color: {{prop.color}};">
                         <span class="phantom-attribute-key">{{prop.attributeName}}</span> <span
                             class="phantom-attribute-value">{{prop.attributeValue}}</span>
                     </div>

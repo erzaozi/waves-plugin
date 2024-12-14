@@ -28,12 +28,12 @@ class WeightCalculator {
         });
 
         const weaponColors = {
-            5: "background:#9d2933;",
-            4: "background:#9f00ed;",
-            3: "background:#6640ff;",
-            2: "background:#00D200;"
+            5: "#9d2933",
+            4: "#9f00ed",
+            3: "#6640ff",
+            2: "#00D200"
         };
-        this.roleDetail.weaponData.color = weaponColors[this.roleDetail.weaponData.resonLevel] || "background:#a0a0a0;";
+        this.roleDetail.weaponData.color = weaponColors[this.roleDetail.weaponData.resonLevel] || "#a0a0a0";
 
         if (!fs.existsSync(this.roleWeightPath)) {
             return this.roleDetail;
@@ -213,22 +213,22 @@ class WeightCalculator {
     }
 
     calStyle(weight) {
-        return weight > 0.5 ? "color:#9d2933;"
-            : weight > 0 ? "color:#057748;"
-                : "color:#a0a0a0;";
+        return weight > 0.5 ? "#9d2933"
+            : weight > 0 ? "#057748"
+                : "#a0a0a0";
     }
 
     calRank(score) {
         const ranks = [
-            { minScore: 22, name: "MAX", color: "color:#9d2933;" },
-            { minScore: 19, name: "ACE", color: "color:#f08a5d;" },
-            { minScore: 17, name: "SSS", color: "color:#eec900;" },
-            { minScore: 15, name: "SS", color: "color:#eec900;" },
-            { minScore: 12, name: "S", color: "color:#eec900;" },
-            { minScore: 9, name: "A", color: "color:#9f00ed;" },
-            { minScore: 6, name: "B", color: "color:#6640ff;" },
-            { minScore: 3, name: "C", color: "color:#00D200;" },
-            { minScore: 0, name: "D", color: "color:#a0a0a0;" },
+            { minScore: 22, name: "MAX", color: "#9d2933" },
+            { minScore: 19, name: "ACE", color: "#f08a5d" },
+            { minScore: 17, name: "SSS", color: "#eec900" },
+            { minScore: 15, name: "SS", color: "#eec900" },
+            { minScore: 12, name: "S", color: "#eec900" },
+            { minScore: 9, name: "A", color: "#9f00ed" },
+            { minScore: 6, name: "B", color: "#6640ff" },
+            { minScore: 3, name: "C", color: "#00D200" },
+            { minScore: 0, name: "D", color: "#a0a0a0" },
         ];
 
         for (const rank of ranks) {

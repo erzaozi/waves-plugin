@@ -85,7 +85,22 @@ export class Training extends plugin {
                 return calculatedRole;
             });
 
-            roleList.sort((a, b) => b.starLevel - a.starLevel || b.phantomData.statistic.totalScore - a.phantomData.statistic.totalScore);
+            roleList.forEach(role => {
+                const { phantomData } = role;
+                phantomData.statistic = {
+                    color: "#a0a0a0",
+                    rank: "N",
+                    totalScore: "N/A",
+                    ...phantomData.statistic
+                };
+            });
+            
+            roleList.sort((a, b) => {
+                const aScore = parseFloat(a.phantomData.statistic.totalScore) || 0;
+                const bScore = parseFloat(b.phantomData.statistic.totalScore) || 0;
+            
+                return b.starLevel - a.starLevel || bScore - aScore;
+            });
 
             const imageCard = await Render.render('Template/training/training', {
                 baseData: baseData.data,

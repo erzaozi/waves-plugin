@@ -70,11 +70,12 @@
                             <img src="{{pluginResources}}/Template/training/imgs/no_phantom.png">
                             {{/if}}
                         </div>
-                        <div class="phantom-rank" style="background-{{role.phantomData.statistic.color}}">
+                        <div class="phantom-rank" style="background-color: {{role.phantomData.statistic.color}};">
                             {{role.phantomData.statistic.rank}}
                         </div>
                         <div class="phantom-score">
-                            {{role.phantomData.statistic.totalScore.toFixed(2)}}
+                            {{typeof role.phantomData.statistic.totalScore === 'number' ?
+                            role.phantomData.statistic.totalScore.toFixed(2) : role.phantomData.statistic.totalScore}}
                         </div>
                     </div>
                 </li>
