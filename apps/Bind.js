@@ -61,7 +61,7 @@ export class Bind extends plugin {
             token = data.data.token;
         } else {
             if (!Config.getConfig().allow_login) {
-                return await e.reply("当前网页登录功能已被禁用，请联系主人开启或使用其他登录方式进行登录\n使用[~登录帮助]查看登录方法！");
+                return await e.reply("当前网页登录功能已被禁用，请联系主人前往插件配置项中开启或使用其他登录方式进行登录\n使用[~登录帮助]查看其他登录方法！");
             }
             const id = Math.random().toString(36).substring(2, 12);
             Server.data[id] = { user_id: e.user_id };

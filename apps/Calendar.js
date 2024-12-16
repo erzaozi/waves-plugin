@@ -28,7 +28,7 @@ export class Calendar extends plugin {
         }
 
         const role = {
-            imgs: (pageData.data.contentJson?.sideModules?.[0]?.content?.tabs?.[0]?.imgs || []).map(item => item.img),
+            imgs: pageData.data.contentJson.sideModules[0].content.tabs.flatMap(tab => tab.imgs).map(item => item.img),
             description: pageData.data.contentJson?.sideModules?.[0]?.content?.tabs?.[0]?.description || '',
             unstart: new Date(pageData.data.contentJson?.sideModules?.[0]?.content?.tabs?.[0]?.countDown?.dateRange?.[0]) > currentDate,
             time: this.format(Math.max(Math.round((new Date(pageData.data.contentJson?.sideModules?.[0]?.content?.tabs?.[0]?.countDown?.dateRange?.[1]) - currentDate) / 1000), 0)),
@@ -37,7 +37,7 @@ export class Calendar extends plugin {
         };
 
         const weapon = {
-            imgs: (pageData.data.contentJson?.sideModules?.[1]?.content?.tabs?.[0]?.imgs || []).map(item => item.img),
+            imgs: pageData.data.contentJson.sideModules[1].content.tabs.flatMap(tab => tab.imgs).map(item => item.img),
             description: pageData.data.contentJson?.sideModules?.[1]?.content?.tabs?.[0]?.description || '',
             unstart: new Date(pageData.data.contentJson?.sideModules?.[1]?.content?.tabs?.[0]?.countDown?.dateRange?.[0]) > currentDate,
             time: this.format(Math.max(Math.round((new Date(pageData.data.contentJson?.sideModules?.[1]?.content?.tabs?.[0]?.countDown?.dateRange?.[1]) - currentDate) / 1000), 0)),
