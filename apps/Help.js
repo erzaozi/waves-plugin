@@ -195,6 +195,11 @@ export class Help extends plugin {
                         "desc": "抽卡模拟器"
                     },
                     {
+                        "icon": 73,
+                        "title": "~兑换码",
+                        "desc": "查看游戏兑换码"
+                    },
+                    {
                         "icon": 72,
                         "title": "~帮助",
                         "desc": "查看帮助面板"
