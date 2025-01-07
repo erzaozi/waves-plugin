@@ -83,9 +83,7 @@ export class Character extends plugin {
             const rolePicDir = path.join(pluginResources, 'rolePic', name);
 
             // 处理主角名称
-            if (name == '漂泊者-男-衍射' || name == '漂泊者-女-衍射') {
-                name = '漂泊者'
-            } else if (name.includes('漂泊者')) {
+            if (name.includes('漂泊者')) {
                 name = name.replace(/-男-|-女-/g, '·');
             }
 
