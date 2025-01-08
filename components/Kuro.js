@@ -50,7 +50,7 @@ class Kuro {
     async signIn(token) {
 
         let data = qs.stringify({
-            'gameId': 3
+            'gameId': 2
         });
 
         try {
