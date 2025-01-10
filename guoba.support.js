@@ -26,12 +26,8 @@ export function supportGuoba() {
     configInfo: {
       schemas: [
         {
-          component: "Divider",
-          label: "Waves 推送配置",
-          componentProps: {
-            orientation: "left",
-            plain: true,
-          },
+          component: "SOFT_GROUP_BEGIN",
+          label: "推送配置"
         },
         {
           field: "user_config.waves_auto_signin_list",
@@ -219,12 +215,8 @@ export function supportGuoba() {
           },
         },
         {
-          component: "Divider",
-          label: "Waves 登录服务器配置",
-          componentProps: {
-            orientation: "left",
-            plain: true,
-          },
+          component: "SOFT_GROUP_BEGIN",
+          label: "登录配置"
         },
         {
           field: "config.allow_login",
@@ -266,12 +258,8 @@ export function supportGuoba() {
           },
         },
         {
-          component: "Divider",
-          label: "Waves 面板图配置",
-          componentProps: {
-            orientation: "left",
-            plain: true,
-          },
+          component: "SOFT_GROUP_BEGIN",
+          label: "面板图配置"
         },
         {
           field: "config.allow_img_upload",
@@ -298,12 +286,8 @@ export function supportGuoba() {
           component: "Switch",
         },
         {
-          component: "Divider",
-          label: "Waves 别名配置",
-          componentProps: {
-            orientation: "left",
-            plain: true,
-          },
+          component: "SOFT_GROUP_BEGIN",
+          label: "别名配置"
         },
         {
           field: "config.allow_set_alias",
@@ -312,12 +296,8 @@ export function supportGuoba() {
           component: "Switch",
         },
         {
-          component: "Divider",
-          label: "Waves 其他配置",
-          componentProps: {
-            orientation: "left",
-            plain: true,
-          },
+          component: "SOFT_GROUP_BEGIN",
+          label: "其他配置"
         },
         {
           field: "config.use_public_cookie",
@@ -427,7 +407,7 @@ export function supportGuoba() {
 
         user_config["waves_auto_news_list"] = [];
         user_config["waves_auto_news_lists"].forEach(({ botId, isGroup, pushId }) => {
-          user_config["waves_auto_news_list"].push({ botId, groupId: isGroup ? pushId : "", userId: !isGroup ? pushId : "" });
+          user_config["waves_auto_news_list"].push({ botId, groupId: isGroup ? pushId : "", userId: isGroup ? "" : pushId });
         });
         delete user_config["waves_auto_news_lists"];
 

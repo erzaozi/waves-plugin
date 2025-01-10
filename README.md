@@ -22,11 +22,8 @@ git clone https://github.com/erzaozi/waves-plugin.git ./plugins/waves-plugin
 ```
 
 > [!NOTE]
-> 如果你的网络环境较差，无法连接到 Github，可以使用 [GitHub Proxy](https://ghgo.xyz/) 提供的文件代理加速下载服务
+> 如果你的网络环境较差，无法连接到 Github，可以使用 [GitHub Proxy](https://ghproxy.link/) 提供的文件代理加速下载服务
 >
-> ```
-> git clone https://ghgo.xyz/https://github.com/erzaozi/waves-plugin.git ./plugins/waves-plugin
-> ```
 
 #### 2. 安装依赖
 
