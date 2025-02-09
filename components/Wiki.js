@@ -94,7 +94,10 @@ class Wiki {
     async getEntry(name, type = '') {
         const recordData = await this.getRecord(name, type);
         if (recordData.status) {
-            const { linkId } = recordData.record.content;
+            const linkId = recordData.record.content.linkUrl
+                ? recordData.record.content.linkUrl?.split('/')?.pop()
+                : recordData.record.content.linkId;
+
             const entryData = await this.getEntryDetail(linkId);
             if (entryData.status) {
                 return { status: true, record: entryData.data, type: recordData.type };
