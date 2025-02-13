@@ -1,7 +1,7 @@
-pool_name: 「另一种喧嚣」
+pool_name: 「于静谧呢喃」
 five_star:
   up_pool:
-    - name: 珂莱塔
+    - name: 菲比
   other_pool:
     - name: 维里奈
     - name: 安可
@@ -13,16 +13,17 @@ five_star:
   other: 0.5
 four_star:
   up_pool:
-    - name: 散华
+    - name: 灯灯
     - name: 炽霞
-    - name: 莫特斐
+    - name: 秋水
   other_pool:
     - name: 桃祈
     - name: 渊武
     - name: 丹瑾
     - name: 釉瑚
     - name: 秧秧
-    - name: 秋水
+    - name: 莫特斐
+    - name: 散华
     - name: 白芷
     - name: 东落
     - name: 西升
