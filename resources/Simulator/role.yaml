@@ -1,7 +1,7 @@
-pool_name: 「于静谧呢喃」
+pool_name: 「燃焰于海」
 five_star:
   up_pool:
-    - name: 菲比
+    - name: 布兰特
   other_pool:
     - name: 维里奈
     - name: 安可
@@ -13,16 +13,16 @@ five_star:
   other: 0.5
 four_star:
   up_pool:
-    - name: 灯灯
-    - name: 炽霞
-    - name: 秋水
-  other_pool:
+    - name: 莫特斐
     - name: 桃祈
+    - name: 釉瑚
+  other_pool:
+    - name: 炽霞
     - name: 渊武
     - name: 丹瑾
-    - name: 釉瑚
+    - name: 秋水
     - name: 秧秧
-    - name: 莫特斐
+    - name: 灯灯
     - name: 散华
     - name: 白芷
     - name: 东落
