@@ -7,7 +7,7 @@ subProps:
   - name: 暴击
     weight: 1
   - name: 攻击百分比
-    weight: 0.3
+    weight: 0.5
   - name: 生命百分比
     weight: 0
   - name: 防御百分比
@@ -15,7 +15,7 @@ subProps:
   - name: 共鸣效率
     weight: 0.8
   - name: 普攻伤害加成
-    weight: 0.5
+    weight: 0.35
   - name: 重击伤害加成
     weight: 0
   - name: 共鸣技能伤害加成
@@ -40,7 +40,7 @@ mainProps:
     - name: 伤害加成
       weight: 0.75
     - name: 攻击百分比
-      weight: 0
+      weight: 0.75
     - name: 生命百分比
       weight: 0
     - name: 防御百分比
