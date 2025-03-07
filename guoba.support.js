@@ -315,7 +315,8 @@ export function supportGuoba() {
               { label: "全部", value: "all" },
               { label: "小沐XMu", value: "XMu" },
               { label: "Moealkyne", value: "moealkyne" },
-              { label: "金铃子攻略组", value: "Linn" }
+              { label: "金铃子攻略组", value: "Linn" },
+              { label: "丸子", value: "ruozi" }
             ],
           },
         },
