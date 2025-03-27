@@ -20,7 +20,7 @@ export class Reward extends plugin {
 
     async reward(e) {
         try {
-            const { data } = await axios.get("https://newsimg.5054399.com/comm/mlcxqcommon/static/wap/js/data_102.js?");
+            const { data } = await axios.get("https://newsimg.5054399.com/comm/mlcxqcommon/static/wap/js/data_102.js");
             const mlList = JSON.parse(data.match(/var mlList=(.*);/)[1]);
 
             const categorized = mlList.reduce((acc, item) => {
