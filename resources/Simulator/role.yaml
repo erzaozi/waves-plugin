@@ -1,7 +1,7 @@
-pool_name: 「燃焰于海」
+pool_name: 「映海之梦」
 five_star:
   up_pool:
-    - name: 布兰特
+    - name: 坎特蕾拉
   other_pool:
     - name: 维里奈
     - name: 安可
@@ -13,18 +13,20 @@ five_star:
   other: 0.5
 four_star:
   up_pool:
-    - name: 莫特斐
-    - name: 桃祈
-    - name: 釉瑚
-  other_pool:
+    - name: 丹瑾
     - name: 炽霞
     - name: 渊武
-    - name: 丹瑾
-    - name: 秋水
+  other_pool:
+    # 4星角色
     - name: 秧秧
-    - name: 灯灯
-    - name: 散华
     - name: 白芷
+    - name: 散华
+    - name: 灯灯
+    - name: 秋水
+    - name: 釉瑚
+    - name: 桃祈
+    - name: 莫特斐
+    # 4星武器
     - name: 东落
     - name: 西升
     - name: 飞逝
