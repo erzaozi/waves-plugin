@@ -1,6 +1,6 @@
-baseAttack: 962
-baseDefense: 1197
-baseHP: 12250
+baseAttack: 900
+baseDefense: 1099
+baseHP: 11600
 subProps:
   - name: 暴击伤害
     weight: 1
@@ -17,9 +17,9 @@ subProps:
   - name: 普攻伤害加成
     weight: 0.4
   - name: 重击伤害加成
-    weight: 0.4
+    weight: 0
   - name: 共鸣技能伤害加成
-    weight: 0.1
+    weight: 0
   - name: 共鸣解放伤害加成
     weight: 0
 mainProps:
