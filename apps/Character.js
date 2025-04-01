@@ -84,7 +84,7 @@ export class Character extends plugin {
 
             // 处理主角名称
             if (name.includes('漂泊者')) {
-                name = name.replace(/-男-|-女-/g, '·');
+                name = '漂泊者'
             }
 
             const char = roleData.data.roleList.find(role => role.roleName === name);
