@@ -130,7 +130,7 @@ class Kuro {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.DETAIL_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
+            const response = await axios.post(CONSTANTS.DETAIL_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, version: '', devcode: '' } });
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
