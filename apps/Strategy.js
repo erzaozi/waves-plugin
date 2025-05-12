@@ -61,7 +61,7 @@ export class Strategy extends plugin {
             return false;
         }
 
-        await e.reply(messages.length === 1 ? messages[0].message : Bot.makeForwardMsg(messages));
+        await e.reply(messages.length === 1 ? messages[0].message : await Bot.makeForwardMsg(messages));
         return true;
     }
 }

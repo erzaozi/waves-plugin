@@ -69,7 +69,7 @@ export class Sanity extends plugin {
             return true;
         }
 
-        await e.reply(Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]));
+        await e.reply(await Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]));
         return true;
     }
 
@@ -131,11 +131,11 @@ export class Sanity extends plugin {
                         return true;
                     }
                     else if (!groupId) {
-                        await Bot[botId]?.pickUser(userId).sendMsg(Bot.makeForwardMsg([{ message: `用户 ${userId}` }, ...data]))
+                        await Bot[botId]?.pickUser(userId).sendMsg(await Bot.makeForwardMsg([{ message: `用户 ${userId}` }, ...data]))
                     }
                     else {
                         await Bot[botId]?.pickGroup(groupId).sendMsg(segment.at(userId))
-                        await Bot[botId]?.pickGroup(groupId).sendMsg(Bot.makeForwardMsg([{ message: `用户 ${userId}` }, ...data]))
+                        await Bot[botId]?.pickGroup(groupId).sendMsg(await Bot.makeForwardMsg([{ message: `用户 ${userId}` }, ...data]))
                     }
                 }
                 return true;

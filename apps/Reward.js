@@ -55,7 +55,7 @@ export class Reward extends plugin {
                 messages.unshift("※ 全部兑换码列表");
             }
 
-            await e.reply(Bot.makeForwardMsg(messages.map(msg => ({ message: msg }))));
+            await e.reply(await Bot.makeForwardMsg(messages.map(msg => ({ message: msg }))));
         } catch (error) {
             logger.mark(logger.blue('[WAVES PLUGIN]'), logger.cyan(`获取兑换码出错`), logger.red(error));
             await e.reply("获取兑换码出错，请稍后再试");
