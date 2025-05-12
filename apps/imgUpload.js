@@ -155,7 +155,7 @@ export class ImgUploader extends plugin {
         const images = JSON.parse(res).img || [];
         const msg = [...images.map(img => ({ message: { ...segment.image(img), origin: true } }))];
 
-        e.reply(msg.length > 1 ? Bot.makeForwardMsg(msg) : msg[0].message);
+        e.reply(msg.length > 1 ? await Bot.makeForwardMsg(msg) : msg[0].message);
         return true;
     }
 
@@ -190,7 +190,7 @@ export class ImgUploader extends plugin {
             { message: `如需删除图片, 请使用 "~删除${character}面板图1" 删除第一张图片, 以此类推` },
         ];
 
-        const message = Bot.makeForwardMsg(msg);
+        const message = await Bot.makeForwardMsg(msg);
 
         const msgRes = await e.reply(message);
         if (!msgRes?.message_id) {

@@ -95,7 +95,7 @@ export class Task extends plugin {
             return true;
         }
 
-        await e.reply(Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]));
+        await e.reply(await Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]));
         return true;
     }
 
@@ -146,7 +146,7 @@ export class Task extends plugin {
             return true;
         }
 
-        await e.reply(Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]));
+        await e.reply(await Bot.makeForwardMsg([{ message: `用户 ${e.user_id}` }, ...data]));
         return true;
     }
 
@@ -211,7 +211,7 @@ export class Task extends plugin {
                 Config.setUserData(userId, newAccountList);
             }
 
-            if (data.length) Bot[botId]?.pickUser(userId).sendMsg(Bot.makeForwardMsg(data))
+            if (data.length) Bot[botId]?.pickUser(userId).sendMsg(await Bot.makeForwardMsg(data))
         }
 
         if (this.e) {
