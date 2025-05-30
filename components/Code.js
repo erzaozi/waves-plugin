@@ -25,6 +25,24 @@ const CONSTANTS = {
     },
 };
 
+function getRandomIp() {
+    const s = [];
+    for (let i = 0; i < 8; i++) {
+        s[i] = Math.floor(Math.random() * 0xffff).toString(16).padStart(4, '0');
+    }
+    return s.join(':');
+}
+
+axios.interceptors.request.use(
+    config => {
+        config.headers['X-Forwarded-For'] = getRandomIp();
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
+
 class Waves {
     constructor() {
     }
