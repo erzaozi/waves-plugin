@@ -25,7 +25,7 @@ const CONSTANTS = {
     },
 };
 
-function getRandomIp() {
+function getRandomIpV6() {
     const s = [];
     for (let i = 0; i < 8; i++) {
         s[i] = Math.floor(Math.random() * 0xffff).toString(16).padStart(4, '0');
@@ -33,9 +33,18 @@ function getRandomIp() {
     return s.join(':');
 }
 
-axios.interceptors.request.use(
+function getRandomIpV4() {
+    return Array(4).fill(0).map(() => Math.floor(Math.random() * 256)).join('.');
+}
+
+const wavesApi = axios.create();
+wavesApi.interceptors.request.use(
     config => {
-        config.headers['X-Forwarded-For'] = getRandomIp();
+        if (config.url === CONSTANTS.SIGNIN_URL) {
+            config.headers['X-Forwarded-For'] = getRandomIpV4();
+        } else {
+            config.headers['X-Forwarded-For'] = getRandomIpV6();
+        }
         return config;
     },
     error => {
@@ -58,7 +67,7 @@ class Waves {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.LOGIN_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, devCode } });
+            const response = await wavesApi.post(CONSTANTS.LOGIN_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, devCode } });
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
@@ -85,7 +94,7 @@ class Waves {
 
 
         try {
-            const response = await axios.post(CONSTANTS.GAME_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.GAME_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 220) {
                 logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取可用性成功，账号已过期`));
@@ -112,7 +121,7 @@ class Waves {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.REFRESH_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.REFRESH_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
@@ -140,7 +149,7 @@ class Waves {
 
 
         try {
-            const response = await axios.post(CONSTANTS.GAME_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.GAME_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
                 if (response.data.data === null) {
@@ -173,7 +182,7 @@ class Waves {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.BASE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.BASE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
@@ -207,7 +216,7 @@ class Waves {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.ROLE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.ROLE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
@@ -241,7 +250,7 @@ class Waves {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.CALABASH_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.CALABASH_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
@@ -276,7 +285,7 @@ class Waves {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.CHALLENGE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.CHALLENGE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
@@ -311,7 +320,7 @@ class Waves {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.EXPLORE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.EXPLORE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
@@ -345,7 +354,7 @@ class Waves {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.ROLE_DETAIL_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.ROLE_DETAIL_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
@@ -382,7 +391,7 @@ class Waves {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.SIGNIN_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
+            const response = await wavesApi.post(CONSTANTS.SIGNIN_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
 
             if (response.data.code === 200) {
                 if (response.data.data === null) {
@@ -415,7 +424,7 @@ class Waves {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.QUERY_RECORD_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.QUERY_RECORD_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
                 if (response.data.data === null) {
@@ -447,12 +456,12 @@ class Waves {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.SELF_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
+            const response = await wavesApi.post(CONSTANTS.SELF_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
 
             if (response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
-                    const other = await axios.post(CONSTANTS.OTHER_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
+                    const other = await wavesApi.post(CONSTANTS.OTHER_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
                     if (other.data.code === 200) {
                         other.data.data = JSON.parse(other.data.data)
                         if (other.data.data === null) {
@@ -488,7 +497,7 @@ class Waves {
         const isCN = !!(data.serverId == "76402e5b20be2c39f095a152090afddc");
 
         try {
-            const response = await axios.post(isCN ? CONSTANTS.GACHA_URL : CONSTANTS.INTL_GACHA_URL, data);
+            const response = await wavesApi.post(isCN ? CONSTANTS.GACHA_URL : CONSTANTS.INTL_GACHA_URL, data);
 
             if (response.data.code === 0) {
                 if (response.data.data === null) {
@@ -538,7 +547,7 @@ class Waves {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.EVENT_LIST_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE } });
+            const response = await wavesApi.post(CONSTANTS.EVENT_LIST_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE } });
 
             if (response.data.code === 200) {
                 if (response.data.data === null) {

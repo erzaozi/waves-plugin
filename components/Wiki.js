@@ -36,7 +36,8 @@ function getRandomIp() {
     return s.join(':');
 }
 
-axios.interceptors.request.use(
+const wikiApi = axios.create();
+wikiApi.interceptors.request.use(
     config => {
         config.headers['X-Forwarded-For'] = getRandomIp();
         return config;
@@ -63,7 +64,7 @@ class Wiki {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.WIKI_PAGE_URL, data, { headers: CONSTANTS.REQUEST_HEADERS_BASE });
+            const response = await wikiApi.post(CONSTANTS.WIKI_PAGE_URL, data, { headers: CONSTANTS.REQUEST_HEADERS_BASE });
 
             if (response.data.code === 200) {
                 return { status: true, data: response.data.data };
@@ -132,7 +133,7 @@ class Wiki {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.WIKI_ENTRYDETAIL_URL, data, { headers: CONSTANTS.REQUEST_HEADERS_BASE });
+            const response = await wikiApi.post(CONSTANTS.WIKI_ENTRYDETAIL_URL, data, { headers: CONSTANTS.REQUEST_HEADERS_BASE });
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
@@ -180,7 +181,7 @@ class Wiki {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.WIKI_SEARCH_URL, data, { headers: CONSTANTS.REQUEST_HEADERS_BASE });
+            const response = await wikiApi.post(CONSTANTS.WIKI_SEARCH_URL, data, { headers: CONSTANTS.REQUEST_HEADERS_BASE });
 
             if (response.data.code === 200) {
                 if (response.data.data.results === null) {
@@ -218,7 +219,7 @@ class Wiki {
     // 获取首页
     async getHomePage() {
         try {
-            const response = await axios.post(CONSTANTS.WIKI_HOMEPAGE_URL, null, { headers: CONSTANTS.REQUEST_HEADERS_BASE });
+            const response = await wikiApi.post(CONSTANTS.WIKI_HOMEPAGE_URL, null, { headers: CONSTANTS.REQUEST_HEADERS_BASE });
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {

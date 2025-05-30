@@ -24,7 +24,8 @@ function getRandomIp() {
     return s.join(':');
 }
 
-axios.interceptors.request.use(
+const kuroApi = axios.create();
+kuroApi.interceptors.request.use(
     config => {
         config.headers['X-Forwarded-For'] = getRandomIp();
         return config;
@@ -47,7 +48,7 @@ class Kuro {
 
 
         try {
-            const response = await axios.post(CONSTANTS.TASK_PROCESS_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
+            const response = await kuroApi.post(CONSTANTS.TASK_PROCESS_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
 
             if (response.data.code === 220) {
                 logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取可用性成功，账号已过期`));
@@ -72,7 +73,7 @@ class Kuro {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.SIGNIN_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await kuroApi.post(CONSTANTS.SIGNIN_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
@@ -100,7 +101,7 @@ class Kuro {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.LIKE_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await kuroApi.post(CONSTANTS.LIKE_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
@@ -124,7 +125,7 @@ class Kuro {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.SHARE_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
+            const response = await kuroApi.post(CONSTANTS.SHARE_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
@@ -148,7 +149,7 @@ class Kuro {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.DETAIL_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, version: '', devcode: '' } });
+            const response = await kuroApi.post(CONSTANTS.DETAIL_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, version: '', devcode: '' } });
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
@@ -173,7 +174,7 @@ class Kuro {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.FORUM_LIST, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, version: '', devcode: '' } });
+            const response = await kuroApi.post(CONSTANTS.FORUM_LIST, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, version: '', devcode: '' } });
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
@@ -195,7 +196,7 @@ class Kuro {
         });
 
         try {
-            const response = await axios.post(CONSTANTS.TASK_PROCESS_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
+            const response = await kuroApi.post(CONSTANTS.TASK_PROCESS_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
@@ -216,7 +217,7 @@ class Kuro {
     async getCoin(token) {
 
         try {
-            const response = await axios.post(CONSTANTS.GET_COIN_URL, null, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
+            const response = await kuroApi.post(CONSTANTS.GET_COIN_URL, null, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
 
             if (response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
