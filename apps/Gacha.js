@@ -198,16 +198,29 @@ export class Gacha extends plugin {
             ], true)
         }
 
-        if (fs.existsSync(`${_path}/data/wavesGacha/${jsonData.playerId}_Export.json`)) {
-            const { list } = JSON.parse(fs.readFileSync(`${_path}/data/wavesGacha/${jsonData.playerId}_Export.json`, 'utf-8'));
+        const oldFilePath = `${_path}/data/wavesGacha/${jsonData.playerId}_Export.json`;
 
-            const filteredList = Object.values(list.reduce((acc, item) => {
+        if (fs.existsSync(oldFilePath)) {
+            const oldFileContent = fs.readFileSync(oldFilePath, 'utf-8');
+            const oldData = JSON.parse(oldFileContent);
+            const oldList = oldData.list;
+            const oldExportTimestamp = oldData.info.export_timestamp;
+
+            const sixMonthsAgoDate = new Date();
+            sixMonthsAgoDate.setMonth(sixMonthsAgoDate.getMonth() - 6);
+            const isOldFileRecent = oldExportTimestamp >= sixMonthsAgoDate.getTime();
+
+            const filteredList = Object.values(oldList.reduce((acc, item) => {
                 (acc[item.gacha_id] = acc[item.gacha_id] || []).push(item);
                 return acc;
-            }, {})).filter(group => group.some(item => json.list.some(newItem => newItem.id === item.id)))
-                .flat();
+            }, {})).filter(group => {
+                const hasOverlap = group.some(oldItem => json.list.some(newItem => newItem.id === oldItem.id));
+                return hasOverlap || isOldFileRecent;
+            }).flat();
 
-            json.list = [...json.list, ...filteredList].filter((item, index, self) => index === self.findIndex(t => t.id === item.id));
+            json.list = [...json.list, ...filteredList].filter((item, index, self) =>
+                index === self.findIndex(t => t.id === item.id)
+            );
 
             json.list.sort((a, b) => a.gacha_id - b.gacha_id || b.id - a.id);
         }
@@ -270,16 +283,28 @@ export class Gacha extends plugin {
         }
 
         const exportPath = `${_path}/data/wavesGacha/${uid}_Export.json`;
-        if (fs.existsSync(exportPath)) {
-            const { list } = JSON.parse(fs.readFileSync(exportPath, 'utf-8'));
 
-            const filteredList = Object.values(list.reduce((acc, item) => {
+        if (fs.existsSync(exportPath)) {
+            const oldFileContent = fs.readFileSync(exportPath, 'utf-8');
+            const oldData = JSON.parse(oldFileContent);
+            const oldList = oldData.list;
+            const oldExportTimestamp = oldData.info.export_timestamp;
+
+            const sixMonthsAgoDate = new Date();
+            sixMonthsAgoDate.setMonth(sixMonthsAgoDate.getMonth() - 6);
+            const isOldFileRecent = oldExportTimestamp >= sixMonthsAgoDate.getTime();
+
+            const filteredList = Object.values(oldList.reduce((acc, item) => {
                 (acc[item.gacha_id] = acc[item.gacha_id] || []).push(item);
                 return acc;
-            }, {})).filter(group => group.some(item => json.list.some(newItem => newItem.id === item.id)))
-                .flat();
+            }, {})).filter(group => {
+                const hasOverlap = group.some(oldItem => json.list.some(newItem => newItem.id === oldItem.id));
+                return hasOverlap || isOldFileRecent;
+            }).flat();
 
-            json.list = [...json.list, ...filteredList].filter((item, index, self) => index === self.findIndex(t => t.id === item.id));
+            json.list = [...json.list, ...filteredList].filter((item, index, self) =>
+                index === self.findIndex(t => t.id === item.id)
+            );
 
             json.list.sort((a, b) => a.gacha_id - b.gacha_id || b.id - a.id);
         }

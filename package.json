@@ -1,6 +1,6 @@
 {
   "name": "waves-plugin",
-  "version": "1.5.21",
+  "version": "1.5.22",
   "description": "基于 Yunzai 的鸣潮游戏数据查询插件",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "axios": "^1.7.8",
     "p-limit": "^6.1.0",
     "qs": "^6.13.1",
-    "sharp": "^0.33.5"
+    "sharp": "^0.34.2"
   },
   "keywords": [
     "Yunzai-Bot",
