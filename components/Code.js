@@ -396,7 +396,7 @@ class Waves {
         try {
             const response = await wavesApi.post(CONSTANTS.SIGNIN_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '', 'b-at': this.bat } });
 
-            if (response.data.code === 10902) {
+            if (response.data.code === 200) {
                 if (response.data.data === null) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`签到失败，返回空数据`));
                     return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
@@ -429,7 +429,7 @@ class Waves {
         try {
             const response = await wavesApi.post(CONSTANTS.QUERY_RECORD_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 10902) {
+            if (response.data.code === 200) {
                 if (response.data.data === null) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`查询签到领取记录失败，返回空数据`));
                     return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
@@ -552,7 +552,7 @@ class Waves {
         try {
             const response = await wavesApi.post(CONSTANTS.EVENT_LIST_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'b-at': this.bat } });
 
-            if (response.data.code === 10902) {
+            if (response.data.code === 200) {
                 if (response.data.data === null) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取活动列表失败，返回空数据`));
                     return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
