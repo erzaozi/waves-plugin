@@ -37,7 +37,7 @@ export class Sanity extends plugin {
         let deleteroleId = [];
 
         for (let account of accountList) {
-            const usability = await waves.isAvailable(account.token);
+            const usability = await waves.isAvailable(account.serverId, account.roleId, account.token);
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -89,7 +89,7 @@ export class Sanity extends plugin {
                 let deleteroleId = [];
 
                 for (let account of accountList) {
-                    const usability = await waves.isAvailable(account.token);
+                    const usability = await waves.isAvailable(account.serverId, account.roleId, account.token);
 
                     if (!usability) {
                         data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });

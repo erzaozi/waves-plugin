@@ -60,7 +60,7 @@ export class Character extends plugin {
         let imgList = [];
 
         await Promise.all(accountList.map(async (account) => {
-            const usability = await waves.isAvailable(account.token);
+            const usability = await waves.isAvailable(account.serverId, account.roleId, account.token);
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });

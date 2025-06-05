@@ -12,7 +12,7 @@ const CONSTANTS = {
     FORUM_LIST: 'https://api.kurobbs.com/forum/list',
 
     REQUEST_HEADERS_BASE: {
-        "source": "h5",
+        "source": "ios",
     },
 };
 

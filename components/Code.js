@@ -3,8 +3,9 @@ import axios from 'axios';
 import qs from 'qs';
 
 const CONSTANTS = {
-    LOGIN_URL: 'https://api.kurobbs.com/user/sdkLoginForH5',
+    LOGIN_URL: 'https://api.kurobbs.com/user/sdkLogin',
     REFRESH_URL: 'https://api.kurobbs.com/aki/roleBox/akiBox/refreshData',
+    TOKEN_REFRESH_URL: 'https://api.kurobbs.com/aki/roleBox/requestToken',
     GAME_DATA_URL: 'https://api.kurobbs.com/gamer/widget/game3/refresh',
     BASE_DATA_URL: 'https://api.kurobbs.com/aki/roleBox/akiBox/baseData',
     ROLE_DATA_URL: 'https://api.kurobbs.com/aki/roleBox/akiBox/roleData',
@@ -21,7 +22,7 @@ const CONSTANTS = {
     OTHER_TOWER_DATA_URL: 'https://api.kurobbs.com/aki/roleBox/akiBox/towerIndex',
 
     REQUEST_HEADERS_BASE: {
-        "source": "h5",
+        "source": "ios",
     },
 };
 
@@ -54,6 +55,7 @@ wavesApi.interceptors.request.use(
 
 class Waves {
     constructor() {
+        this.bat = null;
     }
 
     // 验证码登录
@@ -85,16 +87,16 @@ class Waves {
     }
 
     // 获取可用性
-    async isAvailable(token, strict = false) {
+    async isAvailable(serverId, roleId, token, strict = false) {
 
         let data = qs.stringify({
-            'type': '2',
-            'sizeType': '1'
+            'serverId': serverId,
+            'roleId': roleId
         });
 
 
         try {
-            const response = await wavesApi.post(CONSTANTS.GAME_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.TOKEN_REFRESH_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
 
             if (response.data.code === 220) {
                 logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取可用性成功，账号已过期`));
@@ -103,6 +105,7 @@ class Waves {
                 if (Config.getConfig().enable_log) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.green(`获取可用性成功，账号可用`));
                 }
+                this.bat = JSON.parse(response.data.data).accessToken;
                 return true;
             }
         } catch (error) {
@@ -121,9 +124,9 @@ class Waves {
         });
 
         try {
-            const response = await wavesApi.post(CONSTANTS.REFRESH_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.REFRESH_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 200) {
+            if (response.data.code === 10902) {
                 if (Config.getConfig().enable_log) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.green(`刷新资料成功`));
                 }
@@ -149,7 +152,7 @@ class Waves {
 
 
         try {
-            const response = await wavesApi.post(CONSTANTS.GAME_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.GAME_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
             if (response.data.code === 200) {
                 if (response.data.data === null) {
@@ -182,9 +185,9 @@ class Waves {
         });
 
         try {
-            const response = await wavesApi.post(CONSTANTS.BASE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.BASE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 200) {
+            if (response.data.code === 10902) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null || !response.data.data.showToGuest) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取我的资料失败，返回空数据`));
@@ -216,9 +219,9 @@ class Waves {
         });
 
         try {
-            const response = await wavesApi.post(CONSTANTS.ROLE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.ROLE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 200) {
+            if (response.data.code === 10902) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null || !response.data.data.showToGuest) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取共鸣者失败，返回空数据`));
@@ -250,9 +253,9 @@ class Waves {
         });
 
         try {
-            const response = await wavesApi.post(CONSTANTS.CALABASH_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.CALABASH_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 200) {
+            if (response.data.code === 10902) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取数据坞失败，返回空数据`));
@@ -285,9 +288,9 @@ class Waves {
         });
 
         try {
-            const response = await wavesApi.post(CONSTANTS.CHALLENGE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.CHALLENGE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 200) {
+            if (response.data.code === 10902) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null || !response.data.data.open) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取挑战数据失败，返回空数据`));
@@ -320,9 +323,9 @@ class Waves {
         });
 
         try {
-            const response = await wavesApi.post(CONSTANTS.EXPLORE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.EXPLORE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 200) {
+            if (response.data.code === 10902) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null || !response.data.data.open) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取探索数据失败，返回空数据`));
@@ -354,9 +357,9 @@ class Waves {
         });
 
         try {
-            const response = await wavesApi.post(CONSTANTS.ROLE_DETAIL_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.ROLE_DETAIL_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 200) {
+            if (response.data.code === 10902) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取角色详细信息失败，返回空数据`));
@@ -391,9 +394,9 @@ class Waves {
         });
 
         try {
-            const response = await wavesApi.post(CONSTANTS.SIGNIN_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
+            const response = await wavesApi.post(CONSTANTS.SIGNIN_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '', 'b-at': this.bat } });
 
-            if (response.data.code === 200) {
+            if (response.data.code === 10902) {
                 if (response.data.data === null) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`签到失败，返回空数据`));
                     return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
@@ -424,9 +427,9 @@ class Waves {
         });
 
         try {
-            const response = await wavesApi.post(CONSTANTS.QUERY_RECORD_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token } });
+            const response = await wavesApi.post(CONSTANTS.QUERY_RECORD_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 200) {
+            if (response.data.code === 10902) {
                 if (response.data.data === null) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`查询签到领取记录失败，返回空数据`));
                     return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
@@ -456,12 +459,12 @@ class Waves {
         });
 
         try {
-            const response = await wavesApi.post(CONSTANTS.SELF_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
+            const response = await wavesApi.post(CONSTANTS.SELF_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '', 'b-at': this.bat } });
 
-            if (response.data.code === 200) {
+            if (response.data.code === 10902) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
-                    const other = await wavesApi.post(CONSTANTS.OTHER_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '' } });
+                    const other = await wavesApi.post(CONSTANTS.OTHER_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '', 'b-at': this.bat } });
                     if (other.data.code === 200) {
                         other.data.data = JSON.parse(other.data.data)
                         if (other.data.data === null) {
@@ -530,7 +533,7 @@ class Waves {
             .sort(() => Math.random() - 0.5);
 
         for (let value of values) {
-            if (value.token && await this.isAvailable(value.token)) {
+            if (value.token && await this.isAvailable(value.serverId, value.roleId, value.token)) {
                 return value;
             }
         }
@@ -547,9 +550,9 @@ class Waves {
         });
 
         try {
-            const response = await wavesApi.post(CONSTANTS.EVENT_LIST_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE } });
+            const response = await wavesApi.post(CONSTANTS.EVENT_LIST_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'b-at': this.bat } });
 
-            if (response.data.code === 200) {
+            if (response.data.code === 10902) {
                 if (response.data.data === null) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取活动列表失败，返回空数据`));
                     return { status: false, msg: "查询信息失败，请检查库街区数据终端中对应板块的对外展示开关是否打开" };
