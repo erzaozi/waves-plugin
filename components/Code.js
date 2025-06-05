@@ -126,7 +126,7 @@ class Waves {
         try {
             const response = await wavesApi.post(CONSTANTS.REFRESH_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 10902) {
+            if (response.data.code === 10902 || response.data.code === 200) {
                 if (Config.getConfig().enable_log) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.green(`刷新资料成功`));
                 }
@@ -187,7 +187,7 @@ class Waves {
         try {
             const response = await wavesApi.post(CONSTANTS.BASE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 10902) {
+            if (response.data.code === 10902 || response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null || !response.data.data.showToGuest) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取我的资料失败，返回空数据`));
@@ -221,7 +221,7 @@ class Waves {
         try {
             const response = await wavesApi.post(CONSTANTS.ROLE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 10902) {
+            if (response.data.code === 10902 || response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null || !response.data.data.showToGuest) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取共鸣者失败，返回空数据`));
@@ -255,7 +255,7 @@ class Waves {
         try {
             const response = await wavesApi.post(CONSTANTS.CALABASH_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 10902) {
+            if (response.data.code === 10902 || response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取数据坞失败，返回空数据`));
@@ -290,7 +290,7 @@ class Waves {
         try {
             const response = await wavesApi.post(CONSTANTS.CHALLENGE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 10902) {
+            if (response.data.code === 10902 || response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null || !response.data.data.open) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取挑战数据失败，返回空数据`));
@@ -325,7 +325,7 @@ class Waves {
         try {
             const response = await wavesApi.post(CONSTANTS.EXPLORE_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 10902) {
+            if (response.data.code === 10902 || response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null || !response.data.data.open) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取探索数据失败，返回空数据`));
@@ -359,7 +359,7 @@ class Waves {
         try {
             const response = await wavesApi.post(CONSTANTS.ROLE_DETAIL_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, 'b-at': this.bat } });
 
-            if (response.data.code === 10902) {
+            if (response.data.code === 10902 || response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
                     logger.mark(logger.blue('[WAVES PLUGIN]'), logger.yellow(`获取角色详细信息失败，返回空数据`));
@@ -461,7 +461,7 @@ class Waves {
         try {
             const response = await wavesApi.post(CONSTANTS.SELF_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '', 'b-at': this.bat } });
 
-            if (response.data.code === 10902) {
+            if (response.data.code === 10902 || response.data.code === 200) {
                 response.data.data = JSON.parse(response.data.data)
                 if (response.data.data === null) {
                     const other = await wavesApi.post(CONSTANTS.OTHER_TOWER_DATA_URL, data, { headers: { ...CONSTANTS.REQUEST_HEADERS_BASE, 'token': token, devcode: '', 'b-at': this.bat } });
