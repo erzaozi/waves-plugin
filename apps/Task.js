@@ -47,7 +47,7 @@ export class Task extends plugin {
         let deleteroleId = [];
 
         for (let account of accountList) {
-            const usability = await kuro.isAvailable(account.serverId, account.roleId, account.token);
+            const usability = await kuro.isAvailable(account.token);
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -111,7 +111,7 @@ export class Task extends plugin {
         let deleteroleId = [];
 
         for (let account of accountList) {
-            const usability = await kuro.isAvailable(account.serverId, account.roleId, account.token);
+            const usability = await kuro.isAvailable(account.token);
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -171,7 +171,7 @@ export class Task extends plugin {
             let deleteroleId = [];
 
             for (let account of accountList) {
-                const usability = await kuro.isAvailable(account.serverId, account.roleId, account.token);
+                const usability = await kuro.isAvailable(account.token);
 
                 if (!usability) {
                     data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
