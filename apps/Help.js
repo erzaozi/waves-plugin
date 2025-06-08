@@ -216,6 +216,14 @@ export class Help extends plugin {
             })
         }
 
+        if (e.isMaster) {
+            helpList[0].list.push({
+                "icon": 13,
+                "title": "～上传攻略帮助",
+                "desc": "自定义上传角色攻略图片"
+            })
+        }
+
         if (e.isMaster || Config.getConfig()?.allow_img_upload) {
             helpList.push({
                 "group": "面板图管理",
