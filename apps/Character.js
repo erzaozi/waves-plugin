@@ -16,7 +16,7 @@ export class Character extends plugin {
             priority: 1009,
             rule: [
                 {
-                    reg: "^(?:～|~|鸣潮)(.*)面板(\\d{9})?$",
+                    reg: "^(?:～|~|鸣潮)(.*)(面板|面包)(\\d{9})?$",
                     fnc: "character"
                 }
             ]
