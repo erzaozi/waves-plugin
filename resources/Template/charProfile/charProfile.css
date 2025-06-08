@@ -27,13 +27,13 @@
 #container {
   position: relative;
   width: 761px;
-  height: 1582px;
+  height: 1782px;
   background-image: url(./imgs/rolecard.png);
 }
 
 #weight-version {
   position: absolute;
-  top: 842px;
+  top: 1063px;
   right: 50px;
   font-size: 12px;
   font-style: italic;
@@ -480,4 +480,47 @@
   color: #d3bc8e;
   display: inline-block;
   padding: 0 3px;
+}
+
+.base-attributes {
+    margin: 20px 36px;
+    background-color: #f0ecf0;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.base-attributes-header {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #4e4e4e;
+}
+
+.base-attributes-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.attribute-item {
+    width: 32%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 8px 15px;
+    background-color: #e1e1e1;
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+.attribute-name {
+    font-weight: bold;
+    color: #4e4e4e;
+}
+
+.attribute-value {
+    font-family: "framdit";
+    color: #9d2933;
+    font-weight: bold;
 }
