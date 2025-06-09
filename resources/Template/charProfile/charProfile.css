@@ -223,7 +223,7 @@
 }
 
 #table {
-  margin: 36px 0px 0px 36px;
+  margin: 25px 0px 0px 36px;
   display: grid;
   grid-template-columns: 214px 214px 214px;
   column-gap: 20.3px;
@@ -235,7 +235,7 @@
 #table>* {
   position: relative;
   width: 214px;
-  height: 321px;
+  height: 320px;
   border-radius: 16px;
   overflow: hidden;
 }
