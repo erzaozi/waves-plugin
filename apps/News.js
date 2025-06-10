@@ -58,6 +58,8 @@ export class News extends plugin {
             return true;
         }
 
+        newsData.data.list.sort((a, b) => new Date(b.publishTime) - new Date(a.publishTime));
+
         const { postId } = newsData.data.list[0];
         if (postId != await redis.get(`Yunzai:waves:news`)) {
             const limit = pLimit(Config.getConfig().limit);
