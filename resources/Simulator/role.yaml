@@ -1,7 +1,7 @@
-pool_name: 「诗与乐的交响」
+pool_name: 「却也在风潮后轻舞」
 five_star:
   up_pool:
-    - name: 夏空
+    - name: 卡提希娅
   other_pool:
     - name: 维里奈
     - name: 安可
@@ -13,19 +13,20 @@ five_star:
   other: 0.5
 four_star:
   up_pool:
-    - name: 丹瑾
-    - name: 秧秧
-    - name: 莫特斐
+    - name: 秋水
+    - name: 白芷
+    - name: 釉瑚
   other_pool:
     # 4星角色
     - name: 桃祈
-    - name: 白芷
+    - name: 秧秧
     - name: 散华
     - name: 灯灯
-    - name: 秋水
+    - name: 丹瑾
     - name: 釉瑚
     - name: 炽霞
     - name: 渊武
+    - name: 莫特斐
     # 4星武器
     - name: 东落
     - name: 西升
