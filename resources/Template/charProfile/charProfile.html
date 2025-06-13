@@ -62,6 +62,17 @@
                 {{/each}}
             </div>
         </div>
+        <div class="base-attributes">
+            <div class="base-attributes-header">角色属性</div>
+            <div class="base-attributes-container">
+                {{each data.roleDetail.data.roleAttributeList attr}}
+                <div class="attribute-item">
+                    <div class="attribute-name">{{attr.attributeName}}</div>
+                    <div class="attribute-value">{{attr.attributeValue}}</div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
         <div class="total-score-table">
             {{if data.roleDetail.data.phantomData.statistic}}
             <div class="total-score-table-left">
