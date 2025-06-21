@@ -387,6 +387,16 @@ export function supportGuoba() {
             placeholder: '请输入代理地址，例：http://127.0.0.1:7897',
           },
         },
+        {
+          field: "config.reverse_proxy_url",
+          label: "反向代理地址",
+          bottomHelpMessage: "反向代理地址",
+          component: "Input",
+          required: true,
+          componentProps: {
+            placeholder: '请输入反向代理地址，例：https://api.kurobbs.com',
+          },
+        },
       ],
       getConfigData() {
         let config = Config.getConfig()

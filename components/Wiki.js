@@ -7,10 +7,10 @@ import YAML from 'yaml';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 
 const CONSTANTS = {
-    WIKI_PAGE_URL: 'https://api.kurobbs.com/wiki/core/catalogue/item/getPage',
-    WIKI_ENTRYDETAIL_URL: 'https://api.kurobbs.com/wiki/core/catalogue/item/getEntryDetail',
-    WIKI_SEARCH_URL: 'https://api.kurobbs.com/wiki/core/catalogue/item/search',
-    WIKI_HOMEPAGE_URL: 'https://api.kurobbs.com/wiki/core/homepage/getPage',
+    WIKI_PAGE_URL: '/wiki/core/catalogue/item/getPage',
+    WIKI_ENTRYDETAIL_URL: '/wiki/core/catalogue/item/getEntryDetail',
+    WIKI_SEARCH_URL: '/wiki/core/catalogue/item/search',
+    WIKI_HOMEPAGE_URL: '/wiki/core/homepage/getPage',
     REQUEST_HEADERS_BASE: {
         "wiki_type": "9",
     },
@@ -36,6 +36,9 @@ wikiApi.interceptors.request.use(
         if (proxyUrl) {
             const proxyAgent = new HttpsProxyAgent(proxyUrl);
             config.httpsAgent = proxyAgent;
+        }
+        if (config.url.startsWith('/')) {
+            config.url = Config.getConfig().reverse_proxy_url + config.url;
         }
         return config;
     },

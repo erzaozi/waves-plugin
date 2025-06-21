@@ -4,23 +4,23 @@ import qs from 'qs';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 
 const CONSTANTS = {
-    LOGIN_URL: 'https://api.kurobbs.com/user/sdkLogin',
-    REFRESH_URL: 'https://api.kurobbs.com/aki/roleBox/akiBox/refreshData',
-    TOKEN_REFRESH_URL: 'https://api.kurobbs.com/aki/roleBox/requestToken',
-    GAME_DATA_URL: 'https://api.kurobbs.com/gamer/widget/game3/refresh',
-    BASE_DATA_URL: 'https://api.kurobbs.com/aki/roleBox/akiBox/baseData',
-    ROLE_DATA_URL: 'https://api.kurobbs.com/aki/roleBox/akiBox/roleData',
-    CALABASH_DATA_URL: 'https://api.kurobbs.com/aki/roleBox/akiBox/calabashData',
-    CHALLENGE_DATA_URL: 'https://api.kurobbs.com/aki/roleBox/akiBox/challengeDetails',
-    EXPLORE_DATA_URL: 'https://api.kurobbs.com/aki/roleBox/akiBox/exploreIndex',
-    SIGNIN_URL: 'https://api.kurobbs.com/encourage/signIn/v2',
-    QUERY_RECORD_URL: 'https://api.kurobbs.com/encourage/signIn/queryRecordV2',
+    LOGIN_URL: '/user/sdkLogin',
+    REFRESH_URL: '/aki/roleBox/akiBox/refreshData',
+    TOKEN_REFRESH_URL: '/aki/roleBox/requestToken',
+    GAME_DATA_URL: '/gamer/widget/game3/refresh',
+    BASE_DATA_URL: '/aki/roleBox/akiBox/baseData',
+    ROLE_DATA_URL: '/aki/roleBox/akiBox/roleData',
+    CALABASH_DATA_URL: '/aki/roleBox/akiBox/calabashData',
+    CHALLENGE_DATA_URL: '/aki/roleBox/akiBox/challengeDetails',
+    EXPLORE_DATA_URL: '/aki/roleBox/akiBox/exploreIndex',
+    SIGNIN_URL: '/encourage/signIn/v2',
+    QUERY_RECORD_URL: '/encourage/signIn/queryRecordV2',
     GACHA_URL: 'https://gmserver-api.aki-game2.com/gacha/record/query',
     INTL_GACHA_URL: 'https://gmserver-api.aki-game2.net/gacha/record/query',
-    ROLE_DETAIL_URL: 'https://api.kurobbs.com/aki/roleBox/akiBox/getRoleDetail',
-    EVENT_LIST_URL: 'https://api.kurobbs.com/forum/companyEvent/findEventList',
-    SELF_TOWER_DATA_URL: 'https://api.kurobbs.com/aki/roleBox/akiBox/towerDataDetail',
-    OTHER_TOWER_DATA_URL: 'https://api.kurobbs.com/aki/roleBox/akiBox/towerIndex',
+    ROLE_DETAIL_URL: '/aki/roleBox/akiBox/getRoleDetail',
+    EVENT_LIST_URL: '/forum/companyEvent/findEventList',
+    SELF_TOWER_DATA_URL: '/aki/roleBox/akiBox/towerDataDetail',
+    OTHER_TOWER_DATA_URL: '/aki/roleBox/akiBox/towerIndex',
 
     REQUEST_HEADERS_BASE: {
         "source": "ios",
@@ -34,6 +34,9 @@ wavesApi.interceptors.request.use(
         if (proxyUrl) {
             const proxyAgent = new HttpsProxyAgent(proxyUrl);
             config.httpsAgent = proxyAgent;
+        }
+        if (config.url.startsWith('/')) {
+            config.url = Config.getConfig().reverse_proxy_url + config.url;
         }
         return config;
     },

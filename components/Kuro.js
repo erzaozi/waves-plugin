@@ -4,13 +4,13 @@ import qs from 'qs';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 
 const CONSTANTS = {
-    SIGNIN_URL: 'https://api.kurobbs.com/user/signIn',
-    LIKE_URL: 'https://api.kurobbs.com/forum/like',
-    SHARE_URL: 'https://api.kurobbs.com/encourage/level/shareTask',
-    DETAIL_URL: 'https://api.kurobbs.com/forum/getPostDetail',
-    TASK_PROCESS_URL: 'https://api.kurobbs.com/encourage/level/getTaskProcess',
-    GET_COIN_URL: 'https://api.kurobbs.com/encourage/gold/getTotalGold',
-    FORUM_LIST: 'https://api.kurobbs.com/forum/list',
+    SIGNIN_URL: '/user/signIn',
+    LIKE_URL: '/forum/like',
+    SHARE_URL: '/encourage/level/shareTask',
+    DETAIL_URL: '/forum/getPostDetail',
+    TASK_PROCESS_URL: '/encourage/level/getTaskProcess',
+    GET_COIN_URL: '/encourage/gold/getTotalGold',
+    FORUM_LIST: '/forum/list',
 
     REQUEST_HEADERS_BASE: {
         "source": "ios",
@@ -24,6 +24,9 @@ kuroApi.interceptors.request.use(
         if (proxyUrl) {
             const proxyAgent = new HttpsProxyAgent(proxyUrl);
             config.httpsAgent = proxyAgent;
+        }
+        if (config.url.startsWith('/')) {
+            config.url = Config.getConfig().reverse_proxy_url + config.url;
         }
         return config;
     },

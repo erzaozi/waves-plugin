@@ -23,6 +23,8 @@ render_scale: 100
 limit: 10
 # 代理地址
 proxy_url: ''
+# 反向代理地址
+reverse_proxy_url: 'https://api.kurobbs.com'
 
 # ---------- 登录服务器配置 ----------
 # 允许在线登录
