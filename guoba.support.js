@@ -378,6 +378,15 @@ export function supportGuoba() {
             step: 1,
           },
         },
+        {
+          field: "config.proxy_url",
+          label: "代理地址",
+          bottomHelpMessage: "请求代理地址",
+          component: "Input",
+          componentProps: {
+            placeholder: '请输入代理地址，例：http://127.0.0.1:7897',
+          },
+        },
       ],
       getConfigData() {
         let config = Config.getConfig()

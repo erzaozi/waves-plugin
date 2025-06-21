@@ -1,6 +1,7 @@
 import Config from './Config.js';
 import axios from 'axios';
 import qs from 'qs';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 
 const CONSTANTS = {
     SIGNIN_URL: 'https://api.kurobbs.com/user/signIn',
@@ -16,18 +17,14 @@ const CONSTANTS = {
     },
 };
 
-function getRandomIp() {
-    const s = [];
-    for (let i = 0; i < 8; i++) {
-        s[i] = Math.floor(Math.random() * 0xffff).toString(16).padStart(4, '0');
-    }
-    return s.join(':');
-}
-
 const kuroApi = axios.create();
 kuroApi.interceptors.request.use(
-    config => {
-        config.headers['X-Forwarded-For'] = getRandomIp();
+    async config => {
+        const proxyUrl = Config.getConfig().proxy_url;
+        if (proxyUrl) {
+            const proxyAgent = new HttpsProxyAgent(proxyUrl);
+            config.httpsAgent = proxyAgent;
+        }
         return config;
     },
     error => {

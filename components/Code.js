@@ -1,6 +1,7 @@
 import Config from './Config.js';
 import axios from 'axios';
 import qs from 'qs';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 
 const CONSTANTS = {
     LOGIN_URL: 'https://api.kurobbs.com/user/sdkLogin',
@@ -26,25 +27,13 @@ const CONSTANTS = {
     },
 };
 
-function getRandomIpV6() {
-    const s = [];
-    for (let i = 0; i < 8; i++) {
-        s[i] = Math.floor(Math.random() * 0xffff).toString(16).padStart(4, '0');
-    }
-    return s.join(':');
-}
-
-function getRandomIpV4() {
-    return Array(4).fill(0).map(() => Math.floor(Math.random() * 256)).join('.');
-}
-
 const wavesApi = axios.create();
 wavesApi.interceptors.request.use(
-    config => {
-        if (config.url === CONSTANTS.SIGNIN_URL) {
-            config.headers['X-Forwarded-For'] = getRandomIpV4();
-        } else {
-            config.headers['X-Forwarded-For'] = getRandomIpV6();
+    async config => {
+        const proxyUrl = Config.getConfig().proxy_url;
+        if (proxyUrl) {
+            const proxyAgent = new HttpsProxyAgent(proxyUrl);
+            config.httpsAgent = proxyAgent;
         }
         return config;
     },

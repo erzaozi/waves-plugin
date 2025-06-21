@@ -21,6 +21,8 @@ enable_log: false
 render_scale: 100
 # 接口并发量
 limit: 10
+# 代理地址
+proxy_url: ''
 
 # ---------- 登录服务器配置 ----------
 # 允许在线登录
