@@ -49,7 +49,7 @@ export class TowerInfo extends plugin {
         let deleteroleId = [];
 
         await Promise.all(accountList.map(async (account) => {
-            const usability = await waves.isAvailable(account.serverId, roleId ? roleId : account.roleId, account.token);
+            const usability = await waves.isAvailable(account.serverId, roleId ? roleId : account.roleId, account.token, account.did ? account.did : '');
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -63,8 +63,8 @@ export class TowerInfo extends plugin {
             }
 
             const [baseData, towerData] = await Promise.all([
-                waves.getBaseData(account.serverId, account.roleId, account.token),
-                waves.getTowerData(account.serverId, account.roleId, account.token)
+                waves.getBaseData(account.serverId, account.roleId, account.token, account.did ? account.did : ''),
+                waves.getTowerData(account.serverId, account.roleId, account.token, account.did ? account.did : '')
             ]);
 
             if (!baseData.status || !towerData.status) {

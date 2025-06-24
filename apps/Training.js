@@ -50,7 +50,7 @@ export class Training extends plugin {
         let deleteroleId = [];
 
         await Promise.all(accountList.map(async (account) => {
-            const usability = await waves.isAvailable(account.serverId, roleId ? roleId : account.roleId, account.token);
+            const usability = await waves.isAvailable(account.serverId, roleId ? roleId : account.roleId, account.token, account.did ? account.did : '');
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -64,8 +64,8 @@ export class Training extends plugin {
             }
 
             const [baseData, roleData] = await Promise.all([
-                waves.getBaseData(account.serverId, account.roleId, account.token),
-                waves.getRoleData(account.serverId, account.roleId, account.token)
+                waves.getBaseData(account.serverId, account.roleId, account.token, account.did ? account.did : ''),
+                waves.getRoleData(account.serverId, account.roleId, account.token, account.did ? account.did : '')
             ]);
 
             if (!baseData.status || !roleData.status) {
@@ -74,7 +74,7 @@ export class Training extends plugin {
             }
 
             const Promises = roleData.data.roleList.map(role =>
-                waves.getRoleDetail(account.serverId, account.roleId, role.roleId, account.token).then(data =>
+                waves.getRoleDetail(account.serverId, account.roleId, role.roleId, account.token, account.did ? account.did : '').then(data =>
                     data.status && data.data.role ? { ...role, ...data.data } : null
                 )
             );

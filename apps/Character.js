@@ -60,7 +60,7 @@ export class Character extends plugin {
         let imgList = [];
 
         await Promise.all(accountList.map(async (account) => {
-            const usability = await waves.isAvailable(account.serverId, roleId ? roleId : account.roleId, account.token);
+            const usability = await waves.isAvailable(account.serverId, roleId ? roleId : account.roleId, account.token, account.did ? account.did : '');
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -73,7 +73,7 @@ export class Character extends plugin {
                 await redis.set(`Yunzai:waves:bind:${e.user_id}`, account.roleId);
             }
 
-            const roleData = await waves.getRoleData(account.serverId, account.roleId, account.token);
+            const roleData = await waves.getRoleData(account.serverId, account.roleId, account.token, account.did ? account.did : '');
 
             if (!roleData.status) {
                 data.push({ message: roleData.msg });
@@ -94,7 +94,7 @@ export class Character extends plugin {
                 return;
             }
 
-            const roleDetail = await waves.getRoleDetail(account.serverId, account.roleId, char.roleId, account.token)
+            const roleDetail = await waves.getRoleDetail(account.serverId, account.roleId, char.roleId, account.token, account.did ? account.did : '')
 
             if (!roleDetail.status) {
                 data.push({ message: roleDetail.msg });

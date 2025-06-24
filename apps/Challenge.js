@@ -49,7 +49,7 @@ export class Challenge extends plugin {
         let deleteroleId = [];
 
         await Promise.all(accountList.map(async (account) => {
-            const usability = await waves.isAvailable(account.serverId, roleId ? roleId : account.roleId, account.token);
+            const usability = await waves.isAvailable(account.serverId, roleId ? roleId : account.roleId, account.did ? account.did : '' , account.token);
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -63,8 +63,8 @@ export class Challenge extends plugin {
             }
 
             const [baseData, challengeData] = await Promise.all([
-                waves.getBaseData(account.serverId, account.roleId, account.token),
-                waves.getChallengeData(account.serverId, account.roleId, account.token)
+                waves.getBaseData(account.serverId, account.roleId, account.token, account.did ? account.did : ''),
+                waves.getChallengeData(account.serverId, account.roleId, account.token, account.did ? account.did : '')
             ]);
 
             if (!baseData.status || !challengeData.status) {

@@ -44,10 +44,19 @@ export class Bind extends plugin {
         const [, message] = e.msg.match(this.rule[1].reg);
         const waves = new Waves();
         let token;
-
+        let warningMsg = "";
+        let did = "";
+        
         if (message.startsWith("eyJhbGc")) {
-            if (e.isGroup) e.group.recallMsg(e.message_id)
-            token = message;
+            if (e.isGroup) e.group.recallMsg(e.message_id);
+            const cleanMessage = message.replace(/\s+/g, ''); // 移除所有空格
+            if (cleanMessage.includes(",")) {
+                [token, did] = cleanMessage.split(",", 2);
+            } else {
+                token = cleanMessage;
+                warningMsg = "\n警告：未提供 did 字段，会导致其他登录设备下线！";
+            }
+    
         } else if (message) {
             if (e.isGroup) e.group.recallMsg(e.message_id)
             const [mobile, _, code] = message.split(/(:|：)/);
@@ -59,6 +68,7 @@ export class Bind extends plugin {
                 return await e.reply(`登录失败！原因：${data.msg}\n使用[~登录帮助]查看登录方法！`);
             }
             token = data.data.token;
+            did = data.data.did;
         } else {
             if (!Config.getConfig().allow_login) {
                 return await e.reply("当前网页登录功能已被禁用，请联系主人前往插件配置项中开启或使用其他登录方式进行登录\n使用[~登录帮助]查看其他登录方法！");
@@ -76,6 +86,7 @@ export class Bind extends plugin {
                 return await e.reply('在线登录超时，请重新登录', true);
             }
             token = Server.data[id].token;
+            did = Server.data[id].did;
             delete Server.data[id];
         }
 
@@ -85,13 +96,13 @@ export class Bind extends plugin {
         }
 
         const userConfig = Config.getUserData(e.user_id);
-        const userData = { token, userId: gameData.data.userId, serverId: gameData.data.serverId, roleId: gameData.data.roleId };
+        const userData = { token, did, userId: gameData.data.userId, serverId: gameData.data.serverId, roleId: gameData.data.roleId };
         const userIndex = userConfig.findIndex(item => item.userId === gameData.data.userId);
         userIndex !== -1 ? (userConfig[userIndex] = userData) : userConfig.push(userData);
         await redis.set(`Yunzai:waves:bind:${e.user_id}`, gameData.data.roleId);
 
         Config.setUserData(e.user_id, userConfig);
-        return await e.reply(`${gameData.data.roleName}(${gameData.data.roleId}) 登录成功！`, true);
+        return await e.reply(`${gameData.data.roleName}(${gameData.data.roleId}) 登录成功！${warningMsg}`, true);
     }
     async unLogin(e) {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
@@ -119,7 +130,10 @@ export class Bind extends plugin {
 
     async getToken(e) {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
-
+        accountList = (accountList || []).map(account => ({
+            ...account,
+            did: account.did || ''
+        }));
         if (!accountList || !accountList.length) {
             return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
         }
@@ -129,7 +143,12 @@ export class Bind extends plugin {
         const tokenList = []
         accountList.forEach((item) => {
             tokenList.push({ message: item.roleId })
-            tokenList.push({ message: item.token })
+            
+            if (item.did) {
+                tokenList.push({ message: `${item.token},${item.did}` })
+            } else {
+                tokenList.push({ message: item.token })
+            }
         })
 
         await e.reply(await Bot.makeForwardMsg(tokenList))

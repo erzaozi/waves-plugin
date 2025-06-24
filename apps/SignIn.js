@@ -38,6 +38,11 @@ export class SignIn extends plugin {
     async signIn(e) {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
 
+        accountList = accountList.map(account => ({
+            ...account,
+            did: account.did || ''
+        }));
+
         if (!accountList || !accountList.length) {
             return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
         }
@@ -47,7 +52,12 @@ export class SignIn extends plugin {
         let deleteroleId = [];
 
         for (let account of accountList) {
-            const usability = await waves.isAvailable(account.serverId, account.roleId, account.token);
+            const usability = await waves.isAvailable(
+                account.serverId, 
+                account.roleId, 
+                account.token,
+                account.did
+            );
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -56,12 +66,25 @@ export class SignIn extends plugin {
             }
 
             const [signInData, listData] = await Promise.all([
-                waves.signIn(account.serverId, account.roleId, account.userId, account.token),
-                waves.queryRecord(account.serverId, account.roleId, account.token)
+                waves.signIn(
+                    account.serverId, 
+                    account.roleId, 
+                    account.userId, 
+                    account.token,
+                    account.did
+                ),
+                waves.queryRecord(
+                    account.serverId, 
+                    account.roleId, 
+                    account.token,
+                    account.did
+                )
             ]);
 
             let message = `账号 ${account.userId} 的签到结果\n\n`;
-            message += signInData.status ? `[游戏签到] 签到成功，获得「${listData.data[0].goodsName} × ${listData.data[0].goodsNum}」` : `[游戏签到] 签到失败，原因：${signInData.msg}`;
+            message += signInData.status ? 
+                `[游戏签到] 签到成功，获得「${listData.data[0].goodsName} × ${listData.data[0].goodsNum}」` : 
+                `[游戏签到] 签到失败，原因：${signInData.msg}`;
             message += `\n\n签到已完成，发送[~签到记录]查看近期签到记录`;
 
             data.push({ message: message });
@@ -84,6 +107,11 @@ export class SignIn extends plugin {
     async signInList(e) {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
 
+        accountList = accountList.map(account => ({
+            ...account,
+            did: account.did || ''
+        }));
+
         if (!accountList || !accountList.length) {
             return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
         }
@@ -93,7 +121,12 @@ export class SignIn extends plugin {
         let deleteroleId = [];
 
         for (let account of accountList) {
-            const usability = await waves.isAvailable(account.serverId, account.roleId, account.token);
+            const usability = await waves.isAvailable(
+                account.serverId, 
+                account.roleId, 
+                account.token,
+                account.did
+            );
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -101,7 +134,12 @@ export class SignIn extends plugin {
                 continue;
             }
 
-            const listData = await waves.queryRecord(account.serverId, account.roleId, account.token);
+            const listData = await waves.queryRecord(
+                account.serverId, 
+                account.roleId, 
+                account.token,
+                account.did
+            );
 
             if (!listData.status) {
                 data.push({ message: listData.msg })
@@ -141,16 +179,29 @@ export class SignIn extends plugin {
         for (let user of autoSignInList) {
             const { botId, groupId, userId } = user;
             const accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${userId}`)) || await Config.getUserData(userId);
-            if (!accountList.length) {
+            
+            // 确保每个账户都有 did 字段（兼容旧数据）
+            const accounts = accountList.map(account => ({
+                ...account,
+                did: account.did || ''
+            }));
+            
+            if (!accounts.length) {
                 continue;
             }
 
             let data = [];
             let deleteroleId = [];
 
-            for (let account of accountList) {
+            for (let account of accounts) {
                 const waves = new Waves();
-                const usability = await waves.isAvailable(account.serverId, account.roleId, account.token);
+                // 添加 did 参数
+                const usability = await waves.isAvailable(
+                    account.serverId, 
+                    account.roleId, 
+                    account.token,
+                    account.did
+                );
 
                 if (!usability) {
                     data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -158,7 +209,14 @@ export class SignIn extends plugin {
                     continue;
                 }
 
-                let result = await waves.signIn(account.serverId, account.roleId, account.userId, account.token);
+                // 添加 did 参数
+                let result = await waves.signIn(
+                    account.serverId, 
+                    account.roleId, 
+                    account.userId, 
+                    account.token,
+                    account.did
+                );
 
                 if (result.status) success++
 
@@ -166,7 +224,7 @@ export class SignIn extends plugin {
             }
 
             if (deleteroleId.length) {
-                let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
+                let newAccountList = accounts.filter(account => !deleteroleId.includes(account.roleId));
                 Config.setUserData(userId, newAccountList);
             }
 

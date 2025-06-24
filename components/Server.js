@@ -50,6 +50,7 @@ class Server {
 
             if (!data.status) return res.status(200).json({ code: 400, msg: data.msg });
             this.data[id].token = data.data.token;
+            this.data[id].did = data.data.did; 
             return res.status(200).json({ code: 200, msg: 'Login successful' });
         });
 

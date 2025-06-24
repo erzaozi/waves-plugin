@@ -38,6 +38,11 @@ export class Task extends plugin {
     async doTask(e) {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
 
+        accountList = (accountList || []).map(account => ({
+            ...account,
+            did: account.did || ''
+        }));
+
         if (!accountList || !accountList.length) {
             return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
         }
@@ -47,7 +52,7 @@ export class Task extends plugin {
         let deleteroleId = [];
 
         for (let account of accountList) {
-            const usability = await kuro.isAvailable(account.token);
+            const usability = await kuro.isAvailable(account.token, account.did);
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -64,20 +69,20 @@ export class Task extends plugin {
             let toUserId = postData.data.postList[0].userId;
             let message = `账号 ${account.userId} 的任务结果\n\n`;
 
-            const signData = await kuro.signIn(account.token);
+            const signData = await kuro.signIn(account.token, account.did);
             message += signData.status ? `[用户签到] 签到成功` : `[用户签到] 签到失败，原因：${signData.msg}`;
 
-            const detailPromises = Array.from({ length: 3 }, () => kuro.detail(postId, account.token));
+            const detailPromises = Array.from({ length: 3 }, () => kuro.detail(postId, account.token, account.did));
             const detailResults = await Promise.all(detailPromises);
             const detailCount = detailResults.filter(detail => detail.status).length;
             message += `\n[浏览帖子] 浏览帖子成功 ${detailCount} 次`;
 
-            const likePromises = Array.from({ length: 5 }, () => kuro.like(postId, toUserId, account.token));
+            const likePromises = Array.from({ length: 5 }, () => kuro.like(postId, toUserId, account.token, account.did));
             const likeResults = await Promise.all(likePromises);
             const likeCount = likeResults.filter(like => like.status).length;
             message += `\n[点赞帖子] 点赞帖子成功 ${likeCount} 次`;
 
-            const shareData = await kuro.share(account.token);
+            const shareData = await kuro.share(account.token, account.did);
             message += shareData.status ? `\n[分享帖子] 分享帖子成功` : `\n[分享帖子] 分享帖子失败，原因：${shareData.msg}`;
 
             message += `\n\n全部任务已完成，发送[~任务列表]查看当前任务状态与库洛币数量`;
@@ -102,6 +107,11 @@ export class Task extends plugin {
     async taskList(e) {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
 
+        accountList = (accountList || []).map(account => ({
+            ...account,
+            did: account.did || ''
+        }));
+
         if (!accountList || !accountList.length) {
             return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
         }
@@ -111,7 +121,8 @@ export class Task extends plugin {
         let deleteroleId = [];
 
         for (let account of accountList) {
-            const usability = await kuro.isAvailable(account.token);
+            
+            const usability = await kuro.isAvailable(account.token, account.did);
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -120,8 +131,8 @@ export class Task extends plugin {
             }
 
             const [taskData, coinData] = await Promise.all([
-                kuro.taskProcess(account.token),
-                kuro.getCoin(account.token)
+                kuro.taskProcess(account.token, account.did),
+                kuro.getCoin(account.token, account.did)
             ]);
 
             if (!taskData.status || !coinData.status) {
@@ -162,7 +173,13 @@ export class Task extends plugin {
         for (let user of autoTaskList) {
             const { botId, groupId, userId } = user;
             const accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${userId}`)) || await Config.getUserData(userId);
-            if (!accountList.length) {
+            
+            const accounts = (accountList || []).map(account => ({
+                ...account,
+                did: account.did || ''
+            }));
+            
+            if (!accounts.length) {
                 continue;
             }
 
@@ -170,8 +187,9 @@ export class Task extends plugin {
             let data = [];
             let deleteroleId = [];
 
-            for (let account of accountList) {
-                const usability = await kuro.isAvailable(account.token);
+            for (let account of accounts) {
+
+                const usability = await kuro.isAvailable(account.token, account.did);
 
                 if (!usability) {
                     data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -179,7 +197,8 @@ export class Task extends plugin {
                     continue;
                 }
 
-                let postData = await kuro.getPost();
+
+                let postData = await kuro.getPost(account.did);
                 if (!postData.status) {
                     return { message: `获取帖子失败，无法继续任务` };
                 }
@@ -187,17 +206,21 @@ export class Task extends plugin {
                 let { postId } = postData.data.postList[0];
                 let toUserId = postData.data.postList[0].userId;
 
-                const signData = await kuro.signIn(account.token);
 
-                const detailPromises = Array.from({ length: 3 }, () => kuro.detail(postId, account.token));
+                const signData = await kuro.signIn(account.token, account.did);
+
+
+                const detailPromises = Array.from({ length: 3 }, () => kuro.detail(postId, account.token, account.did));
                 const detailResults = await Promise.all(detailPromises);
                 const detailCount = detailResults.filter(detail => detail.status).length;
 
-                const likePromises = Array.from({ length: 5 }, () => kuro.like(postId, toUserId, account.token));
+
+                const likePromises = Array.from({ length: 5 }, () => kuro.like(postId, toUserId, account.token, account.did));
                 const likeResults = await Promise.all(likePromises);
                 const likeCount = likeResults.filter(like => like.status).length;
 
-                const shareData = await kuro.share(account.token);
+
+                const shareData = await kuro.share(account.token, account.did);
 
                 if (signData.status && detailCount === 3 && likeCount === 5 && shareData.status) {
                     success++;
@@ -207,7 +230,7 @@ export class Task extends plugin {
             }
 
             if (deleteroleId.length) {
-                let newAccountList = accountList.filter(account => !deleteroleId.includes(account.roleId));
+                let newAccountList = accounts.filter(account => !deleteroleId.includes(account.roleId));
                 Config.setUserData(userId, newAccountList);
             }
 

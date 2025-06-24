@@ -27,7 +27,6 @@ export class Sanity extends plugin {
 
     async sanity(e) {
         let accountList = JSON.parse(await redis.get(`Yunzai:waves:users:${e.user_id}`)) || await Config.getUserData(e.user_id);
-
         if (!accountList || !accountList.length) {
             return await e.reply('当前没有登录任何账号，请使用[~登录]进行登录');
         }
@@ -37,7 +36,7 @@ export class Sanity extends plugin {
         let deleteroleId = [];
 
         for (let account of accountList) {
-            const usability = await waves.isAvailable(account.serverId, account.roleId, account.token);
+            const usability = await waves.isAvailable(account.serverId, account.roleId, account.token, account.did ? account.did : '');
 
             if (!usability) {
                 data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -45,7 +44,7 @@ export class Sanity extends plugin {
                 continue;
             }
 
-            const gameData = await waves.getGameData(account.token);
+            const gameData = await waves.getGameData(account.token, account.did ? account.did : '');
 
             if (!gameData.status) {
                 data.push({ message: gameData.msg });
@@ -89,7 +88,7 @@ export class Sanity extends plugin {
                 let deleteroleId = [];
 
                 for (let account of accountList) {
-                    const usability = await waves.isAvailable(account.serverId, account.roleId, account.token);
+                    const usability = await waves.isAvailable(account.serverId, account.roleId, account.token, account.did ? account.did : '');
 
                     if (!usability) {
                         data.push({ message: `账号 ${account.roleId} 的Token已失效\n请重新登录Token` });
@@ -97,7 +96,7 @@ export class Sanity extends plugin {
                         continue;
                     }
 
-                    const result = await waves.getGameData(account.token);
+                    const result = await waves.getGameData(account.token, account.did ? account.did : '');
 
                     if (!result.status) {
                         data.push({ message: result.msg })

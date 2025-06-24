@@ -43,7 +43,7 @@ export class Manage extends plugin {
 
             const limit = pLimit(Config.getConfig().limit);
             const results = await Promise.all(
-                userCounts.flat().map(user => limit(() => waves.isAvailable(user.serverId, user.roleId, user.token, true)))
+                userCounts.flat().map(user => limit(() => waves.isAvailable(user.serverId, user.roleId, user.token, user.did ? user.did : '' , true)))
             )
 
             const available = results.filter(Boolean).length;
@@ -85,7 +85,7 @@ export class Manage extends plugin {
             await Promise.all(yamlFiles.map(async (file) => {
                 const users = YAML.parse(await fs.readFile(`${dir}/${file}`, 'utf-8'));
                 const validUsers = await Promise.all(users.map(async (user) => {
-                    const valid = await waves.isAvailable(user.serverId, user.roleId, user.token, true);
+                    const valid = await waves.isAvailable(user.serverId, user.roleId, user.token, user.did ? user.did : '' , true);
                     if (!valid) deleted++;
                     return valid ? user : null;
                 }));
