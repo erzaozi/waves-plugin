@@ -31,7 +31,7 @@ const Render = {
             logger.mark(logger.blue('[WAVES PLUGIN]'), logger.red(`未找到e.runtime，请升级至最新版Yunzai`));
         }
 
-        let BotName = Version.isMiao ? 'Miao-Yunzai' : Version.isTrss ? 'TRSS-Yunzai' : 'Yunzai-Bot'
+        let BotName = Version.isMangoCat ? 'MangoCat-Yunzai' : Version.isMiao ? 'Miao-Yunzai' : Version.isTrss ? 'TRSS-Yunzai' : 'Yunzai-Bot'
         let currentVersion = null
         const package_path = `${pluginRoot}/package.json`
         try {
